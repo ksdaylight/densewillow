@@ -1,0 +1,15 @@
+{
+  "name": "densewillow",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "nx": "16.4.0",
+    "nx-cloud": "latest"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
