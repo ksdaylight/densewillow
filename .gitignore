@@ -4,7 +4,10 @@
 dist
 tmp
 /out-tsc
-
+/dist
+#Env
+.env
+.env.*
 # dependencies
 node_modules
 
@@ -37,3 +40,14 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Next.js
+.next
