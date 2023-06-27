@@ -1,6 +1,30 @@
+import { initClient } from '@ts-rest/core';
+import { apiBlog } from 'api-contracts';
+
 import styles from './page.module.css';
 
 export default async function Index() {
+    const client = initClient(apiBlog, {
+        baseHeaders: {},
+        baseUrl: 'http://localhost:3000/api',
+    });
+
+    const { body, status } = await client.getFilteredPosts({
+        params: {
+            searchString: 'post',
+        },
+        headers: {
+            'x-api-key': 'test',
+        },
+    });
+    if (status === 200) {
+        // body is Post
+        console.log('body success');
+        console.log(body);
+    } else {
+        // body is unknown
+        console.log(body);
+    }
     /*
      * Replace the elements below with your own.
      *

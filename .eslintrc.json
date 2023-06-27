@@ -87,18 +87,19 @@
                 "import/extensions": 0,
 
                 // 一部分文件在导入devDependencies的依赖时不报错
-                "import/no-extraneous-dependencies": [
-                    1,
-                    {
-                        "devDependencies": [
-                            "**/*.test.{ts,js}",
-                            "**/*.spec.{ts,js}",
-                            "build/**/*.{ts,js}",
-                            "mock/**/*.{ts,js}",
-                            "**.{ts,js}"
-                        ]
-                    }
-                ],
+                // "import/no-extraneous-dependencies": [
+                //     1,
+                //     {
+                //         "devDependencies": [
+                //             "**/*.test.{ts,js}",
+                //             "**/*.spec.{ts,js}",
+                //             "build/**/*.{ts,js}",
+                //             "mock/**/*.{ts,js}",
+                //             "**.{ts,js}"
+                //         ]
+                //     }
+                // ],
+                "import/no-extraneous-dependencies":"off",
                 // 模块导入顺序规则
                 "import/order": [
                     1,
@@ -250,18 +251,19 @@
                 "import/extensions": 0,
 
                 // 一部分文件在导入devDependencies的依赖时不报错
-                "import/no-extraneous-dependencies": [
-                    1,
-                    {
-                        "devDependencies": [
-                            "**/*.test.{ts,js}",
-                            "**/*.spec.{ts,js}",
-                            "build/**/*.{ts,js}",
-                            "mock/**/*.{ts,js}",
-                            "**.{ts,js}"
-                        ]
-                    }
-                ],
+                // "import/no-extraneous-dependencies": [
+                //     1,
+                //     {
+                //         "devDependencies": [
+                //             "**/*.test.{ts,js}",
+                //             "**/*.spec.{ts,js}",
+                //             "build/**/*.{ts,js}",
+                //             "mock/**/*.{ts,js}",
+                //             "**.{ts,js}"
+                //         ]
+                //     }
+                // ],
+                "import/no-extraneous-dependencies":"off",
                 // 模块导入顺序规则
                 "import/order": [
                     1,

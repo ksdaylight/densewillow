@@ -17,6 +17,7 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
+            "api-contracts": ["packages/api-contracts/src/index.ts"],
             "prisma-schema-blog": ["packages/prisma-schema-blog/src/index.ts"]
         }
     },

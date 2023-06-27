@@ -1,7 +1,19 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Controller, Req } from '@nestjs/common';
+
+import {
+    nestControllerContract,
+    NestRequestShapes,
+    TsRestHandler,
+    tsRestHandler,
+} from '@ts-rest/nest';
+
+import { apiBlog } from 'api-contracts';
 
 import { AppService } from './app.service';
 import { PostService } from './post.service';
+
+const c = nestControllerContract(apiBlog);
+type RequestShapes = NestRequestShapes<typeof c>;
 
 @Controller()
 export class AppController {
@@ -10,67 +22,91 @@ export class AppController {
         private readonly postService: PostService,
     ) {}
 
-    @Get()
-    getData() {
-        return this.appService.getData();
+    @TsRestHandler(c.getPostById)
+    async getPostById() {
+        return tsRestHandler(
+            c.getPostById,
+            async ({ params: { id } }: RequestShapes['getPostById']) => {
+                const post = await this.postService.post({ id: String(id) });
+                if (post === null) {
+                    return { status: 404 as const, body: null };
+                }
+                return { status: 200 as const, body: post };
+            },
+        );
     }
 
-    @Get('post/:id')
-    async getPostById(@Param('id') id: string) {
-        return this.postService.post({ id: String(id) });
-    }
-
-    @Get('feed')
+    @TsRestHandler(c.getPostsAndItems)
     async getPostsAndItems() {
-        const posts = this.postService.posts({ where: { published: true } });
-
-        return posts;
-    }
-
-    @Get('filter/:searchString')
-    async getFilteredPosts(@Param('searchString') searchString: string) {
-        const posts = this.postService.posts({
-            where: {
-                OR: [
-                    {
-                        title: {
-                            contains: searchString,
-                        },
-                    },
-                    {
-                        content: {
-                            contains: searchString,
-                        },
-                    },
-                ],
-            },
+        return tsRestHandler(c.getPostsAndItems, async () => {
+            const posts = await this.postService.posts({ where: { published: true } });
+            return { status: 200 as const, body: posts };
         });
-
-        return posts;
     }
 
-    @Post('post')
-    async createdDraft(@Body() postData: { title: string; content?: string; authorEmail: string }) {
-        const { title, content, authorEmail } = postData;
-        return this.postService.createPost({
-            title,
-            content,
+    @TsRestHandler(c.getFilteredPosts)
+    async getFilteredPosts() {
+        return tsRestHandler(
+            c.getFilteredPosts,
+            async ({ params: { searchString } }: RequestShapes['getFilteredPosts']) => {
+                const posts = await this.postService.posts({
+                    where: {
+                        OR: [
+                            {
+                                title: {
+                                    contains: searchString,
+                                },
+                            },
+                            {
+                                content: {
+                                    contains: searchString,
+                                },
+                            },
+                        ],
+                    },
+                });
+
+                return { status: 200 as const, body: posts };
+            },
+        );
+    }
+
+    @TsRestHandler(c.createPost)
+    async createPost(@Req() { body }: RequestShapes['createPost']) {
+        const post = await this.postService.createPost({
+            title: body.title,
+            content: body.content,
             author: {
-                connect: { email: authorEmail },
+                connect: { email: body.authorEmail },
             },
         });
+
+        return { status: 201 as const, body: post };
     }
 
-    @Put('publish/:id')
-    async publishPost(@Param('id') id: string) {
-        return this.postService.updatePost({
-            where: { id: String(id) },
-            data: { published: true },
-        });
+    @TsRestHandler(c.publishPost)
+    async publishPost() {
+        return tsRestHandler(
+            c.publishPost,
+            async ({ params: { id } }: RequestShapes['publishPost']) => {
+                const post = await this.postService.updatePost({
+                    where: { id: String(id) },
+                    data: { published: true },
+                });
+
+                return { status: 200 as const, body: post };
+            },
+        );
     }
 
-    @Delete('post/:id')
-    async deletePost(@Param('id') id: string) {
-        return this.postService.deletePost({ id: String(id) });
+    @TsRestHandler(c.deletePost)
+    async deletePost() {
+        return tsRestHandler(
+            c.deletePost,
+            async ({ params: { id } }: RequestShapes['deletePost']) => {
+                await this.postService.deletePost({ id: String(id) });
+                return { status: 200 as const, body: { message: 'Post Deleted' } };
+            },
+        );
     }
 }
