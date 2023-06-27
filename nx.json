@@ -11,6 +11,9 @@
     "extends": "nx/presets/npm.json",
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "targetDefaults": {
+        "build": {
+            "dependsOn": ["^build"]
+        },
         "test": {
             "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
         }

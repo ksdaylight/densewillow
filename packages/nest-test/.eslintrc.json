@@ -10,7 +10,7 @@
         {
             "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
             "parserOptions": {
-                "project": ["packages/nest-api/tsconfig(.*)?.json"]
+                "project": ["packages/nest-test/tsconfig(.*)?.json"]
             },
             "rules": {
                 "@next/next/no-html-link-for-pages": ["error", "packages/nest-test/pages"]

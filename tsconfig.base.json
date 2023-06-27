@@ -16,7 +16,9 @@
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
-        "paths": {}
+        "paths": {
+            "prisma-schema-blog": ["packages/prisma-schema-blog/src/index.ts"]
+        }
     },
     "exclude": ["node_modules", "tmp"]
 }
