@@ -6,7 +6,6 @@ import { EditorContent, getMarkRange, useEditor, Range } from '@tiptap/react';
 import Underline from '@tiptap/extension-underline';
 import Placeholder from '@tiptap/extension-placeholder';
 import Link from '@tiptap/extension-link';
-import Youtube from '@tiptap/extension-youtube';
 
 import ToolBar from './ToolBar';
 import EditLink from './Link/EditLink';
@@ -29,13 +28,6 @@ const Editor: FC<Props> = (): JSX.Element => {
                 openOnClick: false,
                 HTMLAttributes: {
                     target: '',
-                },
-            }),
-            Youtube.configure({
-                width: 840,
-                height: 472.5,
-                HTMLAttributes: {
-                    class: 'mx-auto rounded',
                 },
             }),
             Video,

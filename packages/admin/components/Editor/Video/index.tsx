@@ -31,7 +31,9 @@ const Video = Node.create({
     addNodeView() {
         return ({ editor, node }: NodeViewRendererProps) => {
             const div = document.createElement('div');
-            div.className = `aspect-w-16 aspect-h-9${editor.isEditable ? ' cursor-pointer' : ''}`;
+            div.className = `flex justify-center aspect-w-16 aspect-h-9${
+                editor.isEditable ? ' cursor-pointer' : ''
+            }`;
             const iframe = document.createElement('iframe');
             if (editor.isEditable) {
                 iframe.className = 'pointer-events-none';
