@@ -67,6 +67,7 @@
         "@nestjs/common": "^9.2.1",
         "@nestjs/core": "^9.2.1",
         "@nestjs/platform-express": "^9.2.1",
+        "@nestjs/platform-fastify": "^9.0.11pmp",
         "@prisma/client": "^4.16.1",
         "@swc/helpers": "~0.5.0",
         "@tailwindcss/typography": "^0.5.9",
