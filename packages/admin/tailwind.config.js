@@ -25,6 +25,9 @@ module.exports = {
                 action: '#3B82F6',
             },
         },
+        backgroundImage: {
+            'png-pattern': "url('/empty-bg.jpg')",
+        },
     },
     // eslint-disable-next-line global-require
     plugins: [require('@tailwindcss/typography')],

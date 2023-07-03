@@ -8,7 +8,6 @@ export default async function Index() {
         baseHeaders: {},
         baseUrl: 'http://localhost:3000/api',
     });
-
     const { body, status } = await client.getFilteredPosts({
         params: {
             searchString: 'post',

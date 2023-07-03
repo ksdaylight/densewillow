@@ -11,6 +11,7 @@ import {
     BsTypeBold,
     BsTypeItalic,
     BsTypeUnderline,
+    BsImageFill,
 } from 'react-icons/bs';
 
 import DropdownOptions from '../../common/DropdownOptions';
@@ -64,24 +65,31 @@ const ToolBar: FC<Props> = ({ editor, onOpenImageClick }): JSX.Element | null =>
         // validate url is from youtube or vimeo
         if (!input.match(/youtube|bilibili/)) {
             // eslint-disable-next-line no-alert
-            return alert('Sorry, your video must be hosted on YouTube or bilibili.');
+            return alert('视频地址必须是 YouTube 或 bilibili 的嵌入视频地址');
         }
         const srcCheck = input.match(/src="(?<src>.+?)"/); // get the src value from embed code if all pasted in
-        const src = srcCheck ? srcCheck.groups!.src : input; // use src or if just url in input use that
+        let src = srcCheck ? srcCheck.groups!.src : input; // use src or if just url in input use that
         // check youtube url is correct
         if (input.match(/youtube/) && !src.match(/^https:\/\/www\.youtube\.com\/embed\//)) {
             // eslint-disable-next-line no-alert
-            return alert(
-                'Sorry, your YouTube embed URL should start with https://www.youtube.com/embed/ to work.',
-            );
+            return alert('YouTube嵌入视频地址必须以 https://www.youtube.com/embed/ 开头');
         }
         // check bilibili url is correct
-        // if (input.match(/bilibili/)) {
-        //     // eslint-disable-next-line no-alert
-        //     return alert(
-        //         'Sorry, your Vimeo embed URL should start with https://player.vimeo.com/video/ to work.',
-        //     );
-        // }
+        if (
+            !src.match(
+                /^(https:\/\/player\.bilibili\.com\/player\.html|\/\/player\.bilibili\.com\/player\.html).*/,
+            )
+        ) {
+            // eslint-disable-next-line no-alert
+            return alert(
+                'Bilibili嵌入视频地址必须以 https://player.bilibili.com 或者 //player.bilibili.com 开头',
+            );
+        }
+
+        // Add "https:" prefix if it's missing
+        if (src.startsWith('//')) {
+            src = `https:${src}`;
+        }
         editor.chain().focus().insertContent(`<video src="${src}"></video>`).run();
     };
 
@@ -174,9 +182,9 @@ const ToolBar: FC<Props> = ({ editor, onOpenImageClick }): JSX.Element | null =>
             <div className="h-4 w-[1px] bg-secondary-dark dark:bg-secondary-light mx-8" />
             <div className="flex items-center space-x-3">
                 <EmbedVideo onSubmit={handleEmbedVideo} />
-                {/* <Button onClick={onOpenImageClick}>
+                <Button onClick={onOpenImageClick}>
                     <BsImageFill />
-                </Button> */}
+                </Button>
             </div>
         </div>
     );
