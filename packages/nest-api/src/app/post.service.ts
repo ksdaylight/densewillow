@@ -55,3 +55,39 @@ export class PostService {
         });
     }
 }
+/*
+
+import { Prisma, PrismaClient } from "@prisma/client";
+import { z } from "zod";
+
+const prisma = new PrismaClient();
+
+class PostService {
+  async getPosts(): Promise<Prisma.PostGetPayload<{}>[]> {
+    const posts = await prisma.post.findMany();
+    return posts.map(post => this.serializePost(post, "list"));
+  }
+
+  async getPostDetail(id: string): Promise<Prisma.PostGetPayload<{}>> {
+    const post = await prisma.post.findUnique({ where: { id } });
+    if (!post) {
+      throw new Error(`Post with id ${id} not found`);
+    }
+    return this.serializePost(post, "detail");
+  }
+
+  private serializePost(post: Prisma.PostGetPayload<{}>, group: "list" | "detail"): Prisma.PostGetPayload<{}> {
+    if (group === "list") {
+      // For the list group, we exclude the content field
+      const { content, ...rest } = post;
+      return rest;
+    } else {
+      // For the detail group, we return all fields
+      return post;
+    }
+  }
+}
+分组、（序列化）示例
+
+
+ */

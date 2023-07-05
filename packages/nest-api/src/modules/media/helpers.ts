@@ -3,10 +3,10 @@ import { randomBytes } from 'crypto';
 import { extname, join, resolve } from 'path';
 
 import { ensureDirSync, writeFileSync } from 'fs-extra';
+
 import { get, isNil } from 'lodash';
 
-import { media } from '@/config';
-import { getTime } from '@/modules/core/helpers';
+// import { getTime } from '@/modules/core/helpers';
 
 import { MediaConfig, UploadFileType } from './types';
 

@@ -3,7 +3,35 @@
     "compilerOptions": {
         "outDir": "../../dist/out-tsc",
         "module": "commonjs",
-        "types": ["jest", "node"]
+        "esModuleInterop": true,
+        "types": ["jest", "node"],
+        //
+        // 
+        "strict": true,
+        "moduleResolution": "Node",
+        "declaration": true,
+        "removeComments": true,
+        "experimentalDecorators": true,
+        "alwaysStrict": true,
+        "sourceMap": true,
+        "incremental": true,
+        "forceConsistentCasingInFileNames": true,
+        "isolatedModules": true,
+        "noUnusedLocals": true,
+        "noImplicitReturns": true,
+        "strictNullChecks": false,
+        "strictBindCallApply": false,
+        "noFallthroughCasesInSwitch": true,
+        "allowSyntheticDefaultImports": true,
+        "pretty": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "noImplicitAny": true,
+        "allowJs": true,
+        "importsNotUsedAsValues": "remove",
+        "noEmit": false,
+        "lib": ["esnext", "DOM", "ScriptHost", "WebWorker"],
+        // "baseUrl": ".",
     },
-    "include": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts", "src/**/*.d.ts"]
+    "include": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts", "src/**/*.d.ts","typings/**/*.d.ts"]
 }
