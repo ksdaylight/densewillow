@@ -23,3 +23,9 @@ model Post {
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String
 }
+model MediaEntity {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  file      String
+  ext       String
+  createdAt DateTime @default(now())
+}

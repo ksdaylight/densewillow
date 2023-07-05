@@ -31,7 +31,16 @@ nx run-many -t <target1> <target2>
 ```
 nx run-many -t <target1> <target2> -p <proj1> <proj2>
 ```
+```
+nx run prisma-schema-blog:prisma db push
+nx run prisma-schema-blog:generate-types
+nx run prisma-schema-blog:prisma format
 
+more detail about prisma with nx:
+
+https://github.com/nrwl/nx-recipes/tree/main/nestjs-prisma#nx--nestjs--prisma
+
+```
 Targets can be defined in the `package.json` or `projects.json`. Learn more [in the docs](https://nx.dev/core-features/run-tasks).
 
 ## Want better Editor Integration?
