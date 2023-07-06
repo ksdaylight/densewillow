@@ -52,8 +52,7 @@ export async function bootApp(
     listened?: (params: CreatorData) => () => Promise<void>,
 ) {
     const { app, configure } = await creator();
-    const { port, host, globalPrefix } = await configure.get<AppConfig>('app');
-    if (!isNil(globalPrefix)) app.setGlobalPrefix(globalPrefix);
+    const { port, host } = await configure.get<AppConfig>('app');
     await app.listen(port, host, listened({ configure } as any));
 }
 
@@ -91,6 +90,7 @@ export async function createBootModule(
             useClass: AppFilter,
         });
     }
+
     return {
         BootModule: CreateModule('BootModule', () => {
             let meta: ModuleMetadata = {

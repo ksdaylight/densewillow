@@ -9,7 +9,6 @@ import {
 
 import { apiBlog } from 'api-contracts';
 
-import { AppService } from './app.service';
 import { PostService } from './post.service';
 
 const c = nestControllerContract(apiBlog);
@@ -17,10 +16,7 @@ type RequestShapes = NestRequestShapes<typeof c>;
 
 @Controller()
 export class AppController {
-    constructor(
-        private readonly appService: AppService,
-        private readonly postService: PostService,
-    ) {}
+    constructor(private readonly postService: PostService) {}
 
     @TsRestHandler(c.getPostById)
     async getPostById() {

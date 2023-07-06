@@ -7,7 +7,7 @@ import { isNil } from 'lodash';
 
 import { Configure } from './configure';
 
-import { ConfigStorageOption, CreateOptions, CreatorData } from './types';
+import { AppConfig, ConfigStorageOption, CreateOptions, CreatorData } from './types';
 import { createBootModule } from './helpers';
 /**
  * 应用核心类
@@ -64,8 +64,11 @@ export class App {
             if (this._app.getHttpAdapter() instanceof FastifyAdapter) {
                 await this._app.init();
             }
+            const { globalPrefix } = await this._configure.get<AppConfig>('app');
+            if (!isNil(globalPrefix)) this._app.setGlobalPrefix(globalPrefix);
         } catch (error) {
-            console.log('Create app failed!');
+            console.log('Create app failed! \n');
+            console.log(error);
             exit(0);
         }
 
@@ -89,9 +92,13 @@ export class App {
             const host = await configure.get<string>('app.host');
             const port = await configure.get<number>('app.port')!;
             const https = await configure.get<boolean>('app.https');
+            const globalPrefix = await configure.get<string>('app.globalPrefix');
+
             appUrl =
                 (await configure.get<boolean>('app.url', undefined)) ??
-                `${https ? 'https' : 'http'}://${host!}:${port}`;
+                `${https ? 'https' : 'http'}://${host!}:${port}${
+                    isNil(globalPrefix) ? '' : globalPrefix
+                }`;
 
             configure.set('app.url', appUrl);
         }

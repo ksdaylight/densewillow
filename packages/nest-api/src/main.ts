@@ -33,6 +33,10 @@ const creator = createApp({
             logger: ['error', 'warn'],
         });
     },
+    globals: {
+        pipe: null,
+        interceptor: null,
+    },
 });
 bootApp(creator, ({ configure }) => async () => {
     echoApi(configure);
