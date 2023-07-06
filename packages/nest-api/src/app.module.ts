@@ -21,3 +21,4 @@ import { AppFilter } from './modules/core/providers/app.filter';
     ],
 })
 export class AppModule {}
+// TODO remove

@@ -1,5 +1,6 @@
+import { Module, ModuleMetadata, Type } from '@nestjs/common';
 import deepmerge from 'deepmerge';
-import { isNil } from 'lodash';
+import { isArray, isNil, isObject } from 'lodash';
 /**
  * 用于请求验证中的boolean数据转义
  * @param value
@@ -52,3 +53,46 @@ export const deepMerge = <T1, T2>(
     }
     return deepmerge(x, y, options) as T2 extends T1 ? T1 : T1 & T2;
 };
+
+/**
+ * 深度合并启动模块的metadata
+ * @param meta 默认metadata
+ * @param custom 自定义metadata
+ */
+export function mergeMeta(meta: ModuleMetadata, custom: ModuleMetadata) {
+    const keys = Array.from(new Set([...Object.keys(meta), ...Object.keys(custom)]));
+    const useMerge = <T>(i: T, p: T) => {
+        if (isArray(p)) return [...((i as any[]) ?? []), ...((p as any[]) ?? [])];
+        if (isObject(p)) return deepMerge(i, p);
+        return p;
+    };
+    const merged = Object.fromEntries(
+        keys
+            .map((type) => [
+                type,
+                useMerge(meta[type as keyof ModuleMetadata], custom[type as keyof ModuleMetadata]),
+            ])
+            .filter(([_, item]) => (isArray(item) ? item.length > 0 : !!item)),
+    );
+    return { ...meta, ...merged };
+}
+
+/**
+ * 创建一个动态模块
+ * @param target
+ * @param metaSetter
+ */
+export function CreateModule(
+    target: string | Type<any>,
+    metaSetter: () => ModuleMetadata = () => ({}),
+): Type<any> {
+    let ModuleClass: Type<any>;
+    if (typeof target === 'string') {
+        ModuleClass = class {};
+        Object.defineProperty(ModuleClass, 'name', { value: target });
+    } else {
+        ModuleClass = target;
+    }
+    Module(metaSetter())(ModuleClass);
+    return ModuleClass;
+}
