@@ -15,7 +15,7 @@ export interface AppConfig {
 
     port: number;
 
-    globalPrefix?: string;
+    globalPrefix?: string; // TODO not work !
 
     https: boolean;
 

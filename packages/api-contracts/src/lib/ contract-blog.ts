@@ -64,6 +64,33 @@ export const apiBlog = c.router(
             },
             body: null,
         },
+        postFileTest: {
+            method: 'POST',
+            path: '/file',
+            contentType: 'multipart/form-data', // <- Only difference
+            body: c.type<any>(), // <- Use File type in here
+            responses: {
+                200: z.object({
+                    uploadedFile: z.object({
+                        id: z.string(),
+                        file: z.number(),
+                        ext: z.string(),
+                        date: z.date(),
+                    }),
+                }),
+                400: z.object({
+                    message: z.string(),
+                }),
+            },
+        },
+        testGet: {
+            method: 'GET',
+            path: `/test`,
+            responses: {
+                200: z.string(),
+                404: z.null(),
+            },
+        },
     },
     {
         baseHeaders: z.object({

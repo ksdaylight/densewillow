@@ -97,7 +97,7 @@ export class App {
             appUrl =
                 (await configure.get<boolean>('app.url', undefined)) ??
                 `${https ? 'https' : 'http'}://${host!}:${port}${
-                    isNil(globalPrefix) ? '' : globalPrefix
+                    isNil(globalPrefix) ? '' : `/${globalPrefix}`
                 }`;
 
             configure.set('app.url', appUrl);
