@@ -7,7 +7,7 @@ import { isNil } from 'lodash';
 
 import { Configure } from './configure';
 
-import { AppConfig, ConfigStorageOption, CreateOptions, CreatorData } from './types';
+import { ConfigStorageOption, CreateOptions, CreatorData } from './types';
 import { createBootModule } from './helpers';
 /**
  * 应用核心类
@@ -58,14 +58,15 @@ export class App {
                 // eslint-disable-next-line global-require
                 this._app.register(require('@fastify/multipart'), {
                     attachFieldsToBody: true,
+                    // prefix: '/api/',
                 });
             }
             // 初始化应用
             if (this._app.getHttpAdapter() instanceof FastifyAdapter) {
                 await this._app.init();
             }
-            const { globalPrefix } = await this._configure.get<AppConfig>('app');
-            if (!isNil(globalPrefix)) this._app.setGlobalPrefix(globalPrefix);
+            // const { globalPrefix } = await this._configure.get<AppConfig>('app');
+            // if (!isNil(globalPrefix)) this._app.setGlobalPrefix(globalPrefix);
         } catch (error) {
             console.log('Create app failed! \n');
             console.log(error);
