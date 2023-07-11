@@ -28,10 +28,14 @@ const creator = createApp({
     configure: { enableDynamicStorage: true },
     modules: [MediaModule],
     builder: async ({ configure, BootModule }) => {
-        return NestFactory.create<NestFastifyApplication>(BootModule, new FastifyAdapter(), {
-            cors: true,
-            logger: ['error', 'warn'],
-        });
+        return NestFactory.create<NestFastifyApplication>(
+            BootModule,
+            new FastifyAdapter({ bodyLimit: 5 * 1024 * 1024 }),
+            {
+                cors: true,
+                logger: ['error', 'warn'],
+            },
+        );
     },
     globals: {
         pipe: null,
