@@ -1,26 +1,52 @@
-import { Body, Controller } from '@nestjs/common';
-import { nestControllerContract, tsRestHandler, TsRestHandler } from '@ts-rest/nest';
+import { Controller, Param, Res } from '@nestjs/common';
+import {
+    nestControllerContract,
+    NestRequestShapes,
+    tsRestHandler,
+    TsRestHandler,
+} from '@ts-rest/nest';
 import { apiBlog } from 'api-contracts';
 
-import { MultipartFile } from '@fastify/multipart';
+import { FastifyReply } from 'fastify';
 
 import { MediaService } from '../services';
+import { NotEmptyPipe } from '../../core/pipes';
+import { ParseObjectIdPipe } from '../../core/pipes/parse-object-id.pipe';
 
-const c = nestControllerContract(apiBlog);
-// type RequestShapes = NestRequestShapes<typeof c>;
+const c = nestControllerContract(apiBlog.images);
+type RequestShapes = NestRequestShapes<typeof c>;
 
 @Controller()
 export class AppController {
-    constructor(private readonly meidaService: MediaService) {}
+    constructor(private readonly mediaService: MediaService) {}
 
-    @TsRestHandler(c.postFileTest)
-    async postFileTest(@Body() image: MultipartFile) {
-        return tsRestHandler(c.postFileTest, async ({ body }) => {
-            // const test = await this.meidaService.upload({
-            //     file: image,
-            //     dir: 'test',
-            // });
-            const test = await this.meidaService.upload({
+    // @TsRestHandler(c.postFileTest)
+    // async postFileTest(@Body() image: MultipartFile) {
+    //     return tsRestHandler(c.postFileTest, async ({ body }) => {
+    //         // const test = await this.meidaService.upload({
+    //         //     file: image,
+    //         //     dir: 'test',
+    //         // });
+    //         const test = await this.meidaService.upload({
+    //             file: Object.values(body)[0],
+    //             dir: 'test',
+    //         });
+    //         return {
+    //             status: 201 as const,
+    //             body: {
+    //                 id: test.id,
+    //                 file: test.file,
+    //                 ext: test.ext,
+    //                 date: test.createdAt,
+    //             },
+    //         };
+    //     });
+    // }
+
+    @TsRestHandler(c.uploadImage)
+    async uploadImage() {
+        return tsRestHandler(c.uploadImage, async ({ body }) => {
+            const test = await this.mediaService.upload({
                 file: Object.values(body)[0],
                 dir: 'test',
             });
@@ -33,6 +59,18 @@ export class AppController {
                     date: test.createdAt,
                 },
             };
+        });
+    }
+
+    @TsRestHandler(c.loadImage)
+    async loadImage(
+        @Param('id', new ParseObjectIdPipe()) id: string,
+        @Param('ext', new NotEmptyPipe({ maxLength: 10 })) ext: string,
+        @Res({ passthrough: true }) res: FastifyReply,
+    ) {
+        return tsRestHandler(c.loadImage, async ({ params }: RequestShapes['loadImage']) => {
+            console.log(params['id.:ext']);
+            return { status: 200, body: await this.mediaService.loadImage({ id }, res, `.${ext}`) };
         });
     }
 
