@@ -18,12 +18,26 @@ const MediaSchema = z.object({
     ext: z.string(),
     createdAt: z.date(),
 });
+export const ObjectIdSchema = z.string().refine((value) => /^[a-f\d]{24}$/i.test(value), {
+    message: 'Invalid ObjectId',
+});
+
+export function createStringSchema(minLength: number, maxLength: number) {
+    return z
+        .string()
+        .min(minLength, `The param's can not less then ${minLength}!`)
+        .max(maxLength, `The param's can not surpass then ${maxLength}!`);
+}
 
 export const mediaContract = c.router(
     {
         loadImage: {
             method: 'GET',
             path: `/images/:id.:ext`,
+            pathParams: z.object({
+                id: ObjectIdSchema,
+                ext: createStringSchema(1, 10),
+            }),
             summary: 'get image ',
             responses: {
                 200: c.type<StreamableFile>(),
@@ -43,6 +57,7 @@ export const mediaContract = c.router(
             path: '/uploadImage',
             contentType: 'multipart/form-data', // <- Only difference
             body: c.type<any>(), // <- Use File type in here
+            // body: c.type<{ image: MultipartFile }>(), // <- Use File type in here
             responses: {
                 200: z.object({
                     uploadedFile: z.object({

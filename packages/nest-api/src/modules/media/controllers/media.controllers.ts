@@ -1,4 +1,4 @@
-import { Controller, Param, Res } from '@nestjs/common';
+import { Controller, Res } from '@nestjs/common';
 import {
     nestControllerContract,
     NestRequestShapes,
@@ -10,8 +10,7 @@ import { apiBlog } from 'api-contracts';
 import { FastifyReply } from 'fastify';
 
 import { MediaService } from '../services';
-import { NotEmptyPipe } from '../../core/pipes';
-import { ParseObjectIdPipe } from '../../core/pipes/parse-object-id.pipe';
+import { isValidFile } from '../constraints';
 
 const c = nestControllerContract(apiBlog.images);
 type RequestShapes = NestRequestShapes<typeof c>;
@@ -46,6 +45,13 @@ export class AppController {
     @TsRestHandler(c.uploadImage)
     async uploadImage() {
         return tsRestHandler(c.uploadImage, async ({ body }) => {
+            const check = isValidFile(Object.values(body)[0], {
+                mimetypes: ['image/png', 'image/gif', 'image/jpeg', 'image/webp', 'image/svg+xml'],
+                fileSize: 1024 * 1024 * 5,
+            });
+            if (!check) {
+                return { status: 400, body: { message: '请上传5M以内的，图片格式的文件' } };
+            }
             const test = await this.mediaService.upload({
                 file: Object.values(body)[0],
                 dir: 'test',
@@ -64,13 +70,18 @@ export class AppController {
 
     @TsRestHandler(c.loadImage)
     async loadImage(
-        @Param('id', new ParseObjectIdPipe()) id: string,
-        @Param('ext', new NotEmptyPipe({ maxLength: 10 })) ext: string,
+        // @Param('id', new ParseObjectIdPipe()) id: string,
+        // @Param('ext', new NotEmptyPipe({ maxLength: 10 })) ext: string,
         @Res({ passthrough: true }) res: FastifyReply,
     ) {
         return tsRestHandler(c.loadImage, async ({ params }: RequestShapes['loadImage']) => {
-            console.log(params['id.:ext']);
-            return { status: 200, body: await this.mediaService.loadImage({ id }, res, `.${ext}`) };
+            console.log(params.id);
+            console.log(`${params.ext} \n`);
+
+            return {
+                status: 200,
+                body: await this.mediaService.loadImage({ id: params.id }, res, `.${params.ext}`),
+            };
         });
     }
 
