@@ -48,9 +48,19 @@ export const mediaContract = c.router(
             method: 'GET',
             path: '/images',
             responses: {
-                200: z.array(MediaSchema),
+                200: z.object({
+                    posts: MediaSchema.array(),
+                    count: z.number(),
+                    skip: z.number(),
+                    take: z.number(),
+                }),
                 404: z.null(),
             },
+            query: z.object({
+                take: z.string().transform(Number),
+                skip: z.string().transform(Number),
+            }),
+            summary: 'Get all images',
         },
         uploadImage: {
             method: 'POST',

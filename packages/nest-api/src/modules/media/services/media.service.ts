@@ -51,6 +51,28 @@ export class MediaService {
         });
     }
 
+    async media(params: {
+        skip?: number;
+        take?: number;
+        cursor?: Prisma.MediaEntityWhereUniqueInput;
+        where?: Prisma.MediaEntityWhereInput;
+        orderBy?: Prisma.MediaEntityOrderByWithRelationInput;
+    }) {
+        const { skip, take, cursor, where, orderBy } = params;
+        const media = await this.prisma.mediaEntity.findMany({
+            skip,
+            take,
+            cursor,
+            where,
+            orderBy,
+        });
+        const totalMedia = await this.prisma.mediaEntity.count({
+            where: where || undefined,
+        });
+
+        return { media, totalMedia };
+    }
+
     async deleteMedia(where: Prisma.MediaEntityWhereUniqueInput): Promise<MediaEntity> {
         const deleteMedia = await this.prisma.mediaEntity.delete({
             where,

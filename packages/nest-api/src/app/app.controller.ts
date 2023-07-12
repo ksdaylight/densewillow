@@ -12,8 +12,8 @@ import { apiBlog } from 'api-contracts';
 import { PostService } from './post.service';
 
 const c = nestControllerContract(apiBlog);
-type RequestShapes = NestRequestShapes<typeof c>;
 
+type RequestShapes = NestRequestShapes<typeof c>;
 @Controller()
 export class AppController {
     constructor(private readonly postService: PostService) {}

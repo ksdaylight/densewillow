@@ -19,28 +19,20 @@ type RequestShapes = NestRequestShapes<typeof c>;
 export class AppController {
     constructor(private readonly mediaService: MediaService) {}
 
-    // @TsRestHandler(c.postFileTest)
-    // async postFileTest(@Body() image: MultipartFile) {
-    //     return tsRestHandler(c.postFileTest, async ({ body }) => {
-    //         // const test = await this.meidaService.upload({
-    //         //     file: image,
-    //         //     dir: 'test',
-    //         // });
-    //         const test = await this.meidaService.upload({
-    //             file: Object.values(body)[0],
-    //             dir: 'test',
-    //         });
-    //         return {
-    //             status: 201 as const,
-    //             body: {
-    //                 id: test.id,
-    //                 file: test.file,
-    //                 ext: test.ext,
-    //                 date: test.createdAt,
-    //             },
-    //         };
-    //     });
-    // }
+    @TsRestHandler(c.getImages)
+    async getImage() {
+        return tsRestHandler(c.getImages, async ({ query: { take, skip } }) => {
+            const { media, totalMedia } = await this.mediaService.media({
+                take,
+                skip,
+            });
+
+            return {
+                status: 200 as const,
+                body: { media, count: totalMedia, skip, take },
+            };
+        });
+    }
 
     @TsRestHandler(c.uploadImage)
     async uploadImage() {
