@@ -1,6 +1,17 @@
 import { NextPage } from 'next';
+import { initQueryClient } from '@ts-rest/react-query';
+
+import { apiBlog } from 'api-contracts';
 
 import AdminLayout from '../../components/layout/AdminLayout';
+
+export const baseApiUrl = 'http://127.0.0.1:3100/api';
+export const apiClient = initQueryClient(apiBlog, {
+    baseUrl: 'http://127.0.0.1:3100',
+    baseHeaders: {
+        'x-api-key': 'key',
+    },
+});
 
 interface Props {}
 const Admin: NextPage<Props> = () => {

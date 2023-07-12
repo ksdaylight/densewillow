@@ -49,7 +49,7 @@ export const mediaContract = c.router(
             path: '/images',
             responses: {
                 200: z.object({
-                    posts: MediaSchema.array(),
+                    images: MediaSchema.array(),
                     count: z.number(),
                     skip: z.number(),
                     take: z.number(),
@@ -57,6 +57,8 @@ export const mediaContract = c.router(
                 404: z.null(),
             },
             query: z.object({
+                // take: z.number(),
+                // skip: z.number(),
                 take: z.string().transform(Number),
                 skip: z.string().transform(Number),
             }),
@@ -102,7 +104,7 @@ export const mediaContract = c.router(
     },
     {
         baseHeaders: z.object({
-            'x-api-key': z.string(),
+            'x-api-key': z.string().optional(),
         }),
     },
 );
@@ -184,7 +186,7 @@ export const apiBlog = c.router(
     },
     {
         baseHeaders: z.object({
-            'x-api-key': z.string(),
+            'x-api-key': z.string().optional(),
         }),
         pathPrefix: `/${process.env['APP_PREFIX']}`,
     },

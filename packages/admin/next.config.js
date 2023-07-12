@@ -1,7 +1,11 @@
 // @ts-check
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+// const fs = require('fs');
+const path = require('path');
+
 const { composePlugins, withNx } = require('@nx/next');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -13,7 +17,10 @@ const nextConfig = {
         svgr: false,
     },
     images: {
-        domains: ['images.unsplash.com', 'res.cloudinary.com'],
+        domains: ['images.unsplash.com', 'res.cloudinary.com', '127.0.0.1'],
+    },
+    env: {
+        APP_PREFIX: process.env.APP_PREFIX || 'test',
     },
 };
 

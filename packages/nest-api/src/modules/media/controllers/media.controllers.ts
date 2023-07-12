@@ -29,7 +29,7 @@ export class AppController {
 
             return {
                 status: 200 as const,
-                body: { media, count: totalMedia, skip, take },
+                body: { images: media, count: totalMedia, skip, take },
             };
         });
     }

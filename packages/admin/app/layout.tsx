@@ -1,3 +1,5 @@
+import Providers from '../utils/provider';
+
 import './global.css';
 
 export const metadata = {
@@ -10,7 +12,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         <html lang="en">
             <body>
                 {/* <h1 className="tw-text-red-500"> the root layout</h1> */}
-                {children}
+                <Providers>{children}</Providers>
             </body>
         </html>
     );
