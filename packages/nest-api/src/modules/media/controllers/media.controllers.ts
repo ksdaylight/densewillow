@@ -25,6 +25,9 @@ export class AppController {
             const { media, totalMedia } = await this.mediaService.media({
                 take,
                 skip,
+                orderBy: {
+                    createdAt: 'desc',
+                },
             });
 
             return {
@@ -67,8 +70,8 @@ export class AppController {
         @Res({ passthrough: true }) res: FastifyReply,
     ) {
         return tsRestHandler(c.loadImage, async ({ params }: RequestShapes['loadImage']) => {
-            console.log(params.id);
-            console.log(`${params.ext} \n`);
+            // console.log(params.id);
+            // console.log(`${params.ext} \n`);
 
             return {
                 status: 200,
