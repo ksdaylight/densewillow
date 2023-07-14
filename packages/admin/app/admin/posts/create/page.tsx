@@ -25,7 +25,7 @@ const Create: NextPage<Props> = async () => {
     const dehydratedState = dehydrate(queryClient);
 
     return (
-        <AdminLayout>
+        <AdminLayout title="New Post">
             <div className="max-w-4xl mx-auto">
                 <Hydrate state={dehydratedState}>
                     <Editor />
