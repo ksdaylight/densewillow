@@ -1,18 +1,13 @@
 import { z } from 'zod';
 import { initContract } from '@ts-rest/core';
 import { StreamableFile } from '@nestjs/common';
+import { MultipartFile } from '@fastify/multipart';
+
+import { ObjectIdSchema, MediaSchema } from './types';
+
 // import { MediaContract } from './contract-media';
 
 const c = initContract();
-const MediaSchema = z.object({
-    id: z.string(),
-    file: z.string(),
-    ext: z.string(),
-    createdAt: z.date(),
-});
-export const ObjectIdSchema = z.string().refine((value) => /^[a-f\d]{24}$/i.test(value), {
-    message: 'Invalid ObjectId',
-});
 
 export function createStringSchema(minLength: number, maxLength: number) {
     return z
@@ -68,8 +63,8 @@ export const mediaContract = c.router(
             method: 'POST',
             path: '/uploadImage',
             contentType: 'multipart/form-data', // <- Only difference
-            body: c.type<any>(), // <- Use File type in here
-            // body: c.type<{ image: MultipartFile }>(), // <- Use File type in here
+            // body: c.type<any>(), // <- Use File type in here
+            body: c.type<{ image: MultipartFile }>(), // <- Use File type in here
             responses: {
                 200: z.object({
                     uploadedFile: z.object({

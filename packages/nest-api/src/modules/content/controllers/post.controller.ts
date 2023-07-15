@@ -1,21 +1,22 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Req } from '@nestjs/common';
 
 import {
-    nestControllerContract,
     NestRequestShapes,
     TsRestHandler,
+    nestControllerContract,
     tsRestHandler,
 } from '@ts-rest/nest';
 
 import { apiBlog } from 'api-contracts';
 
-import { PostService } from './post.service';
+import { PostService } from '../services';
 
-const c = nestControllerContract(apiBlog);
+// import { PostService } from '../services/post.service';
+const c = nestControllerContract(apiBlog.content);
 
 type RequestShapes = NestRequestShapes<typeof c>;
 @Controller()
-export class AppController {
+export class MediaController {
     constructor(private readonly postService: PostService) {}
 
     @TsRestHandler(c.getPostById)
@@ -32,20 +33,26 @@ export class AppController {
         );
     }
 
-    // @TsRestHandler(c.getPostsAndItems)
-    // async getPostsAndItems() {
-    //     return tsRestHandler(c.getPostsAndItems, async () => {
-    //         const posts = await this.postService.posts({ where: { published: true } });
-    //         return { status: 200 as const, body: posts };
-    //     });
-    // }
+    @TsRestHandler(c.getPosts)
+    async getPosts() {
+        return tsRestHandler(c.getPosts, async ({ query: { take, skip } }) => {
+            const { posts, total } = await this.postService.posts({
+                take,
+                skip,
+                orderBy: {
+                    createdAt: 'desc',
+                },
+            });
+            return { status: 200 as const, body: { posts, count: total, skip, take } };
+        });
+    }
 
     @TsRestHandler(c.getFilteredPosts)
     async getFilteredPosts() {
         return tsRestHandler(
             c.getFilteredPosts,
             async ({ params: { searchString } }: RequestShapes['getFilteredPosts']) => {
-                const posts = await this.postService.posts({
+                const { posts } = await this.postService.posts({
                     where: {
                         OR: [
                             {
@@ -67,33 +74,24 @@ export class AppController {
         );
     }
 
-    // @TsRestHandler(c.createPost)
-    // async createPost(@Req() { body }: RequestShapes['createPost']) {
-    //     const post = await this.postService.createPost({
-    //         title: body.title,
-    //         content: body.content,
-    //         author: {
-    //             connect: { email: body.authorEmail },
-    //         },
-    //     });
-
-    //     return { status: 201 as const, body: post };
-    // }
-
-    // @TsRestHandler(c.publishPost)
-    // async publishPost() {
-    //     return tsRestHandler(
-    //         c.publishPost,
-    //         async ({ params: { id } }: RequestShapes['publishPost']) => {
-    //             const post = await this.postService.updatePost({
-    //                 where: { id: String(id) },
-    //                 data: { published: true },
-    //             });
-
-    //             return { status: 200 as const, body: post };
-    //         },
-    //     );
-    // }
+    @TsRestHandler(c.createPost)
+    async createPost(@Req() { body: bodyOrginal }: RequestShapes['createPost']) {
+        // const post = await this.postService.createPost({
+        //     title: body.title,
+        //     content: body.content,
+        //     author: {
+        //         connect: { email: body.authorEmail },
+        //     },
+        // });
+        return tsRestHandler(c.createPost, async (body) => {
+            console.log(body.body.title);
+            console.log('\n');
+            console.log(bodyOrginal);
+            return { status: 201 as const, body: { message: 'hhh ' } };
+        });
+        // return { status: 201 as const, body: post };
+    }
+    // TODO update
 
     @TsRestHandler(c.deletePost)
     async deletePost() {

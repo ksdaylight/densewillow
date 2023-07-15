@@ -30,8 +30,8 @@ model Post {
   tags      String[]
   thumbnailId String? 
   thumbnail   MediaEntity? @relation(fields: [thumbnailId], references: [id])
-  author    User    @relation("AuthorRelation", fields: [authorId], references: [id])
-  authorId  String
+  author    User?    @relation("AuthorRelation", fields: [authorId], references: [id])
+  authorId  String?
   likes     PostLike[] // 关联到新的PostLike模型
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
