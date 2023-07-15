@@ -1,4 +1,4 @@
-import { Controller, Req } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 
 import {
     nestControllerContract,
@@ -32,13 +32,13 @@ export class AppController {
         );
     }
 
-    @TsRestHandler(c.getPostsAndItems)
-    async getPostsAndItems() {
-        return tsRestHandler(c.getPostsAndItems, async () => {
-            const posts = await this.postService.posts({ where: { published: true } });
-            return { status: 200 as const, body: posts };
-        });
-    }
+    // @TsRestHandler(c.getPostsAndItems)
+    // async getPostsAndItems() {
+    //     return tsRestHandler(c.getPostsAndItems, async () => {
+    //         const posts = await this.postService.posts({ where: { published: true } });
+    //         return { status: 200 as const, body: posts };
+    //     });
+    // }
 
     @TsRestHandler(c.getFilteredPosts)
     async getFilteredPosts() {
@@ -67,33 +67,33 @@ export class AppController {
         );
     }
 
-    @TsRestHandler(c.createPost)
-    async createPost(@Req() { body }: RequestShapes['createPost']) {
-        const post = await this.postService.createPost({
-            title: body.title,
-            content: body.content,
-            author: {
-                connect: { email: body.authorEmail },
-            },
-        });
+    // @TsRestHandler(c.createPost)
+    // async createPost(@Req() { body }: RequestShapes['createPost']) {
+    //     const post = await this.postService.createPost({
+    //         title: body.title,
+    //         content: body.content,
+    //         author: {
+    //             connect: { email: body.authorEmail },
+    //         },
+    //     });
 
-        return { status: 201 as const, body: post };
-    }
+    //     return { status: 201 as const, body: post };
+    // }
 
-    @TsRestHandler(c.publishPost)
-    async publishPost() {
-        return tsRestHandler(
-            c.publishPost,
-            async ({ params: { id } }: RequestShapes['publishPost']) => {
-                const post = await this.postService.updatePost({
-                    where: { id: String(id) },
-                    data: { published: true },
-                });
+    // @TsRestHandler(c.publishPost)
+    // async publishPost() {
+    //     return tsRestHandler(
+    //         c.publishPost,
+    //         async ({ params: { id } }: RequestShapes['publishPost']) => {
+    //             const post = await this.postService.updatePost({
+    //                 where: { id: String(id) },
+    //                 data: { published: true },
+    //             });
 
-                return { status: 200 as const, body: post };
-            },
-        );
-    }
+    //             return { status: 200 as const, body: post };
+    //         },
+    //     );
+    // }
 
     @TsRestHandler(c.deletePost)
     async deletePost() {

@@ -11,21 +11,42 @@ datasource db {
 model User {
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
   email String  @unique
-  name  String?
-  posts Post[]
+  name     String
+  role     String @default("user")
+  provider String
+  avatar   String?
+  posts    Post[]   @relation("AuthorRelation")
+  likes    PostLike[] // 关联到新的PostLike模型
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Post {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
   title     String
+  slug      String  @unique
   content   String?
-  published Boolean? @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
+  meta      String
+  tags      String[]
+  thumbnailId String? 
+  thumbnail   MediaEntity? @relation(fields: [thumbnailId], references: [id])
+  author    User    @relation("AuthorRelation", fields: [authorId], references: [id])
   authorId  String
+  likes     PostLike[] // 关联到新的PostLike模型
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model PostLike { // 新的PostLike模型表示User和Post之间的“喜欢”的关系
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  post    Post   @relation(fields: [postId], references: [id])
+  postId  String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
 }
 model MediaEntity {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   file      String
   ext       String
   createdAt DateTime @default(now())
+  post      Post[]
 }
