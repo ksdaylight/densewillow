@@ -6,6 +6,7 @@ import { EditorContent, getMarkRange, useEditor, Range } from '@tiptap/react';
 import Underline from '@tiptap/extension-underline';
 import Placeholder from '@tiptap/extension-placeholder';
 import Link from '@tiptap/extension-link';
+import { MultipartFile } from '@fastify/multipart';
 import TipTapImage from '@tiptap/extension-image';
 // import { apiClient, baseApiUrl } from 'packages/admin/app/admin/';
 
@@ -27,7 +28,7 @@ import ThumbnailSelector from './ThumbnailSelector';
 export interface FinalPost extends SeoResult {
     title: string;
     content: string;
-    thumbnail?: File | string;
+    thumbnail?: File;
 }
 interface Props {
     initialValue?: FinalPost;
@@ -54,7 +55,7 @@ const Editor: FC<Props> = ({
     });
 
     const apiQueryClient = useTsRestQueryClient(apiClient);
-    const queryClient = useQueryClient();
+    const queryClientOriginal = useQueryClient();
 
     const [uploading, setUploading] = useState(false);
     const editor = useEditor({
@@ -100,17 +101,21 @@ const Editor: FC<Props> = ({
             take: String(10),
         },
     });
-    // debugger;
+
     const images =
         data?.body?.images.map((image) => ({
             src: `${baseApiUrl}/images/${image.id}${image.ext}`,
         })) || [];
-    // console.log(images);
 
     const { mutate } = apiQueryClient.images.uploadImage.useMutation({
         onSuccess: () => {
             setUploading(false);
-            queryClient.invalidateQueries(['getAllImage', '1']);
+            queryClientOriginal.invalidateQueries(['getAllImage', '1']);
+        },
+    });
+    const { mutate: createPostMutate } = apiQueryClient.content.createPost.useMutation({
+        onSuccess: () => {
+            console.log('test success');
         },
     });
     const updateTitle: ChangeEventHandler<HTMLInputElement> = ({ target }) =>
@@ -122,11 +127,22 @@ const Editor: FC<Props> = ({
         setUploading(true);
         const formData = new FormData();
         formData.append('image', image);
-        mutate({ body: { image } });
+        mutate({ body: { image: image as any as MultipartFile } });
     };
     const handleSubmit = () => {
         if (!editor) return;
+
         console.log({ ...post, content: editor.getHTML() });
+
+        createPostMutate({
+            body: {
+                title: 'test',
+                image: post.thumbnail as any as MultipartFile,
+                slug: 'adadasdads',
+                meta: 'asdfadd',
+                tags: ['333', '111'],
+            },
+        });
     };
 
     useEffect(() => {
@@ -151,7 +167,7 @@ const Editor: FC<Props> = ({
                     {/* Thumbnail Selector and Submit Button */}
                     <div className="flex items-center justify-between mb-3">
                         <ThumbnailSelector
-                            initialValue={post.thumbnail as string}
+                            initialValue={post.thumbnail as any as string} // TODO modify
                             onChange={updateThumbnail}
                         />
                         <div className="inline-block">

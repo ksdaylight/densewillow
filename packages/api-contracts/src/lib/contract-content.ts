@@ -1,7 +1,7 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
-import { MultipartValue, ObjectIdSchema, PostSchema, multipartFileSchema } from './types';
+import { MultipartValueZod, ObjectIdSchema, PostSchema, multipartFileSchema } from './types';
 
 const c = initContract();
 
@@ -61,13 +61,16 @@ export const contentContract = c.router(
             path: '/post',
             contentType: 'multipart/form-data',
             responses: {
-                201: z.object({ message: z.string() }),
-                // 201: PostSchema,
+                // 201: z.object({ message: z.string() }),
+                201: PostSchema,
             },
+            // body: c.type<{ title: string; image: File | undefined }>(),
             body: z.object({
-                title: MultipartValue,
-                content: MultipartValue.optional(),
-                authorEmail: MultipartValue,
+                title: MultipartValueZod.or(z.string()),
+                slug: MultipartValueZod.or(z.string()),
+                content: MultipartValueZod.or(z.string()).optional(),
+                meta: MultipartValueZod.or(z.string()),
+                tags: MultipartValueZod.or(z.string().array()).optional(),
                 image: multipartFileSchema.optional(),
             }),
         },

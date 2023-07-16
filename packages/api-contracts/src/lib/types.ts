@@ -25,7 +25,7 @@ export const PostSchema = z.object({
     updatedAt: z.date(),
 });
 
-export const MultipartValue = z.object({
+export const MultipartValueZod = z.object({
     type: z.literal('field'),
     value: z.string(),
     fieldname: z.string(),
@@ -47,4 +47,4 @@ export const MultipartFileZod = z.object({
     fields: z.unknown(), // 暂时随意定义
 });
 
-export const multipartFileSchema = z.union([MultipartFileZod, MultipartValue]);
+export const multipartFileSchema = z.union([MultipartFileZod, MultipartValueZod]);
