@@ -61,10 +61,9 @@ export const contentContract = c.router(
             path: '/post',
             contentType: 'multipart/form-data',
             responses: {
-                // 201: z.object({ message: z.string() }),
                 201: PostSchema,
+                404: z.object({ message: z.string() }),
             },
-            // body: c.type<{ title: string; image: File | undefined }>(),
             body: z.object({
                 title: MultipartValueZod.or(z.string()),
                 slug: MultipartValueZod.or(z.string()),
@@ -85,12 +84,15 @@ export const contentContract = c.router(
         updatePost: {
             method: 'PATCH',
             path: `/posts/:id`,
-            responses: { 200: PostSchema },
+            responses: { 200: PostSchema, 404: z.object({ message: z.string() }) },
             body: z.object({
-                title: z.string().optional(),
-                content: z.string().optional(),
-                published: z.boolean().optional(),
-                description: z.string().optional(),
+                id: MultipartValueZod.or(ObjectIdSchema), // 没做检验
+                title: MultipartValueZod.or(z.string()),
+                slug: MultipartValueZod.or(z.string()),
+                content: MultipartValueZod.or(z.string()).optional(),
+                meta: MultipartValueZod.or(z.string()),
+                tags: MultipartValueZod.or(z.string().array()).optional(),
+                image: multipartFileSchema.optional(),
             }),
             summary: 'Update a post',
             // metadata: {

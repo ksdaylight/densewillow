@@ -65,26 +65,54 @@ export class MediaController {
     @TsRestHandler(c.createPost)
     async createPost() {
         return tsRestHandler(c.createPost, async (body) => {
-            console.log(body);
-            console.log('\n');
+            // console.log(body);
+            // console.log('\n');
             const data = body.body;
-
-            const post = await this.postService.createPost({
-                title: this.extractStringValue(data.title),
-                slug: this.extractStringValue(data.slug),
-                ...(data.content !== undefined
-                    ? { content: this.extractStringValue(data.content) }
-                    : {}),
-                meta: this.extractStringValue(data.meta),
-                ...(data.tags !== undefined
-                    ? { tags: { set: this.extractArrayValue(data.tags) } }
-                    : {}),
-            });
-
-            return { status: 201 as const, body: post };
+            try {
+                const post = await this.postService.createPost({
+                    title: this.extractStringValue(data.title),
+                    slug: this.extractStringValue(data.slug),
+                    ...(data.content !== undefined
+                        ? { content: this.extractStringValue(data.content) }
+                        : {}),
+                    meta: this.extractStringValue(data.meta),
+                    ...(data.tags !== undefined
+                        ? { tags: { set: this.extractArrayValue(data.tags) } }
+                        : {}),
+                });
+                return { status: 201 as const, body: post };
+            } catch (error) {
+                return { status: 400 as const, body: { message: 'internal error' } };
+            }
         });
     }
-    // TODO update
+
+    @TsRestHandler(c.updatePost)
+    async updatePost() {
+        return tsRestHandler(c.updatePost, async ({ body: reqData }) => {
+            try {
+                const post = await this.postService.updatePost({
+                    where: {
+                        id: this.extractStringValue(reqData.id),
+                    },
+                    data: {
+                        title: this.extractStringValue(reqData.title),
+                        slug: this.extractStringValue(reqData.slug),
+                        ...(reqData.content !== undefined
+                            ? { content: this.extractStringValue(reqData.content) }
+                            : {}),
+                        meta: this.extractStringValue(reqData.meta),
+                        ...(reqData.tags !== undefined
+                            ? { tags: { set: this.extractArrayValue(reqData.tags) } }
+                            : {}),
+                    },
+                });
+                return { status: 201 as const, body: post };
+            } catch (error) {
+                return { status: 400 as const, body: { message: 'internal error' } };
+            }
+        });
+    }
 
     @TsRestHandler(c.deletePost)
     async deletePost() {
