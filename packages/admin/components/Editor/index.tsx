@@ -7,6 +7,7 @@ import Underline from '@tiptap/extension-underline';
 import Placeholder from '@tiptap/extension-placeholder';
 import Link from '@tiptap/extension-link';
 import { MultipartFile } from '@fastify/multipart';
+import { isNil } from 'lodash';
 import TipTapImage from '@tiptap/extension-image';
 // import { apiClient, baseApiUrl } from 'packages/admin/app/admin/';
 
@@ -26,19 +27,20 @@ import SEOForm, { SeoResult } from './SeoForm';
 import ThumbnailSelector from './ThumbnailSelector';
 
 export interface FinalPost extends SeoResult {
+    id?: string;
     title: string;
     content: string;
-    thumbnail?: File;
+    thumbnail?: File | string;
 }
 interface Props {
-    initialValue?: FinalPost;
+    initialSlug?: string;
     btnTitle?: string;
     busy?: boolean;
     // onSubmit(post: FinalPost): void;
 }
 
 const Editor: FC<Props> = ({
-    initialValue,
+    initialSlug,
     btnTitle = 'Submit',
     busy = false,
     // onSubmit,
@@ -115,7 +117,12 @@ const Editor: FC<Props> = ({
     });
     const { mutate: createPostMutate } = apiQueryClient.content.createPost.useMutation({
         onSuccess: () => {
-            console.log('test success');
+            console.log('create success');
+        },
+    });
+    const { mutate: updatePostMutate } = apiQueryClient.content.updatePost.useMutation({
+        onSuccess: () => {
+            console.log('update success');
         },
     });
     const updateTitle: ChangeEventHandler<HTMLInputElement> = ({ target }) =>
@@ -133,16 +140,34 @@ const Editor: FC<Props> = ({
         if (!editor) return;
 
         console.log({ ...post, content: editor.getHTML() });
-
-        createPostMutate({
-            body: {
-                title: 'test',
-                image: post.thumbnail as any as MultipartFile,
-                slug: 'adadasdads',
-                meta: 'asdfadd',
-                tags: ['333', '111'],
-            },
-        });
+        if (!isNil(initialSlug)) {
+            if (!isNil(post.id)) {
+                updatePostMutate({
+                    body: {
+                        id: post.id,
+                        title: post.title,
+                        content: editor.getHTML(),
+                        image: post.thumbnail as any as MultipartFile,
+                        slug: post.slug,
+                        meta: post.meta,
+                        tags: post.tags.split(',').map((tag: string) => tag.trim()),
+                    },
+                });
+            } else {
+                console.log('id为空');
+            }
+        } else {
+            createPostMutate({
+                body: {
+                    title: post.title,
+                    content: editor.getHTML(),
+                    image: post.thumbnail as any as MultipartFile,
+                    slug: post.slug,
+                    meta: post.meta,
+                    tags: post.tags.split(',').map((tag: string) => tag.trim()),
+                },
+            });
+        }
     };
 
     useEffect(() => {
@@ -151,14 +176,40 @@ const Editor: FC<Props> = ({
         }
     }, [editor, selectionRange]);
     useEffect(() => {
-        if (initialValue) {
-            setPost({ ...initialValue });
-            editor?.commands.setContent(initialValue.content);
+        if (!isNil(initialSlug)) {
+            const { data: postData } = apiClient.content.getPostBySlug.useQuery(
+                ['getPostBySlug', initialSlug],
+                {
+                    params: { slug: initialSlug },
+                },
+            );
+            if (!isNil(postData)) {
+                const {
+                    id,
+                    meta: postMeta,
+                    title,
+                    content,
+                    thumbnail: image,
+                    tags: postTags,
+                } = postData.body;
 
-            const { meta, slug, tags } = initialValue;
-            setSeoInitialValue({ meta, slug, tags });
+                const initialValue = {
+                    id,
+                    title,
+                    content: content || '',
+                    tags: postTags.join(', '),
+                    thumbnail: !isNil(image) ? `${baseApiUrl}/images/${image.id}${image.ext}` : '',
+                    slug: initialSlug,
+                    meta: postMeta,
+                };
+                setPost({ ...initialValue });
+                editor?.commands.setContent(initialValue.content);
+
+                const { meta, slug, tags } = initialValue;
+                setSeoInitialValue({ meta, slug, tags });
+            }
         }
-    }, [initialValue, editor]);
+    }, [initialSlug, editor]);
 
     return (
         <>

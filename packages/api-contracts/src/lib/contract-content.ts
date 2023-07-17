@@ -18,6 +18,17 @@ export const contentContract = c.router(
                 404: z.null(),
             },
         },
+        getPostBySlug: {
+            method: 'GET',
+            path: `/post/slug/:slug`,
+            pathParams: z.object({
+                slug: z.string().min(1).max(50),
+            }),
+            responses: {
+                200: PostSchema,
+                404: z.null(),
+            },
+        },
         getPosts: {
             method: 'GET',
             path: '/posts',
@@ -73,17 +84,11 @@ export const contentContract = c.router(
                 image: multipartFileSchema.optional(),
             }),
         },
-        publishPost: {
-            method: 'PUT',
-            path: `/publish/:id`,
-            body: null,
-            responses: {
-                200: PostSchema,
-            },
-        },
+
         updatePost: {
             method: 'PATCH',
-            path: `/posts/:id`,
+            path: `/posts`,
+            contentType: 'multipart/form-data',
             responses: { 200: PostSchema, 404: z.object({ message: z.string() }) },
             body: z.object({
                 id: MultipartValueZod.or(ObjectIdSchema), // 没做检验

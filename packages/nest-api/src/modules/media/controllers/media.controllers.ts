@@ -47,17 +47,17 @@ export class MediaController {
             if (!check) {
                 return { status: 400, body: { message: '请上传5M以内的，图片格式的文件' } };
             }
-            const test = await this.mediaService.upload({
+            const imageEntity = await this.mediaService.upload({
                 file: Object.values(body)[0],
-                dir: 'test',
+                dir: 'post',
             });
             return {
                 status: 201 as const,
                 body: {
-                    id: test.id,
-                    file: test.file,
-                    ext: test.ext,
-                    date: test.createdAt,
+                    id: imageEntity.id,
+                    file: imageEntity.file,
+                    ext: imageEntity.ext,
+                    date: imageEntity.createdAt,
                 },
             };
         });
