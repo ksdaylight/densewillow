@@ -37,8 +37,8 @@ export class MediaController {
 
     @TsRestHandler(c.getPostBySlug)
     async getPostBySlug() {
-        return tsRestHandler(c.getPostBySlug, async ({ params: { slug } }) => {
-            const post = await this.postService.post({ slug: String(slug) });
+        return tsRestHandler(c.getPostBySlug, async ({ params }) => {
+            const post = await this.postService.post({ slug: String(params.slug) });
             if (post === null) {
                 return { status: 404 as const, body: null };
             }
@@ -101,12 +101,13 @@ export class MediaController {
     }
 
     // 封装文章数据创建或更新函数
-    async createOrUpdatePost(
-        data: any,
-        method: string,
-        thumbnailId?: string,
-        id?: string,
-    ): Promise<Post> {
+    async createOrUpdatePost(params: {
+        data: any;
+        method: string;
+        thumbnailId?: string;
+        id?: string;
+    }): Promise<Post> {
+        const { data, method, thumbnailId, id } = params;
         const postData = {
             title: this.extractStringValue(data.title),
             slug: this.extractStringValue(data.slug),
@@ -116,7 +117,9 @@ export class MediaController {
             meta: this.extractStringValue(data.meta),
             ...(!isNil(thumbnailId)
                 ? {
-                      connect: { id: thumbnailId },
+                      thumbnail: {
+                          connect: { id: thumbnailId },
+                      },
                   }
                 : {}),
             ...(data.tags !== undefined
@@ -130,7 +133,7 @@ export class MediaController {
         if (method === 'update') {
             return this.postService.updatePost({
                 where: {
-                    id: this.extractStringValue(id),
+                    id,
                 },
                 data: postData,
             });
@@ -138,28 +141,28 @@ export class MediaController {
         return undefined;
     }
 
-    // 使用封装的函数重构 createPost 和 updatePost
     @TsRestHandler(c.createPost)
     async createPost() {
-        return tsRestHandler(c.createPost, async (body) => {
-            const data = body.body;
+        return tsRestHandler(c.createPost, async ({ body }) => {
+            // const body = body.body;
             let imageId = null;
             try {
-                if (!isNil(data.image)) {
-                    if (!(await this.checkFile(data.image as MultipartFile))) {
+                if (!isNil(body.image)) {
+                    const realImage = body.image as MultipartFile; // band-aid fix 即使是
+                    if (!(await this.checkFile(realImage))) {
                         return { status: 400, body: { message: '请上传5M以内的，图片格式的文件' } };
                     }
-                    const imageEntity = await this.uploadFile(data.image as MultipartFile);
+                    const imageEntity = await this.uploadFile(realImage);
                     imageId = imageEntity.id;
                 }
-                const post = await this.createOrUpdatePost(
-                    data,
-                    !isNil(imageId) ? imageId : undefined,
-                    'create',
-                );
+                const post = await this.createOrUpdatePost({
+                    data: body,
+                    method: 'create',
+                    thumbnailId: !isNil(imageId) ? imageId : undefined,
+                });
                 return { status: 201 as const, body: post };
             } catch (error) {
-                return { status: 400 as const, body: { message: 'internal error' } };
+                return { status: 400 as const, body: { message: `${(error as Error).message}` } };
             }
         });
     }
@@ -170,21 +173,27 @@ export class MediaController {
             try {
                 let imageId = null;
                 if (!isNil(reqData.image)) {
-                    if (!(await this.checkFile(reqData.image as MultipartFile))) {
-                        return { status: 400, body: { message: '请上传5M以内的，图片格式的文件' } };
+                    // 更新如果只是url时的限制
+                    if ((reqData.image as any).type === 'file') {
+                        if (!(await this.checkFile(reqData.image as MultipartFile))) {
+                            return {
+                                status: 400,
+                                body: { message: '请上传5M以内的，图片格式的文件' },
+                            };
+                        }
+                        const imageEntity = await this.uploadFile(reqData.image as MultipartFile);
+                        imageId = imageEntity.id;
                     }
-                    const imageEntity = await this.uploadFile(reqData.image as MultipartFile);
-                    imageId = imageEntity.id;
                 }
-                const post = await this.createOrUpdatePost(
-                    reqData,
-                    !isNil(imageId) ? imageId : undefined,
-                    'update',
-                    this.extractStringValue(reqData.id),
-                );
+                const post = await this.createOrUpdatePost({
+                    data: reqData,
+                    thumbnailId: !isNil(imageId) ? imageId : undefined,
+                    method: 'update',
+                    id: this.extractStringValue(reqData.id),
+                });
                 return { status: 201 as const, body: post };
             } catch (error) {
-                return { status: 400 as const, body: { message: 'internal error' } };
+                return { status: 400 as const, body: { message: `${(error as Error).message}` } };
             }
         });
     }
@@ -198,10 +207,16 @@ export class MediaController {
     }
 
     extractStringValue(value: string | any): string {
-        if (typeof value === 'string') {
-            return value;
+        if (value === undefined) {
+            return undefined;
         }
-        return value.value as string;
+        let jsonString: string;
+        if (typeof value === 'string') {
+            jsonString = value;
+        } else {
+            jsonString = value.value as string;
+        }
+        return JSON.parse(jsonString);
     }
 
     extractArrayValue(value: string | any): string[] | undefined {

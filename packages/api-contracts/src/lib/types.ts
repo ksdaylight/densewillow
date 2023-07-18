@@ -25,26 +25,30 @@ export const PostSchema = z.object({
     updatedAt: z.date(),
 });
 
-export const MultipartValueZod = z.object({
-    type: z.literal('field'),
-    value: z.string(),
-    fieldname: z.string(),
-    mimetype: z.string(),
-    encoding: z.string(),
-    fieldnameTruncated: z.boolean(),
-    valueTruncated: z.boolean(),
-    fields: z.unknown(), // 暂时随意定义
-});
+export const MultipartValueZod = z
+    .object({
+        type: z.literal('field'),
+        value: z.string(),
+        fieldname: z.string(),
+        mimetype: z.string(),
+        encoding: z.string(),
+        fieldnameTruncated: z.boolean(),
+        valueTruncated: z.boolean(),
+        fields: z.unknown(), // 暂时随意定义
+    })
+    .passthrough();
 
-export const MultipartFileZod = z.object({
-    type: z.literal('file'),
-    toBuffer: z.function(),
-    file: z.unknown(), // 暂时随意定义
-    fieldname: z.string(),
-    filename: z.string(),
-    encoding: z.string(),
-    mimetype: z.string(),
-    fields: z.unknown(), // 暂时随意定义
-});
+export const MultipartFileZod = z
+    .object({
+        type: z.literal('file'),
+        toBuffer: z.function(),
+        file: z.unknown(), // 暂时随意定义
+        fieldname: z.string(),
+        filename: z.string(),
+        encoding: z.string(),
+        mimetype: z.string(),
+        fields: z.unknown(), // 暂时随意定义
+    })
+    .passthrough();
 
 export const multipartFileSchema = z.union([MultipartFileZod, MultipartValueZod]);

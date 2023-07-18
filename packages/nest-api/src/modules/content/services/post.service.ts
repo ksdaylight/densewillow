@@ -12,6 +12,9 @@ export class PostService {
     async post(postWhereUniqueInput: Prisma.PostWhereUniqueInput): Promise<Post | null> {
         return this.prisma.post.findUnique({
             where: postWhereUniqueInput,
+            include: {
+                thumbnail: true,
+            },
         });
     }
 

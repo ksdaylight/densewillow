@@ -15,6 +15,8 @@ import { useTsRestQueryClient } from '@ts-rest/react-query';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { useRouter } from 'next/navigation';
+
 import { apiClient, baseApiUrl } from '../../app/admin/page';
 
 import ActionButton from '../common/ActionButton';
@@ -58,6 +60,8 @@ const Editor: FC<Props> = ({
 
     const apiQueryClient = useTsRestQueryClient(apiClient);
     const queryClientOriginal = useQueryClient();
+
+    const router = useRouter();
 
     const [uploading, setUploading] = useState(false);
     const editor = useEditor({
@@ -118,6 +122,7 @@ const Editor: FC<Props> = ({
     const { mutate: createPostMutate } = apiQueryClient.content.createPost.useMutation({
         onSuccess: () => {
             console.log('create success');
+            router.push(`/admin/posts/update/${post.slug}`);
         },
     });
     const { mutate: updatePostMutate } = apiQueryClient.content.updatePost.useMutation({
@@ -132,14 +137,14 @@ const Editor: FC<Props> = ({
 
     const handleImageUpload = async (image: File) => {
         setUploading(true);
-        const formData = new FormData();
-        formData.append('image', image);
+        // const formData = new FormData();
+        // formData.append('image', image);
         mutate({ body: { image: image as any as MultipartFile } });
     };
     const handleSubmit = () => {
         if (!editor) return;
 
-        console.log({ ...post, content: editor.getHTML() });
+        // console.log({ ...post, content: editor.getHTML() });
         if (!isNil(initialSlug)) {
             if (!isNil(post.id)) {
                 updatePostMutate({
@@ -175,41 +180,41 @@ const Editor: FC<Props> = ({
             editor.commands.setTextSelection(selectionRange);
         }
     }, [editor, selectionRange]);
+
+    const { data: postData } = apiClient.content.getPostBySlug.useQuery(
+        ['getPostBySlug', initialSlug || ''],
+        {
+            params: { slug: initialSlug || '' },
+        },
+    );
+
     useEffect(() => {
-        if (!isNil(initialSlug)) {
-            const { data: postData } = apiClient.content.getPostBySlug.useQuery(
-                ['getPostBySlug', initialSlug],
-                {
-                    params: { slug: initialSlug },
-                },
-            );
-            if (!isNil(postData)) {
-                const {
-                    id,
-                    meta: postMeta,
-                    title,
-                    content,
-                    thumbnail: image,
-                    tags: postTags,
-                } = postData.body;
+        if (!isNil(initialSlug) && !isNil(postData)) {
+            const {
+                id,
+                meta: postMeta,
+                title,
+                content,
+                thumbnail: image,
+                tags: postTags,
+            } = postData.body;
 
-                const initialValue = {
-                    id,
-                    title,
-                    content: content || '',
-                    tags: postTags.join(', '),
-                    thumbnail: !isNil(image) ? `${baseApiUrl}/images/${image.id}${image.ext}` : '',
-                    slug: initialSlug,
-                    meta: postMeta,
-                };
-                setPost({ ...initialValue });
-                editor?.commands.setContent(initialValue.content);
+            const initialValue = {
+                id,
+                title,
+                content: content || '',
+                tags: postTags.join(', '),
+                thumbnail: !isNil(image) ? `${baseApiUrl}/images/${image.id}${image.ext}` : '',
+                slug: initialSlug,
+                meta: postMeta,
+            };
+            setPost({ ...initialValue });
+            editor?.commands.setContent(initialValue.content);
 
-                const { meta, slug, tags } = initialValue;
-                setSeoInitialValue({ meta, slug, tags });
-            }
+            const { meta, slug, tags } = initialValue;
+            setSeoInitialValue({ meta, slug, tags });
         }
-    }, [initialSlug, editor]);
+    }, [initialSlug, editor, postData]);
 
     return (
         <>

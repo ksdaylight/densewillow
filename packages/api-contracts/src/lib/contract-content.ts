@@ -1,7 +1,7 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
-import { MultipartValueZod, ObjectIdSchema, PostSchema, multipartFileSchema } from './types';
+import { MultipartValueZod, ObjectIdSchema, PostSchema } from './types';
 
 const c = initContract();
 
@@ -75,13 +75,21 @@ export const contentContract = c.router(
                 201: PostSchema,
                 404: z.object({ message: z.string() }),
             },
+            // body: c.type<{
+            //     title: string;
+            //     slug: string;
+            //     content: string;
+            //     meta: string;
+            //     tags: string[];
+            //     image: MultipartFile;
+            // }>(),
             body: z.object({
-                title: MultipartValueZod.or(z.string()),
+                title: z.unknown().or(z.string()),
                 slug: MultipartValueZod.or(z.string()),
                 content: MultipartValueZod.or(z.string()).optional(),
                 meta: MultipartValueZod.or(z.string()),
                 tags: MultipartValueZod.or(z.string().array()).optional(),
-                image: multipartFileSchema.optional(),
+                image: z.unknown().optional(),
             }),
         },
 
@@ -97,7 +105,7 @@ export const contentContract = c.router(
                 content: MultipartValueZod.or(z.string()).optional(),
                 meta: MultipartValueZod.or(z.string()),
                 tags: MultipartValueZod.or(z.string().array()).optional(),
-                image: multipartFileSchema.optional(),
+                image: z.unknown().optional(),
             }),
             summary: 'Update a post',
             // metadata: {

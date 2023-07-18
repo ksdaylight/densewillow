@@ -1,7 +1,5 @@
 import { extname, join } from 'path';
 
-import util from 'util';
-
 import { Injectable, NotFoundException, StreamableFile } from '@nestjs/common';
 import { FastifyReply } from 'fastify';
 import { createReadStream, existsSync, removeSync } from 'fs-extra';
@@ -29,7 +27,7 @@ export class MediaService {
     async upload({ file, dir }: CreateFileOptions) {
         if (isNil(file)) throw new NotFoundException('Have not any file to upload!');
         // console.log(JSON.stringify(file, null, 2));
-        console.log(util.inspect(file, { showHidden: false, depth: null }));
+        // console.log(util.inspect(file, { showHidden: false, depth: null }));
         const uploader: UploadFileType = {
             filename: file.filename,
             mimetype: file.mimetype,
