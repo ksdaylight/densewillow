@@ -9,9 +9,7 @@ const Providers = ({ children }: React.PropsWithChildren) => {
         new QueryClient({
             defaultOptions: {
                 queries: {
-                    staleTime: Infinity,
-                    refetchOnWindowFocus: false,
-                    refetchOnReconnect: false,
+                    staleTime: 5000,
                 },
             },
         }),

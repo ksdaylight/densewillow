@@ -13,10 +13,11 @@ async function getPost({ queryKey }: QueryFunctionContext) {
 }
 const Update = async ({ params }: { params: { slug: string } }) => {
     const queryClient = getQueryClient();
-    // queryClient.setDefaultOptions({
-    //     queries: {
-    //         enabled: false,
-    //     },
+    // queryClient.setQueryDefaults(['getPostBySlug', params.slug], {
+    //     // enabled: false,
+    //     staleTime: Infinity,
+    //     refetchOnWindowFocus: false,
+    //     refetchOnReconnect: false,
     // });
     await queryClient.prefetchQuery(['getPostBySlug', params.slug], getPost);
     const dehydratedState = dehydrate(queryClient);

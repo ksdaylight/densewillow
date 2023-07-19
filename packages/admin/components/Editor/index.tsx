@@ -101,12 +101,18 @@ const Editor: FC<Props> = ({
         editor?.chain().focus().setImage({ src: result.src, alt: result.altText }).run();
     };
 
-    const { data } = apiClient.images.getImages.useQuery(['getAllImage', '1'], {
-        query: {
-            skip: String(0),
-            take: String(10),
+    const { data } = apiClient.images.getImages.useQuery(
+        ['getAllImage', '1'],
+        {
+            query: {
+                skip: String(0),
+                take: String(10),
+            },
         },
-    });
+        {
+            staleTime: 60000,
+        },
+    );
 
     const images =
         data?.body?.images.map((image) => ({
@@ -186,10 +192,13 @@ const Editor: FC<Props> = ({
         {
             params: { slug: initialSlug || '' },
         },
+        {
+            enabled: false,
+        },
     );
 
     useEffect(() => {
-        if (!isNil(initialSlug) && !isNil(postData)) {
+        if (!isNil(initialSlug) && !isNil(postData) && !isNil(postData.body)) {
             const {
                 id,
                 meta: postMeta,
