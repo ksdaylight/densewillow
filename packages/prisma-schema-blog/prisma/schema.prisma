@@ -12,14 +12,46 @@ model User {
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
   email String  @unique
   name     String
-  role     String @default("user")
   provider String
   avatar   String?
   posts    Post[]   @relation("AuthorRelation")
-  likes    PostLike[] // 关联到新的PostLike模型
+  roleIDs        String[] @db.ObjectId
+  roles          Role[] @relation(fields: [roleIDs], references: [id])
+  permissionIDs  String[] @db.ObjectId
+  permissions    Permission[] @relation(fields: [permissionIDs], references: [id])
+  likedPostIDs   String[] @db.ObjectId
+  likedPosts     Post[]   @relation(fields: [likedPostIDs], references: [id], name: "LikeRelation")
+  accessTokens AccessToken[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+model Role {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  label         String?      // 可选字段
+  description   String?      // 可选字段
+  systemic     Boolean      @default(false)
+  permissionIDs  String[] @db.ObjectId
+  permissions    Permission[] @relation(fields: [permissionIDs], references: [id])
+  userIDs        String[] @db.ObjectId
+  users          User[] @relation(fields: [userIDs], references: [id])
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+model Permission {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  label         String?      // 可选字段
+  description   String?      // 可选字段
+  rule          Json         // 存储 rule
+  roleIDs    String[] @db.ObjectId
+  roles      Role[] @relation(fields: [roleIDs], references: [id])
+  userIDs    String[] @db.ObjectId
+  users      User[] @relation(fields: [userIDs], references: [id])
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
 
 model Post {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -28,25 +60,39 @@ model Post {
   content   String?
   meta      String
   tags      String[]
-  thumbnailId String? 
-  thumbnail   MediaEntity? @relation(fields: [thumbnailId], references: [id])
-  author    User?    @relation("AuthorRelation", fields: [authorId], references: [id])
-  authorId  String?
-  likes     PostLike[] // 关联到新的PostLike模型
+  thumbnailId String @db.ObjectId
+  thumbnail   MediaEntity @relation(fields: [thumbnailId], references: [id])
+  author    User    @relation(fields: [authorId], references: [id], name: "AuthorRelation")
+  authorId  String @db.ObjectId
+  likedByUserIDs String[] @db.ObjectId 
+  likedUsers   User[]   @relation(fields: [likedByUserIDs], references: [id], name: "LikeRelation")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-model PostLike { // 新的PostLike模型表示User和Post之间的“喜欢”的关系
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  post    Post   @relation(fields: [postId], references: [id])
-  postId  String
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String
-}
+
 model MediaEntity {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   file      String
   ext       String
   createdAt DateTime @default(now())
   post      Post[]
+}
+
+model RefreshToken {
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
+  value       String
+  expired_at  DateTime
+  createdAt   DateTime @default(now())
+  accessToken AccessToken @relation(fields: [accessTokenId], references: [id])
+  accessTokenId  String @unique @db.ObjectId 
+}
+
+model AccessToken {
+  id              String             @id @default(auto()) @map("_id") @db.ObjectId
+  value           String
+  expired_at      DateTime
+  createdAt       DateTime @default(now())
+  refreshToken    RefreshToken? 
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
 }
