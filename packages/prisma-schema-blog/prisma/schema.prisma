@@ -61,10 +61,10 @@ model Post {
   content   String?
   meta      String
   tags      String[]
-  thumbnailId String @db.ObjectId
-  thumbnail   MediaEntity @relation(fields: [thumbnailId], references: [id])
-  author    User    @relation(fields: [authorId], references: [id], name: "AuthorRelation")
-  authorId  String @db.ObjectId
+  thumbnailId String? @db.ObjectId
+  thumbnail   MediaEntity? @relation(fields: [thumbnailId], references: [id])
+  author    User?    @relation(fields: [authorId], references: [id], name: "AuthorRelation")
+  authorId  String? @db.ObjectId
   likedByUserIDs String[] @db.ObjectId 
   likedUsers   User[]   @relation(fields: [likedByUserIDs], references: [id], name: "LikeRelation")
   createdAt DateTime @default(now())

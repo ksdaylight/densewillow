@@ -4,12 +4,13 @@ import { isNil } from 'lodash';
 
 import { ExtractJwt } from 'passport-jwt';
 
-import { JwtAuthGuard } from '@/modules/user/guards';
-
-import { UserRepository } from '@/modules/user/repositories';
-import { TokenService } from '@/modules/user/services';
-
 import { RbacResolver } from '../rbac.resolver';
+
+import { PrismaService } from '../../core/providers';
+
+import { JwtAuthGuard } from '../../user/guards';
+
+import { TokenService } from '../../user/services';
 
 import { getCheckers, solveChecker } from './checker';
 
@@ -19,7 +20,7 @@ export class RbacGuard extends JwtAuthGuard {
         protected reflector: Reflector,
         protected resolver: RbacResolver,
         protected tokenService: TokenService,
-        protected userRepository: UserRepository,
+        protected prisma: PrismaService,
         protected moduleRef: ModuleRef,
     ) {
         super(reflector, tokenService);
@@ -36,18 +37,14 @@ export class RbacGuard extends JwtAuthGuard {
 
         request = context.switchToHttp().getRequest();
         if (isNil(request.user)) return false;
-        const user = await this.userRepository.findOneOrFail({
-            relations: ['roles.permissions', 'permissions'],
-            where: {
-                id: request.user.id,
-            },
-        });
+
         return solveChecker({
             resolver: this.resolver,
             checkers,
             moduleRef: this.moduleRef,
-            user,
+            userId: request.user.id,
             request,
+            prisma: this.prisma,
         });
     }
 }

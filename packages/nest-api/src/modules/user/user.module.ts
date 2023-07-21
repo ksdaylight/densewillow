@@ -7,19 +7,14 @@ import { Configure } from '../core/configure';
 import { EnvironmentType } from '../core/constants';
 
 import { ModuleBuilder } from '../core/decorators';
-import { DatabaseModule } from '../database/database.module';
-import { addEntities, addSubscribers } from '../database/helpers';
 
 import { RbacModule } from '../rbac/rbac.module';
 
 import { CoreModule } from '../core/core.module';
 
-import * as entities from './entities';
 import * as guards from './guards';
-import * as repositories from './repositories';
 import * as services from './services';
 import * as strategies from './strategies';
-import * as subscribers from './subscribers';
 import { UserConfig } from './types';
 
 const jwtModuleRegister = (configure: Configure) => async (): Promise<JwtModuleOptions> => {
@@ -43,19 +38,9 @@ const jwtModuleRegister = (configure: Configure) => async (): Promise<JwtModuleO
             useFactory: jwtModuleRegister(configure),
         }),
         CoreModule,
-        await addEntities(configure, Object.values(entities)),
         forwardRef(() => RbacModule),
-        DatabaseModule.forRepository(Object.values(repositories)),
     ],
-    providers: [
-        ...Object.values(services),
-        ...(await addSubscribers(configure, Object.values(subscribers))),
-        ...Object.values(strategies),
-        ...Object.values(guards),
-    ],
-    exports: [
-        ...Object.values(services),
-        DatabaseModule.forRepository(Object.values(repositories)),
-    ],
+    providers: [...Object.values(services), ...Object.values(strategies), ...Object.values(guards)],
+    exports: [...Object.values(services)],
 }))
 export class UserModule {}

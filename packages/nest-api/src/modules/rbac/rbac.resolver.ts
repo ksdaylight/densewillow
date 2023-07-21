@@ -1,20 +1,20 @@
 import { AbilityOptions, AbilityTuple, MongoQuery, SubjectType } from '@casl/ability';
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { isNil, omit, isArray } from 'lodash';
-import { DataSource, EntityManager, In, Not } from 'typeorm';
 
-import { deepMerge } from '@/modules/core/helpers';
+import { Prisma } from '@prisma/client/blog';
 
 import { Configure } from '../core/configure';
 
-import { UserEntity } from '../user/entities';
 import { getUserConfig } from '../user/helpers';
 import { UserConfig } from '../user/types';
 
+import { deepMerge } from '../core/helpers';
+
+import { PrismaService } from '../core/providers';
+
 import { SystemRoles } from './constants';
-import { PermissionEntity } from './entities/permission.entity';
-import { RoleEntity } from './entities/role.entity';
-import { PermissionType, Role } from './types';
+import { PermissionType, RoleType } from './types';
 
 const getSubject = <S extends SubjectType>(subject: S) => {
     if (typeof subject === 'string') return subject;
@@ -25,11 +25,11 @@ const getSubject = <S extends SubjectType>(subject: S) => {
 export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends MongoQuery = MongoQuery>
     implements OnApplicationBootstrap
 {
-    protected setuped = false;
+    protected isSetUp = false;
 
     protected options: AbilityOptions<A, C>;
 
-    protected _roles: Role[] = [
+    protected _roles: RoleType[] = [
         {
             name: SystemRoles.USER,
             label: '普通用户',
@@ -56,12 +56,12 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
         },
     ];
 
-    constructor(protected dataSource: DataSource, protected configure: Configure) {}
+    constructor(protected prisma: PrismaService, protected configure: Configure) {}
 
     setOptions(options: AbilityOptions<A, C>) {
-        if (!this.setuped) {
+        if (!this.isSetUp) {
             this.options = options;
-            this.setuped = true;
+            this.isSetUp = true;
         }
         return this;
     }
@@ -74,7 +74,7 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
         return this._permissions;
     }
 
-    addRoles(data: Role[]) {
+    addRoles(data: RoleType[]) {
         this._roles = [...this.roles, ...data];
     }
 
@@ -89,34 +89,25 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
     }
 
     async onApplicationBootstrap() {
-        if (
-            !(await this.configure.get<boolean>('app.server', true)) ||
-            !this.dataSource.isInitialized
-        )
-            return null;
-        const queryRunner = this.dataSource.createQueryRunner();
-
-        await queryRunner.connect();
-        await queryRunner.startTransaction();
+        if (!(await this.configure.get<boolean>('app.server', true))) return null;
 
         try {
-            await this.syncRoles(queryRunner.manager);
-            await this.syncPermissions(queryRunner.manager);
-            await queryRunner.commitTransaction();
+            await this.prisma.$transaction(async (tx) => {
+                await this.syncRoles(tx);
+                await this.syncPermissions(tx);
+            });
         } catch (err) {
             console.log(err);
-            await queryRunner.rollbackTransaction();
-        } finally {
-            await queryRunner.release();
         }
+
         return true;
     }
 
     /**
      * 同步角色
-     * @param manager
+     * @param prisma
      */
-    protected async syncRoles(manager: EntityManager) {
+    protected async syncRoles(prisma: Prisma.TransactionClient) {
         this._roles = this.roles.reduce((o, n) => {
             if (o.map(({ name }) => name).includes(n.name)) {
                 return o.map((e) => (e.name === n.name ? deepMerge(e, n, 'merge') : e));
@@ -124,52 +115,55 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
             return [...o, n];
         }, []);
         for (const item of this.roles) {
-            let role = await manager.findOne(RoleEntity, {
-                relations: ['permissions'],
+            let role = await prisma.role.findFirst({
                 where: {
                     name: item.name,
                 },
             });
 
             if (isNil(role)) {
-                role = await manager.save(
-                    manager.create(RoleEntity, {
+                role = await prisma.role.create({
+                    data: {
                         name: item.name,
                         label: item.label,
                         description: item.description,
-                        systemed: true,
-                    }),
-                    {
-                        reload: true,
+                        systemic: true,
                     },
-                );
+                });
             } else {
-                await manager.update(RoleEntity, role.id, { systemed: true });
+                await prisma.role.update({
+                    where: { id: role.id },
+                    data: {
+                        systemic: true,
+                    },
+                });
             }
         }
 
-        // 清理已经不存在的系统角色
-        const systemRoles = await manager.findBy(RoleEntity, { systemed: true });
-        const toDels: string[] = [];
+        const systemRoles = await prisma.role.findMany({ where: { systemic: true } });
+        const toDeles: string[] = [];
         for (const sRole of systemRoles) {
-            if (isNil(this.roles.find(({ name }) => sRole.name === name))) toDels.push(sRole.id);
+            if (isNil(this.roles.find(({ name }) => sRole.name === name))) toDeles.push(sRole.id);
         }
-        if (toDels.length > 0) await manager.delete(RoleEntity, toDels);
+        if (toDeles.length > 0) await prisma.role.deleteMany({ where: { id: { in: toDeles } } });
     }
 
     /**
      * 同步权限
-     * @param manager
+     * @param prisma
      */
-    protected async syncPermissions(manager: EntityManager) {
+    protected async syncPermissions(prisma: Prisma.TransactionClient) {
         const superAdmin = await getUserConfig<UserConfig['super']>('super');
-        const permissions = await manager.find(PermissionEntity);
-        const roles = await manager.find(RoleEntity, {
-            relations: ['permissions'],
-            where: { name: Not(SystemRoles.ADMIN) },
+        const permissions = await prisma.permission.findMany();
+        const roles = await prisma.role.findMany({
+            include: { permissions: true },
+            where: {
+                name: {
+                    not: SystemRoles.ADMIN,
+                },
+            },
         });
-        const roleRepo = manager.getRepository(RoleEntity);
-        // 合并并去除重复权限
+
         this._permissions = this.permissions.reduce(
             (o, n) => (o.map(({ name }) => name).includes(n.name) ? o : [...o, n]),
             [],
@@ -180,76 +174,97 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
 
         for (const item of this.permissions) {
             const permission = omit(item, ['conditions']);
-            const old = await manager.findOneBy(PermissionEntity, {
-                name: permission.name,
+            const old = await prisma.permission.findFirst({
+                where: {
+                    name: permission.name,
+                },
             });
             if (isNil(old)) {
-                await manager.save(manager.create(PermissionEntity, permission));
+                await prisma.permission.create({
+                    data: {
+                        name: permission.name,
+                        label: permission.label,
+                        description: permission.description,
+                        rule: permission.rule as any,
+                    },
+                });
             } else {
-                await manager.update(PermissionEntity, old.id, permission);
+                await prisma.permission.update({
+                    where: { id: old.id },
+                    data: {
+                        name: permission.name,
+                        label: permission.label,
+                        description: permission.description,
+                        rule: permission.rule as any,
+                    },
+                });
             }
         }
 
         // 删除冗余权限
-        const toDels: string[] = [];
+        const toDeles: string[] = [];
         for (const item of permissions) {
-            if (!names.includes(item.name) && item.name !== 'system-manage') toDels.push(item.id);
+            if (!names.includes(item.name) && item.name !== 'system-manage') toDeles.push(item.id);
         }
-        if (toDels.length > 0) await manager.delete(PermissionEntity, toDels);
+        if (toDeles.length > 0)
+            await prisma.permission.deleteMany({ where: { id: { in: toDeles } } });
 
         /** *********** 同步普通角色  ************ */
         for (const role of roles) {
-            const rolePermissions = await manager.findBy(PermissionEntity, {
-                name: In(this.roles.find(({ name }) => name === role.name).permissions),
+            const rolePermissions = await prisma.permission.findMany({
+                where: {
+                    name: {
+                        in: this.roles.find(({ name }) => name === role.name).permissions,
+                    },
+                },
             });
-            await roleRepo
-                .createQueryBuilder('role')
-                .relation(RoleEntity, 'permissions')
-                .of(role)
-                .addAndRemove(
-                    rolePermissions.map(({ id }) => id),
-                    (role.permissions ?? []).map(({ id }) => id),
-                );
+            await prisma.role.update({
+                where: { id: role.id },
+                data: {
+                    permissions: {
+                        set: rolePermissions.map(({ id }) => ({
+                            id,
+                        })),
+                    },
+                },
+            });
         }
 
         /** *********** 同步超级管理员角色  ************ */
 
         // 查询出超级管理员角色
-        const superRole = await manager.findOneOrFail(RoleEntity, {
-            relations: ['permissions'],
+        const superRole = await prisma.role.findFirst({
             where: { name: 'super-admin' },
         });
-
-        const systemManage = await manager.findOneOrFail(PermissionEntity, {
+        const systemManage = await prisma.permission.findFirst({
             where: { name: 'system-manage' },
         });
+
         // 添加系统管理权限到超级管理员角色
-        await roleRepo
-            .createQueryBuilder('role')
-            .relation(RoleEntity, 'permissions')
-            .of(superRole)
-            .addAndRemove(
-                [systemManage.id],
-                (superRole.permissions ?? []).map(({ id }) => id),
-            );
+        await prisma.role.update({
+            where: { id: superRole.id },
+            data: {
+                permissions: {
+                    set: [{ id: systemManage.id }],
+                },
+            },
+        });
 
         /** *********** 添加超级管理员角色到初始用户  ************ */
 
-        const superUser = await manager.findOne(UserEntity, {
-            relations: ['roles'],
-            where: { username: superAdmin.email },
+        const superUser = await prisma.user.findUnique({
+            where: { email: superAdmin.email },
         });
 
-        if (!isNil(superUser)) {
-            const userRepo = manager.getRepository(UserEntity);
-            await userRepo
-                .createQueryBuilder('user')
-                .relation(UserEntity, 'roles')
-                .of(superUser)
-                .addAndRemove(
-                    [superRole.id],
-                    ((superUser.roles ?? []) as RoleEntity[]).map(({ id }) => id),
-                );
+        if (superUser) {
+            await prisma.user.update({
+                where: { id: superUser.id },
+                data: {
+                    roles: {
+                        set: [{ id: superRole.id }],
+                    },
+                },
+            });
         }
     }
 }

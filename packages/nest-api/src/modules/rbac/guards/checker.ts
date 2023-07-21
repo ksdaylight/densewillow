@@ -5,56 +5,65 @@ import { ModuleRef, Reflector } from '@nestjs/core';
 import { FastifyRequest as Request } from 'fastify';
 import { isNil } from 'lodash';
 
-import { User } from '@prisma/client/blog';
-
 import { PERMISSION_CHECKERS } from '../constants';
 import { RbacResolver } from '../rbac.resolver';
 import { PermissionChecker } from '../types';
+import { PrismaService } from '../../core/providers';
 
 type CheckerParams = {
     resolver: RbacResolver;
     checkers: PermissionChecker[];
     moduleRef: ModuleRef;
-    user: ClassToPlain<User>;
+    prisma: PrismaService;
+    userId: string;
     request?: any;
 };
 
 export const getCheckers = (context: ExecutionContext, reflector: Reflector) => {
-    const crudCheckers = Reflect.getMetadata(
-        PERMISSION_CHECKERS,
-        context.getClass().prototype,
-        context.getHandler().name,
-    ) as PermissionChecker[];
     const defaultCheckers = reflector.getAllAndOverride<PermissionChecker[]>(PERMISSION_CHECKERS, [
         context.getHandler(),
         context.getClass(),
     ]);
 
-    return crudCheckers ?? defaultCheckers;
+    return defaultCheckers;
 };
 
 export const solveChecker = async ({
     checkers,
     moduleRef,
     resolver,
-    user,
+    userId,
     request,
+    prisma,
 }: CheckerParams) => {
-    let permissions = user.permissions as PermissionEntity[];
-    for (const role of user.roles) {
-        permissions = [...permissions, ...role.permissions];
-    }
+    const userDetail = await prisma.user.findUnique({
+        where: { id: userId },
+        include: {
+            permissions: true,
+            roles: {
+                include: {
+                    permissions: true,
+                },
+            },
+        },
+    });
+    let permissions = [
+        ...userDetail.permissions,
+        ...userDetail.roles.flatMap((role) => role.permissions),
+    ];
+
     permissions = permissions.reduce((o, n) => {
         if (o.find(({ name }) => name === n.name)) return o;
         return [...o, n];
     }, []);
     const ability = createMongoAbility(
         permissions.map(({ rule, name }) => {
+            const parsedRule = JSON.parse(rule as string);
             const resolve = resolver.permissions.find((p) => p.name === name);
             if (!isNil(resolve) && !isNil(resolve.rule.conditions)) {
-                return { ...rule, conditions: resolve.rule.conditions(user) };
+                return { ...parsedRule, conditions: resolve.rule.conditions(userDetail) };
             }
-            return rule;
+            return parsedRule;
         }),
     );
     const results = await Promise.all(
