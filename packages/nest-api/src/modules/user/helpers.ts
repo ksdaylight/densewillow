@@ -52,9 +52,12 @@ export const defaultUserConfig = (configure: Configure): UserConfig => {
                 3600 * 30,
             ),
         },
+        github: {
+            github_client_id: configure.env('USER_TOKEN_SECRET'),
+            github_client_secret: configure.env('GITHUB_CLIENT_SECRET'),
+        },
         super: {
-            username: configure.env('SUPER_ADMIN_USERNAME', 'admin'),
-            password: configure.env('SUPER_ADMIN_PASSWORD', '123456aA$'),
+            email: configure.env('SUPER_ADMIN_EMAIL', 'admin@admin.com'),
         },
     };
 };

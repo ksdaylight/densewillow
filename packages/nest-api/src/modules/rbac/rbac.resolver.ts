@@ -237,7 +237,7 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
 
         const superUser = await manager.findOne(UserEntity, {
             relations: ['roles'],
-            where: { username: superAdmin.username },
+            where: { username: superAdmin.email },
         });
 
         if (!isNil(superUser)) {

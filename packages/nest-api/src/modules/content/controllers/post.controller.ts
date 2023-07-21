@@ -18,7 +18,7 @@ import { MediaService } from '../../media/services';
 const c = nestControllerContract(apiBlog.content);
 
 @Controller()
-export class MediaController {
+export class ContentController {
     constructor(
         private readonly postService: PostService,
         private readonly mediaService: MediaService,
@@ -84,7 +84,7 @@ export class MediaController {
         });
     }
 
-    // 封装文件有效性检查函数
+    // 文件有效性检查函数
     async checkFile(file: MultipartFile): Promise<boolean> {
         return isValidFile(file, {
             mimetypes: ['image/png', 'image/gif', 'image/jpeg', 'image/webp', 'image/svg+xml'],
@@ -92,7 +92,7 @@ export class MediaController {
         });
     }
 
-    // 封装文件上传函数
+    // 文件上传函数
     async uploadFile(file: MultipartFile): Promise<MediaEntity> {
         return this.mediaService.upload({
             file,
@@ -100,7 +100,7 @@ export class MediaController {
         });
     }
 
-    // 封装文章数据创建或更新函数
+    // 文章数据创建或更新函数
     async createOrUpdatePost(params: {
         data: any;
         method: string;
@@ -206,6 +206,7 @@ export class MediaController {
         });
     }
 
+    // TODO 封装整合
     extractStringValue(value: string | any): string {
         if (value === undefined) {
             return undefined;

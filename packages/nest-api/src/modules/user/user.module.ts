@@ -12,6 +12,8 @@ import { addEntities, addSubscribers } from '../database/helpers';
 
 import { RbacModule } from '../rbac/rbac.module';
 
+import { CoreModule } from '../core/core.module';
+
 import * as entities from './entities';
 import * as guards from './guards';
 import * as repositories from './repositories';
@@ -40,6 +42,7 @@ const jwtModuleRegister = (configure: Configure) => async (): Promise<JwtModuleO
         JwtModule.registerAsync({
             useFactory: jwtModuleRegister(configure),
         }),
+        CoreModule,
         await addEntities(configure, Object.values(entities)),
         forwardRef(() => RbacModule),
         DatabaseModule.forRepository(Object.values(repositories)),

@@ -4,36 +4,52 @@ import dayjs from 'dayjs';
 import { FastifyReply as Response } from 'fastify';
 import jwt from 'jsonwebtoken';
 import { v4 as uuid } from 'uuid';
+import { AccessToken, RefreshToken, User } from '@prisma/client/blog';
 
-import { getTime } from '@/modules/core/helpers';
-
-import { AccessTokenEntity } from '../entities/access-token.entity';
-import { RefreshTokenEntity } from '../entities/refresh-token.entity';
-import { UserEntity } from '../entities/user.entity';
 import { getUserConfig } from '../helpers';
 import { JwtConfig, JwtPayload } from '../types';
+import { PrismaService } from '../../core/providers';
+import { getTime } from '../../core/helpers';
 
 /**
  * 令牌服务
  */
 @Injectable()
 export class TokenService {
-    constructor(protected readonly jwtService: JwtService) {}
+    constructor(
+        protected readonly jwtService: JwtService,
+
+        protected prisma: PrismaService,
+    ) {}
 
     /**
      * 根据accessToken刷新AccessToken与RefreshToken
      * @param accessToken
      * @param response
      */
-    async refreshToken(accessToken: AccessTokenEntity, response: Response) {
-        const { user, refreshToken } = accessToken;
+    async refreshToken(accessToken: AccessToken, response: Response) {
+        const { userId } = accessToken;
+        const refreshToken = await this.prisma.refreshToken.findFirst({
+            where: {
+                accessTokenId: accessToken.id,
+            },
+        });
         if (refreshToken) {
             const now = await getTime();
             // 判断refreshToken是否过期
             if (now.isAfter(refreshToken.expired_at)) return null;
             // 如果没过期则生成新的access_token和refresh_token
+            const user = await this.prisma.user.findUnique({
+                where: {
+                    id: userId,
+                },
+            });
             const token = await this.generateAccessToken(user, now);
-            await accessToken.remove();
+            await this.prisma.accessToken.delete({
+                where: {
+                    id: accessToken.id,
+                },
+            });
             response.header('token', token.accessToken.value);
             return token;
         }
@@ -46,7 +62,7 @@ export class TokenService {
      * @param user
      * @param now
      */
-    async generateAccessToken(user: UserEntity, now: dayjs.Dayjs) {
+    async generateAccessToken(user: User, now: dayjs.Dayjs) {
         const config = await getUserConfig<JwtConfig>('jwt');
         const accessTokenPayload: JwtPayload = {
             sub: user.id,
@@ -54,11 +70,19 @@ export class TokenService {
         };
 
         const signed = this.jwtService.sign(accessTokenPayload);
-        const accessToken = new AccessTokenEntity();
-        accessToken.value = signed;
-        accessToken.user = user;
-        accessToken.expired_at = now.add(config.token_expired, 'second').toDate();
-        await accessToken.save();
+
+        const accessToken = await this.prisma.accessToken.create({
+            data: {
+                value: signed,
+                expired_at: now.add(config.token_expired, 'second').toDate(),
+                user: {
+                    connect: {
+                        id: user.id,
+                    },
+                },
+            },
+        });
+
         const refreshToken = await this.generateRefreshToken(accessToken, await getTime());
         return { accessToken, refreshToken };
     }
@@ -68,19 +92,25 @@ export class TokenService {
      * @param accessToken
      * @param now
      */
-    async generateRefreshToken(
-        accessToken: AccessTokenEntity,
-        now: dayjs.Dayjs,
-    ): Promise<RefreshTokenEntity> {
+    async generateRefreshToken(accessToken: AccessToken, now: dayjs.Dayjs): Promise<RefreshToken> {
         const config = await getUserConfig<JwtConfig>('jwt');
         const refreshTokenPayload = {
             uuid: uuid(),
         };
-        const refreshToken = new RefreshTokenEntity();
-        refreshToken.value = jwt.sign(refreshTokenPayload, config.refresh_secret);
-        refreshToken.expired_at = now.add(config.refresh_token_expired, 'second').toDate();
-        refreshToken.accessToken = accessToken;
-        await refreshToken.save();
+        const refreshTokenValue = jwt.sign(refreshTokenPayload, config.refresh_secret);
+        const expiredAt = now.add(config.refresh_token_expired, 'second').toDate();
+
+        const refreshToken = await this.prisma.refreshToken.create({
+            data: {
+                value: refreshTokenValue,
+                expired_at: expiredAt,
+                accessToken: {
+                    connect: {
+                        id: accessToken.id,
+                    },
+                },
+            },
+        });
         return refreshToken;
     }
 
@@ -89,9 +119,9 @@ export class TokenService {
      * @param value
      */
     async checkAccessToken(value: string) {
-        return AccessTokenEntity.findOne({
+        return this.prisma.accessToken.findFirst({
             where: { value },
-            relations: ['user', 'refreshToken'],
+            include: { refreshToken: true, user: true },
         });
     }
 
@@ -100,10 +130,13 @@ export class TokenService {
      * @param value
      */
     async removeAccessToken(value: string) {
-        const accessToken = await AccessTokenEntity.findOne({
+        const accessToken = await this.prisma.accessToken.findFirst({
             where: { value },
         });
-        if (accessToken) await accessToken.remove();
+        if (accessToken)
+            await this.prisma.accessToken.delete({
+                where: { id: accessToken.id },
+            });
     }
 
     /**
@@ -111,13 +144,20 @@ export class TokenService {
      * @param value
      */
     async removeRefreshToken(value: string) {
-        const refreshToken = await RefreshTokenEntity.findOne({
+        const refreshToken = await this.prisma.refreshToken.findFirst({
             where: { value },
-            relations: ['accessToken'],
+            include: { accessToken: true },
         });
         if (refreshToken) {
-            if (refreshToken.accessToken) await refreshToken.accessToken.remove();
-            await refreshToken.remove();
+            if (refreshToken.accessToken) {
+                await this.prisma.accessToken.delete({
+                    where: { id: refreshToken.accessToken.id },
+                });
+            }
+
+            await this.prisma.refreshToken.delete({
+                where: { id: refreshToken.id },
+            });
         }
     }
 
@@ -125,10 +165,15 @@ export class TokenService {
      * 验证Token是否正确,如果正确则返回所属用户对象
      * @param token
      */
-    async verifyAccessToken(token: AccessTokenEntity) {
+    async verifyAccessToken(token: AccessToken) {
         const config = await getUserConfig<JwtConfig>('jwt');
         const result = jwt.verify(token.value, config.secret);
         if (!result) return false;
-        return token.user;
+
+        return this.prisma.user.findUnique({
+            where: {
+                id: token.userId,
+            },
+        });
     }
 }

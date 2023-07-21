@@ -4,10 +4,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { isNil } from 'lodash';
 import { ExtractJwt } from 'passport-jwt';
 
-import { ALLOW_GUEST } from '@/modules/restful/constants';
-
 import { TokenService } from '../services/token.service';
-
+import { ALLOW_GUEST } from '../constants';
 /**
  * 用户JWT认证守卫
  * 检测用户是否已登录
@@ -85,11 +83,11 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         return user;
     }
 
-    protected getRequest(context: ExecutionContext) {
+    getRequest(context: ExecutionContext) {
         return context.switchToHttp().getRequest();
     }
 
-    protected getResponse(context: ExecutionContext) {
+    getResponse(context: ExecutionContext) {
         return context.switchToHttp().getResponse();
     }
 }

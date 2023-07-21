@@ -13,6 +13,7 @@ model User {
   email String  @unique
   name     String
   provider String
+  activated Boolean  @default(false)
   avatar   String?
   posts    Post[]   @relation("AuthorRelation")
   roleIDs        String[] @db.ObjectId
