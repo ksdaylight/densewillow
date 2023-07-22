@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-github2';
-import { instanceToPlain } from 'class-transformer';
+
+import { isNil } from 'lodash';
 
 import { GitHubProfile } from '../types';
 import { UserService } from '../services';
@@ -11,11 +12,11 @@ import { UserService } from '../services';
  */
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy) {
-    constructor(private readonly userService: UserService) {
+    constructor(protected readonly userService: UserService) {
         super({
             clientID: process.env.GITHUB_CLIENT_ID,
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
-            callbackURL: 'http://localhost:3000/auth/github/callback',
+            callbackURL: 'http://192.168.80.6/api/auth/github/callback', // TODO 更改，以及网络情况验证
             scope: ['user:email'],
         });
     }
@@ -26,13 +27,18 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
         profile: GitHubProfile,
         done: (error: null, data: any) => void,
     ) {
-        const user = await this.userService.create({
+        // profile.accessToken = accessToken;
+        let user = await this.userService.detail({
             email: profile.emails[0].value,
-            name: profile.displayName,
-            provider: 'github',
-            activated: true,
         });
-
-        done(null, instanceToPlain(user));
+        if (isNil(user)) {
+            user = await this.userService.create({
+                email: profile.emails[0].value,
+                name: profile.displayName,
+                provider: 'github',
+                activated: true,
+            });
+        }
+        done(null, user);
     }
 }

@@ -5,6 +5,8 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 
 import { isNil } from 'lodash';
 
+import { FastifyInstance } from 'fastify';
+
 import { Configure } from './configure';
 
 import { ConfigStorageOption, CreateOptions, CreatorData } from './types';
@@ -65,8 +67,18 @@ export class App {
             if (this._app.getHttpAdapter() instanceof FastifyAdapter) {
                 await this._app.init();
             }
-            // const { globalPrefix } = await this._configure.get<AppConfig>('app');
-            // if (!isNil(globalPrefix)) this._app.setGlobalPrefix(globalPrefix);
+            const fastifyInstance = this._app.getHttpAdapter().getInstance();
+
+            (fastifyInstance as FastifyInstance).addHook('onRequest', (request, reply, done) => {
+                (reply as any).setHeader = function (key: any, value: any) {
+                    return this.raw.setHeader(key, value);
+                };
+                (reply as any).end = function () {
+                    this.raw.end();
+                };
+                (reply as any).res = reply;
+                done();
+            }); // for fastify + nestJs passport
         } catch (error) {
             console.log('Create app failed! \n');
             console.log(error);

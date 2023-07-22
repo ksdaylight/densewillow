@@ -15,6 +15,7 @@ import { CoreModule } from '../core/core.module';
 import * as guards from './guards';
 import * as services from './services';
 import * as strategies from './strategies';
+import * as controllers from './controllers';
 import { UserConfig } from './types';
 
 const jwtModuleRegister = (configure: Configure) => async (): Promise<JwtModuleOptions> => {
@@ -41,6 +42,7 @@ const jwtModuleRegister = (configure: Configure) => async (): Promise<JwtModuleO
         forwardRef(() => RbacModule),
     ],
     providers: [...Object.values(services), ...Object.values(strategies), ...Object.values(guards)],
+    controllers: Object.values(controllers),
     exports: [...Object.values(services)],
 }))
 export class UserModule {}
