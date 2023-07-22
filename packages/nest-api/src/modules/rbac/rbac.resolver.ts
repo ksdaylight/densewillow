@@ -201,7 +201,6 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
             }
         }
 
-        // 删除冗余权限
         const toDeles: string[] = [];
         for (const item of permissions) {
             if (!names.includes(item.name) && item.name !== 'system-manage') toDeles.push(item.id);
@@ -209,7 +208,6 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
         if (toDeles.length > 0)
             await prisma.permission.deleteMany({ where: { id: { in: toDeles } } });
 
-        /** *********** 同步普通角色  ************ */
         for (const role of roles) {
             const rolePermissions = await prisma.permission.findMany({
                 where: {
@@ -230,17 +228,13 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
             });
         }
 
-        /** *********** 同步超级管理员角色  ************ */
-
-        // 查询出超级管理员角色
         const superRole = await prisma.role.findFirst({
-            where: { name: 'super-admin' },
+            where: { name: SystemRoles.ADMIN },
         });
         const systemManage = await prisma.permission.findFirst({
             where: { name: 'system-manage' },
         });
 
-        // 添加系统管理权限到超级管理员角色
         await prisma.role.update({
             where: { id: superRole.id },
             data: {
@@ -249,8 +243,6 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
                 },
             },
         });
-
-        /** *********** 添加超级管理员角色到初始用户  ************ */
 
         const superUser = await prisma.user.findUnique({
             where: { email: superAdmin.email },

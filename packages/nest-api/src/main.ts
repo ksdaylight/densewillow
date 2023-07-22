@@ -7,6 +7,7 @@ import { MediaModule } from './modules/media/media.modules';
 import { ContentModule } from './modules/content/content.module';
 import { UserModule } from './modules/user/user.module';
 import { RbacModule } from './modules/rbac/rbac.module';
+import { RbacGuard } from './modules/rbac/guards';
 
 const creator = createApp({
     configs,
@@ -25,6 +26,7 @@ const creator = createApp({
     globals: {
         pipe: null,
         interceptor: null,
+        guard: RbacGuard,
     },
 });
 bootApp(creator, ({ configure }) => async () => {

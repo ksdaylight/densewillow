@@ -64,26 +64,12 @@ export class MediaController {
     }
 
     @TsRestHandler(c.loadImage)
-    async loadImage(
-        // @Param('id', new ParseObjectIdPipe()) id: string,
-        // @Param('ext', new NotEmptyPipe({ maxLength: 10 })) ext: string,
-        @Res({ passthrough: true }) res: FastifyReply,
-    ) {
+    async loadImage(@Res({ passthrough: true }) res: FastifyReply) {
         return tsRestHandler(c.loadImage, async ({ params }: RequestShapes['loadImage']) => {
-            // console.log(params.id);
-            // console.log(`${params.ext} \n`);
-
             return {
                 status: 200,
                 body: await this.mediaService.loadImage({ id: params.id }, res, `.${params.ext}`),
             };
-        });
-    }
-
-    @TsRestHandler(c.testGet)
-    async getTest() {
-        return tsRestHandler(c.testGet, async () => {
-            return { status: 200, body: 'test success' };
         });
     }
 }

@@ -5,7 +5,10 @@ import { AuthGuard } from '@nestjs/passport';
 import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
 import { apiBlog } from 'api-contracts';
 
+import { User } from '@prisma/client/blog';
+
 import { AuthService } from '../services';
+import { Guest, ReqUser } from '../decorators';
 
 /**
  * 账户中心控制器
@@ -17,6 +20,7 @@ export class AuthController {
     constructor(protected readonly authService: AuthService) {}
 
     @TsRestHandler(c.githubAuth)
+    @Guest()
     @UseGuards(AuthGuard('github'))
     async githubAuth(@Request() req: any) {
         return tsRestHandler(c.githubAuth, async (body) => {
@@ -32,28 +36,16 @@ export class AuthController {
     }
 
     @TsRestHandler(c.githubAuthCallback)
+    @Guest()
     @UseGuards(AuthGuard('github'))
-    githubAuthCallback(@Request() req: any) {
-        return tsRestHandler(c.githubAuthCallback, async (body) => {
-            const message = {
-                req: util.inspect(req, { showHidden: false, depth: 3 }),
-                body: util.inspect(body, { showHidden: false, depth: 3 }),
-            };
+    githubAuthCallback(@Request() req: any, @ReqUser() user: ClassToPlain<User>) {
+        return tsRestHandler(c.githubAuthCallback, async () => {
             return {
                 status: 200 as const,
-                body: { message: util.inspect(message, { showHidden: false, depth: 3 }) },
+                body: { token: await this.authService.createToken(user.id) },
             };
         });
-
-        // 在这里，你可以创建一个 JWT 并将其发送给用户，或者重定向用户到一个包含 JWT 的 URL
     }
-
-    // @Post('login')
-    // @Guest()
-    // @UseGuards(LocalAuthGuard)
-    // async login(@ReqUser() user: ClassToPlain<UserEntity>, @Body() _data: CredentialDto) {
-    //     return { token: await this.authService.createToken(user.id) };
-    // }
 
     /**
      * 注销登录

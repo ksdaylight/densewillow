@@ -3,10 +3,11 @@ import { ModuleRef } from '@nestjs/core';
 import { Permission, Role, User } from '@prisma/client/blog';
 import { FastifyRequest as Request } from 'fastify';
 
-export type RoleType = Pick<ClassToPlain<Role>, 'name' | 'label' | 'description'> & {
-    permissions: string[];
-};
-
+export type RoleType = {
+    name: ClassToPlain<Role>['name'];
+} & Partial<Pick<ClassToPlain<Role>, 'label' | 'description'>> & {
+        permissions: string[];
+    };
 export type PermissionType<A extends AbilityTuple, C extends MongoQuery> = Pick<
     ClassToPlain<Permission>,
     'name'

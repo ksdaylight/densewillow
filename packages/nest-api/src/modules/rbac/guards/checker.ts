@@ -58,18 +58,17 @@ export const solveChecker = async ({
     }, []);
     const ability = createMongoAbility(
         permissions.map(({ rule, name }) => {
-            const parsedRule = JSON.parse(rule as string);
             const resolve = resolver.permissions.find((p) => p.name === name);
             if (!isNil(resolve) && !isNil(resolve.rule.conditions)) {
-                return { ...parsedRule, conditions: resolve.rule.conditions(userDetail) };
+                return { ...(rule as any), conditions: resolve.rule.conditions(userDetail) };
             }
-            return parsedRule;
+            return rule;
         }),
     );
     const results = await Promise.all(
         checkers.map(async (checker) => execChecker(checker, ability, moduleRef, request)),
     );
-    console.dir(results);
+    // console.dir(results);
     return results.every((r) => !!r);
 };
 

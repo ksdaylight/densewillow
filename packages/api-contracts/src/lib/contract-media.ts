@@ -88,14 +88,6 @@ export const mediaContract = c.router(
             },
             body: null,
         },
-        testGet: {
-            method: 'GET',
-            path: `/test`,
-            responses: {
-                200: z.string(),
-                404: z.null(),
-            },
-        },
     },
     {
         baseHeaders: z.object({

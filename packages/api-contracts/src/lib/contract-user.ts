@@ -18,7 +18,7 @@ export const userContract = c.router(
             method: 'GET',
             path: `/github/callback`,
             responses: {
-                201: z.object({ message: z.string() }),
+                201: z.object({ token: z.string() }),
                 404: z.object({ message: z.string() }),
             },
             // body: c.type<{

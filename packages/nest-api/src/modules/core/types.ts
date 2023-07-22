@@ -5,6 +5,7 @@ import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import dayjs from 'dayjs';
 
 import { Configure } from './configure';
+import { IAuthGuard } from '@nestjs/passport';
 /** ******************** 应用配置  ********************* */
 
 /**
@@ -50,6 +51,8 @@ export interface CreateOptions {
         interceptor?: Type<any> | null;
 
         filter?: Type<any> | null;
+
+        guard?: Type<IAuthGuard>;
     };
 
     configure?: ConfigStorageOption;

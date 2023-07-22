@@ -14,8 +14,14 @@ import { PostService } from '../services';
 
 import { isValidFile } from '../../media/constraints';
 import { MediaService } from '../../media/services';
+import { PermissionChecker } from '../../rbac/types';
+import { PermissionAction } from '../../rbac/constants';
+import { Permission } from '../../rbac/decorators';
+import { getTime } from '../../core/helpers';
 // import { PostService } from '../services/post.service';
 const c = nestControllerContract(apiBlog.content);
+
+const testChecker: PermissionChecker = async (ab) => ab.can(PermissionAction.MANAGE, 'all');
 
 @Controller()
 export class ContentController {
@@ -23,6 +29,14 @@ export class ContentController {
         private readonly postService: PostService,
         private readonly mediaService: MediaService,
     ) {}
+
+    @Permission(testChecker)
+    @TsRestHandler(c.testGet)
+    async getTest() {
+        return tsRestHandler(c.testGet, async () => {
+            return { status: 200, body: `${await getTime()}test success` };
+        });
+    }
 
     @TsRestHandler(c.getPostById)
     async getPostById() {

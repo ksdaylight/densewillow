@@ -17,7 +17,6 @@ export class UserService implements OnModuleInit {
     constructor(protected configure: Configure, protected prisma: PrismaService) {}
 
     async onModuleInit() {
-        // TODO 检查  添加角色 后面再同步
         if (!(await this.configure.get<boolean>('app.server', true))) return null;
         const adminConf = await getUserConfig<UserConfig['super']>('super');
         const admin = await this.detail({ email: adminConf.email });
@@ -51,6 +50,18 @@ export class UserService implements OnModuleInit {
         });
         await this.syncActivated(await this.detail({ id: user.id }));
         return this.detail({ id: user.id });
+    }
+
+    async updateUser(params: {
+        where: Prisma.UserWhereUniqueInput;
+        data: Prisma.UserUpdateInput;
+    }): Promise<User> {
+        const { data, where } = params;
+        await this.syncActivated(await this.detail(where));
+        return this.prisma.user.update({
+            data,
+            where,
+        });
     }
 
     async detail(userWhereUniqueInput: Prisma.UserWhereUniqueInput): Promise<User | null> {
@@ -127,17 +138,6 @@ export class UserService implements OnModuleInit {
                 },
             });
         }
-    }
-
-    async updateUser(params: {
-        where: Prisma.UserWhereUniqueInput;
-        data: Prisma.UserUpdateInput;
-    }): Promise<User> {
-        const { data, where } = params;
-        return this.prisma.user.update({
-            data,
-            where,
-        });
     }
 
     async users(params: {
