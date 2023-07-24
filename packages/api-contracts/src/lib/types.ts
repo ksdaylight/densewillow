@@ -20,6 +20,7 @@ export const PostSchema = z.object({
     tags: z.array(z.string()),
     thumbnailId: z.string().nullable(),
     thumbnail: MediaSchema.nullable(),
+    likedByUserIDs: z.array(z.string()),
     authorId: z.string(),
     createdAt: z.date(),
     updatedAt: z.date(),

@@ -9,7 +9,7 @@ export const baseApiUrl = 'http://127.0.0.1:3100/api'; // TODO BaseUrl 替换策
 export const apiClient = initQueryClient(apiBlog, {
     baseUrl: 'http://127.0.0.1:3100',
     baseHeaders: {
-        'x-api-key': 'key',
+        Authorization: 'key',
     },
 });
 

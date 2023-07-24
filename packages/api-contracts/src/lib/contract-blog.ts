@@ -18,7 +18,7 @@ export const apiBlog = c.router(
     },
     {
         baseHeaders: z.object({
-            'x-api-key': z.string().optional(),
+            Authorization: z.string().optional(),
         }),
         pathPrefix: `/${process.env['APP_PREFIX']}`,
     },
