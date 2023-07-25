@@ -11,6 +11,7 @@ import { FastifyReply } from 'fastify';
 
 import { MediaService } from '../services';
 import { isValidFile } from '../constraints';
+import { Guest } from '../../user/decorators';
 
 const c = nestControllerContract(apiBlog.images);
 type RequestShapes = NestRequestShapes<typeof c>;
@@ -19,6 +20,7 @@ type RequestShapes = NestRequestShapes<typeof c>;
 export class MediaController {
     constructor(private readonly mediaService: MediaService) {}
 
+    @Guest()
     @TsRestHandler(c.getImages)
     async getImage() {
         return tsRestHandler(c.getImages, async ({ query: { take, skip } }) => {
@@ -63,6 +65,7 @@ export class MediaController {
         });
     }
 
+    @Guest()
     @TsRestHandler(c.loadImage)
     async loadImage(@Res({ passthrough: true }) res: FastifyReply) {
         return tsRestHandler(c.loadImage, async ({ params }: RequestShapes['loadImage']) => {

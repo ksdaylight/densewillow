@@ -1,14 +1,31 @@
+'use client';
+
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState } from 'react';
 import { IconType } from 'react-icons';
 import { RiMenuFoldFill, RiMenuUnfoldFill } from 'react-icons/ri';
+import {
+    AiOutlineDashboard,
+    AiOutlineContainer,
+    AiOutlineTeam,
+    AiOutlineMail,
+    AiOutlineContacts,
+} from 'react-icons/ai';
 
 import Logo from '../Logo';
 
 interface Props {
-    navItems: { label: string; icon: IconType; href: string }[];
+    navItems: { label: string; icon: string; href: string }[];
 }
+type IconNames = 'dashboard' | 'container' | 'team' | 'mail' | 'contacts';
 
+const ICONS: Record<IconNames, IconType> = {
+    dashboard: AiOutlineDashboard,
+    container: AiOutlineContainer,
+    team: AiOutlineTeam,
+    mail: AiOutlineMail,
+    contacts: AiOutlineContacts,
+};
 const NAV_OPEN_WIDTH = 'w-60';
 const NAV_CLOSE_WIDTH = 'w-12';
 const NAV_VISIBILITY = 'nav-visibility';
@@ -58,28 +75,27 @@ const AdminNav: FC<Props> = ({ navItems }): JSX.Element => {
         >
             <div>
                 {/* logo */}
-                <Link href="/admin">
-                    <a className="flex items-center space-x-2 p-3 mb-10">
-                        <Logo className="fill-highlight-light dark:fill-highlight-dark w-5 h-5" />
-                        {visible && (
-                            <span className="text-highlight-light dark:text-highlight-dark text-xl font-semibold leading-none">
-                                Admin
-                            </span>
-                        )}
-                    </a>
+                <Link href="/admin" className="flex items-center space-x-2 p-3 mb-10">
+                    <Logo className="fill-highlight-light dark:fill-highlight-dark w-5 h-5" />
+                    {visible && (
+                        <span className="text-highlight-light dark:text-highlight-dark text-xl font-semibold leading-none">
+                            Admin
+                        </span>
+                    )}
                 </Link>
 
                 {/* nav items */}
                 <div className="space-y-6">
                     {navItems.map((item) => {
+                        const Icon = ICONS[item.icon as IconNames];
                         return (
-                            <Link key={item.href} href={item.href}>
-                                <a className="flex items-center text-highlight-light dark:text-highlight-dark text-xl p-3 hover:scale-[0.98] transition">
-                                    <item.icon size={24} />
-                                    {visible && (
-                                        <span className="ml-2 leading-none">{item.label}</span>
-                                    )}
-                                </a>
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className="flex items-center text-highlight-light dark:text-highlight-dark text-xl p-3 hover:scale-[0.98] transition"
+                            >
+                                <Icon size={24} />
+                                {visible && <span className="ml-2 leading-none">{item.label}</span>}
                             </Link>
                         );
                     })}

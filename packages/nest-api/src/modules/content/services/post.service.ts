@@ -37,7 +37,7 @@ export class PostService {
                 thumbnail: true,
             },
         });
-        const total = await this.prisma.mediaEntity.count({
+        const total = await this.prisma.post.count({
             where: where || undefined,
         });
         return { posts, total };

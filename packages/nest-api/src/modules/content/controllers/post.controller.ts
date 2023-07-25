@@ -18,6 +18,7 @@ import { PermissionChecker } from '../../rbac/types';
 import { PermissionAction } from '../../rbac/constants';
 import { Permission } from '../../rbac/decorators';
 import { getTime } from '../../core/helpers';
+import { Guest } from '../../user/decorators';
 // import { PostService } from '../services/post.service';
 const c = nestControllerContract(apiBlog.content);
 
@@ -38,6 +39,7 @@ export class ContentController {
         });
     }
 
+    @Guest()
     @TsRestHandler(c.getPostById)
     async getPostById() {
         return tsRestHandler(c.getPostById, async ({ params: { id } }) => {
@@ -49,6 +51,7 @@ export class ContentController {
         });
     }
 
+    @Guest()
     @TsRestHandler(c.getPostBySlug)
     async getPostBySlug() {
         return tsRestHandler(c.getPostBySlug, async ({ params }) => {
@@ -59,7 +62,7 @@ export class ContentController {
             return { status: 200 as const, body: post };
         });
     }
-
+    @Guest()
     @TsRestHandler(c.getPosts)
     async getPosts() {
         return tsRestHandler(c.getPosts, async ({ query: { take, skip } }) => {

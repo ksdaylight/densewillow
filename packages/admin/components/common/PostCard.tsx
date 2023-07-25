@@ -36,21 +36,19 @@ const PostCard: FC<Props> = ({ controls = false, post, busy, onDeleteClick }): J
             {/* Post Info */}
             <div className="p-2 flex-1 flex flex-col">
                 <Link href={`/${slug}`}>
-                    <a>
-                        <div className="flex items-center justify-between text-sm text-primary-dark dark:text-primary">
-                            <div className="flex items-center space-x-1">
-                                {tags.map((t, index) => (
-                                    <span key={t + index.toString()}>#{t}</span>
-                                ))}
-                            </div>
-                            <span>{dateformat(createdAt, 'd-mmm-yyyy')}</span>
+                    <div className="flex items-center justify-between text-sm text-primary-dark dark:text-primary">
+                        <div className="flex items-center space-x-1">
+                            {tags.map((t, index) => (
+                                <span key={t + index.toString()}>#{t}</span>
+                            ))}
                         </div>
+                        <span>{dateformat(createdAt, 'd-mmm-yyyy')}</span>
+                    </div>
 
-                        <h1 className="font-semibold text-primary-dark dark:text-primary">
-                            {trimText(title, 50)}
-                        </h1>
-                        <p className="text-secondary-dark">{trimText(meta, 70)}</p>
-                    </a>
+                    <h1 className="font-semibold text-primary-dark dark:text-primary">
+                        {trimText(title, 50)}
+                    </h1>
+                    <p className="text-secondary-dark">{trimText(meta, 70)}</p>
                 </Link>
 
                 {controls && (
@@ -59,8 +57,11 @@ const PostCard: FC<Props> = ({ controls = false, post, busy, onDeleteClick }): J
                             <span className="animate-pulse">Removing</span>
                         ) : (
                             <>
-                                <Link href={`/admin/posts/update/${slug}`}>
-                                    <a className="hover:underline">Edit</a>
+                                <Link
+                                    href={`/admin/posts/update/${slug}`}
+                                    className="hover:underline"
+                                >
+                                    Edit
                                 </Link>
                                 <button onClick={onDeleteClick} className="hover:underline">
                                     Delete
