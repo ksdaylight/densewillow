@@ -2,7 +2,7 @@
 
 import { FC, useEffect, useState, useCallback } from 'react';
 
-import { formatPosts } from '../../../utils/helps';
+import { filterPosts, formatPosts } from '../../../utils/helps';
 
 import { PostDetail } from '../../../utils/types';
 
@@ -50,9 +50,9 @@ const PostAdmin: FC<Props> = (): JSX.Element => {
         }
     }, [isFetching, fetchNextPage, hasNextPage]);
 
-    if (data) {
-     const posts = data.pages.flatMap((page) => (page.status === 200 ? page.body.posts : []));
-    }
+    // if (data) {
+    //     const posts = data.pages.flatMap((page) => (page.status === 200 ? page.body.posts : []));
+    // }
     return (
         <InfiniteScrollPosts
             hasMore={hasMorePosts}
@@ -60,6 +60,7 @@ const PostAdmin: FC<Props> = (): JSX.Element => {
             dataLength={postsToRender.length}
             posts={postsToRender}
             showControls
+            onPostRemoved={(post) => setPostsToRender(filterPosts(postsToRender, post))}
         />
     );
 };

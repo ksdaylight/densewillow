@@ -31,6 +31,7 @@ const Gallery: FC<Props> = ({
                             src={src}
                             selected={selectedImage === src}
                             onClick={() => onSelect(src)}
+                            alt="gallery"
                         />
                     </div>
                 );

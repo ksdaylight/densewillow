@@ -62,6 +62,7 @@ export class ContentController {
             return { status: 200 as const, body: post };
         });
     }
+
     @Guest()
     @TsRestHandler(c.getPosts)
     async getPosts() {

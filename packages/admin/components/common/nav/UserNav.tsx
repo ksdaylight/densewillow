@@ -7,6 +7,8 @@ import { HiLightBulb } from 'react-icons/hi';
 
 import { useRouter } from 'next/router';
 
+import useDarkMode from '../../../hooks/useDarkMode';
+
 import { GitHubAuthButton } from '../../button';
 import { APP_NAME } from '../AppHead';
 import DropdownOptions, { DropDownOptions } from '../DropdownOptions';
@@ -31,6 +33,8 @@ const UserNav: FC<Props> = (props): JSX.Element => {
     const isAuth = status === 'authenticated';
     const profile = data?.user as UserProfile | undefined;
     const isAdmin = profile && profile.role === 'admin';
+
+    const { toggleTheme } = useDarkMode();
 
     const handleLoginWithGithub = async () => {
         await signIn('github');
@@ -59,7 +63,10 @@ const UserNav: FC<Props> = (props): JSX.Element => {
             </Link>
 
             <div className="flex items-center space-x-5">
-                <button className="dark:text-secondary-dark text-secondary-light">
+                <button
+                    onClick={toggleTheme}
+                    className="dark:text-secondary-dark text-secondary-light"
+                >
                     <HiLightBulb size={34} />
                 </button>
 
