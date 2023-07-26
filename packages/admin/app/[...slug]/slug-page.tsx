@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 
 import Image from 'next/image';
@@ -7,9 +9,9 @@ import parse from 'html-react-parser';
 
 import { isNil } from 'lodash';
 
-import DefaultLayout from '../../../components/layout/DefaultLayout';
+import DefaultLayout from '../../components/layout/DefaultLayout';
 
-import { apiClient, baseApiUrl } from '../../admin/page';
+import { apiClient, baseApiUrl } from '../admin/page';
 
 interface Props {
     initialSlug?: string;

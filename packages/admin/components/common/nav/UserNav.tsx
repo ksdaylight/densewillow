@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import { FC } from 'react';
 import { HiLightBulb } from 'react-icons/hi';
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import useDarkMode from '../../../hooks/useDarkMode';
 
@@ -14,7 +14,6 @@ import { APP_NAME } from '../AppHead';
 import DropdownOptions, { DropDownOptions } from '../DropdownOptions';
 import Logo from '../Logo';
 import ProfileHead from '../ProfileHead';
-import { UserProfile } from '../../../utils/types';
 
 interface Props {}
 
@@ -29,10 +28,12 @@ const defaultOptions: DropDownOptions = [
 
 const UserNav: FC<Props> = (props): JSX.Element => {
     const router = useRouter();
-    const { data, status } = useSession();
-    const isAuth = status === 'authenticated';
-    const profile = data?.user as UserProfile | undefined;
-    const isAdmin = profile && profile.role === 'admin';
+    // const { data, status } = useSession();
+    const isAuth = true;
+    //  status === 'authenticated';
+    // const profile = data?.user as UserProfile | undefined;
+    const isAdmin = true;
+    // profile && profile.role === 'admin';
 
     const { toggleTheme } = useDarkMode();
 
@@ -55,11 +56,9 @@ const UserNav: FC<Props> = (props): JSX.Element => {
     return (
         <div className="flex items-center justify-between bg-primary-dark p-3">
             {/* Logo */}
-            <Link href="/">
-                <a className="flex space-x-2 text-highlight-dark">
-                    <Logo className="fill-highlight-dark" />
-                    <span className="text-xl font-semibold">{APP_NAME}</span>
-                </a>
+            <Link href="/" className="flex space-x-2 text-highlight-dark">
+                <Logo className="fill-highlight-dark" />
+                <span className="text-xl font-semibold">{APP_NAME}</span>
             </Link>
 
             <div className="flex items-center space-x-5">

@@ -1,7 +1,7 @@
 'use client';
 
 import { signOut } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 
 import useDarkMode from '../../../hooks/useDarkMode';

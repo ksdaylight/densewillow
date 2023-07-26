@@ -1,8 +1,9 @@
 import { QueryFunctionContext, dehydrate } from '@tanstack/query-core';
 
-import Editor from '../../../components/Editor';
-import Hydrate from '../../../utils/hydrate.client';
-import getQueryClient from '../../../utils/getQueryClient';
+import Hydrate from '../../utils/hydrate.client';
+import getQueryClient from '../../utils/getQueryClient';
+
+import PostSlugPage from './slug-page';
 
 async function getPost({ queryKey }: QueryFunctionContext) {
     const [, slug] = queryKey;
@@ -16,7 +17,7 @@ const PostSlug = async ({ params }: { params: { slug: string } }) => {
     const dehydratedState = dehydrate(queryClient);
     return (
         <Hydrate state={dehydratedState}>
-            <Editor btnTitle="Update" initialSlug={params.slug} />
+            <PostSlugPage initialSlug={params.slug} />
         </Hydrate>
     );
 };

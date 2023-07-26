@@ -5,7 +5,7 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import InfiniteScrollPosts from '../components/common/InfiniteScrollPosts';
 import { PostDetail } from '../utils/types';
 
-import { formatPosts } from '../utils/helps';
+import { filterPosts, formatPosts } from '../utils/helps';
 
 import { apiClient } from './admin/page';
 
@@ -23,7 +23,7 @@ const Home: FC<Props> = (): JSX.Element => {
                 query: { skip: pageParam.skip, take: pageParam.take },
             }),
             {
-                staleTime: 60000,
+                staleTime: 600000,
                 getNextPageParam: (lastPage, allPages) => {
                     if (lastPage.status === 200) {
                         if (lastPage.body.count > allPages.length * limit) {
@@ -57,6 +57,7 @@ const Home: FC<Props> = (): JSX.Element => {
             dataLength={postsToRender.length}
             posts={postsToRender}
             showControls={isAdmin}
+            onPostRemoved={(post) => setPostsToRender(filterPosts(postsToRender, post))}
         />
     );
 };
