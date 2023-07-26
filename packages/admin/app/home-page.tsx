@@ -9,12 +9,13 @@ import { filterPosts, formatPosts } from '../utils/helps';
 
 import { apiClient } from './admin/page';
 
-interface Props {}
-const Home: FC<Props> = (): JSX.Element => {
+interface Props {
+    isAdmin?: boolean;
+}
+const Home: FC<Props> = ({ isAdmin = false }): JSX.Element => {
     const [postsToRender, setPostsToRender] = useState<PostDetail[]>([]);
     const [hasMorePosts, setHasMorePosts] = useState(true);
     const limit = 9;
-    const isAdmin = false;
 
     const { data, isFetching, fetchNextPage, hasNextPage } =
         apiClient.content.getPosts.useInfiniteQuery(

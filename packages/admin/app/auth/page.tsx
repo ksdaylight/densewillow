@@ -4,7 +4,7 @@ import { GitHubAuthButton } from '../../components/button';
 
 interface Props {}
 
-const Signin: NextPage<Props> = () => {
+const SignInPage: NextPage<Props> = () => {
     return (
         <div className="h-screen flex items-center justify-center bg-primary dark:bg-primary-dark">
             <GitHubAuthButton />
@@ -12,4 +12,4 @@ const Signin: NextPage<Props> = () => {
     );
 };
 
-export default Signin;
+export default SignInPage;

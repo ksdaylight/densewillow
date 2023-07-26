@@ -3,6 +3,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { FastifyRequest as Request } from 'fastify';
 import { ExtractJwt } from 'passport-jwt';
 
+import { Prisma } from '@prisma/client/blog';
+
 import { getUserConfig } from '../helpers';
 
 import { UserConfig } from '../types';
@@ -14,6 +16,8 @@ import { PrismaService } from '../../core/providers';
 import { App } from '../../core/app';
 
 import { EnvironmentType } from '../../core/constants';
+
+import { SystemRoles } from '../../rbac/constants';
 
 import { TokenService } from './token.service';
 
@@ -34,15 +38,35 @@ export class AuthService {
         return false;
     }
 
-    // /**
-    //  * 登录用户,并生成新的token和refreshToken
-    //  * @param user
-    //  */
-    // async login(user: User) {
-    //     const now = await getTime();
-    //     const { accessToken } = await this.tokenService.generateAccessToken(user, now);
-    //     return accessToken.value;
-    // }
+    async getMainRole(userId: Prisma.UserWhereUniqueInput) {
+        const userInfo = await this.prisma.user.findUnique({
+            where: userId,
+            include: {
+                roles: true,
+            },
+        });
+        const { roles } = userInfo;
+
+        // 如果用户没有任何角色，返回 null
+        if (!roles || roles.length === 0) {
+            return null;
+        }
+
+        // 如果用户只有一个角色，直接返回该角色
+        if (roles.length === 1) {
+            return roles[0];
+        }
+
+        // 如果用户有多个角色，查找是否有 'admin' 角色
+        for (const role of roles) {
+            if (role.name === SystemRoles.ADMIN) {
+                return role;
+            }
+        }
+
+        // 如果没有 'admin' 角色，返回第一个角色
+        return roles[0];
+    }
 
     /**
      * 注销登录

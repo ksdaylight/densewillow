@@ -74,6 +74,7 @@
     "dependencies": {
         "@babel/runtime": "^7.22.5",
         "@casl/ability": "^6.5.0",
+        "@fastify/cookie": "^8.3.0",
         "@fastify/multipart": "^7.3.0",
         "@fastify/static": "^6.10.2",
         "@nestjs/common": "^9.2.1",
@@ -88,6 +89,7 @@
         "@tanstack/query-core": "4.29.7",
         "@tanstack/react-query": "4.29.7",
         "@tanstack/react-query-devtools": "4.29.7",
+        "@tippyjs/react": "^4.2.6",
         "@tiptap/core": "^2.0.3",
         "@tiptap/extension-image": "^2.0.0-beta.199",
         "@tiptap/extension-link": "^2.0.0-beta.199",
@@ -113,6 +115,7 @@
         "fastify": "^4.5.2",
         "find-up": "5",
         "fs-extra": "^11.1.1",
+        "html-react-parser": "^3.0.4",
         "jsonwebtoken": "^9.0.1",
         "lodash": "^4.17.21",
         "mime-types": "^2.1.35",
@@ -132,8 +135,6 @@
         "tslib": "^2.3.0",
         "uuid": "^9.0.0",
         "yaml": "^2.3.1",
-        "zod": "^3.21.4",
-        "@tippyjs/react": "^4.2.6",
-        "html-react-parser": "^3.0.4"
+        "zod": "^3.21.4"
     }
 }

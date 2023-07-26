@@ -6,6 +6,8 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 import { isNil } from 'lodash';
 
 import { FastifyInstance } from 'fastify';
+import type { FastifyCookieOptions } from '@fastify/cookie';
+import cookie from '@fastify/cookie';
 
 import { Configure } from './configure';
 
@@ -69,16 +71,21 @@ export class App {
             }
             const fastifyInstance = this._app.getHttpAdapter().getInstance();
 
-            (fastifyInstance as FastifyInstance).addHook('onRequest', (request, reply, done) => {
-                (reply as any).setHeader = function (key: any, value: any) {
-                    return this.raw.setHeader(key, value);
-                };
-                (reply as any).end = function () {
-                    this.raw.end();
-                };
-                (reply as any).res = reply;
-                done();
-            }); // for fastify + nestJs passport
+            (fastifyInstance as FastifyInstance)
+                .addHook('onRequest', (request, reply, done) => {
+                    (reply as any).setHeader = function (key: any, value: any) {
+                        return this.raw.setHeader(key, value);
+                    };
+                    (reply as any).end = function () {
+                        this.raw.end();
+                    };
+                    (reply as any).res = reply;
+                    done();
+                }) // for fastify + nestJs passport
+                .register(cookie, {
+                    secret: 'my-cookie-secret', // for cookies signature
+                    parseOptions: {}, // options for parsing cookies
+                } as FastifyCookieOptions);
         } catch (error) {
             console.log('Create app failed! \n');
             console.log(error);

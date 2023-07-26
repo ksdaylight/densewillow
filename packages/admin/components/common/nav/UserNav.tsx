@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { signIn, signOut } from 'next-auth/react';
+
 import { FC } from 'react';
 import { HiLightBulb } from 'react-icons/hi';
 
@@ -15,32 +15,23 @@ import DropdownOptions, { DropDownOptions } from '../DropdownOptions';
 import Logo from '../Logo';
 import ProfileHead from '../ProfileHead';
 
-interface Props {}
+interface Props {
+    isAuth?: boolean;
+    isAdmin?: boolean;
+}
 
 const defaultOptions: DropDownOptions = [
     {
         label: 'Logout',
         async onClick() {
-            await signOut();
+            // await signOut();
         },
     },
 ];
 
-const UserNav: FC<Props> = (props): JSX.Element => {
-    const router = useRouter();
-    // const { data, status } = useSession();
-    const isAuth = true;
-    //  status === 'authenticated';
-    // const profile = data?.user as UserProfile | undefined;
-    const isAdmin = true;
-    // profile && profile.role === 'admin';
-
+const UserNav: FC<Props> = ({ isAuth = false, isAdmin = false }): JSX.Element => {
     const { toggleTheme } = useDarkMode();
-
-    const handleLoginWithGithub = async () => {
-        await signIn('github');
-    };
-
+    const router = useRouter();
     const dropDownOptions: DropDownOptions = isAdmin
         ? [
               {
@@ -75,7 +66,7 @@ const UserNav: FC<Props> = (props): JSX.Element => {
                         head={<ProfileHead nameInitial="N" lightOnly />}
                     />
                 ) : (
-                    <GitHubAuthButton onClick={handleLoginWithGithub} lightOnly />
+                    <GitHubAuthButton lightOnly />
                 )}
             </div>
         </div>
