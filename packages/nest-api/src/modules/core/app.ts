@@ -86,6 +86,11 @@ export class App {
                     secret: 'my-cookie-secret', // for cookies signature
                     parseOptions: {}, // options for parsing cookies
                 } as FastifyCookieOptions);
+            // .register(cors, {
+            //     origin: 'http://192.168.80.6:4200', // 客户端地址
+            //     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+            //     credentials: true, // 这个是关键，允许服务器发送 Cookie
+            // });
         } catch (error) {
             console.log('Create app failed! \n');
             console.log(error);

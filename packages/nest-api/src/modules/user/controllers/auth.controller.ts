@@ -11,6 +11,7 @@ import { FastifyReply } from 'fastify';
 
 import { AuthService } from '../services';
 import { Guest, ReqUser } from '../decorators';
+import { EnvironmentType } from '../../core/constants';
 
 /**
  * 账户中心控制器
@@ -41,11 +42,7 @@ export class AuthController {
     // @Get('auth/github/callback')
     @Guest()
     @UseGuards(AuthGuard('github'))
-    async githubAuthCallback(
-        @Request() req: any,
-        @ReqUser() user: ClassToPlain<User>,
-        @Res() reply: FastifyReply,
-    ) {
+    async githubAuthCallback(@ReqUser() user: ClassToPlain<User>, @Res() reply: FastifyReply) {
         return tsRestHandler(c.githubAuthCallback, async () => {
             const token = await this.authService.createToken(user.id);
             const role = await this.authService.getMainRole({
@@ -53,27 +50,28 @@ export class AuthController {
             });
 
             reply.setCookie('auth_token', token, {
-                httpOnly: false,
-                secure: false, // process.env.NODE_ENV === EnvironmentType.PRODUCTION,
-                sameSite: 'none',
-                maxAge: 3600, // 1 hour
+                path: '/',
+                httpOnly: true,
+                secure: process.env.NODE_ENV === EnvironmentType.PRODUCTION,
+                sameSite: 'strict',
+                domain: '192.168.80.6',
+                maxAge: 3600 * 24 * 7,
             });
             console.log(token);
             console.log(role.name);
             reply.setCookie('user_role', role.name, {
+                path: '/',
                 httpOnly: false,
-                secure: false, // process.env.NODE_ENV === EnvironmentType.PRODUCTION,
-                sameSite: 'none',
-                maxAge: 3600, // 1 hour
+                secure: false,
+                sameSite: 'strict',
+                domain: '192.168.80.6',
+                maxAge: 3600 * 24 * 7,
             });
             // 重定向
             const redirectUrl = `http://192.168.80.6:4200`;
             reply.status(302).redirect(redirectUrl);
+
             return { status: 200 as const, body: reply }; // 怎么都可以，写这个是为了过类型检测
-            // return {
-            //     status: 200 as const,
-            //     body: { token: await this.authService.createToken(user.id) },
-            // };
         });
     }
 
