@@ -13,12 +13,20 @@ const Index: NextPage<Props> = async () => {
     const token = cookieStore.get('auth_token');
     console.log(cookieStore.getAll());
     console.log(token);
+    const res = await fetch(`http://127.0.0.1:3100/api/test`, {
+        headers: {
+            authorization: `bearer ${token?.value || ''}`, // Use your cookie
+        },
+    });
 
+    console.log(res);
     const userRole = cookieStore.get('user_role');
 
-    console.log(userRole);
     return (
-        <DefaultLayout>
+        <DefaultLayout
+            isAdmin={userRole?.value === 'super-admin'}
+            isAuth={userRole?.value !== undefined}
+        >
             <div className="pb-20">
                 <Home isAdmin={userRole?.value === 'super-admin'} />
             </div>

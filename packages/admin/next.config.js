@@ -17,7 +17,7 @@ const nextConfig = {
         svgr: false,
     },
     images: {
-        domains: ['images.unsplash.com', 'res.cloudinary.com', '127.0.0.1'],
+        domains: ['192.168.80.6'],
     },
     env: {
         APP_PREFIX: process.env.APP_PREFIX || 'test',

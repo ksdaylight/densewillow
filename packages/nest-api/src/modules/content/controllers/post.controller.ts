@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Req } from '@nestjs/common';
 
 import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
 
@@ -9,6 +9,8 @@ import { MultipartFile } from '@fastify/multipart';
 import { MediaEntity, Post } from '@prisma/client/blog';
 
 import { isNil } from 'lodash';
+
+import { FastifyRequest } from 'fastify';
 
 import { PostService } from '../services';
 
@@ -31,7 +33,8 @@ export class ContentController {
     @Guest()
     // @Permission(testChecker)
     @TsRestHandler(c.testGet)
-    async getTest() {
+    async getTest(@Req() req: FastifyRequest) {
+        console.log(req);
         return tsRestHandler(c.testGet, async () => {
             return { status: 200, body: `${await getTime()}test success` };
         });

@@ -10,6 +10,7 @@ import { getUserConfig } from '../helpers';
 import { JwtConfig, JwtPayload } from '../types';
 import { PrismaService } from '../../core/providers';
 import { getTime } from '../../core/helpers';
+import { EnvironmentType } from '../../core/constants';
 
 /**
  * 令牌服务
@@ -50,7 +51,16 @@ export class TokenService {
                     id: accessToken.id,
                 },
             });
-            response.header('token', token.accessToken.value);
+            // response.header('token', token.accessToken.value);
+
+            response.setCookie('auth_token', token.accessToken.value, {
+                path: '/',
+                httpOnly: true,
+                secure: process.env.NODE_ENV === EnvironmentType.PRODUCTION,
+                sameSite: 'strict',
+                domain: '192.168.80.6',
+                maxAge: 3600 * 24 * 7,
+            });
             return token;
         }
         return null;

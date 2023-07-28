@@ -57,8 +57,8 @@ export class AuthController {
                 domain: '192.168.80.6',
                 maxAge: 3600 * 24 * 7,
             });
-            console.log(token);
-            console.log(role.name);
+            // console.log(token);
+            // console.log(role.name);
             reply.setCookie('user_role', role.name, {
                 path: '/',
                 httpOnly: false,

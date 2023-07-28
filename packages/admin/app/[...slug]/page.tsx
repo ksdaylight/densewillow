@@ -7,7 +7,9 @@ import PostSlugPage from './slug-page';
 
 async function getPost({ queryKey }: QueryFunctionContext) {
     const [, slug] = queryKey;
-    const res = await fetch(`http://127.0.0.1:3100/api/post/slug/${slug}`); // TODO BASE URL
+    const res = await fetch(`http://127.0.0.1:3100/api/post/slug/${slug}`, {
+        credentials: 'include',
+    }); // TODO BASE URL
     const data = await res.json();
     return { body: data };
 }

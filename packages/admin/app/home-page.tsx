@@ -2,6 +2,8 @@
 
 import { FC, useCallback, useEffect, useState } from 'react';
 
+// import { getCookies } from 'cookies-next';
+
 import InfiniteScrollPosts from '../components/common/InfiniteScrollPosts';
 import { PostDetail } from '../utils/types';
 
@@ -37,6 +39,18 @@ const Home: FC<Props> = ({ isAdmin = false }): JSX.Element => {
             },
         );
 
+    const { data: testData } = apiClient.content.testGet.useQuery(
+        ['userAuth2', '1'],
+        {},
+        {
+            staleTime: 18000,
+        },
+    );
+    console.log(testData);
+
+    // const cookieStore = getCookies();
+
+    // console.log(cookieStore);
     useEffect(() => {
         if (data?.pages) {
             const newPosts = data.pages.flatMap((page) => formatPosts(page.body.posts));

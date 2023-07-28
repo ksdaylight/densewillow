@@ -3,6 +3,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { instanceToPlain } from 'class-transformer';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
+import { FastifyRequest } from 'fastify';
+
 import { getUserConfig } from '../helpers';
 import { JwtPayload } from '../types';
 import { PrismaService } from '../../core/providers';
@@ -16,7 +18,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) implements OnModuleI
 
     constructor(private readonly prisma: PrismaService) {
         super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            jwtFromRequest: (req: FastifyRequest) => {
+                let token = ExtractJwt.fromAuthHeaderAsBearerToken()(req as any); // 请求头的优先
+                if (!token && req && req.cookies) {
+                    token = req.cookies.yourCookieName;
+                }
+                return token;
+            },
             ignoreExpiration: false,
             secretOrKeyProvider: (
                 _req: Request,

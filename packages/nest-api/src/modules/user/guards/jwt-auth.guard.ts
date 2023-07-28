@@ -4,6 +4,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { isNil } from 'lodash';
 import { ExtractJwt } from 'passport-jwt';
 
+import { FastifyRequest } from 'fastify';
+
 import { TokenService } from '../services/token.service';
 import { ALLOW_GUEST } from '../constants';
 /**
@@ -21,7 +23,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
      * @param context
      */
     async canActivate(context: ExecutionContext) {
-        const crudGuest = Reflect.getMetadata(
+        const methodGuest = Reflect.getMetadata(
             ALLOW_GUEST,
             context.getClass().prototype,
             context.getHandler().name,
@@ -29,19 +31,27 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         const defaultGuest = this.reflector.getAllAndOverride<boolean>(ALLOW_GUEST, [
             context.getHandler(),
             context.getClass(),
-        ]);
-        const allowGuest = crudGuest ?? defaultGuest;
+        ]); // method and class
+        const allowGuest = methodGuest ?? defaultGuest;
         const request = this.getRequest(context);
         const response = this.getResponse(context);
         // if (!request.headers.authorization) return false;
-        // 从请求头中获取token
+        // 从请求头中获取token，且请求头的优先处理，如有，直接不出来cookie
         // 如果请求头不含有authorization字段则认证失败
         const requestToken = ExtractJwt.fromAuthHeaderAsBearerToken()(request);
-        if (isNil(requestToken) && !allowGuest) return false;
+
+        const cookieToken = (request as FastifyRequest).cookies.auth_token;
+
+        let token = requestToken;
+        if (isNil(token)) {
+            token = cookieToken;
+        }
+        if (isNil(token) && !allowGuest) return false;
         // 判断token是否存在,如果不存在则认证失败
-        const accessToken = isNil(requestToken)
+        const accessToken = isNil(token)
             ? undefined
-            : await this.tokenService.checkAccessToken(requestToken!);
+            : await this.tokenService.checkAccessToken(token!);
+
         if (isNil(accessToken) && !allowGuest) throw new UnauthorizedException();
         try {
             // 检测token是否为损坏或过期的无效状态,如果无效则尝试刷新token
@@ -53,10 +63,10 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
             // 刷新成功则给请求头更换新的token
             // 并给响应头添加新的token和refreshtoken
             if (!isNil(accessToken)) {
-                const token = await this.tokenService.refreshToken(accessToken, response);
-                if (isNil(token) && !allowGuest) return false;
-                if (token.accessToken) {
-                    request.headers.authorization = `Bearer ${token.accessToken.value}`;
+                const newToken = await this.tokenService.refreshToken(accessToken, response);
+                if (isNil(newToken) && !allowGuest) return false;
+                if (newToken.accessToken) {
+                    request.headers.authorization = `Bearer ${newToken.accessToken.value}`; // 策略中，获取jwt以请求头的优先
                 }
                 // 刷新失败则再次抛出认证失败的异常
                 const result = await super.canActivate(context);

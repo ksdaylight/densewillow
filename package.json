@@ -108,6 +108,7 @@
         "chalk": "4",
         "class-transformer": "^0.5.1",
         "classnames": "^2.3.2",
+        "cookies-next": "^2.1.2",
         "dateformat": "^5.0.3",
         "dayjs": "^1.11.9",
         "deepmerge": "^4.3.1",

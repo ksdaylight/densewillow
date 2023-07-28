@@ -5,12 +5,13 @@ import { apiBlog } from 'api-contracts';
 
 import AdminLayout from '../../components/layout/AdminLayout';
 
-export const baseApiUrl = 'http://127.0.0.1:3100/api'; // TODO BaseUrl 替换策略
+export const baseApiUrl = 'http://192.168.80.6/api'; // TODO BaseUrl 替换策略
 export const apiClient = initQueryClient(apiBlog, {
-    baseUrl: 'http://127.0.0.1:3100',
+    baseUrl: 'http://192.168.80.6',
     baseHeaders: {
         Authorization: 'key',
-    },
+    }, // 类型需要匹配
+    credentials: 'include',
 });
 
 interface Props {}
