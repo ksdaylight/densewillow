@@ -34,7 +34,7 @@ export class ContentController {
     // @Permission(testChecker)
     @TsRestHandler(c.testGet)
     async getTest(@Req() req: FastifyRequest) {
-        console.log(req);
+        // console.log(req);
         return tsRestHandler(c.testGet, async () => {
             return { status: 200, body: `${await getTime()}test success` };
         });

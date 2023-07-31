@@ -10,7 +10,6 @@ import { getUserConfig } from '../helpers';
 import { JwtConfig, JwtPayload } from '../types';
 import { PrismaService } from '../../core/providers';
 import { getTime } from '../../core/helpers';
-import { EnvironmentType } from '../../core/constants';
 
 /**
  * 令牌服务
@@ -35,7 +34,9 @@ export class TokenService {
                 accessTokenId: accessToken.id,
             },
         });
+        console.log('------------------- 0');
         if (refreshToken) {
+            console.log('------------------- 1');
             const now = await getTime();
             // 判断refreshToken是否过期
             if (now.isAfter(refreshToken.expired_at)) return null;
@@ -46,23 +47,41 @@ export class TokenService {
                 },
             });
             const token = await this.generateAccessToken(user, now);
-            await this.prisma.accessToken.delete({
-                where: {
-                    id: accessToken.id,
-                },
-            });
+            console.log('------------------- 2');
+            try {
+                await this.prisma.refreshToken.delete({
+                    where: {
+                        id: refreshToken.id,
+                    },
+                });
+                console.log(`------------------- 3 ${refreshToken.id}`);
+            } catch (error) {
+                console.log(error);
+            }
+            try {
+                await this.prisma.accessToken.delete({
+                    where: {
+                        id: accessToken.id,
+                    },
+                });
+
+                console.log(`------------------- 4 ${accessToken.id}`);
+            } catch (error) {
+                console.log(error);
+            }
             // response.header('token', token.accessToken.value);
 
             response.setCookie('auth_token', token.accessToken.value, {
                 path: '/',
                 httpOnly: true,
-                secure: process.env.NODE_ENV === EnvironmentType.PRODUCTION,
+                secure: false, // process.env.NODE_ENV === EnvironmentType.PRODUCTION,
                 sameSite: 'strict',
                 domain: '192.168.80.6',
                 maxAge: 3600 * 24 * 7,
-            });
+            }); // TODO 需要测试是否成功刷给用户了
             return token;
         }
+        console.log('------------------- 6');
         return null;
     }
 

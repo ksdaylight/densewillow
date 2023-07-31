@@ -21,7 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) implements OnModuleI
             jwtFromRequest: (req: FastifyRequest) => {
                 let token = ExtractJwt.fromAuthHeaderAsBearerToken()(req as any); // 请求头的优先
                 if (!token && req && req.cookies) {
-                    token = req.cookies.yourCookieName;
+                    token = req.cookies.auth_token;
                 }
                 return token;
             },
