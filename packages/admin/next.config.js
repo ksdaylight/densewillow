@@ -22,6 +22,9 @@ const nextConfig = {
     env: {
         APP_PREFIX: process.env.APP_PREFIX || 'test',
     },
+    experimental: {
+        serverActions: true,
+    },
 };
 
 const plugins = [

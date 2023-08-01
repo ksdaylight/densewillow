@@ -1,6 +1,6 @@
 'use client';
 
-import { signOut } from 'next-auth/react';
+// import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 
@@ -15,7 +15,7 @@ const AdminSecondaryNav: FC<Props> = (props): JSX.Element => {
     const router = useRouter();
     const { toggleTheme } = useDarkMode();
     const navigateToCreateNewPost = () => router.push('/admin/posts/create');
-    const handleLogOut = async () => signOut();
+    // const handleLogOut = async () => signOut();
 
     const options: DropDownOptions = [
         {
@@ -26,10 +26,10 @@ const AdminSecondaryNav: FC<Props> = (props): JSX.Element => {
             label: 'Change theme',
             onClick: toggleTheme,
         },
-        {
-            label: 'Log out',
-            onClick: handleLogOut,
-        },
+        // {
+        //     label: 'Log out',
+        //     // onClick: handleLogOut,
+        // },
     ];
 
     return (

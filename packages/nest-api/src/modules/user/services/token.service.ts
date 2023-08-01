@@ -27,7 +27,7 @@ export class TokenService {
      * @param accessToken
      * @param response
      */
-    async refreshToken(accessToken: AccessToken, response: Response) {
+    async refreshToken(accessToken: AccessToken, response: Response, isFromService = false) {
         const { userId } = accessToken;
         const refreshToken = await this.prisma.refreshToken.findFirst({
             where: {
@@ -40,6 +40,7 @@ export class TokenService {
             const now = await getTime();
             // 判断refreshToken是否过期
             if (now.isAfter(refreshToken.expired_at)) return null;
+            if (isFromService) return true; // 不进行删除，IP白名单直接放行
             // 如果没过期则生成新的access_token和refresh_token
             const user = await this.prisma.user.findUnique({
                 where: {
@@ -79,6 +80,17 @@ export class TokenService {
                 domain: '192.168.80.6',
                 maxAge: 3600 * 24 * 7,
             }); // TODO 需要测试是否成功刷给用户了
+            response.setCookie(`${token.accessToken.id}`, token.accessToken.value, {
+                path: '/',
+                httpOnly: false,
+                secure: false,
+                sameSite: 'strict',
+                domain: '192.168.80.6',
+                maxAge: 3600 * 24 * 7,
+            });
+            console.log(
+                `------------------- 5  ${token.accessToken.id} \n ${token.accessToken.value}`,
+            );
             return token;
         }
         console.log('------------------- 6');

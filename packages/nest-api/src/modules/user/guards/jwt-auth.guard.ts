@@ -18,6 +18,8 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         super();
     }
 
+    IPprefixes = ['127.0.0.1'];
+
     /**
      * 守卫方法
      * @param context
@@ -55,7 +57,9 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         if (isNil(accessToken) && !allowGuest) throw new UnauthorizedException();
         try {
             // 检测token是否为损坏或过期的无效状态,如果无效则尝试刷新token
+
             const result = await super.canActivate(context);
+
             if (allowGuest) return true;
             return result as boolean;
         } catch (e) {
@@ -63,10 +67,27 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
             // 刷新成功则给请求头更换新的token
             // 并给响应头添加新的token和refreshtoken
             if (!isNil(accessToken)) {
-                const newToken = await this.tokenService.refreshToken(accessToken, response);
-                if (isNil(newToken) && !allowGuest) return false;
-                if (newToken.accessToken) {
-                    request.headers.authorization = `Bearer ${newToken.accessToken.value}`; // 策略中，获取jwt以请求头的优先
+                if (!isNil(requestToken)) {
+                    console.log('===================================================');
+                    console.log(request);
+                    console.log('===================================================');
+                }
+                const isFromService = this.IPprefixes.some((prefix) =>
+                    request.headers.host.startsWith(prefix),
+                );
+                const newTokenOrAllowServer = await this.tokenService.refreshToken(
+                    accessToken,
+                    response,
+                    isFromService,
+                );
+
+                if (isNil(newTokenOrAllowServer) && !allowGuest) return false;
+
+                if (newTokenOrAllowServer === true) {
+                    return true;
+                }
+                if (newTokenOrAllowServer.accessToken) {
+                    request.headers.authorization = `Bearer ${newTokenOrAllowServer.accessToken.value}`; // 策略中，获取jwt以请求头的优先
                 }
                 // 刷新失败则再次抛出认证失败的异常
                 const result = await super.canActivate(context);

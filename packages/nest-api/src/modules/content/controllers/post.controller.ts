@@ -30,7 +30,7 @@ export class ContentController {
         private readonly mediaService: MediaService,
     ) {}
 
-    @Guest()
+    // @Guest()
     // @Permission(testChecker)
     @TsRestHandler(c.testGet)
     async getTest(@Req() req: FastifyRequest) {

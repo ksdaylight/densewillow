@@ -1,5 +1,4 @@
 import { NextPage } from 'next';
-
 import { cookies } from 'next/headers';
 
 import DefaultLayout from '../components/layout/DefaultLayout';
@@ -13,13 +12,14 @@ const Index: NextPage<Props> = async () => {
     const token = cookieStore.get('auth_token');
     console.log(cookieStore.getAll());
     console.log(token);
-    const res = await fetch(`http://127.0.0.1:3100/api/test`, {
+    // const res =
+    await fetch(`http://127.0.0.1:3100/api/test`, {
         headers: {
             authorization: `bearer ${token?.value || ''}`, // Use your cookie
         },
     });
 
-    console.log(res);
+    // console.log(res);
     const userRole = cookieStore.get('user_role');
 
     return (
