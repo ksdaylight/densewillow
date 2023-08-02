@@ -11,6 +11,7 @@ import { FastifyReply } from 'fastify';
 
 import { AuthService } from '../services';
 import { Guest, ReqUser } from '../decorators';
+import { EnvironmentType } from '../../core/constants';
 
 /**
  * 账户中心控制器
@@ -51,13 +52,11 @@ export class AuthController {
             reply.setCookie('auth_token', token, {
                 path: '/',
                 httpOnly: true,
-                secure: false, // process.env.NODE_ENV === EnvironmentType.PRODUCTION,
+                secure: process.env.NODE_ENV === EnvironmentType.PRODUCTION,
                 sameSite: 'strict',
                 domain: '192.168.80.6',
                 maxAge: 3600 * 24 * 7,
             });
-            // console.log(token);
-            // console.log(role.name);
             reply.setCookie('user_role', role.name, {
                 path: '/',
                 httpOnly: false,

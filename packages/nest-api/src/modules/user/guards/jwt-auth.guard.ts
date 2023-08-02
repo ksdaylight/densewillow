@@ -18,7 +18,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         super();
     }
 
-    IPprefixes = ['127.0.0.1'];
+    IPprefixes = ['127.0.0.1']; // if need, can rm it to config
 
     /**
      * 守卫方法
@@ -37,17 +37,15 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         const allowGuest = methodGuest ?? defaultGuest;
         const request = this.getRequest(context);
         const response = this.getResponse(context);
-        // if (!request.headers.authorization) return false;
-        // 从请求头中获取token，且请求头的优先处理，如有，直接不出来cookie
-        // 如果请求头不含有authorization字段则认证失败
-        const requestToken = ExtractJwt.fromAuthHeaderAsBearerToken()(request);
 
+        const requestToken = ExtractJwt.fromAuthHeaderAsBearerToken()(request);
+        const isFromService =
+            this.IPprefixes.some((prefix) => request.headers.host.startsWith(prefix)) &&
+            !isNil(requestToken);
         const cookieToken = (request as FastifyRequest).cookies.auth_token;
 
-        let token = requestToken;
-        if (isNil(token)) {
-            token = cookieToken;
-        }
+        const token = isFromService ? requestToken : cookieToken;
+
         if (isNil(token) && !allowGuest) return false;
         // 判断token是否存在,如果不存在则认证失败
         const accessToken = isNil(token)
@@ -56,45 +54,33 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
         if (isNil(accessToken) && !allowGuest) throw new UnauthorizedException();
         try {
-            // 检测token是否为损坏或过期的无效状态,如果无效则尝试刷新token
-
+            // 检测token是否为损坏或过期的无效状态
             const result = await super.canActivate(context);
-
             if (allowGuest) return true;
             return result as boolean;
         } catch (e) {
-            // 尝试通过refreshToken刷新token
-            // 刷新成功则给请求头更换新的token
-            // 并给响应头添加新的token和refreshtoken
+            // 是否存在访问token即为是否存在刷新token
             if (!isNil(accessToken)) {
-                if (!isNil(requestToken)) {
-                    console.log('===================================================');
-                    console.log(request);
-                    console.log('===================================================');
+                // 如果是服务端不进行生成新cookie，删除等操作，IP白名单直接放行
+                if (isFromService) {
+                    return this.tokenService.checkRefreshToken(accessToken);
                 }
-                const isFromService = this.IPprefixes.some((prefix) =>
-                    request.headers.host.startsWith(prefix),
-                );
-                const newTokenOrAllowServer = await this.tokenService.refreshToken(
-                    accessToken,
-                    response,
-                    isFromService,
-                );
+                // 如果是客户端即使allowGuest,也为其刷新cookie
+                const newToken = await this.tokenService.refreshToken(accessToken, response);
 
-                if (isNil(newTokenOrAllowServer) && !allowGuest) return false;
-
-                if (newTokenOrAllowServer === true) {
-                    return true;
+                if (isNil(newToken)) {
+                    // 刷新token失败,如果允许游客访问，那么返回 true，否则返回 false
+                    return allowGuest;
                 }
-                if (newTokenOrAllowServer.accessToken) {
-                    request.headers.authorization = `Bearer ${newTokenOrAllowServer.accessToken.value}`; // 策略中，获取jwt以请求头的优先
+                // 刷新token 成功
+                if (newToken.accessToken) {
+                    request.headers.authorization = `Bearer ${newToken.accessToken.value}`; // 策略中，获取jwt以请求头的优先
                 }
-                // 刷新失败则再次抛出认证失败的异常
+                // 再次认证一下
                 const result = await super.canActivate(context);
-                if (allowGuest) return true;
-                return result as boolean;
+                return allowGuest || result;
             }
-
+            // 如果不存在访问令牌，那么返回是否允许游客访问的结果
             return allowGuest;
         }
     }

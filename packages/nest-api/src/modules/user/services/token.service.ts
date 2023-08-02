@@ -10,6 +10,7 @@ import { getUserConfig } from '../helpers';
 import { JwtConfig, JwtPayload } from '../types';
 import { PrismaService } from '../../core/providers';
 import { getTime } from '../../core/helpers';
+import { EnvironmentType } from '../../core/constants';
 
 /**
  * 令牌服务
@@ -22,79 +23,122 @@ export class TokenService {
         protected prisma: PrismaService,
     ) {}
 
-    /**
-     * 根据accessToken刷新AccessToken与RefreshToken
-     * @param accessToken
-     * @param response
-     */
-    async refreshToken(accessToken: AccessToken, response: Response, isFromService = false) {
+    async checkRefreshToken(accessToken: AccessToken) {
         const { userId } = accessToken;
         const refreshToken = await this.prisma.refreshToken.findFirst({
             where: {
                 accessTokenId: accessToken.id,
             },
         });
-        console.log('------------------- 0');
-        if (refreshToken) {
-            console.log('------------------- 1');
-            const now = await getTime();
+
+        const now = await getTime();
+        this.clearExpiredTokens(userId).catch((error) => console.log(error));
+        // 如果此函数被调用不是因为accessToken过期则直接返回false
+        if (now.isAfter(accessToken.expired_at) && refreshToken) {
             // 判断refreshToken是否过期
-            if (now.isAfter(refreshToken.expired_at)) return null;
-            if (isFromService) return true; // 不进行删除，IP白名单直接放行
-            // 如果没过期则生成新的access_token和refresh_token
-            const user = await this.prisma.user.findUnique({
+            if (now.isAfter(refreshToken.expired_at)) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 根据accessToken刷新AccessToken与RefreshToken
+     * @param accessToken
+     * @param response
+     */
+    async refreshToken(accessToken: AccessToken, response: Response) {
+        const { userId } = accessToken;
+        let token = null;
+
+        try {
+            const refreshToken = await this.prisma.refreshToken.findFirst({
                 where: {
-                    id: userId,
+                    accessTokenId: accessToken.id,
                 },
             });
-            const token = await this.generateAccessToken(user, now);
-            console.log('------------------- 2');
-            try {
-                await this.prisma.refreshToken.delete({
+            if (refreshToken) {
+                const now = await getTime();
+                // 判断refreshToken是否过期
+                if (now.isAfter(refreshToken.expired_at)) {
+                    return null;
+                }
+                // 如果没过期则生成新的access_token和refresh_token
+                const user = await this.prisma.user.findUnique({
                     where: {
-                        id: refreshToken.id,
-                    },
-                });
-                console.log(`------------------- 3 ${refreshToken.id}`);
-            } catch (error) {
-                console.log(error);
-            }
-            try {
-                await this.prisma.accessToken.delete({
-                    where: {
-                        id: accessToken.id,
+                        id: userId,
                     },
                 });
 
-                console.log(`------------------- 4 ${accessToken.id}`);
-            } catch (error) {
-                console.log(error);
-            }
-            // response.header('token', token.accessToken.value);
+                token = await this.generateAccessToken(user, now);
 
-            response.setCookie('auth_token', token.accessToken.value, {
-                path: '/',
-                httpOnly: true,
-                secure: false, // process.env.NODE_ENV === EnvironmentType.PRODUCTION,
-                sameSite: 'strict',
-                domain: '192.168.80.6',
-                maxAge: 3600 * 24 * 7,
-            }); // TODO 需要测试是否成功刷给用户了
-            response.setCookie(`${token.accessToken.id}`, token.accessToken.value, {
-                path: '/',
-                httpOnly: false,
-                secure: false,
-                sameSite: 'strict',
-                domain: '192.168.80.6',
-                maxAge: 3600 * 24 * 7,
-            });
-            console.log(
-                `------------------- 5  ${token.accessToken.id} \n ${token.accessToken.value}`,
-            );
-            return token;
+                response.setCookie('auth_token', token.accessToken.value, {
+                    path: '/',
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === EnvironmentType.PRODUCTION,
+                    sameSite: 'strict',
+                    domain: '192.168.80.6',
+                    maxAge: 3600 * 24 * 7,
+                });
+
+                return token;
+            }
+        } finally {
+            this.clearExpiredTokens(userId).catch((error) => console.log(error));
         }
-        console.log('------------------- 6');
-        return null;
+
+        return token;
+    }
+
+    async clearExpiredTokens(userId: string) {
+        const oldAccessTokens = await this.prisma.accessToken.findMany({
+            where: {
+                userId,
+            },
+        });
+        const tasks = [];
+        for (const oldAccess of oldAccessTokens) {
+            tasks.push(
+                this.prisma.refreshToken
+                    .findMany({
+                        where: {
+                            accessTokenId: oldAccess.id,
+                        },
+                    })
+                    .then(async (oldRefreshTokens) => {
+                        const deleteTasks = [];
+                        for (const oldRefresh of oldRefreshTokens) {
+                            const nowTime = await getTime();
+                            if (nowTime.isAfter(oldRefresh.expired_at)) {
+                                // 创建删除 refreshToken 和 accessToken 的任务
+                                const deleteRefreshTokenTask = await this.prisma.refreshToken
+                                    .delete({
+                                        where: {
+                                            id: oldRefresh.id,
+                                        },
+                                    })
+                                    .catch((error) => console.log(error));
+
+                                const deleteAccessTokenTask = await this.prisma.accessToken
+                                    .delete({
+                                        where: {
+                                            id: oldRefresh.accessTokenId,
+                                        },
+                                    })
+                                    .catch((error) => console.log(error));
+
+                                deleteTasks.push(deleteRefreshTokenTask, deleteAccessTokenTask);
+                            }
+                        }
+                        return Promise.all(deleteTasks); // 等待所有的删除任务完成
+                    }),
+            );
+        }
+
+        // 执行所有的任务
+        return Promise.all(tasks);
     }
 
     /**

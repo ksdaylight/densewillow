@@ -49,7 +49,7 @@ export const defaultUserConfig = (configure: Configure): UserConfig => {
             refresh_token_expired: configure.env(
                 'USER_REFRESH_TOKEN_EXPIRED',
                 (v) => toNumber(v),
-                3600 * 30,
+                120,
             ),
         },
         github: {
