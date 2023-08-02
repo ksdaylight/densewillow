@@ -1,9 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-
-import Image from 'next/image';
-
+import Image from 'next/legacy/image';
 import dateFormat from 'dateformat';
 import parse from 'html-react-parser';
 

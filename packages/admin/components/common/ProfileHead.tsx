@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { FC, useCallback } from 'react';
 import { AiFillCaretDown } from 'react-icons/ai';
 
