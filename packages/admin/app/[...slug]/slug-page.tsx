@@ -8,8 +8,9 @@ import parse from 'html-react-parser';
 import { isNil } from 'lodash';
 
 import DefaultLayout from '../../components/layout/DefaultLayout';
+import { apiClient, baseApiUrl } from '../page';
 
-import { apiClient, baseApiUrl } from '../admin/page';
+// import { apiClient, baseApiUrl } from '../admin/page';
 
 interface Props {
     initialSlug?: string;

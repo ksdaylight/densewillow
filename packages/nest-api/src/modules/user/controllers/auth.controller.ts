@@ -3,7 +3,7 @@ import util from 'util';
 import { Controller, Post, Request, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
-import { apiBlog } from 'api-contracts';
+import { apiBlog } from '@api-contracts';
 
 import { User } from '@prisma/client/blog';
 

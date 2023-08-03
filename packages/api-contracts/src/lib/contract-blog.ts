@@ -4,7 +4,6 @@ import { initContract } from '@ts-rest/core';
 import { mediaContract } from './contract-media';
 import { contentContract } from './contract-content';
 import { userContract } from './contract-user';
-// import { MediaContract } from './contract-media';
 
 const c = initContract();
 

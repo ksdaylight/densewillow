@@ -9,7 +9,6 @@ import Link from '@tiptap/extension-link';
 import { MultipartFile } from '@fastify/multipart';
 import { isNil } from 'lodash';
 import TipTapImage from '@tiptap/extension-image';
-// import { apiClient, baseApiUrl } from 'packages/admin/app/admin/';
 
 import { useTsRestQueryClient } from '@ts-rest/react-query';
 
@@ -17,7 +16,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useRouter } from 'next/navigation';
 
-import { apiClient, baseApiUrl } from '../../app/admin/page';
+import { apiClient, baseApiUrl } from '../../app/page';
 
 import ActionButton from '../common/ActionButton';
 

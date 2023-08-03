@@ -4,12 +4,13 @@ import { FC, useCallback, useEffect, useState } from 'react';
 
 // import { getCookies } from 'cookies-next';
 
-import InfiniteScrollPosts from '../components/common/InfiniteScrollPosts';
 import { PostDetail } from '../utils/types';
 
 import { filterPosts, formatPosts } from '../utils/helps';
 
-import { apiClient } from './admin/page';
+import InfiniteScrollPosts from '../components/common/InfiniteScrollPosts';
+
+import { apiClient } from './page'; // './page';
 
 interface Props {
     isAdmin?: boolean;

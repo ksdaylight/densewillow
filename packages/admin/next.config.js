@@ -20,10 +20,8 @@ const nextConfig = {
         domains: ['192.168.80.6'],
     },
     env: {
-        APP_PREFIX: process.env.APP_PREFIX || 'test',
-    },
-    experimental: {
-        serverActions: true,
+        APP_PREFIX: process.env.APP_PREFIX || 'api',
+        SERVER_BASE_URL: process.env.SERVER_BASE_URL || '',
     },
 };
 

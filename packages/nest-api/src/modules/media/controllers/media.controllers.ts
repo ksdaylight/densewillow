@@ -5,7 +5,7 @@ import {
     tsRestHandler,
     TsRestHandler,
 } from '@ts-rest/nest';
-import { apiBlog } from 'api-contracts';
+import { apiBlog } from '@api-contracts';
 
 import { FastifyReply } from 'fastify';
 

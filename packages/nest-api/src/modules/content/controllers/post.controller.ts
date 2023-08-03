@@ -2,7 +2,7 @@ import { Controller, Req } from '@nestjs/common';
 
 import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
 
-import { apiBlog } from 'api-contracts';
+import { apiBlog } from '@api-contracts';
 
 import { MultipartFile } from '@fastify/multipart';
 

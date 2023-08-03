@@ -6,9 +6,8 @@ import { filterPosts, formatPosts } from '../../../utils/helps';
 
 import { PostDetail } from '../../../utils/types';
 
-import { apiClient } from '../page';
-
 import InfiniteScrollPosts from '../../../components/common/InfiniteScrollPosts';
+import { apiClient } from '../../page';
 
 interface Props {}
 const PostAdmin: FC<Props> = (): JSX.Element => {

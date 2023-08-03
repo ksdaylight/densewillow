@@ -44,12 +44,12 @@ export const defaultUserConfig = (configure: Configure): UserConfig => {
         hash: 10,
         jwt: {
             secret: configure.env('USER_TOKEN_SECRET', 'my-refresh-secret'),
-            token_expired: configure.env('USER_TOKEN_EXPIRED', (v) => toNumber(v), 60),
+            token_expired: configure.env('USER_TOKEN_EXPIRED', (v) => toNumber(v), 3600),
             refresh_secret: configure.env('USER_REFRESH_TOKEN_SECRET', 'my-refresh-secret'),
             refresh_token_expired: configure.env(
                 'USER_REFRESH_TOKEN_EXPIRED',
                 (v) => toNumber(v),
-                120,
+                3600 * 12,
             ),
         },
         github: {

@@ -2,7 +2,7 @@ import { Post, MediaEntity } from '@prisma/client/blog';
 
 import { isNil } from 'lodash';
 
-import { baseApiUrl } from '../app/admin/page';
+import { baseApiUrl } from '../app/page';
 
 import { PostDetail } from './types';
 
@@ -25,4 +25,3 @@ export const filterPosts = (posts: PostDetail[], postToFilter: PostDetail) => {
         return post.id !== postToFilter.id;
     });
 };
-// TODO thumbal image

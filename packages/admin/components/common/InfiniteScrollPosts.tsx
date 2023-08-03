@@ -1,7 +1,7 @@
 import { FC, ReactNode, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { apiClient } from '../../app/admin/page';
+import { apiClient } from '../../app/page';
 // 'packages/admin/app/admin/page';
 
 import { PostDetail } from '../../utils/types';

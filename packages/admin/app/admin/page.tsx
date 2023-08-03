@@ -1,18 +1,18 @@
 import { NextPage } from 'next';
-import { initQueryClient } from '@ts-rest/react-query';
+// import { initQueryClient } from '@ts-rest/react-query';
 
-import { apiBlog } from 'api-contracts';
+// import { apiBlog } from '@api-contracts';
 
 import AdminLayout from '../../components/layout/AdminLayout';
 
-export const baseApiUrl = 'http://192.168.80.6/api'; // TODO BaseUrl 替换策略
-export const apiClient = initQueryClient(apiBlog, {
-    baseUrl: 'http://192.168.80.6',
-    baseHeaders: {
-        Authorization: 'key',
-    }, // 类型需要匹配
-    credentials: 'include',
-});
+// export const baseApiUrl = 'http://192.168.80.6/api'; // TODO BaseUrl 替换策略
+// export const apiClient = initQueryClient(apiBlog, {
+//     baseUrl: 'http://192.168.80.6',
+//     baseHeaders: {
+//         Authorization: 'key',
+//     }, // 类型需要匹配
+//     credentials: 'include',
+// });
 
 interface Props {}
 const Admin: NextPage<Props> = () => {
