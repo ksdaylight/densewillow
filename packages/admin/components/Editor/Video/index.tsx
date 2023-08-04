@@ -33,7 +33,7 @@ const Video = Node.create({
             const div = document.createElement('div');
             div.className = `flex justify-center aspect-w-16 aspect-h-9${
                 editor.isEditable ? ' cursor-pointer' : ''
-            }`;
+            }`; // TODO 自动缩放
             const iframe = document.createElement('iframe');
             if (editor.isEditable) {
                 iframe.className = 'pointer-events-none';

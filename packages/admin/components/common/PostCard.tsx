@@ -5,6 +5,7 @@ import dateformat from 'dateformat';
 import Link from 'next/link';
 
 import { PostDetail } from '../../utils/types';
+import { trimText } from '../../utils/helps';
 
 interface Props {
     post: PostDetail;
@@ -12,11 +13,6 @@ interface Props {
     controls?: boolean;
     onDeleteClick?(): void;
 }
-
-const trimText = (text: string, trimBy: number) => {
-    if (text.length <= trimBy) return text;
-    return `${text.substring(0, trimBy).trim()}...`;
-};
 
 const PostCard: FC<Props> = ({ controls = false, post, busy, onDeleteClick }): JSX.Element => {
     const { title, slug, meta, createdAt, tags, thumbnail } = post;

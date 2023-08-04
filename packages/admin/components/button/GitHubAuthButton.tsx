@@ -31,7 +31,7 @@ export const GitHubAuthButton: FC<Props> = ({ lightOnly }): JSX.Element => {
     //     },
     // );
     const handleClick = async () => {
-        window.location.href = 'http://127.0.0.1:3100/api/auth/github';
+        window.location.href = 'http://192.168.80.6/api/auth/github'; // TODO 需要改
         // await refetch();
         // if (data?.status === 200) {
         //     console.log(data?.body.message);
