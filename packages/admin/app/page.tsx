@@ -27,7 +27,7 @@ const Index: NextPage<Props> = async () => {
     console.log(token);
     await fetch(`http://127.0.0.1:3100/api/test`, {
         headers: {
-            authorization: `bearer ${token?.value || ''}`, // Use your cookie
+            authorization: `bearer ${token?.value || ''}`,
         },
     });
 

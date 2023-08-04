@@ -17,7 +17,7 @@ const nextConfig = {
         svgr: false,
     },
     images: {
-        domains: ['192.168.80.6'],
+        domains: ['192.168.80.6', 'avatars.githubusercontent.com'],
     },
     env: {
         APP_PREFIX: process.env.APP_PREFIX || 'api',

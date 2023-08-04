@@ -25,3 +25,7 @@ export const filterPosts = (posts: PostDetail[], postToFilter: PostDetail) => {
         return post.id !== postToFilter.id;
     });
 };
+export const trimText = (text: string, trimBy: number) => {
+    if (text.length <= trimBy) return text;
+    return `${text.substring(0, trimBy).trim()}...`;
+};
