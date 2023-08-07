@@ -108,15 +108,118 @@ export const contentContract = c.router(
                 image: z.unknown().optional(),
             }),
             summary: 'Update a post',
-            // metadata: {
-            //     roles: ['user'],
-            //     resource: 'post',
-            //     identifierPath: 'params.id',
-            // } as const,
         },
         deletePost: {
             method: 'DELETE',
             path: `/post/:id`,
+            pathParams: z.object({
+                id: ObjectIdSchema,
+            }),
+            responses: {
+                200: z.object({ message: z.string() }),
+                404: z.object({ message: z.string() }),
+            },
+            body: null,
+        },
+        getCommentsByPostId: {
+            method: 'GET',
+            path: `/comments-by-post`,
+            query: z.object({
+                belongsTo: ObjectIdSchema,
+                take: z
+                    .string()
+                    .transform(Number)
+                    .refine((n) => !Number.isNaN(n), {
+                        message: 'take must be a valid number',
+                    }),
+                skip: z
+                    .string()
+                    .transform(Number)
+                    .refine((n) => !Number.isNaN(n), {
+                        message: 'take must be a valid number',
+                    }),
+            }),
+            summary: 'Get all Comments',
+
+            responses: {
+                200: z.any(),
+                404: z.null(),
+            },
+        },
+        getComments: {
+            method: 'GET',
+            path: `/comments`,
+            query: z.object({
+                take: z
+                    .string()
+                    .transform(Number)
+                    .refine((n) => !Number.isNaN(n), {
+                        message: 'take must be a valid number',
+                    }),
+                skip: z
+                    .string()
+                    .transform(Number)
+                    .refine((n) => !Number.isNaN(n), {
+                        message: 'take must be a valid number',
+                    }),
+            }),
+            summary: 'Get all Comments',
+
+            responses: {
+                200: z.any(),
+                404: z.null(),
+            },
+        },
+        createChiefComment: {
+            method: 'POST',
+            path: '/comment',
+            body: z.object({
+                content: z.string(),
+                belongsTo: ObjectIdSchema,
+            }),
+            responses: {
+                201: z.any(),
+                404: z.null(),
+            },
+        },
+        addReplay: {
+            method: 'POST',
+            path: '/comment/add-replay',
+            body: z.object({
+                content: z.string(),
+                repliedTo: ObjectIdSchema,
+            }),
+            responses: {
+                201: z.any(),
+                404: z.null(),
+            },
+        },
+        updateLike: {
+            method: 'POST',
+            path: '/comment/update-like',
+            body: z.object({
+                id: ObjectIdSchema,
+            }),
+            responses: {
+                201: z.any(),
+                404: z.null(),
+            },
+        },
+        updateComment: {
+            method: 'PATCH',
+            path: `/comment`,
+            body: z.object({
+                content: z.string(),
+                id: ObjectIdSchema,
+            }),
+            responses: {
+                201: z.any(),
+                404: z.null(),
+            },
+        },
+        deleteComment: {
+            method: 'DELETE',
+            path: `/comment/:id`,
             pathParams: z.object({
                 id: ObjectIdSchema,
             }),

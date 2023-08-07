@@ -34,10 +34,20 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
         if (isNil(user)) {
             user = await this.userService.create({
                 email: profile.emails[0].value,
+                avatar: profile.photos[0].value,
                 name: profile.displayName,
                 provider: 'github',
                 activated: true,
             });
+        } else {
+            if (user?.avatar !== profile.photos[0].value) {
+                this.userService.updateUser({
+                    where: { id: user.id },
+                    data: {
+                        avatar: profile.photos[0].value,
+                    },
+                });
+            }
         }
         done(null, user);
     }

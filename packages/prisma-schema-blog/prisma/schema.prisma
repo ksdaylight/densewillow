@@ -104,8 +104,8 @@ model AccessToken {
 
 model Comment {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  belongsTo    Post      @relation(fields: [belongsToId], references: [id], name: "CommentPostRelation" )
-  belongsToId  String    @db.ObjectId
+  belongsTo    Post?      @relation(fields: [belongsToId], references: [id], name: "CommentPostRelation" )
+  belongsToId  String?    @db.ObjectId
   owner        User      @relation(fields: [ownerId], references: [id], name: "CommentOwnerRelation")
   ownerId      String    @db.ObjectId
   content      String
