@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Image from 'next/legacy/image';
 import dateFormat from 'dateformat';
 import parse from 'html-react-parser';
@@ -11,11 +11,15 @@ import DefaultLayout from '../../components/layout/DefaultLayout';
 import { apiClient, baseApiUrl } from '../page';
 
 // import { apiClient, baseApiUrl } from '../admin/page';
+const host = 'https://densewillow.com';
 
 interface Props {
     initialSlug?: string;
 }
 const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
+    const [likes, setLikes] = useState({ likedByOwner: false, count: 0 });
+    const [liking, setLiking] = useState(false);
+
     const { data: postData } = apiClient.content.getPostBySlug.useQuery(
         ['getPostBySlug', initialSlug || ''],
         {
@@ -28,7 +32,8 @@ const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
     if (!postData) {
         return <>nothing</>;
     }
-    const { title, content, tags, meta, thumbnail, createdAt } = postData.body;
+    const { id, title, content, tags, meta, authorId, slug, thumbnail, createdAt, relatedPosts } =
+        postData.body;
     return (
         <DefaultLayout title={title} desc={meta}>
             <div className="pb-20">

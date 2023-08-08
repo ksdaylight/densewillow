@@ -1,7 +1,7 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
-import { MultipartValueZod, ObjectIdSchema, PostSchema } from './types';
+import { CommentFormatSchema, MultipartValueZod, ObjectIdSchema, PostSchema } from './types';
 
 const c = initContract();
 
@@ -142,7 +142,13 @@ export const contentContract = c.router(
             summary: 'Get all Comments',
 
             responses: {
-                200: z.any(),
+                200: z.object({
+                    comments: CommentFormatSchema.array(),
+                    count: z.number(),
+                    skip: z.number(),
+                    take: z.number(),
+                }),
+
                 404: z.null(),
             },
         },
@@ -166,7 +172,13 @@ export const contentContract = c.router(
             summary: 'Get all Comments',
 
             responses: {
-                200: z.any(),
+                200: z.object({
+                    comments: CommentFormatSchema.array(),
+                    count: z.number(),
+                    skip: z.number(),
+                    take: z.number(),
+                }),
+
                 404: z.null(),
             },
         },
@@ -178,7 +190,7 @@ export const contentContract = c.router(
                 belongsTo: ObjectIdSchema,
             }),
             responses: {
-                201: z.any(),
+                201: CommentFormatSchema,
                 404: z.null(),
             },
         },
@@ -190,7 +202,7 @@ export const contentContract = c.router(
                 repliedTo: ObjectIdSchema,
             }),
             responses: {
-                201: z.any(),
+                201: CommentFormatSchema,
                 404: z.null(),
             },
         },
@@ -213,7 +225,7 @@ export const contentContract = c.router(
                 id: ObjectIdSchema,
             }),
             responses: {
-                201: z.any(),
+                201: CommentFormatSchema,
                 404: z.null(),
             },
         },

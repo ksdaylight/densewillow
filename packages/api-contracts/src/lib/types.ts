@@ -25,6 +25,20 @@ export const PostSchema = z.object({
     createdAt: z.date(),
     updatedAt: z.date(),
 });
+export const CommentFormatSchema = z.object({
+    id: z.string(),
+    content: z.string().nullable(),
+    likes: z.number(),
+    chiefComment: z.boolean(),
+    createdAt: z.string(),
+    owner: z.object({
+        id: z.string(),
+        name: z.string(),
+        avatar: z.string(),
+    }),
+    repliedTo: z.string(),
+    likedByOwner: z.boolean(),
+});
 
 export const MultipartValueZod = z
     .object({

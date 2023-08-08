@@ -17,7 +17,7 @@ const PostAdmin: FC<Props> = (): JSX.Element => {
     const limit = 9;
     const { data, isFetching, fetchNextPage, hasNextPage } =
         apiClient.content.getPosts.useInfiniteQuery(
-            ['getPosts', '1'],
+            ['getPosts', '2'],
             ({ pageParam = { skip: 0, take: limit } }) => ({
                 query: { skip: pageParam.skip, take: pageParam.take },
             }),

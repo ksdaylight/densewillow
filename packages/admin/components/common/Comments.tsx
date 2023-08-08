@@ -1,9 +1,10 @@
-import axios from 'axios';
 import { FC, useEffect, useState } from 'react';
 
 // import useAuth from '../../hooks/useAuth';
 
 import { User } from '@prisma/client/blog';
+
+import { isNil } from 'lodash';
 
 import { CommentResponse } from '../../utils/types';
 import { GitHubAuthButton } from '../button';
@@ -21,12 +22,12 @@ interface Props {
 }
 
 const limit = 5;
-let currentPageNo = 0;
+// const currentPageNo = 0;
 
 const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
     const [comments, setComments] = useState<CommentResponse[]>();
     const [showConfirmModal, setShowConfirmModal] = useState(false);
-    const [reachedToEnd, setReachedToEnd] = useState(false);
+    // const [reachedToEnd, setReachedToEnd] = useState(false);
     const [busyCommentLike, setBusyCommentLike] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [selectedComment, setSelectedComment] = useState<CommentResponse | null>(null);
@@ -128,36 +129,92 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
         setComments([...newComments]);
     };
 
-    const handleNewCommentSubmit = async (content: string) => {
-        setSubmitting(true);
-        try {
-            const newComment = await axios
-                .post('/api/comment', { content, belongsTo })
-                .then(({ data }) => data.comment)
-                .catch((err) => console.log(err));
+    // const handleNewCommentSubmit = async (content: string) => {
+    //     setSubmitting(true);
+    //     try {
+    //         const newComment = await axios
+    //             .post('/api/comment', { content, belongsTo })
+    //             .then(({ data }) => data.comment)
+    //             .catch((err) => console.log(err));
+    //         if (newComment && comments) setComments([...comments, newComment]);
+    //         else setComments([newComment]);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+
+    //     setSubmitting(false);
+    // };
+    const { mutate: addChiefCommentMutate } = apiClient.content.createChiefComment.useMutation({
+        onSuccess: (data, variables, context) => {
+            const newComment = data.body as CommentResponse;
             if (newComment && comments) setComments([...comments, newComment]);
             else setComments([newComment]);
-        } catch (error) {
+        },
+        onError: (error, variables, context) => {
             console.log(error);
-        }
+        },
+    });
 
+    const handleNewCommentSubmit = async (content: string) => {
+        setSubmitting(true);
+        if (!isNil(belongsTo)) {
+            addChiefCommentMutate({
+                body: {
+                    content,
+                    belongsTo,
+                },
+            });
+        } else {
+            console.log('no belongs to !!');
+        }
         setSubmitting(false);
     };
 
+    // const handleReplySubmit = (replyComment: { content: string; repliedTo: string }) => {
+    //     axios
+    //         .post('/api/comment/add-reply', replyComment)
+    //         .then(({ data }) => insertNewReplyComments(data.comment))
+    //         .catch((err) => console.log(err));
+    // };
+
+    const { mutate: addReplyMutate } = apiClient.content.addReplay.useMutation({
+        onSuccess: (data, variables, context) => {
+            insertNewReplyComments(data.body as CommentResponse);
+        },
+        onError: (error, variables, context) => {
+            console.log(error);
+        },
+    });
+
     const handleReplySubmit = (replyComment: { content: string; repliedTo: string }) => {
-        axios
-            .post('/api/comment/add-reply', replyComment)
-            .then(({ data }) => insertNewReplyComments(data.comment))
-            .catch((err) => console.log(err));
+        addReplyMutate({
+            body: replyComment,
+        });
     };
+    // const handleUpdateSubmit = (content: string, id: string) => {
+    //     axios
+    //         .patch(`/api/comment?commentId=${id}`, { content })
+    //         .then(({ data }) => updateEditedComment(data.comment))
+    //         .catch((err) => console.log(err));
+    // };
+
+    const { mutate: updateMutate } = apiClient.content.updateComment.useMutation({
+        onSuccess: (data, variables, context) => {
+            updateEditedComment(data.body as CommentResponse);
+        },
+        onError: (error, variables, context) => {
+            console.log(error);
+        },
+    });
 
     const handleUpdateSubmit = (content: string, id: string) => {
-        axios
-            .patch(`/api/comment?commentId=${id}`, { content })
-            .then(({ data }) => updateEditedComment(data.comment))
-            .catch((err) => console.log(err));
+        updateMutate({
+            body: {
+                id,
+                content,
+            },
+        });
     };
-
     const handleOnDeleteClick = (comment: CommentResponse) => {
         setCommentToDelete(comment);
         setShowConfirmModal(true);
@@ -168,82 +225,195 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
         setShowConfirmModal(false);
     };
 
+    // const handleOnDeleteConfirm = () => {
+    //     if (!commentToDelete) return;
+
+    //     axios
+    //         .delete(`/api/comment?commentId=${commentToDelete.id}`)
+    //         .then(({ data }) => {
+    //             if (data.removed) updateDeletedComments(commentToDelete);
+    //         })
+    //         .catch((err) => console.log(err))
+    //         .finally(() => {
+    //             setCommentToDelete(null);
+    //             setShowConfirmModal(false);
+    //         });
+    // };
+    const { mutate: deleteMutate } = apiClient.content.deleteComment.useMutation({
+        onSuccess: (data, variables, context) => {
+            if (data.status === 200) {
+                if (commentToDelete) updateDeletedComments(commentToDelete);
+            }
+            setBusyCommentLike(false);
+            setSelectedComment(null);
+        },
+        onError: (error, variables, context) => {
+            console.log(error);
+        },
+        onSettled: () => {
+            setCommentToDelete(null);
+            setShowConfirmModal(false);
+        },
+    });
+
     const handleOnDeleteConfirm = () => {
         if (!commentToDelete) return;
-
-        axios
-            .delete(`/api/comment?commentId=${commentToDelete.id}`)
-            .then(({ data }) => {
-                if (data.removed) updateDeletedComments(commentToDelete);
-            })
-            .catch((err) => console.log(err))
-            .finally(() => {
-                setCommentToDelete(null);
-                setShowConfirmModal(false);
-            });
+        deleteMutate({
+            params: {
+                id: commentToDelete.id,
+            },
+        });
     };
-
+    const { mutate: updateLikeMutate } = apiClient.content.updateLike.useMutation({
+        onSuccess(data, variables, context) {
+            updateLikedComments(data.body.comment);
+            setBusyCommentLike(false);
+            setSelectedComment(null);
+        },
+        onError(error, variables, context) {
+            console.log(error);
+            setBusyCommentLike(false);
+            setSelectedComment(null);
+        },
+    });
     const handleOnLikeClick = (comment: CommentResponse) => {
         setBusyCommentLike(true);
         setSelectedComment(comment);
-        axios
-            .post('/api/comment/update-like', { commentId: comment.id })
-            .then(({ data }) => {
-                updateLikedComments(data.comment);
-                setBusyCommentLike(false);
-                setSelectedComment(null);
-            })
-            .catch((err) => {
-                console.log(err);
-                setBusyCommentLike(false);
-                setSelectedComment(null);
-            });
+        updateLikeMutate({
+            body: {
+                id: comment.id,
+            },
+        });
     };
+    // const handleOnLikeClick = (comment: CommentResponse) => {
+    //     setBusyCommentLike(true);
+    //     setSelectedComment(comment);
+    //     axios
+    //         .post('/api/comment/update-like', { commentId: comment.id })
+    //         .then(({ data }) => {
+    //             updateLikedComments(data.comment);
+    //             setBusyCommentLike(false);
+    //             setSelectedComment(null);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //             setBusyCommentLike(false);
+    //             setSelectedComment(null);
+    //         });
+    // };
 
     // fetching all comments
-    const fetchAllComments = async (pageNo = currentPageNo) => {
-        try {
-            const { data } = await axios(`/api/comment/all?pageNo=${pageNo}&limit=${limit}`);
 
-            if (!data.comments.length) {
-                currentPageNo -= 1;
-                return setReachedToEnd(true);
-            }
+    // const fetchAllComments = async (pageNo = currentPageNo) => {
+    //     try {
+    //         const { data } = await axios(`/api/comment/all?pageNo=${pageNo}&limit=${limit}`);
 
-            setComments(data.comments);
-        } catch (error) {
-            console.log(error);
-        }
-        return undefined;
-    };
+    //         if (!data.comments.length) {
+    //             currentPageNo -= 1;
+    //             return setReachedToEnd(true);
+    //         }
+
+    //         setComments(data.comments);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    //     return undefined;
+    // };
+
+    // const handleOnNextClick = () => {
+    //     if (reachedToEnd) return;
+    //     currentPageNo += 1;
+    //     fetchAllComments(currentPageNo);
+    // };
+
+    // const handleOnPrevClick = () => {
+    //     if (currentPageNo <= 0) return;
+    //     if (reachedToEnd) setReachedToEnd(false);
+    //     currentPageNo -= 1;
+    //     fetchAllComments(currentPageNo);
+    // };
+
+    const {
+        data: allCommentsData,
+        // isFetching,
+        fetchNextPage,
+        fetchPreviousPage,
+        hasNextPage,
+        hasPreviousPage,
+    } = apiClient.content.getComments.useInfiniteQuery(
+        ['getComments', '1'],
+        ({ pageParam = { skip: 0, take: limit } }) => ({
+            query: { skip: pageParam.skip, take: pageParam.take },
+        }),
+        {
+            staleTime: 60000,
+            getNextPageParam: (lastPage, allPages) => {
+                if (lastPage.status === 200) {
+                    if (lastPage.body.count > allPages.length * limit) {
+                        return { take: limit, skip: allPages.length * limit };
+                    }
+                    return undefined;
+                }
+                return undefined;
+            },
+        },
+    );
 
     const handleOnNextClick = () => {
-        if (reachedToEnd) return;
-        currentPageNo += 1;
-        fetchAllComments(currentPageNo);
+        if (hasNextPage) fetchNextPage();
     };
 
     const handleOnPrevClick = () => {
-        if (currentPageNo <= 0) return;
-        if (reachedToEnd) setReachedToEnd(false);
-        currentPageNo -= 1;
-        fetchAllComments(currentPageNo);
+        if (hasPreviousPage) fetchPreviousPage();
     };
 
     useEffect(() => {
-        if (!belongsTo) return;
-        axios(`/api/comment?belongsTo=${belongsTo}`)
-            .then(({ data }) => {
-                setComments(data.comments);
-            })
-            .catch((err) => console.log(err));
-    }, [belongsTo]);
+        if (!belongsTo && fetchAll) {
+            if (allCommentsData?.pages) {
+                const newComments = allCommentsData.pages.flatMap(
+                    (page) => page.body.comments as CommentResponse[],
+                );
+                setComments(newComments);
+            }
+        }
+    }, [allCommentsData, hasNextPage, belongsTo, fetchAll]);
+    // useEffect(() => {
+    //     if (!belongsTo) return;
+    //     axios(`/api/comment?belongsTo=${belongsTo}`)
+    //         .then(({ data }) => {
+    //             setComments(data.comments);
+    //         })
+    //         .catch((err) => console.log(err));
+    // }, [belongsTo]);
+
+    const { data: commentsByBelongsData, isError } = apiClient.content.getCommentsByPostId.useQuery(
+        ['comments', belongsTo],
+        {
+            query: {
+                take: String(100),
+                skip: String(0),
+                belongsTo: belongsTo || '',
+            },
+        },
+        {
+            enabled: !!belongsTo, // Only run the query if belongsTo is defined
+        },
+    );
 
     useEffect(() => {
-        if (!belongsTo && fetchAll) {
-            fetchAllComments();
+        if (!belongsTo) return;
+        if (!isNil(commentsByBelongsData)) {
+            setComments(commentsByBelongsData.body.comments as CommentResponse[]);
         }
-    }, [belongsTo, fetchAll]);
+    }, [commentsByBelongsData, belongsTo]);
+
+    if (isError) console.log('An error occurred');
+
+    // useEffect(() => {
+    //     if (!belongsTo && fetchAll) {
+    //         fetchAllComments();
+    //     }
+    // }, [belongsTo, fetchAll]);
 
     return (
         <div className="py-20 space-y-4">
