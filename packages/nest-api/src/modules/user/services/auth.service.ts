@@ -28,19 +28,15 @@ import { TokenService } from './token.service';
 export class AuthService {
     constructor(private readonly tokenService: TokenService, protected prisma: PrismaService) {}
 
-    async validateUser(credential: string, password: string) {
-        // const user = await this.userService.findOneByCredential(credential, async (query) =>
-        //     query.addSelect('user.password'),
-        // );
-        // if (user && decrypt(password, user.password)) {
-        //     return user;
-        // }//TODO Remove
-        return false;
+    async user(userWhereUniqueInput: Prisma.UserWhereUniqueInput) {
+        return this.prisma.user.findUnique({
+            where: userWhereUniqueInput,
+        });
     }
 
-    async getMainRole(userId: Prisma.UserWhereUniqueInput) {
+    async getMainRole(userUnique: Prisma.UserWhereUniqueInput) {
         const userInfo = await this.prisma.user.findUnique({
-            where: userId,
+            where: userUnique,
             include: {
                 roles: true,
             },

@@ -39,7 +39,6 @@ export class AuthController {
     }
 
     @TsRestHandler(c.githubAuthCallback)
-    // @Get('auth/github/callback')
     @Guest()
     @UseGuards(AuthGuard('github'))
     async githubAuthCallback(@ReqUser() user: ClassToPlain<User>, @Res() reply: FastifyReply) {
@@ -73,12 +72,23 @@ export class AuthController {
         });
     }
 
+    @TsRestHandler(c.getUserProfile)
+    async getUserProfile(@ReqUser() user: ClassToPlain<User>) {
+        return tsRestHandler(c.getUserProfile, async () => {
+            return {
+                status: 200 as const,
+                body: { user },
+            };
+        });
+    }
+
     /**
      * 注销登录
      * @param req
      */
     @Post('logout')
     async logout(@Request() req: any) {
+        // TODO logout
         return this.authService.logout(req);
     }
 }

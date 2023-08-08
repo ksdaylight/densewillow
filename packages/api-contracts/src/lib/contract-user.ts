@@ -30,6 +30,14 @@ export const userContract = c.router(
             //     image: MultipartFile;
             // }>(),
         },
+        getUserProfile: {
+            method: 'GET',
+            path: `/user-profile`,
+            responses: {
+                200: z.any(),
+                // 404: z.object({ message: z.string() }),
+            },
+        },
     },
     {
         pathPrefix: '/auth',

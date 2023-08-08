@@ -2,8 +2,13 @@ import axios from 'axios';
 import { FC, useEffect, useState } from 'react';
 
 // import useAuth from '../../hooks/useAuth';
+
+import { User } from '@prisma/client/blog';
+
 import { CommentResponse } from '../../utils/types';
 import { GitHubAuthButton } from '../button';
+
+import { apiClient } from '../../app/page';
 
 import CommentCard from './CommentCard';
 import CommentForm from './CommentForm';
@@ -27,7 +32,15 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
     const [selectedComment, setSelectedComment] = useState<CommentResponse | null>(null);
     const [commentToDelete, setCommentToDelete] = useState<CommentResponse | null>(null);
 
-    const userProfile = { id: 'test' }; // useAuth();
+    const { data: userProfileData } = apiClient.user.getUserProfile.useQuery(
+        ['getUserProfile', '1'],
+        {},
+        {
+            staleTime: 60000,
+        },
+    );
+    // const userProfile = { id: 'test' }; // useAuth();TODO need a better way
+    const userProfile = userProfileData?.body.user as User;
 
     const insertNewReplyComments = (reply: CommentResponse) => {
         if (!comments) return;
