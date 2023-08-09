@@ -1,5 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { User } from '@prisma/client/blog';
+import { isNil } from 'lodash';
 
 /**
  * 当前用户装饰器
@@ -8,5 +9,6 @@ import { User } from '@prisma/client/blog';
  */
 export const ReqUser = createParamDecorator(async (_data: unknown, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
+    if (isNil(request.user)) return null;
     return request.user as ClassToPlain<User>;
 });

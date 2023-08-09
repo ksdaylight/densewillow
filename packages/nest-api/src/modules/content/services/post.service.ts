@@ -18,6 +18,35 @@ export class PostService {
         });
     }
 
+    async findRelatePosts(post: Post) {
+        const posts = await this.prisma.post.findMany({
+            where: {
+                tags: {
+                    hasSome: post.tags,
+                },
+                NOT: {
+                    id: post.id,
+                },
+            },
+            orderBy: {
+                createdAt: 'desc',
+            },
+            take: 5,
+            select: {
+                id: true,
+                title: true,
+                slug: true,
+            },
+        });
+
+        const relatedPosts = posts.map((p) => ({
+            id: p.id,
+            title: p.title,
+            slug: p.slug,
+        }));
+        return relatedPosts;
+    }
+
     async posts(params: {
         skip?: number;
         take?: number;

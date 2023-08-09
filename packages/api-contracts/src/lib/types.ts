@@ -11,20 +11,22 @@ export const MediaSchema = z.object({
 export const ObjectIdSchema = z.string().refine((value) => /^[a-f\d]{24}$/i.test(value), {
     message: 'Invalid ObjectId',
 });
-export const PostSchema = z.object({
-    id: z.string(),
-    title: z.string(),
-    slug: z.string(),
-    content: z.string().nullable(),
-    meta: z.string(),
-    tags: z.array(z.string()),
-    thumbnailId: z.string().nullable(),
-    thumbnail: MediaSchema.nullable(),
-    likedByUserIDs: z.array(z.string()),
-    authorId: z.string(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-});
+export const PostSchema = z
+    .object({
+        id: z.string(),
+        title: z.string(),
+        slug: z.string(),
+        content: z.string().nullable(),
+        meta: z.string(),
+        tags: z.array(z.string()),
+        thumbnailId: z.string().nullable(),
+        thumbnail: MediaSchema.nullable(),
+        likedByUserIDs: z.array(z.string()),
+        authorId: z.string(),
+        createdAt: z.date(),
+        updatedAt: z.date(),
+    })
+    .passthrough();
 export const CommentFormatSchema = z.object({
     id: z.string(),
     content: z.string().nullable(),

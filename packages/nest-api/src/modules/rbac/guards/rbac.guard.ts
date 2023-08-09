@@ -29,7 +29,7 @@ export class RbacGuard extends JwtAuthGuard {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const authCheck = await super.canActivate(context);
         let request = context.switchToHttp().getRequest();
-        const requestToken = ExtractJwt.fromAuthHeaderAsBearerToken()(request);
+        const requestToken = ExtractJwt.fromAuthHeaderAsBearerToken()(request); // TODO add cookie token
         if (!authCheck) return false;
         if (authCheck && isNil(requestToken)) return true;
         const checkers = getCheckers(context, this.reflector);

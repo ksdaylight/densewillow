@@ -32,7 +32,7 @@ const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
     if (!postData) {
         return <>nothing</>;
     }
-    const { id, title, content, tags, meta, authorId, slug, thumbnail, createdAt, relatedPosts } =
+    const { id, title, content, tags, meta, author, slug, thumbnail, createdAt, relatedPosts } =
         postData.body;
     return (
         <DefaultLayout title={title} desc={meta}>

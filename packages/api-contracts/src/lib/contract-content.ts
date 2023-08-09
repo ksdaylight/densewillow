@@ -121,6 +121,34 @@ export const contentContract = c.router(
             },
             body: null,
         },
+        getPostLikeStatus: {
+            method: 'GET',
+            path: `/like-status`,
+            pathParams: z.object({
+                id: ObjectIdSchema,
+            }),
+            responses: {
+                200: z.object({ likesCount: z.string(), likedByOwner: z.boolean() }),
+                404: z.object({ message: z.string() }),
+            },
+            query: z.object({
+                postId: z.string(),
+            }),
+        },
+        updatePostLike: {
+            method: 'POST',
+            path: `/like-status`,
+            pathParams: z.object({
+                id: ObjectIdSchema,
+            }),
+            responses: {
+                200: z.object({ newLikes: z.number() }),
+                404: z.object({ message: z.string() }),
+            },
+            body: z.object({
+                postId: z.string(),
+            }),
+        },
         getCommentsByPostId: {
             method: 'GET',
             path: `/comments-by-post`,

@@ -6,7 +6,7 @@ import { apiBlog } from '@api-contracts';
 
 import { MultipartFile } from '@fastify/multipart';
 
-import { MediaEntity, Post } from '@prisma/client/blog';
+import { MediaEntity, Post, User } from '@prisma/client/blog';
 
 import { isNil } from 'lodash';
 
@@ -17,7 +17,8 @@ import { PostService } from '../services';
 import { isValidFile } from '../../media/constraints';
 import { MediaService } from '../../media/services';
 import { getTime } from '../../core/helpers';
-import { Guest } from '../../user/decorators';
+import { Guest, ReqUser } from '../../user/decorators';
+import { UserService } from '../../user/services';
 // import { PostService } from '../services/post.service';
 const c = nestControllerContract(apiBlog.content);
 
@@ -28,6 +29,7 @@ export class ContentController {
     constructor(
         private readonly postService: PostService,
         private readonly mediaService: MediaService,
+        private readonly userService: UserService,
     ) {}
 
     // @Guest()
@@ -45,6 +47,7 @@ export class ContentController {
     async getPostById() {
         return tsRestHandler(c.getPostById, async ({ params: { id } }) => {
             const post = await this.postService.post({ id: String(id) });
+
             if (post === null) {
                 return { status: 404 as const, body: null };
             }
@@ -57,10 +60,12 @@ export class ContentController {
     async getPostBySlug() {
         return tsRestHandler(c.getPostBySlug, async ({ params }) => {
             const post = await this.postService.post({ slug: String(params.slug) });
+            const relatedPosts = await this.postService.findRelatePosts(post);
+            const author = await this.userService.getAuthorInfo(post.authorId);
             if (post === null) {
                 return { status: 404 as const, body: null };
             }
-            return { status: 200 as const, body: post };
+            return { status: 200 as const, body: { author, relatedPosts, ...post } };
         });
     }
 
@@ -250,5 +255,51 @@ export class ContentController {
             jsonString = value.value as string;
         }
         return JSON.parse(jsonString);
+    }
+
+    @Guest()
+    @TsRestHandler(c.getPostLikeStatus)
+    async getPostLikeStatus(@ReqUser() user: ClassToPlain<User>) {
+        // TODO 测试Guest 时是否有用 ReqUser
+        return tsRestHandler(c.getPostLikeStatus, async ({ query: { postId } }) => {
+            const post = await this.postService.post({ id: String(postId) });
+            const likesCount = post.likedByUserIDs.length;
+            let likedByOwner = false;
+            if (!isNil(user)) {
+                likedByOwner = post.likedByUserIDs.includes(user.id as any);
+            }
+            if (post === null) {
+                return { status: 404 as const, body: { message: 'no post found' } };
+            }
+            return { status: 404 as const, body: { likesCount, likedByOwner } };
+        });
+    }
+
+    @TsRestHandler(c.updatePostLike)
+    async updatePostLike(@ReqUser() user: ClassToPlain<User>) {
+        return tsRestHandler(c.updatePostLike, async ({ body: { postId } }) => {
+            try {
+                const post = await this.postService.post({ id: postId });
+                const oldLikes = post.likedByUserIDs || [];
+                const likedBy = user.id;
+                const operation = oldLikes.includes(likedBy) ? 'disconnect' : 'connect';
+                const updatedPost = await this.postService.updatePost({
+                    where: { id: post.id },
+                    data: {
+                        likedUsers: {
+                            [operation]: {
+                                id: likedBy,
+                            },
+                        },
+                    },
+                });
+                return {
+                    status: 201 as const,
+                    body: { newLikes: updatedPost.likedByUserIDs.length },
+                };
+            } catch (error) {
+                return { status: 400 as const, body: { message: `${(error as Error).message}` } };
+            }
+        });
     }
 }
