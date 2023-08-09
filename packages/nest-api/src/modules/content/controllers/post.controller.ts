@@ -271,7 +271,7 @@ export class ContentController {
             if (post === null) {
                 return { status: 404 as const, body: { message: 'no post found' } };
             }
-            return { status: 404 as const, body: { likesCount, likedByOwner } };
+            return { status: 200 as const, body: { likesCount, likedByOwner } };
         });
     }
 
