@@ -2,16 +2,16 @@ import { NextPage } from 'next';
 
 import AdminLayout from '../../../components/layout/AdminLayout';
 
-import PostAdmin from './post-page';
+import AdminUser from './users-page';
 
 interface Props {}
 
-const Posts: NextPage<Props> = async () => {
+const Users: NextPage<Props> = () => {
     return (
         <AdminLayout>
-            <PostAdmin />
+            <AdminUser />
         </AdminLayout>
     );
 };
 
-export default Posts;
+export default Users;

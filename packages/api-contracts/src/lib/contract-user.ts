@@ -38,6 +38,34 @@ export const userContract = c.router(
                 // 404: z.object({ message: z.string() }),
             },
         },
+        getUsers: {
+            method: 'GET',
+            path: '/users',
+            responses: {
+                200: z.object({
+                    users: z.any(),
+                    count: z.number(),
+                    skip: z.number(),
+                    take: z.number(),
+                }),
+                404: z.null(),
+            },
+            query: z.object({
+                take: z
+                    .string()
+                    .transform(Number)
+                    .refine((n) => !Number.isNaN(n), {
+                        message: 'take must be a valid number',
+                    }),
+                skip: z
+                    .string()
+                    .transform(Number)
+                    .refine((n) => !Number.isNaN(n), {
+                        message: 'take must be a valid number',
+                    }),
+            }),
+            summary: 'Get all user',
+        },
     },
     {
         pathPrefix: '/auth',

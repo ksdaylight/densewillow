@@ -4,7 +4,7 @@ import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/n
 
 import { apiBlog } from '@api-contracts';
 
-import { User, Comment } from '@prisma/client/blog';
+import { User, Comment, Post } from '@prisma/client/blog';
 
 import { FastifyRequest } from 'fastify';
 
@@ -84,6 +84,7 @@ export class CommentController {
                             owner: true,
                         },
                     },
+                    belongsTo: true,
                 },
             });
 
@@ -98,7 +99,10 @@ export class CommentController {
         });
     }
 
-    async formatCommentAndReplies(comment: Comment & { replies?: Comment[] }, userId?: string) {
+    async formatCommentAndReplies(
+        comment: Comment & { replies?: Comment[] } & { belongsTo?: Post },
+        userId?: string,
+    ) {
         const formattedComment = await this.commentService.formatComment(comment, userId);
         const formattedReplies = comment.replies
             ? await Promise.all(
@@ -107,7 +111,16 @@ export class CommentController {
                   ),
               )
             : [];
-        return { ...formattedComment, replies: formattedReplies };
+
+        return {
+            ...formattedComment,
+            replies: formattedReplies,
+            belongsTo: {
+                id: comment.belongsTo.id,
+                title: comment.belongsTo.title,
+                slug: comment.belongsTo.slug,
+            },
+        };
     }
 
     @TsRestHandler(c.createChiefComment)

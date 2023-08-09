@@ -57,8 +57,8 @@ const Editor: FC<Props> = ({
         slug: '',
     });
 
-    const apiQueryClient = useTsRestQueryClient(apiClient);
-    const queryClientOriginal = useQueryClient();
+    const apiQueryClient = useTsRestQueryClient(apiClient); // TODO 这个不是自己就有的吗
+    const queryClientOriginal = useQueryClient(); // 这个用refetch就可以吧
 
     const router = useRouter();
 

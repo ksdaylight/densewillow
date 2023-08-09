@@ -40,6 +40,11 @@ export const CommentFormatSchema = z.object({
     }),
     repliedTo: z.string(),
     likedByOwner: z.boolean(),
+    belongsTo: z.object({
+        id: z.string(),
+        title: z.string(),
+        slug: z.string(),
+    }),
 });
 
 export const MultipartValueZod = z
