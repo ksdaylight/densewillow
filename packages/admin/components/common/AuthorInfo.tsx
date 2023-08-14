@@ -19,7 +19,7 @@ const AuthorInfo: FC<Props> = ({ profile }): JSX.Element => {
             {/* profile icons */}
             <div className="w-12">
                 <div className="aspect-square relative">
-                    <Image src={avatar} layout="fill" alt={name} className="rounded" />
+                    {avatar && <Image src={avatar} layout="fill" alt={name} className="rounded" />}
                 </div>
             </div>
             {/* profile name, message */}

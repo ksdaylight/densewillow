@@ -45,7 +45,7 @@ const Home: FC<Props> = ({ isAdmin = false }): JSX.Element => {
         {},
         {
             staleTime: 18000,
-        },
+        }, // TODO remove test
     );
     console.log(testData);
 

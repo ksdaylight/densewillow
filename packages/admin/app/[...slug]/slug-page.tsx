@@ -12,7 +12,6 @@ import Link from 'next/link';
 import LikeHeart from '../../components/common/LikeHeart';
 
 import AuthorInfo from '../../components/common/AuthorInfo';
-
 import Comments from '../../components/common/Comments';
 
 import DefaultLayout from '../../components/layout/DefaultLayout';
@@ -28,7 +27,6 @@ interface Props {
 const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
     const [likes, setLikes] = useState({ likedByOwner: false, count: 0 });
     const [liking, setLiking] = useState(false);
-
     const { data: postData } = apiClient.content.getPostBySlug.useQuery(
         ['getPostBySlug', initialSlug || ''],
         {
@@ -41,6 +39,7 @@ const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
 
     const { id, title, content, tags, meta, author, slug, thumbnail, createdAt, relatedPosts } =
         postData!.body;
+
     const getLikeLabel = useCallback((): string => {
         const { likedByOwner, count } = likes;
 
@@ -112,19 +111,15 @@ const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
     return (
         <DefaultLayout title={title} desc={meta}>
             <div className="lg:px-0 px-3">
-                {thumbnail ? (
-                    <div className="relative aspect-video">
+                <div className="relative aspect-video">
+                    {thumbnail && (
                         <Image
-                            src={
-                                !isNil(thumbnail)
-                                    ? `${baseApiUrl}/images/${thumbnail.id}${thumbnail.ext}`
-                                    : ''
-                            }
+                            src={`${baseApiUrl}/images/${thumbnail.id}${thumbnail.ext}`}
                             alt={title}
                             layout="fill"
                         />
-                    </div>
-                ) : null}
+                    )}
+                </div>
 
                 <h1 className="text-6xl font-semibold text-primary-dark dark:text-primary py-2">
                     {title}

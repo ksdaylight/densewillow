@@ -25,6 +25,25 @@ export const PostSchema = z
         authorId: z.string(),
         createdAt: z.date(),
         updatedAt: z.date(),
+        relatedPosts: z
+            .array(
+                z.object({
+                    id: z.string(),
+                    title: z.string(),
+                    slug: z.string(),
+                }),
+            )
+            .nullable()
+            .optional(),
+        author: z
+            .object({
+                id: z.string(),
+                name: z.string(),
+                avatar: z.string(),
+                message: z.string(),
+            })
+            .nullable()
+            .optional(),
     })
     .passthrough();
 export const CommentFormatSchema = z.object({

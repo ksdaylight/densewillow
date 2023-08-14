@@ -22,7 +22,7 @@ export class PostService {
         const posts = await this.prisma.post.findMany({
             where: {
                 tags: {
-                    hasSome: post.tags,
+                    hasSome: post.tags || '',
                 },
                 NOT: {
                     id: post.id,

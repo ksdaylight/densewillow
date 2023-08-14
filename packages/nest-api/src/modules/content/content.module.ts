@@ -4,6 +4,8 @@ import { ModuleBuilder } from '../core/decorators';
 
 import { MediaModule } from '../media/media.modules';
 
+import { UserModule } from '../user/user.module';
+
 import * as services from './services';
 
 import * as controllers from './controllers';
@@ -13,7 +15,7 @@ import { ContentRbac } from './rbac';
     const providers: ModuleMetadata['providers'] = [...Object.values(services), ContentRbac];
 
     return {
-        imports: [MediaModule],
+        imports: [MediaModule, UserModule],
         providers,
         controllers: Object.values(controllers),
         exports: [...Object.values(services)],

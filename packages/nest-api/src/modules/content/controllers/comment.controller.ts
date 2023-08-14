@@ -1,4 +1,4 @@
-import { Controller, Req } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 
 import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
 
@@ -6,11 +6,8 @@ import { apiBlog } from '@api-contracts';
 
 import { User, Comment, Post } from '@prisma/client/blog';
 
-import { FastifyRequest } from 'fastify';
-
 import { CommentService } from '../services';
 
-import { getTime } from '../../core/helpers';
 import { Guest, ReqUser } from '../../user/decorators';
 // import { PostService } from '../services/post.service';
 const c = nestControllerContract(apiBlog.content);
@@ -20,16 +17,6 @@ const c = nestControllerContract(apiBlog.content);
 @Controller()
 export class CommentController {
     constructor(private readonly commentService: CommentService) {}
-
-    // @Guest()
-    // @Permission(testChecker)
-    @TsRestHandler(c.testGet)
-    async getTest(@Req() req: FastifyRequest) {
-        // console.log(req);
-        return tsRestHandler(c.testGet, async () => {
-            return { status: 200, body: `${await getTime()}test success` };
-        });
-    }
 
     @Guest()
     @TsRestHandler(c.getCommentsByPostId)

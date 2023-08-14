@@ -358,8 +358,8 @@ importers:
         specifier: ^29.4.1
         version: 29.4.1
       next-share:
-        specifier: ^0.19.0
-        version: 0.19.0(react@18.2.0)
+        specifier: 0.24.0
+        version: 0.24.0(react@18.2.0)
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
@@ -10557,8 +10557,8 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /next-share@0.19.0(react@18.2.0):
-    resolution: {integrity: sha512-egqNtBkyoP/takhLK7yxcuXIOMnj55hQfBCdpq5iBkruqJM4JXcdtvQ7HvxYvLKrbWQ99ayKEcsv9dXwSdTd8g==}
+  /next-share@0.24.0(react@18.2.0):
+    resolution: {integrity: sha512-6cA2lwcUnzk6kAqfeXXcqGKkV9EHWL4dpIP6QuO7dXmWWxLdvMqFbgvBJfG6vFGiMY/QPQ7jS7P+nLdSZhTfRA==}
     engines: {node: '>=8', npm: '>=5'}
     peerDependencies:
       react: '>=17.0.2'
