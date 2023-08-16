@@ -14,35 +14,35 @@ import { APP_NAME } from '../AppHead';
 import DropdownOptions, { DropDownOptions } from '../DropdownOptions';
 import Logo from '../Logo';
 import ProfileHead from '../ProfileHead';
+import { useRoleInfoContext } from '../../../context/role-info';
 
-interface Props {
-    isAuth?: boolean;
-    isAdmin?: boolean;
-}
+interface Props {}
 
 const defaultOptions: DropDownOptions = [
     {
         label: 'Logout',
         async onClick() {
             // await signOut();
-        },
+        }, // TODO
     },
 ];
 
-const UserNav: FC<Props> = ({ isAuth = false, isAdmin = false }): JSX.Element => {
+const UserNav: FC<Props> = (): JSX.Element => {
     const { toggleTheme } = useDarkMode();
+    const { userInfoLocal } = useRoleInfoContext();
     const router = useRouter();
-    const dropDownOptions: DropDownOptions = isAdmin
-        ? [
-              {
-                  label: 'Dashboard',
-                  onClick() {
-                      router.push('/admin');
+    const dropDownOptions: DropDownOptions =
+        userInfoLocal.role === 'super-admin'
+            ? [
+                  {
+                      label: 'Dashboard',
+                      onClick() {
+                          router.push('/admin');
+                      },
                   },
-              },
-              ...defaultOptions,
-          ]
-        : defaultOptions;
+                  ...defaultOptions,
+              ]
+            : defaultOptions;
 
     return (
         <div className="flex items-center justify-between bg-primary-dark p-3">
@@ -60,15 +60,15 @@ const UserNav: FC<Props> = ({ isAuth = false, isAdmin = false }): JSX.Element =>
                     <HiLightBulb size={34} />
                 </button>
 
-                {isAuth ? (
+                {userInfoLocal.role !== 'guest' ? (
                     <DropdownOptions
                         options={dropDownOptions}
                         head={
                             <ProfileHead
-                                // nameInitial={profile?.name[0].toUpperCase()}
-                                // avatar={profile?.avatar}
+                                nameInitial={userInfoLocal?.name?.toUpperCase()}
+                                avatar={userInfoLocal.avatar}
                                 lightOnly
-                            /> // TODO     first
+                            />
                         }
                     />
                 ) : (

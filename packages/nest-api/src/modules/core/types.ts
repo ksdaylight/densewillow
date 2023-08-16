@@ -4,8 +4,9 @@ import { NestFastifyApplication } from '@nestjs/platform-fastify';
 
 import dayjs from 'dayjs';
 
-import { Configure } from './configure';
 import { IAuthGuard } from '@nestjs/passport';
+
+import { Configure } from './configure';
 /** ******************** 应用配置  ********************* */
 
 /**
@@ -16,7 +17,7 @@ export interface AppConfig {
 
     port: number;
 
-    globalPrefix?: string; // TODO not work !
+    globalPrefix?: string;
 
     https: boolean;
 

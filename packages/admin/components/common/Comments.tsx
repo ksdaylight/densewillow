@@ -1,8 +1,6 @@
+'use client';
+
 import { FC, useEffect, useState } from 'react';
-
-// import useAuth from '../../hooks/useAuth';
-
-import { User } from '@prisma/client/blog';
 
 import { isNil } from 'lodash';
 
@@ -10,6 +8,8 @@ import { CommentResponse } from '../../utils/types';
 import { GitHubAuthButton } from '../button';
 
 import { apiClient } from '../../app/page';
+
+import { useRoleInfoContext } from '../../context/role-info';
 
 import CommentCard from './CommentCard';
 import CommentForm from './CommentForm';
@@ -24,7 +24,7 @@ interface Props {
 const limit = 5;
 // const currentPageNo = 0;
 
-const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
+const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
     const [comments, setComments] = useState<CommentResponse[]>();
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     // const [reachedToEnd, setReachedToEnd] = useState(false);
@@ -33,15 +33,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
     const [selectedComment, setSelectedComment] = useState<CommentResponse | null>(null);
     const [commentToDelete, setCommentToDelete] = useState<CommentResponse | null>(null);
 
-    const { data: userProfileData } = apiClient.user.getUserProfile.useQuery(
-        ['getUserProfile', '1'],
-        {},
-        {
-            staleTime: 60000,
-        },
-    );
-    // const userProfile = { id: 'test' }; // useAuth();TODO need a better way
-    const userProfile = userProfileData?.body.user as User;
+    const { userInfoLocal } = useRoleInfoContext();
 
     const insertNewReplyComments = (reply: CommentResponse) => {
         if (!comments) return;
@@ -110,12 +102,12 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
         if (!comments) return;
         let newComments = [...comments];
 
-        if (likedComment.chiefComment)
+        if (likedComment.chiefComment) {
             newComments = newComments.map((comment) => {
                 if (comment.id === likedComment.id) return likedComment;
                 return comment;
             });
-        else {
+        } else {
             const chiefCommentIndex = newComments.findIndex(
                 ({ id }) => id === likedComment.repliedTo,
             );
@@ -129,21 +121,6 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
         setComments([...newComments]);
     };
 
-    // const handleNewCommentSubmit = async (content: string) => {
-    //     setSubmitting(true);
-    //     try {
-    //         const newComment = await axios
-    //             .post('/api/comment', { content, belongsTo })
-    //             .then(({ data }) => data.comment)
-    //             .catch((err) => console.log(err));
-    //         if (newComment && comments) setComments([...comments, newComment]);
-    //         else setComments([newComment]);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-
-    //     setSubmitting(false);
-    // };
     const { mutate: addChiefCommentMutate } = apiClient.content.createChiefComment.useMutation({
         onSuccess: (data, variables, context) => {
             const newComment = data.body as CommentResponse;
@@ -170,13 +147,6 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
         setSubmitting(false);
     };
 
-    // const handleReplySubmit = (replyComment: { content: string; repliedTo: string }) => {
-    //     axios
-    //         .post('/api/comment/add-reply', replyComment)
-    //         .then(({ data }) => insertNewReplyComments(data.comment))
-    //         .catch((err) => console.log(err));
-    // };
-
     const { mutate: addReplyMutate } = apiClient.content.addReplay.useMutation({
         onSuccess: (data, variables, context) => {
             insertNewReplyComments(data.body as CommentResponse);
@@ -191,12 +161,6 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
             body: replyComment,
         });
     };
-    // const handleUpdateSubmit = (content: string, id: string) => {
-    //     axios
-    //         .patch(`/api/comment?commentId=${id}`, { content })
-    //         .then(({ data }) => updateEditedComment(data.comment))
-    //         .catch((err) => console.log(err));
-    // };
 
     const { mutate: updateMutate } = apiClient.content.updateComment.useMutation({
         onSuccess: (data, variables, context) => {
@@ -225,20 +189,6 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
         setShowConfirmModal(false);
     };
 
-    // const handleOnDeleteConfirm = () => {
-    //     if (!commentToDelete) return;
-
-    //     axios
-    //         .delete(`/api/comment?commentId=${commentToDelete.id}`)
-    //         .then(({ data }) => {
-    //             if (data.removed) updateDeletedComments(commentToDelete);
-    //         })
-    //         .catch((err) => console.log(err))
-    //         .finally(() => {
-    //             setCommentToDelete(null);
-    //             setShowConfirmModal(false);
-    //         });
-    // };
     const { mutate: deleteMutate } = apiClient.content.deleteComment.useMutation({
         onSuccess: (data, variables, context) => {
             if (data.status === 200) {
@@ -266,14 +216,15 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
     };
     const { mutate: updateLikeMutate } = apiClient.content.updateLike.useMutation({
         onSuccess(data, variables, context) {
-            updateLikedComments(data.body.comment);
-            setBusyCommentLike(false);
+            updateLikedComments(data.body);
             setSelectedComment(null);
         },
         onError(error, variables, context) {
             console.log(error);
-            setBusyCommentLike(false);
             setSelectedComment(null);
+        },
+        onSettled() {
+            setBusyCommentLike(false);
         },
     });
     const handleOnLikeClick = (comment: CommentResponse) => {
@@ -285,53 +236,6 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
             },
         });
     };
-    // const handleOnLikeClick = (comment: CommentResponse) => {
-    //     setBusyCommentLike(true);
-    //     setSelectedComment(comment);
-    //     axios
-    //         .post('/api/comment/update-like', { commentId: comment.id })
-    //         .then(({ data }) => {
-    //             updateLikedComments(data.comment);
-    //             setBusyCommentLike(false);
-    //             setSelectedComment(null);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //             setBusyCommentLike(false);
-    //             setSelectedComment(null);
-    //         });
-    // };
-
-    // fetching all comments
-
-    // const fetchAllComments = async (pageNo = currentPageNo) => {
-    //     try {
-    //         const { data } = await axios(`/api/comment/all?pageNo=${pageNo}&limit=${limit}`);
-
-    //         if (!data.comments.length) {
-    //             currentPageNo -= 1;
-    //             return setReachedToEnd(true);
-    //         }
-
-    //         setComments(data.comments);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    //     return undefined;
-    // };
-
-    // const handleOnNextClick = () => {
-    //     if (reachedToEnd) return;
-    //     currentPageNo += 1;
-    //     fetchAllComments(currentPageNo);
-    // };
-
-    // const handleOnPrevClick = () => {
-    //     if (currentPageNo <= 0) return;
-    //     if (reachedToEnd) setReachedToEnd(false);
-    //     currentPageNo -= 1;
-    //     fetchAllComments(currentPageNo);
-    // };
 
     const {
         data: allCommentsData,
@@ -346,7 +250,8 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
             query: { skip: pageParam.skip, take: pageParam.take },
         }),
         {
-            staleTime: 60000,
+            enabled: fetchAll,
+            // staleTime: 60000,
             getNextPageParam: (lastPage, allPages) => {
                 if (lastPage.status === 200) {
                     if (lastPage.body.count > allPages.length * limit) {
@@ -377,14 +282,6 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
             }
         }
     }, [allCommentsData, hasNextPage, belongsTo, fetchAll]);
-    // useEffect(() => {
-    //     if (!belongsTo) return;
-    //     axios(`/api/comment?belongsTo=${belongsTo}`)
-    //         .then(({ data }) => {
-    //             setComments(data.comments);
-    //         })
-    //         .catch((err) => console.log(err));
-    // }, [belongsTo]);
 
     const { data: commentsByBelongsData, isError } = apiClient.content.getCommentsByPostId.useQuery(
         ['comments', belongsTo],
@@ -409,15 +306,9 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
 
     if (isError) console.log('An error occurred');
 
-    // useEffect(() => {
-    //     if (!belongsTo && fetchAll) {
-    //         fetchAllComments();
-    //     }
-    // }, [belongsTo, fetchAll]);
-
     return (
         <div className="py-20 space-y-4">
-            {userProfile ? (
+            {userInfoLocal.role !== 'guest' ? (
                 <CommentForm
                     visible={!fetchAll}
                     onSubmit={handleNewCommentSubmit}
@@ -439,7 +330,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
                     <div key={comment.id}>
                         <CommentCard
                             comment={comment}
-                            showControls={userProfile?.id === comment.owner.id}
+                            showControls={userInfoLocal?.id === comment.owner.id}
                             onReplySubmit={(content) =>
                                 handleReplySubmit({ content, repliedTo: comment.id })
                             }
@@ -457,7 +348,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
                                         <CommentCard
                                             key={reply.id}
                                             comment={reply}
-                                            showControls={userProfile?.id === reply.owner.id}
+                                            showControls={userInfoLocal?.id === reply.owner.id}
                                             onReplySubmit={(content) =>
                                                 handleReplySubmit({
                                                     content,

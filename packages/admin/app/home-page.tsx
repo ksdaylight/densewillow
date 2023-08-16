@@ -4,22 +4,37 @@ import { FC, useCallback, useEffect, useState } from 'react';
 
 // import { getCookies } from 'cookies-next';
 
+import { getCookie } from 'cookies-next';
+
+import { User } from '@prisma/client/blog';
+
+import { isNil } from 'lodash';
+
 import { PostDetail } from '../utils/types';
 
 import { filterPosts, formatPosts } from '../utils/helps';
 
 import InfiniteScrollPosts from '../components/common/InfiniteScrollPosts';
 
+import { useRoleInfoContext } from '../context/role-info';
+
 import { apiClient } from './page'; // './page';
 
-interface Props {
-    isAdmin?: boolean;
-}
-const Home: FC<Props> = ({ isAdmin = false }): JSX.Element => {
+interface Props {}
+const Home: FC<Props> = (): JSX.Element => {
     const [postsToRender, setPostsToRender] = useState<PostDetail[]>([]);
     const [hasMorePosts, setHasMorePosts] = useState(true);
     const limit = 9;
-
+    const { userInfoLocal, setUserInfoLocal } = useRoleInfoContext();
+    const { data: userProfileData } = apiClient.user.getUserProfile.useQuery(
+        ['getUserProfile', '1'],
+        {},
+        {
+            staleTime: 60000,
+        },
+    );
+    const userProfile = userProfileData?.body.user as User;
+    const roleInfo = getCookie('user_role');
     const { data, isFetching, fetchNextPage, hasNextPage } =
         apiClient.content.getPosts.useInfiniteQuery(
             ['getPosts', '1'],
@@ -40,18 +55,25 @@ const Home: FC<Props> = ({ isAdmin = false }): JSX.Element => {
             },
         );
 
-    const { data: testData } = apiClient.content.testGet.useQuery(
-        ['userAuth2', '1'],
-        {},
-        {
-            staleTime: 18000,
-        }, // TODO remove test
-    );
-    console.log(testData);
+    // const { data: testData } = apiClient.content.testGet.useQuery(
+    //     ['userAuth2', '1'],
+    //     {},
+    //     {
+    //         staleTime: 18000,
+    //     },
+    // );
+    // console.log(testData);
 
-    // const cookieStore = getCookies();
+    useEffect(() => {
+        if (isNil(userProfile)) return;
+        setUserInfoLocal({
+            id: userProfile.id,
+            name: userProfile.name,
+            avatar: userProfile.avatar || undefined,
+            role: roleInfo as string,
+        });
+    }, [userProfile]);
 
-    // console.log(cookieStore);
     useEffect(() => {
         if (data?.pages) {
             const newPosts = data.pages.flatMap((page) => formatPosts(page.body.posts));
@@ -72,7 +94,7 @@ const Home: FC<Props> = ({ isAdmin = false }): JSX.Element => {
             next={fetchMorePosts}
             dataLength={postsToRender.length}
             posts={postsToRender}
-            showControls={isAdmin}
+            showControls={userInfoLocal.role === 'super-admin'}
             onPostRemoved={(post) => setPostsToRender(filterPosts(postsToRender, post))}
         />
     );

@@ -67,22 +67,24 @@ const AdminHome: FC<Props> = (): JSX.Element => {
         const commentsResult = latestCommentsData?.body.comments;
 
         if (!isNil(commentsResult)) {
-            const transformResult = commentsResult.map(
-                (item): LatestComment => ({
-                    id: item.id,
-                    owner: {
-                        id: item.owner.id,
-                        name: item.owner.name,
-                        avatar: item.owner.avatar,
-                    },
-                    content: item.content || '',
-                    belongsTo: {
-                        id: item.belongsTo.id,
-                        title: item.belongsTo.title,
-                        slug: item.belongsTo.slug,
-                    },
-                }),
-            );
+            const transformResult = commentsResult
+                .filter((item) => item.chiefComment)
+                .map(
+                    (item): LatestComment => ({
+                        id: item.id,
+                        owner: {
+                            id: item.owner.id,
+                            name: item.owner.name,
+                            avatar: item.owner.avatar,
+                        },
+                        content: item.content || '',
+                        belongsTo: {
+                            id: item.belongsTo.id,
+                            title: item.belongsTo.title,
+                            slug: item.belongsTo.slug,
+                        },
+                    }),
+                );
             setLatestComments(transformResult);
         }
     }, [latestCommentsData]);

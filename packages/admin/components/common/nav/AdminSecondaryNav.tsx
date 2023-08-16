@@ -8,6 +8,7 @@ import useDarkMode from '../../../hooks/useDarkMode';
 import DropdownOptions, { DropDownOptions } from '../DropdownOptions';
 import ProfileHead from '../ProfileHead';
 import SearchBar from '../SearchBar';
+import { useRoleInfoContext } from '../../../context/role-info';
 
 interface Props {}
 
@@ -16,6 +17,7 @@ const AdminSecondaryNav: FC<Props> = (props): JSX.Element => {
     const { toggleTheme } = useDarkMode();
     const navigateToCreateNewPost = () => router.push('/admin/posts/create');
     // const handleLogOut = async () => signOut();
+    const { userInfoLocal } = useRoleInfoContext();
 
     const options: DropDownOptions = [
         {
@@ -37,7 +39,10 @@ const AdminSecondaryNav: FC<Props> = (props): JSX.Element => {
             {/* search bar */}
             <SearchBar />
             {/* options / profile head */}
-            <DropdownOptions head={<ProfileHead nameInitial="J" />} options={options} />
+            <DropdownOptions
+                head={<ProfileHead nameInitial={userInfoLocal?.name?.toUpperCase()} />}
+                options={options}
+            />
         </div>
     );
 };

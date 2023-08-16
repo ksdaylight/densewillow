@@ -1,3 +1,4 @@
+import { UserRoleContextProvider } from '../context/role-info';
 import Providers from '../utils/provider';
 
 import './global.css';
@@ -12,8 +13,9 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
     return (
         <html lang="en">
             <body>
-                {/* <h1 className="tw-text-red-500"> the root layout</h1> */}
-                <Providers>{children}</Providers>
+                <Providers>
+                    <UserRoleContextProvider>{children}</UserRoleContextProvider>
+                </Providers>
             </body>
         </html>
     );

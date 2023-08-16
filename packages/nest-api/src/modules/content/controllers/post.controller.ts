@@ -260,7 +260,6 @@ export class ContentController {
     @Guest()
     @TsRestHandler(c.getPostLikeStatus)
     async getPostLikeStatus(@ReqUser() user: ClassToPlain<User>) {
-        // TODO 测试Guest 时是否有用 ReqUser
         return tsRestHandler(c.getPostLikeStatus, async ({ query: { postId } }) => {
             const post = await this.postService.post({ id: String(postId) });
             const likesCount = post.likedByUserIDs.length;

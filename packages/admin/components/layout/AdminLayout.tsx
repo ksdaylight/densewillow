@@ -23,7 +23,7 @@ const navItems = [
     { href: '/admin/posts', icon: 'container', label: 'Posts' },
     { href: '/admin/users', icon: 'team', label: 'Users' },
     { href: '/admin/comments', icon: 'mail', label: 'Comments' },
-    { href: '/admin/contact', icon: 'contacts', label: 'Contact' },
+    // { href: '/admin/contact', icon: 'contacts', label: 'Contact' },
 ];
 
 const AdminLayout: FC<Props> = ({ title, children }): JSX.Element => {

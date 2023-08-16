@@ -6,6 +6,8 @@ import { apiBlog } from '@api-contracts';
 
 import { User, Comment, Post } from '@prisma/client/blog';
 
+import { isNil } from 'lodash';
+
 import { CommentService } from '../services';
 
 import { Guest, ReqUser } from '../../user/decorators';
@@ -20,7 +22,7 @@ export class CommentController {
 
     @Guest()
     @TsRestHandler(c.getCommentsByPostId)
-    async getCommentByPost() {
+    async getCommentByPost(@ReqUser() user: ClassToPlain<User>) {
         return tsRestHandler(
             c.getCommentsByPostId,
             async ({ query: { take, skip, belongsTo } }) => {
@@ -35,6 +37,7 @@ export class CommentController {
                     },
                     include: {
                         owner: true,
+                        belongsTo: true,
                         replies: {
                             include: {
                                 owner: true,
@@ -43,7 +46,7 @@ export class CommentController {
                     },
                 });
                 const formattedComments = await Promise.all(
-                    comments.map((comment) => this.formatCommentAndReplies(comment)),
+                    comments.map((comment) => this.formatCommentAndReplies(comment, user.id)),
                 );
 
                 return {
@@ -102,11 +105,15 @@ export class CommentController {
         return {
             ...formattedComment,
             replies: formattedReplies,
-            belongsTo: {
-                id: comment.belongsTo.id,
-                title: comment.belongsTo.title,
-                slug: comment.belongsTo.slug,
-            },
+            ...(!isNil(comment.belongsTo)
+                ? {
+                      belongsTo: {
+                          id: comment.belongsTo.id,
+                          title: comment.belongsTo.title,
+                          slug: comment.belongsTo.slug,
+                      },
+                  }
+                : {}),
         };
     }
 
@@ -213,12 +220,16 @@ export class CommentController {
                     },
                 });
 
+                const updatedComment = await this.commentService.comment({
+                    id: body.id,
+                });
+
                 // const comment = await this.commentService.formatComment(oldComment, user.id);
                 const comment = {
-                    ...(await this.commentService.formatComment(oldComment, user.id)),
-                    replies: oldComment.replies
+                    ...(await this.commentService.formatComment(updatedComment, user.id)),
+                    replies: updatedComment.replies
                         ? await Promise.all(
-                              oldComment.replies.map(async (reply: any) =>
+                              updatedComment.replies.map(async (reply: any) =>
                                   this.commentService.formatComment(reply, user.id),
                               ),
                           )

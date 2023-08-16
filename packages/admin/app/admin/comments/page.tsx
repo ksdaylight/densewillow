@@ -19,4 +19,3 @@ const AdminComments: NextPage<Props> = () => {
 };
 
 export default AdminComments;
-// TODO

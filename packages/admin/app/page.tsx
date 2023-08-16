@@ -23,23 +23,20 @@ export const apiClient = initQueryClient(apiBlog, {
 const Index: NextPage<Props> = async () => {
     const cookieStore = (await headers).cookies();
     const token = cookieStore.get('auth_token');
-    console.log(cookieStore.getAll());
-    console.log(token);
+    // console.log(cookieStore.getAll());
+    // console.log(token);
     await fetch(`http://127.0.0.1:3100/api/test`, {
         headers: {
             authorization: `bearer ${token?.value || ''}`,
         },
     });
 
-    const userRole = cookieStore.get('user_role');
+    // const userRole = cookieStore.get('user_role');
 
     return (
-        <DefaultLayout
-            isAdmin={userRole?.value === 'super-admin'}
-            isAuth={userRole?.value !== undefined}
-        >
+        <DefaultLayout>
             <div className="pb-20">
-                <Home isAdmin={userRole?.value === 'super-admin'} />
+                <Home />
             </div>
         </DefaultLayout>
     );
