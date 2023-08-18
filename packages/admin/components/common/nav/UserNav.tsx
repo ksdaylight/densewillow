@@ -7,6 +7,8 @@ import { HiLightBulb } from 'react-icons/hi';
 
 import { useRouter } from 'next/navigation';
 
+import { deleteCookie } from 'cookies-next';
+
 import useDarkMode from '../../../hooks/useDarkMode';
 
 import { GitHubAuthButton } from '../../button';
@@ -15,22 +17,31 @@ import DropdownOptions, { DropDownOptions } from '../DropdownOptions';
 import Logo from '../Logo';
 import ProfileHead from '../ProfileHead';
 import { useRoleInfoContext } from '../../../context/role-info';
+import { apiClient } from '../../../app/page';
 
 interface Props {}
 
-const defaultOptions: DropDownOptions = [
-    {
-        label: 'Logout',
-        async onClick() {
-            // await signOut();
-        }, // TODO
-    },
-];
-
 const UserNav: FC<Props> = (): JSX.Element => {
     const { toggleTheme } = useDarkMode();
-    const { userInfoLocal } = useRoleInfoContext();
+    const { userInfoLocal, setUserInfoLocal } = useRoleInfoContext();
     const router = useRouter();
+    const { mutate: logOutMutate } = apiClient.user.logout.useMutation();
+    const logOutOption = {
+        label: 'Logout',
+        async onClick() {
+            console.log(userInfoLocal); // test
+            setUserInfoLocal({
+                id: undefined,
+                name: undefined,
+                avatar: undefined,
+                role: 'guest',
+            });
+            console.log(userInfoLocal); // test
+            deleteCookie('user_role');
+            logOutMutate({ body: 'logout' }); // teRest 有问题，必须放在最后
+            router.push('/');
+        },
+    };
     const dropDownOptions: DropDownOptions =
         userInfoLocal.role === 'super-admin'
             ? [
@@ -40,9 +51,9 @@ const UserNav: FC<Props> = (): JSX.Element => {
                           router.push('/admin');
                       },
                   },
-                  ...defaultOptions,
+                  logOutOption,
               ]
-            : defaultOptions;
+            : [logOutOption];
 
     return (
         <div className="flex items-center justify-between bg-primary-dark p-3">

@@ -66,6 +66,16 @@ export const userContract = c.router(
             }),
             summary: 'Get all user',
         },
+        logout: {
+            method: 'POST',
+            path: '/logout',
+            responses: {
+                // 201: z.unknown(),
+                404: z.object({ message: z.string() }),
+                200: z.unknown(),
+            },
+            body: z.any(),
+        },
     },
     {
         pathPrefix: '/auth',

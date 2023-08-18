@@ -1,6 +1,6 @@
 import util from 'util';
 
-import { Controller, Post, Request, Res, UseGuards } from '@nestjs/common';
+import { Controller, Request, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
 import { apiBlog } from '@api-contracts';
@@ -76,9 +76,27 @@ export class AuthController {
      * 注销登录
      * @param req
      */
-    @Post('logout')
-    async logout(@Request() req: any) {
-        // TODO logout
-        return this.authService.logout(req);
+    @TsRestHandler(c.logout)
+    async logout(@Request() req: any, @Res() reply: FastifyReply) {
+        // TODO logout + login 页面跳转
+        return tsRestHandler(c.logout, async () => {
+            try {
+                await this.authService.logout(req);
+            } catch (error) {
+                return { status: 404, body: { message: 'error' } };
+            }
+            reply.setCookie('auth_token', 'deleted', {
+                path: '/',
+                expires: new Date(0),
+                httpOnly: true,
+                secure: process.env.NODE_ENV === EnvironmentType.PRODUCTION,
+                sameSite: 'strict',
+                domain: '192.168.80.6',
+                maxAge: 3600 * 24 * 7,
+            });
+            const redirectUrl = `http://192.168.80.6:4200`;
+            reply.status(302).redirect(redirectUrl); // teRest 有问题， @Res() 后不能正常获取返回
+            return { status: 200 as const, body: { message: 'success' } }; // 怎么都可以
+        });
     }
 }

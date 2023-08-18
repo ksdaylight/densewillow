@@ -75,7 +75,7 @@ export class AuthService {
         }
 
         return {
-            msg: 'logout_success',
+            message: 'logout_success',
         };
     }
 
