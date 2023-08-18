@@ -9,8 +9,10 @@ async function getPost({ queryKey }: QueryFunctionContext) {
     const [, slug] = queryKey;
     const res = await fetch(`http://127.0.0.1:3100/api/post/slug/${slug}`, {
         credentials: 'include',
+        cache: 'no-store',
     }); // TODO BASE URL
     const data = await res.json();
+    console.log(data);
     return { body: data };
 }
 const PostSlug = async ({ params }: { params: { slug: string } }) => {
