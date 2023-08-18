@@ -78,7 +78,6 @@ export class AuthController {
      */
     @TsRestHandler(c.logout)
     async logout(@Request() req: any, @Res() reply: FastifyReply) {
-        // TODO logout + login 页面跳转
         return tsRestHandler(c.logout, async () => {
             try {
                 await this.authService.logout(req);
