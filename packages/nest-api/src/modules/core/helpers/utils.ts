@@ -40,7 +40,20 @@ export function isAsyncFn<R, A extends Array<any>>(
  * @param y 新值
  * @param arrayMode 对于数组采取的策略,`replace`为直接替换,`merge`为合并数组
  */
-export const deepMerge = <T1, T2>(
+// export const deepMerge = <T1, T2>(
+//     x: Partial<T1>,
+//     y: Partial<T2>,
+//     arrayMode: 'replace' | 'merge' = 'merge',
+// ) => {
+//     const options: deepmerge.Options = {};
+//     if (arrayMode === 'replace') {
+//         options.arrayMerge = (_d, s, _o) => s;
+//     } else if (arrayMode === 'merge') {
+//         options.arrayMerge = (_d, s, _o) => Array.from(new Set([..._d, ...s]));
+//     }
+//     return deepmerge(x, y, options) as T2 extends T1 ? T1 : T1 & T2;
+// };
+export const deepMerge = <T1 extends object, T2 extends object>(
     x: Partial<T1>,
     y: Partial<T2>,
     arrayMode: 'replace' | 'merge' = 'merge',
@@ -63,7 +76,7 @@ export function mergeMeta(meta: ModuleMetadata, custom: ModuleMetadata) {
     const keys = Array.from(new Set([...Object.keys(meta), ...Object.keys(custom)]));
     const useMerge = <T>(i: T, p: T) => {
         if (isArray(p)) return [...((i as any[]) ?? []), ...((p as any[]) ?? [])];
-        if (isObject(p)) return deepMerge(i, p);
+        if (isObject(p)) return deepMerge(i as object, p as object);
         return p;
     };
     const merged = Object.fromEntries(

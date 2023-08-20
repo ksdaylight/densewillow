@@ -3,6 +3,7 @@ import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/n
 import { apiBlog } from '@api-contracts';
 
 import { User } from '@prisma/client/blog';
+import { UserPartialWithRelationsSchema } from '@api-contracts';
 
 import { UserService } from '../services';
 import { Guest, ReqUser } from '../decorators';
@@ -37,6 +38,8 @@ export class UserController {
                     createdAt: 'desc',
                 },
             });
+            const test = UserPartialWithRelationsSchema;
+            console.log(test);
             return { status: 200 as const, body: { users, count: total, skip, take } };
         });
     }

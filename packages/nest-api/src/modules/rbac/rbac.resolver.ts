@@ -1,5 +1,5 @@
 import { AbilityOptions, AbilityTuple, MongoQuery, SubjectType } from '@casl/ability';
-import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import { Injectable, NotFoundException, OnApplicationBootstrap } from '@nestjs/common';
 import { isNil, omit, isArray } from 'lodash';
 
 import { Prisma } from '@prisma/client/blog';
@@ -27,7 +27,7 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
 {
     protected isSetUp = false;
 
-    protected options: AbilityOptions<A, C>;
+    protected options?: AbilityOptions<A, C>;
 
     protected _roles: RoleType[] = [
         {
@@ -113,7 +113,7 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
                 return o.map((e) => (e.name === n.name ? deepMerge(e, n, 'merge') : e));
             }
             return [...o, n];
-        }, []);
+        }, [] as RoleType[]);
         for (const item of this.roles) {
             let role = await prisma.role.findFirst({
                 where: {
@@ -166,7 +166,7 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
 
         this._permissions = this.permissions.reduce(
             (o, n) => (o.map(({ name }) => name).includes(n.name) ? o : [...o, n]),
-            [],
+            [] as PermissionType<A, C>[],
         );
         const names = this.permissions.map(({ name }) => name);
 
@@ -182,10 +182,10 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
             if (isNil(old)) {
                 await prisma.permission.create({
                     data: {
-                        name: permission.name,
+                        name: permission.name!,
                         label: permission.label,
                         description: permission.description,
-                        rule: permission.rule as any,
+                        rule: JSON.stringify(permission.rule),
                     },
                 });
             } else {
@@ -195,7 +195,7 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
                         name: permission.name,
                         label: permission.label,
                         description: permission.description,
-                        rule: permission.rule as any,
+                        rule: JSON.stringify(permission.rule),
                     },
                 });
             }
@@ -212,7 +212,7 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
             const rolePermissions = await prisma.permission.findMany({
                 where: {
                     name: {
-                        in: this.roles.find(({ name }) => name === role.name).permissions,
+                        in: this.roles.find(({ name }) => name === role.name)?.permissions,
                     },
                 },
             });
@@ -234,7 +234,7 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
         const systemManage = await prisma.permission.findFirst({
             where: { name: 'system-manage' },
         });
-
+        if (isNil(superRole) || isNil(systemManage)) throw NotFoundException;
         await prisma.role.update({
             where: { id: superRole.id },
             data: {

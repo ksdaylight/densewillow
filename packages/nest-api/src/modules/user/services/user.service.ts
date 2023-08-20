@@ -1,5 +1,5 @@
-import { ForbiddenException, Injectable, OnModuleInit } from '@nestjs/common';
-import { isNil } from 'lodash';
+import { ForbiddenException, Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
+import { isNil, isNull } from 'lodash';
 
 import { Prisma, User } from '@prisma/client/blog';
 
@@ -48,7 +48,7 @@ export class UserService implements OnModuleInit {
         const user = await this.prisma.user.create({
             data,
         });
-        await this.syncActivated(await this.detail({ id: user.id }));
+        await this.syncActivated((await this.detail({ id: user.id })) || user);
         return this.detail({ id: user.id });
     }
 
@@ -57,7 +57,9 @@ export class UserService implements OnModuleInit {
         data: Prisma.UserUpdateInput;
     }): Promise<User> {
         const { data, where } = params;
-        await this.syncActivated(await this.detail(where));
+        const user = await this.detail(where);
+        if (isNull(user)) throw NotFoundException;
+        await this.syncActivated(user);
         return this.prisma.user.update({
             data,
             where,
@@ -156,7 +158,7 @@ export class UserService implements OnModuleInit {
             where,
             orderBy,
         });
-        const total = await this.prisma.mediaEntity.count({
+        const total = await this.prisma.user.count({
             where: where || undefined,
         });
         return { users, total };
@@ -167,7 +169,7 @@ export class UserService implements OnModuleInit {
      * @param condition
      * @param callback
      */
-    async getCurrentUser(user?: ClassToPlain<User>): Promise<User> {
+    async getCurrentUser(user: ClassToPlain<User>): Promise<User> {
         return this.prisma.user.findUniqueOrThrow({ where: { id: user.id } });
     }
 
@@ -179,6 +181,7 @@ export class UserService implements OnModuleInit {
         } else {
             author = await this.detail({ id: userId });
         }
+        if (!author) return null;
         const postAuthor = {
             id: author.id,
             name: author.name,
@@ -190,7 +193,7 @@ export class UserService implements OnModuleInit {
         return postAuthor;
     }
 
-    async getCurrentUserWithPermission(user?: ClassToPlain<User>): Promise<User> {
+    async getCurrentUserWithPermission(user: ClassToPlain<User>): Promise<User> {
         return this.prisma.user.findUniqueOrThrow({
             include: {
                 permissions: true,

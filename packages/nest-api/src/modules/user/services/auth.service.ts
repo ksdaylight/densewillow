@@ -1,9 +1,11 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { FastifyRequest as Request } from 'fastify';
 import { ExtractJwt } from 'passport-jwt';
 
 import { Prisma } from '@prisma/client/blog';
+
+import { isNil } from 'lodash';
 
 import { getUserConfig } from '../helpers';
 
@@ -41,6 +43,7 @@ export class AuthService {
                 roles: true,
             },
         });
+        if (isNil(userInfo)) throw NotFoundException;
         const { roles } = userInfo;
 
         // 如果用户没有任何角色，返回 null
@@ -87,6 +90,7 @@ export class AuthService {
         const now = await getTime();
         try {
             const user = await this.prisma.user.findUnique({ where: { id } });
+            if (isNil(user)) throw NotFoundException;
             const { accessToken } = await this.tokenService.generateAccessToken(user, now);
             return accessToken.value;
         } catch (error) {

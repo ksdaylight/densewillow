@@ -88,7 +88,7 @@ export class MediaService {
      * @param ext 图片后缀
      */
     async loadImage(id: Prisma.MediaEntityWhereUniqueInput, res: FastifyReply, ext?: string) {
-        const media = await this.prisma.mediaEntity.findUnique({ where: id });
+        const media = await this.prisma.mediaEntity.findUniqueOrThrow({ where: id });
         const filePath = join(await this.configure.get('media.upload'), media.file);
         if (!existsSync(filePath) || (ext && extname(filePath) !== ext)) {
             throw new NotFoundException('file not exists!');

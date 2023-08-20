@@ -49,7 +49,7 @@ export function createApp(options: CreateOptions): Creator {
  */
 export async function bootApp(
     creator: () => Promise<CreatorData>,
-    listened?: (params: CreatorData) => () => Promise<void>,
+    listened: (params: CreatorData) => () => Promise<void>,
 ) {
     const { app, configure } = await creator();
     const { port, host } = await configure.get<AppConfig>('app');
@@ -67,18 +67,22 @@ export async function createBootModule(
 ): Promise<{ BootModule: Type<any>; modules: ModuleBuildMap }> {
     const { meta: bootMeta, modules, globals = {} } = options;
     const { configure } = params;
-    const importModules = [...modules, CoreModule];
+
+    let importModules: ModuleItem[] = [CoreModule];
+    if (!isNil(modules)) {
+        importModules = [...modules, ...importModules];
+    }
     const moduleMaps = await createImportModules(configure, importModules);
     const imports: ModuleMetadata['imports'] = Object.values(moduleMaps).map((m) => m.module);
     const providers: ModuleMetadata['providers'] = [];
-    if (globals.pipe !== null) {
-        const pipe = globals.pipe ?? globals.pipe(params);
+    if (!isNil(globals.pipe)) {
+        const pipe = !isNil(globals.pipe) ?? globals.pipe(params);
         providers.push({
             provide: APP_PIPE,
             useValue: pipe,
         });
     }
-    if (globals.interceptor !== null) {
+    if (!isNil(globals.interceptor)) {
         providers.push({
             provide: APP_INTERCEPTOR,
             useClass: globals.interceptor,

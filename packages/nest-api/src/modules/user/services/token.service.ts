@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import dayjs from 'dayjs';
 import { FastifyReply as Response } from 'fastify';
 import jwt from 'jsonwebtoken';
 import { v4 as uuid } from 'uuid';
 import { AccessToken, RefreshToken, User } from '@prisma/client/blog';
+
+import { isNil } from 'lodash';
 
 import { getUserConfig } from '../helpers';
 import { JwtConfig, JwtPayload } from '../types';
@@ -71,7 +73,7 @@ export class TokenService {
                         id: userId,
                     },
                 });
-
+                if (isNil(user)) throw NotFoundException;
                 token = await this.generateAccessToken(user, now);
 
                 response.setCookie('auth_token', token.accessToken.value, {

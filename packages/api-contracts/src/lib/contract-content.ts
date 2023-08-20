@@ -1,7 +1,7 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
-import { CommentFormatSchema, MultipartValueZod, ObjectIdSchema, PostSchema } from './types';
+import { CommentFormatSchema, MultipartValueZod, ObjectIdSchema, PostSchema2 } from './types';
 
 const c = initContract();
 
@@ -14,7 +14,7 @@ export const contentContract = c.router(
                 id: ObjectIdSchema,
             }),
             responses: {
-                200: PostSchema,
+                200: PostSchema2,
                 404: z.null(),
             },
         },
@@ -25,7 +25,7 @@ export const contentContract = c.router(
                 slug: z.string().min(1).max(50),
             }),
             responses: {
-                200: PostSchema,
+                200: PostSchema2,
                 404: z.null(),
             },
         },
@@ -34,7 +34,7 @@ export const contentContract = c.router(
             path: '/posts',
             responses: {
                 200: z.object({
-                    posts: PostSchema.array(),
+                    posts: PostSchema2.array(),
                     count: z.number(),
                     skip: z.number(),
                     take: z.number(),
@@ -64,7 +64,7 @@ export const contentContract = c.router(
                 searchString: z.string().min(1).max(20),
             }),
             responses: {
-                200: z.array(PostSchema),
+                200: z.array(PostSchema2),
             },
         },
         createPost: {
@@ -72,7 +72,7 @@ export const contentContract = c.router(
             path: '/post',
             contentType: 'multipart/form-data',
             responses: {
-                201: PostSchema,
+                201: PostSchema2,
                 404: z.object({ message: z.string() }),
             },
             // body: c.type<{
@@ -97,7 +97,7 @@ export const contentContract = c.router(
             method: 'PATCH',
             path: `/posts`,
             contentType: 'multipart/form-data',
-            responses: { 200: PostSchema, 404: z.object({ message: z.string() }) },
+            responses: { 200: PostSchema2, 404: z.object({ message: z.string() }) },
             body: z.object({
                 id: MultipartValueZod.or(ObjectIdSchema), // 没做检验
                 title: MultipartValueZod.or(z.string()),

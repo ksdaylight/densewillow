@@ -19,7 +19,7 @@
         "isolatedModules": true,
         "noUnusedLocals": true,
         "noImplicitReturns": true,
-        "strictNullChecks": false,
+        "strictNullChecks": true,
         "strictBindCallApply": false,
         "noFallthroughCasesInSwitch": true,
         "allowSyntheticDefaultImports": true,

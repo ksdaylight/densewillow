@@ -1,4 +1,4 @@
-import { MongoAbility } from '@casl/ability';
+import { MongoAbility, Subject } from '@casl/ability';
 import { FastifyRequest as Request } from 'fastify';
 import { isNil, isArray } from 'lodash';
 
@@ -23,7 +23,7 @@ export const getRequestItems = (request?: Request): string[] => {
  * @param request
  * @param permission
  */
-export const checkOwner = async <E>(
+export const checkOwner = async <E extends Subject>(
     ability: MongoAbility,
     getModels: (items: string[]) => Promise<E[]>,
     request?: Request,

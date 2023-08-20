@@ -54,7 +54,7 @@ export class CommentService {
     }
 
     formatComment = async (comment: Comment, userId?: string) => {
-        const owner = await this.prisma.user.findUnique({ where: { id: comment.ownerId } });
+        const owner = await this.prisma.user.findUniqueOrThrow({ where: { id: comment.ownerId } });
         return {
             id: comment.id,
             content: comment.content,
@@ -96,7 +96,7 @@ export class CommentService {
             }); // TODO verification
         } else {
             await this.prisma.comment.update({
-                where: { id: comment.repliedToID },
+                where: { id: comment.repliedToID! },
                 data: {
                     replies: {
                         disconnect: [{ id: comment.id }],

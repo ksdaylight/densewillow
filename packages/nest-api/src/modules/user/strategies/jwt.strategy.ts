@@ -14,13 +14,13 @@ import { PrismaService } from '../../core/providers';
  */
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) implements OnModuleInit {
-    private secretOrKey: string | Buffer;
+    private secretOrKey: string | Buffer | null = null;
 
     constructor(private readonly prisma: PrismaService) {
         super({
             jwtFromRequest: (req: FastifyRequest) => {
                 let token = ExtractJwt.fromAuthHeaderAsBearerToken()(req as any); // 请求头的优先
-                if (!token && req && req.cookies) {
+                if (!token && req && req.cookies.auth_token) {
                     token = req.cookies.auth_token;
                 }
                 return token;
@@ -31,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) implements OnModuleI
                 _rawJwtToken: string,
                 done: (err: Error | null, secretOrKey: string | Buffer) => void,
             ) => {
-                done(null, this.secretOrKey);
+                done(null, this.secretOrKey!); // init in onModuleInit
             },
         });
     }

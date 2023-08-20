@@ -11,7 +11,7 @@ export const MediaSchema = z.object({
 export const ObjectIdSchema = z.string().refine((value) => /^[a-f\d]{24}$/i.test(value), {
     message: 'Invalid ObjectId',
 });
-export const PostSchema = z
+export const PostSchema2 = z
     .object({
         id: z.string(),
         title: z.string(),
@@ -55,9 +55,9 @@ export const CommentFormatSchema = z.object({
     owner: z.object({
         id: z.string(),
         name: z.string(),
-        avatar: z.string(),
+        avatar: z.string().nullable(),
     }),
-    repliedTo: z.string(),
+    repliedTo: z.string().nullable(),
     likedByOwner: z.boolean(),
     belongsTo: z.object({
         id: z.string(),

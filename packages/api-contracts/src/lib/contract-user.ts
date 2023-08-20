@@ -1,6 +1,8 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
+import { UserPartialWithRelationsSchema } from '../zod';
+
 const c = initContract();
 
 export const userContract = c.router(
@@ -43,7 +45,7 @@ export const userContract = c.router(
             path: '/users',
             responses: {
                 200: z.object({
-                    users: z.any(),
+                    users: UserPartialWithRelationsSchema.array(),
                     count: z.number(),
                     skip: z.number(),
                     take: z.number(),

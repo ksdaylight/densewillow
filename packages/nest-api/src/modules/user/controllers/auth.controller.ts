@@ -56,7 +56,7 @@ export class AuthController {
                 domain: '192.168.80.6',
                 maxAge: 3600 * 24 * 7,
             });
-            reply.setCookie('user_role', role.name, {
+            reply.setCookie('user_role', role?.name || 'guest', {
                 path: '/',
                 httpOnly: false,
                 secure: false,

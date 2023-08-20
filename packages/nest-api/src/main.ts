@@ -28,7 +28,7 @@ const creator = createApp({
         );
     },
     globals: {
-        pipe: null,
+        // pipe: null,
         interceptor: null,
         guard: RbacGuard,
     },

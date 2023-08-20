@@ -1,6 +1,6 @@
 import { createMongoAbility, MongoAbility } from '@casl/ability';
 
-import { ExecutionContext } from '@nestjs/common';
+import { ExecutionContext, NotFoundException } from '@nestjs/common';
 import { ModuleRef, Reflector } from '@nestjs/core';
 import { FastifyRequest as Request } from 'fastify';
 import { isNil } from 'lodash';
@@ -9,6 +9,7 @@ import { PERMISSION_CHECKERS } from '../constants';
 import { RbacResolver } from '../rbac.resolver';
 import { PermissionChecker } from '../types';
 import { PrismaService } from '../../core/providers';
+import { Permission } from '@prisma/client/blog';
 
 type CheckerParams = {
     resolver: RbacResolver;
@@ -47,6 +48,7 @@ export const solveChecker = async ({
             },
         },
     });
+    if (isNil(userDetail)) throw NotFoundException;
     let permissions = [
         ...userDetail.permissions,
         ...userDetail.roles.flatMap((role) => role.permissions),
@@ -55,7 +57,7 @@ export const solveChecker = async ({
     permissions = permissions.reduce((o, n) => {
         if (o.find(({ name }) => name === n.name)) return o;
         return [...o, n];
-    }, []);
+    }, [] as Permission[]);
     const ability = createMongoAbility(
         permissions.map(({ rule, name }) => {
             const resolve = resolver.permissions.find((p) => p.name === name);

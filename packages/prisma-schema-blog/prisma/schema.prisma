@@ -8,6 +8,14 @@ datasource db {
   url      = env("DATABASE_BLOG_URL")
 }
 
+generator zod {
+  provider       = "zod-prisma-types"
+  createOptionalDefaultValuesTypes = true // default is false
+  createRelationValuesTypes        = true // default is false
+  createPartialTypes               = true // default is false
+  output                           = "../../api-contracts/src/zod" //cause: @nx/enforce-module-boundaries
+}
+
 model User {
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
   email String  @unique
