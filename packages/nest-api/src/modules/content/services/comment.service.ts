@@ -11,15 +11,19 @@ import { PrismaService } from '../../core/providers';
 export class CommentService {
     constructor(protected configure: Configure, protected prisma: PrismaService) {}
 
-    async comment(commentWhereUniqueInput: Prisma.CommentWhereUniqueInput) {
+    async comment(
+        commentWhereUniqueInput: Prisma.CommentWhereUniqueInput,
+        include?: Prisma.CommentInclude,
+    ) {
         return this.prisma.comment.findUnique({
             where: commentWhereUniqueInput,
-            include: {
-                owner: true,
-                likes: true,
-                replyTo: true,
-                replies: true,
-            },
+            include,
+            // : {
+            //     owner: true,
+            //     likes: true,
+            //     replyTo: true,
+            //     replies: true,
+            // },
         });
     }
 
@@ -47,9 +51,13 @@ export class CommentService {
         return { comments, total };
     }
 
-    async createComment(data: Prisma.CommentCreateInput): Promise<Comment> {
+    async createComment(
+        data: Prisma.CommentCreateInput,
+        include?: Prisma.CommentInclude,
+    ): Promise<Comment> {
         return this.prisma.comment.create({
             data,
+            include,
         });
     }
 
@@ -70,11 +78,13 @@ export class CommentService {
     async updateComment(params: {
         where: Prisma.CommentWhereUniqueInput;
         data: Prisma.CommentUpdateInput;
+        include?: Prisma.CommentInclude;
     }): Promise<Comment> {
-        const { data, where } = params;
+        const { data, where, include } = params;
         return this.prisma.comment.update({
             data,
             where,
+            include,
         });
     }
 

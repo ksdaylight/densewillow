@@ -41,7 +41,7 @@ export interface LatestComment {
     owner: {
         id: string;
         name: string;
-        avatar?: string;
+        avatar: string | null;
     };
     content: string;
     belongsTo: {

@@ -216,6 +216,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
     };
     const { mutate: updateLikeMutate } = apiClient.content.updateLike.useMutation({
         onSuccess(data, variables, context) {
+            data.body?.replies[0].owner;
             updateLikedComments(data.body);
             setSelectedComment(null);
         },

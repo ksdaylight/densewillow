@@ -55,12 +55,7 @@ export class MediaController {
             });
             return {
                 status: 201 as const,
-                body: {
-                    id: imageEntity.id,
-                    file: imageEntity.file,
-                    ext: imageEntity.ext,
-                    date: imageEntity.createdAt,
-                },
+                body: imageEntity,
             };
         });
     }

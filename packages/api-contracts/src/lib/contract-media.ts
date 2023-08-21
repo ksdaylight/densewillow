@@ -3,7 +3,9 @@ import { initContract } from '@ts-rest/core';
 import { StreamableFile } from '@nestjs/common';
 import { MultipartFile } from '@fastify/multipart';
 
-import { ObjectIdSchema, MediaSchema } from './types';
+import { MediaEntitySchema } from '../zod';
+
+import { ObjectIdSchema } from './types';
 
 // import { MediaContract } from './contract-media';
 
@@ -36,7 +38,7 @@ export const mediaContract = c.router(
             path: '/images',
             responses: {
                 200: z.object({
-                    images: MediaSchema.array(),
+                    images: MediaEntitySchema.array(),
                     count: z.number(),
                     skip: z.number(),
                     take: z.number(),
@@ -66,14 +68,7 @@ export const mediaContract = c.router(
             // body: c.type<any>(), // <- Use File type in here
             body: c.type<{ image: MultipartFile }>(), // <- Use File type in here
             responses: {
-                200: z.object({
-                    uploadedFile: z.object({
-                        id: z.string(),
-                        file: z.number(),
-                        ext: z.string(),
-                        date: z.date(),
-                    }),
-                }),
+                200: MediaEntitySchema,
                 400: z.object({
                     message: z.string(),
                 }),

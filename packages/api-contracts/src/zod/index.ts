@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { z } from 'zod';
 import { Prisma } from '../../../../node_modules/@prisma/client/blog';
 

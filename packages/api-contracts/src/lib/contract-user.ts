@@ -1,7 +1,7 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
-import { UserPartialWithRelationsSchema } from '../zod';
+import { UserSchema } from '../zod';
 
 const c = initContract();
 
@@ -21,22 +21,13 @@ export const userContract = c.router(
             path: `/github/callback`,
             responses: {
                 200: z.unknown(),
-                // 404: z.object({ message: z.string() }),
             },
-            // body: c.type<{
-            //     title: string;
-            //     slug: string;
-            //     content: string;
-            //     meta: string;
-            //     tags: string[];
-            //     image: MultipartFile;
-            // }>(),
         },
         getUserProfile: {
             method: 'GET',
             path: `/user-profile`,
             responses: {
-                200: z.any(),
+                200: UserSchema,
                 // 404: z.object({ message: z.string() }),
             },
         },
@@ -45,7 +36,7 @@ export const userContract = c.router(
             path: '/users',
             responses: {
                 200: z.object({
-                    users: UserPartialWithRelationsSchema.array(),
+                    users: UserSchema.array(),
                     count: z.number(),
                     skip: z.number(),
                     take: z.number(),

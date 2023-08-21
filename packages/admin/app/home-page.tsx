@@ -6,8 +6,6 @@ import { FC, useCallback, useEffect, useState } from 'react';
 
 import { getCookie } from 'cookies-next';
 
-import { User } from '@prisma/client/blog';
-
 import { isNil } from 'lodash';
 
 import { PostDetail } from '../utils/types';
@@ -33,7 +31,7 @@ const Home: FC<Props> = (): JSX.Element => {
             staleTime: 60000,
         },
     );
-    const userProfile = userProfileData?.body.user as User;
+    const userProfile = userProfileData?.body;
     const roleInfo = getCookie('user_role');
     const { data, isFetching, fetchNextPage, hasNextPage } =
         apiClient.content.getPosts.useInfiniteQuery(

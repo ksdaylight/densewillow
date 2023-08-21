@@ -14,7 +14,10 @@ const LatestCommentListCard: FC<Props> = ({ comment }): JSX.Element => {
     const { owner, belongsTo, content } = comment;
     return (
         <div className="flex space-x-2">
-            <ProfileIcon nameInitial={owner.name[0]} avatar={owner.avatar} />
+            <ProfileIcon
+                nameInitial={owner.name[0]}
+                avatar={owner.avatar ? owner.avatar : undefined}
+            />
 
             <div className="flex-1">
                 <p className="font-semibold text-primary-dark dark:text-primary transition">

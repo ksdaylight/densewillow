@@ -10,7 +10,7 @@ import { isNil } from 'lodash';
 
 import { CommentService } from '../services';
 
-import { ReqUser } from '../../user/decorators';
+import { Guest, ReqUser } from '../../user/decorators';
 // import { PostService } from '../services/post.service';
 const c = nestControllerContract(apiBlog.content);
 
@@ -20,74 +20,75 @@ const c = nestControllerContract(apiBlog.content);
 export class CommentController {
     constructor(private readonly commentService: CommentService) {}
 
-    // @Guest()
-    // @TsRestHandler(c.getCommentsByPostId)
-    // async getCommentByPost(@ReqUser() user: ClassToPlain<User>) {
-    //     return tsRestHandler(
-    //         c.getCommentsByPostId,
-    //         async ({ query: { take, skip, belongsTo } }) => {
-    //             const { comments, total } = await this.commentService.comments({
-    //                 take,
-    //                 skip,
-    //                 orderBy: {
-    //                     createdAt: 'desc',
-    //                 },
-    //                 where: {
-    //                     belongsToId: belongsTo,
-    //                 },
-    //                 include: {
-    //                     owner: true,
-    //                     belongsTo: true,
-    //                     replies: {
-    //                         include: {
-    //                             owner: true,
-    //                         },
-    //                     },
-    //                 },
-    //             });
-    //             const formattedComments = await Promise.all(
-    //                 comments.map((comment) => this.formatCommentAndReplies(comment, user.id)),
-    //             );
+    @Guest()
+    @TsRestHandler(c.getCommentsByPostId)
+    async getCommentByPost(@ReqUser() user: ClassToPlain<User>) {
+        return tsRestHandler(
+            c.getCommentsByPostId,
+            async ({ query: { take, skip, belongsTo } }) => {
+                const { comments, total } = await this.commentService.comments({
+                    take,
+                    skip,
+                    orderBy: {
+                        createdAt: 'desc',
+                    },
+                    where: {
+                        belongsToId: belongsTo,
+                    },
+                    include: {
+                        owner: true,
+                        belongsTo: true,
+                        replies: {
+                            include: {
+                                owner: true,
+                            },
+                        },
+                    },
+                });
+                // const formattedComments = await Promise.all(
+                //     comments.map((comment) => this.formatCommentAndReplies(comment, user.id)),
+                // );
 
-    //             return {
-    //                 status: 200 as const,
-    //                 body: { comments: formattedComments, count: total, skip, take },
-    //             };
-    //         },
-    //     );
-    // }
+                return {
+                    status: 200 as const,
+                    body: { comments, count: total, skip, take },
+                };
+            },
+        );
+    }
 
-    // @Guest() // TODO add admin permission
-    // @TsRestHandler(c.getComments)
-    // async getComments(@ReqUser() user: ClassToPlain<User>) {
-    //     return tsRestHandler(c.getComments, async ({ query: { take, skip } }) => {
-    //         const { comments, total } = await this.commentService.comments({
-    //             take,
-    //             skip,
-    //             orderBy: {
-    //                 createdAt: 'desc',
-    //             },
-    //             include: {
-    //                 owner: true,
-    //                 replies: {
-    //                     include: {
-    //                         owner: true,
-    //                     },
-    //                 },
-    //                 belongsTo: true,
-    //             },
-    //         });
+    @Guest() // TODO add admin permission
+    @TsRestHandler(c.getComments)
+    async getComments(@ReqUser() user: ClassToPlain<User>) {
+        return tsRestHandler(c.getComments, async ({ query: { take, skip } }) => {
+            const { comments, total } = await this.commentService.comments({
+                take,
+                skip,
+                orderBy: {
+                    createdAt: 'desc',
+                },
+                include: {
+                    owner: true,
+                    replies: {
+                        include: {
+                            owner: true,
+                        },
+                    },
+                    belongsTo: true,
+                    _count: true,
+                },
+            });
 
-    //         const formattedComments = await Promise.all(
-    //             comments.map((comment) => this.formatCommentAndReplies(comment, user.id)),
-    //         );
+            // const formattedComments = await Promise.all(
+            //     comments.map((comment) => this.formatCommentAndReplies(comment, user.id)),
+            // );
 
-    //         return {
-    //             status: 200 as const,
-    //             body: { comments: formattedComments, count: total, skip, take },
-    //         };
-    //     });
-    // }
+            return {
+                status: 200 as const,
+                body: { comments, count: total, skip, take },
+            };
+        });
+    }
 
     async formatCommentAndReplies(
         comment: Comment & { replies?: Comment[] } & { belongsTo?: Post },
@@ -114,58 +115,68 @@ export class CommentController {
         };
     }
 
-    // @TsRestHandler(c.createChiefComment)
-    // async createChiefComment(@ReqUser() user: ClassToPlain<User>) {
-    //     return tsRestHandler(c.createChiefComment, async ({ body }) => {
-    //         try {
-    //             const newComment = await this.commentService.createComment({
-    //                 content: body.content,
-    //                 belongsTo: { connect: { id: body.belongsTo } },
-    //                 owner: { connect: { id: user.id } },
-    //                 chiefComment: true,
-    //             });
-    //             const comment = await this.commentService.formatComment(newComment, user.id);
-    //             return { status: 201 as const, body: comment };
-    //         } catch (error) {
-    //             return { status: 400 as const, body: { message: `${(error as Error).message}` } };
-    //         }
-    //     });
-    // }
+    @TsRestHandler(c.createChiefComment)
+    async createChiefComment(@ReqUser() user: ClassToPlain<User>) {
+        return tsRestHandler(c.createChiefComment, async ({ body }) => {
+            try {
+                const newComment = await this.commentService.createComment(
+                    {
+                        content: body.content,
+                        belongsTo: { connect: { id: body.belongsTo } },
+                        owner: { connect: { id: user.id } },
+                        chiefComment: true,
+                    },
+                    { owner: true },
+                );
+                // const comment = await this.commentService.formatComment(newComment, user.id);
+                return { status: 201 as const, body: newComment };
+            } catch (error) {
+                return { status: 400 as const, body: { message: `${(error as Error).message}` } };
+            }
+        });
+    }
 
-    // @TsRestHandler(c.addReplay)
-    // async createReplay(@ReqUser() user: ClassToPlain<User>) {
-    //     return tsRestHandler(c.addReplay, async ({ body }) => {
-    //         try {
-    //             const newComment = await this.commentService.createComment({
-    //                 content: body.content,
-    //                 replyTo: { connect: { id: body.repliedTo } },
-    //                 owner: { connect: { id: user.id } },
-    //             });
-    //             const comment = await this.commentService.formatComment(newComment, user.id);
-    //             return { status: 201 as const, body: comment };
-    //         } catch (error) {
-    //             return { status: 400 as const, body: { message: `${(error as Error).message}` } };
-    //         }
-    //     });
-    // }
+    @TsRestHandler(c.addReplay)
+    async createReplay(@ReqUser() user: ClassToPlain<User>) {
+        return tsRestHandler(c.addReplay, async ({ body }) => {
+            try {
+                const newComment = await this.commentService.createComment(
+                    {
+                        content: body.content,
+                        replyTo: { connect: { id: body.repliedTo } },
+                        owner: { connect: { id: user.id } },
+                    },
+                    {
+                        owner: true,
+                    },
+                );
+                // const comment = await this.commentService.formatComment(newComment, user.id);
+                return { status: 201 as const, body: newComment };
+            } catch (error) {
+                return { status: 400 as const, body: { message: `${(error as Error).message}` } };
+            }
+        });
+    }
 
-    // @TsRestHandler(c.updateComment)
-    // async updateComment(@ReqUser() user: ClassToPlain<User>) {
-    //     return tsRestHandler(c.updateComment, async ({ body }) => {
-    //         try {
-    //             const newComment = await this.commentService.updateComment({
-    //                 where: { id: body.id },
-    //                 data: {
-    //                     content: body.content,
-    //                 },
-    //             });
-    //             const comment = await this.commentService.formatComment(newComment, user.id);
-    //             return { status: 201 as const, body: comment };
-    //         } catch (error) {
-    //             return { status: 400 as const, body: { message: `${(error as Error).message}` } };
-    //         }
-    //     });
-    // }
+    @TsRestHandler(c.updateComment)
+    async updateComment(@ReqUser() user: ClassToPlain<User>) {
+        return tsRestHandler(c.updateComment, async ({ body }) => {
+            try {
+                const newComment = await this.commentService.updateComment({
+                    where: { id: body.id },
+                    data: {
+                        content: body.content,
+                    },
+                    include: {
+                        owner: true,
+                    },
+                });
+                return { status: 201 as const, body: newComment };
+            } catch (error) {
+                return { status: 400 as const, body: { message: `${(error as Error).message}` } };
+            }
+        });
+    }
 
     @TsRestHandler(c.updateLike)
     async updateLike(@ReqUser() user: ClassToPlain<User>) {
@@ -178,36 +189,9 @@ export class CommentController {
                 const oldLikes = oldComment.likedByUserIDs || [];
                 const likedBy = user.id;
 
-                // // like and unlike
-                // // this is for unlike
-                // if (oldLikes.includes(likedBy)) {
-                //     await this.commentService.updateComment({
-                //         where: { id: oldComment.id },
-                //         data: {
-                //             likes: {
-                //                 disconnect: {
-                //                     id: likedBy,
-                //                 },
-                //             },
-                //         },
-                //     });
-                // }
-                // // this is to like comment
-                // else {
-                //     await this.commentService.updateComment({
-                //         where: { id: oldComment.id },
-                //         data: {
-                //             likes: {
-                //                 connect: {
-                //                     id: likedBy,
-                //                 },
-                //             },
-                //         },
-                //     });
-                // }
                 const operation = oldLikes.includes(likedBy) ? 'disconnect' : 'connect';
 
-                await this.commentService.updateComment({
+                const updatedComment = await this.commentService.updateComment({
                     where: { id: oldComment.id },
                     data: {
                         likes: {
@@ -216,25 +200,29 @@ export class CommentController {
                             },
                         },
                     },
-                });
-
-                const updatedComment = await this.commentService.comment({
-                    id: body.id,
+                    include: {
+                        owner: true,
+                        replies: {
+                            include: {
+                                owner: true,
+                            },
+                        },
+                    },
                 });
 
                 if (isNil(updatedComment)) throw NotFoundException;
                 // const comment = await this.commentService.formatComment(oldComment, user.id);
-                const comment = {
-                    ...(await this.commentService.formatComment(updatedComment, user.id)),
-                    replies: updatedComment.replies
-                        ? await Promise.all(
-                              updatedComment.replies.map(async (reply: any) =>
-                                  this.commentService.formatComment(reply, user.id),
-                              ),
-                          )
-                        : [],
-                };
-                return { status: 201 as const, body: comment };
+                // const comment = {
+                //     ...(await this.commentService.formatComment(updatedComment, user.id)),
+                //     replies: updatedComment.replies
+                //         ? await Promise.all(
+                //               updatedComment.replies.map(async (reply: any) =>
+                //                   this.commentService.formatComment(reply, user.id),
+                //               ),
+                //           )
+                //         : [],
+                // };
+                return { status: 201 as const, body: updatedComment };
             } catch (error) {
                 return { status: 400 as const, body: { message: `${(error as Error).message}` } };
             }

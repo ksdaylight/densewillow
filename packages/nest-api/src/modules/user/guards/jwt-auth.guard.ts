@@ -18,7 +18,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         super();
     }
 
-    IPprefixes = ['127.0.0.1']; // if need, can rm it to config
+    IPprefixes = ['127.0.0.1', '192.168.80.6']; // if need, can rm it to config
 
     /**
      * 守卫方法

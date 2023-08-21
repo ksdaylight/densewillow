@@ -2,7 +2,7 @@ import { Controller, NotFoundException, Req } from '@nestjs/common';
 
 import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
 
-import { apiBlog } from '@api-contracts';
+import { apiBlog, UserOptionalDefaultsWithPartialRelationsSchema } from '@api-contracts';
 
 import { MultipartFile } from '@fastify/multipart';
 
@@ -13,7 +13,7 @@ import { isNil } from 'lodash';
 import { FastifyRequest } from 'fastify';
 
 // import { UserOptionalDefaultsWithPartialRelationsSchema } from '@prisma/client/blog/zod';
-import { UserOptionalDefaultsWithPartialRelationsSchema } from '@api-contracts';
+// import { UserOptionalDefaultsWithPartialRelationsSchema } from '@api-contracts';
 // import { UserPartialWithRelationsSchema } from 'packages/prisma-schema-blog/prisma/generated/zod';
 
 import { PostService } from '../services';
