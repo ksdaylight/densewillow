@@ -177,20 +177,29 @@ export class UserService implements OnModuleInit {
         let author = null;
         if (isNil(userId)) {
             const adminConf = await getUserConfig<UserConfig['super']>('super');
-            author = await this.detail({ email: adminConf.email });
+            author = await this.prisma.user.findUnique({
+                where: {
+                    email: adminConf.email,
+                },
+            });
         } else {
-            author = await this.detail({ id: userId });
+            author = await this.prisma.user.findUnique({
+                where: {
+                    id: userId,
+                },
+            });
         }
         if (!author) return null;
-        const postAuthor = {
-            id: author.id,
-            name: author.name,
-            avatar: author.avatar,
-            message: `This post is written by ${author.name}. ${
-                author.name.split(' ')[0]
-            } is an full stack JavaScript developer. `,
-        };
-        return postAuthor;
+        // const postAuthor = {
+        //     id: author.id,
+        //     name: author.name,
+        //     avatar: author.avatar,
+        //     message: `This post is written by ${author.name}. ${
+        //         author.name.split(' ')[0]
+        //     } is an full stack JavaScript developer. `,
+        // };
+        // return postAuthor;
+        return author;
     }
 
     async getCurrentUserWithPermission(user: ClassToPlain<User>): Promise<User> {

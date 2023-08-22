@@ -75,7 +75,7 @@ export const MultipartValueZod = z
         encoding: z.string(),
         fieldnameTruncated: z.boolean(),
         valueTruncated: z.boolean(),
-        fields: z.unknown(), // 暂时随意定义
+        fields: z.unknown(),
     })
     .passthrough();
 
@@ -83,12 +83,12 @@ export const MultipartFileZod = z
     .object({
         type: z.literal('file'),
         toBuffer: z.function(),
-        file: z.unknown(), // 暂时随意定义
+        file: z.unknown(),
         fieldname: z.string(),
         filename: z.string(),
         encoding: z.string(),
         mimetype: z.string(),
-        fields: z.unknown(), // 暂时随意定义
+        fields: z.unknown(),
     })
     .passthrough();
 

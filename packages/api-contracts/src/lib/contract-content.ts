@@ -5,12 +5,13 @@ import {
     CommentOptionalDefaultsSchema,
     CommentOptionalDefaultsWithPartialRelationsSchema,
     CommentSchema,
-    CommentWithRelationsSchema,
+    PostOptionalDefaultsWithPartialRelationsSchema,
+    // CommentWithRelationsSchema,
     PostSchema,
     UserSchema,
 } from '../zod';
 
-import { MultipartValueZod, ObjectIdSchema, PostSchema2 } from './types';
+import { MultipartValueZod, ObjectIdSchema } from './types';
 
 const c = initContract();
 const CommentOptionalDefaultsWithPartialRelationsAddRepliesSchema =
@@ -21,7 +22,7 @@ const CommentOptionalDefaultsWithPartialRelationsAddRepliesSchema =
                 owner: z.lazy(() => UserSchema),
                 likes: z.lazy(() => UserSchema).array(),
                 replyTo: z.lazy(() => CommentSchema).nullable(),
-                replies: z.lazy(() => CommentWithRelationsSchema).array(),
+                replies: z.lazy(() => CommentOptionalDefaultsWithPartialRelationsSchema).array(),
             })
             .partial(),
     );
@@ -34,7 +35,7 @@ export const contentContract = c.router(
                 id: ObjectIdSchema,
             }),
             responses: {
-                200: PostSchema2,
+                200: PostOptionalDefaultsWithPartialRelationsSchema,
                 404: z.null(),
             },
         },
@@ -45,7 +46,14 @@ export const contentContract = c.router(
                 slug: z.string().min(1).max(50),
             }),
             responses: {
-                200: PostSchema2,
+                200: PostSchema.merge(
+                    z
+                        .object({
+                            author: UserSchema.nullable(),
+                            relatePosts: PostSchema.array(),
+                        })
+                        .partial(),
+                ),
                 404: z.null(),
             },
         },
@@ -54,7 +62,7 @@ export const contentContract = c.router(
             path: '/posts',
             responses: {
                 200: z.object({
-                    posts: PostSchema2.array(),
+                    posts: PostOptionalDefaultsWithPartialRelationsSchema.array(),
                     count: z.number(),
                     skip: z.number(),
                     take: z.number(),
@@ -84,7 +92,7 @@ export const contentContract = c.router(
                 searchString: z.string().min(1).max(20),
             }),
             responses: {
-                200: z.array(PostSchema2),
+                200: PostOptionalDefaultsWithPartialRelationsSchema.array(),
             },
         },
         createPost: {
@@ -92,7 +100,7 @@ export const contentContract = c.router(
             path: '/post',
             contentType: 'multipart/form-data',
             responses: {
-                201: PostSchema2,
+                201: PostSchema,
                 404: z.object({ message: z.string() }),
             },
             // body: c.type<{
@@ -104,7 +112,7 @@ export const contentContract = c.router(
             //     image: MultipartFile;
             // }>(),
             body: z.object({
-                title: z.unknown().or(z.string()),
+                title: MultipartValueZod.or(z.string()),
                 slug: MultipartValueZod.or(z.string()),
                 content: MultipartValueZod.or(z.string()).optional(),
                 meta: MultipartValueZod.or(z.string()),
@@ -117,7 +125,7 @@ export const contentContract = c.router(
             method: 'PATCH',
             path: `/posts`,
             contentType: 'multipart/form-data',
-            responses: { 200: PostSchema2, 404: z.object({ message: z.string() }) },
+            responses: { 200: PostSchema, 404: z.object({ message: z.string() }) },
             body: z.object({
                 id: MultipartValueZod.or(ObjectIdSchema), // 没做检验
                 title: MultipartValueZod.or(z.string()),

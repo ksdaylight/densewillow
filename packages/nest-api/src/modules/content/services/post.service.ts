@@ -9,12 +9,10 @@ import { PrismaService } from '../../core/providers';
 export class PostService {
     constructor(protected configure: Configure, protected prisma: PrismaService) {}
 
-    async post(postWhereUniqueInput: Prisma.PostWhereUniqueInput): Promise<Post | null> {
+    async post(postWhereUniqueInput: Prisma.PostWhereUniqueInput, include?: Prisma.PostInclude) {
         return this.prisma.post.findUnique({
             where: postWhereUniqueInput,
-            include: {
-                thumbnail: true,
-            },
+            include,
         });
     }
 
@@ -32,19 +30,15 @@ export class PostService {
                 createdAt: 'desc',
             },
             take: 5,
-            select: {
-                id: true,
-                title: true,
-                slug: true,
-            },
         });
 
-        const relatedPosts = posts.map((p) => ({
-            id: p.id,
-            title: p.title,
-            slug: p.slug,
-        }));
-        return relatedPosts;
+        // const relatedPosts = posts.map((p) => ({
+        //     id: p.id,
+        //     title: p.title,
+        //     slug: p.slug,
+        // }));
+        // return relatedPosts;
+        return posts;
     }
 
     async posts(params: {
@@ -53,8 +47,9 @@ export class PostService {
         cursor?: Prisma.PostWhereUniqueInput;
         where?: Prisma.PostWhereInput;
         orderBy?: Prisma.PostOrderByWithRelationInput;
+        include?: Prisma.PostInclude;
     }) {
-        const { skip, take, cursor, where, orderBy } = params;
+        const { skip, take, cursor, where, orderBy, include } = params;
 
         const posts = await this.prisma.post.findMany({
             skip,
@@ -62,9 +57,7 @@ export class PostService {
             cursor,
             where,
             orderBy,
-            include: {
-                thumbnail: true,
-            },
+            include,
         });
         const total = await this.prisma.post.count({
             where: where || undefined,
@@ -81,11 +74,13 @@ export class PostService {
     async updatePost(params: {
         where: Prisma.PostWhereUniqueInput;
         data: Prisma.PostUpdateInput;
+        select?: Prisma.PostSelect;
     }): Promise<Post> {
-        const { data, where } = params;
+        const { data, where, select } = params;
         return this.prisma.post.update({
             data,
             where,
+            select,
         });
     }
 

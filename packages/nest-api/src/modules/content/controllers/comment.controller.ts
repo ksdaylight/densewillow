@@ -4,7 +4,7 @@ import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/n
 
 import { apiBlog } from '@api-contracts';
 
-import { User, Comment, Post } from '@prisma/client/blog';
+import { User } from '@prisma/client/blog';
 
 import { isNil } from 'lodash';
 
@@ -90,30 +90,30 @@ export class CommentController {
         });
     }
 
-    async formatCommentAndReplies(
-        comment: Comment & { replies?: Comment[] } & { belongsTo?: Post },
-        userId?: string,
-    ) {
-        const formattedComment = await this.commentService.formatComment(comment, userId);
-        const formattedReplies = comment.replies
-            ? await Promise.all(
-                  comment.replies.map(async (reply: Comment) =>
-                      this.commentService.formatComment(reply, userId),
-                  ),
-              )
-            : [];
+    // async formatCommentAndReplies(
+    //     comment: Comment & { replies?: Comment[] } & { belongsTo?: Post },
+    //     userId?: string,
+    // ) {
+    //     const formattedComment = await this.commentService.formatComment(comment, userId);
+    //     const formattedReplies = comment.replies
+    //         ? await Promise.all(
+    //               comment.replies.map(async (reply: Comment) =>
+    //                   this.commentService.formatComment(reply, userId),
+    //               ),
+    //           )
+    //         : [];
 
-        return {
-            ...formattedComment,
-            replies: formattedReplies,
+    //     return {
+    //         ...formattedComment,
+    //         replies: formattedReplies,
 
-            belongsTo: {
-                id: comment?.belongsTo?.id || '',
-                title: comment?.belongsTo?.title || '',
-                slug: comment?.belongsTo?.slug || '',
-            },
-        };
-    }
+    //         belongsTo: {
+    //             id: comment?.belongsTo?.id || '',
+    //             title: comment?.belongsTo?.title || '',
+    //             slug: comment?.belongsTo?.slug || '',
+    //         },
+    //     };
+    // }
 
     @TsRestHandler(c.createChiefComment)
     async createChiefComment(@ReqUser() user: ClassToPlain<User>) {
