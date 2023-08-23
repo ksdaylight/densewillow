@@ -1,27 +1,27 @@
 import { Post, MediaEntity } from '@prisma/client/blog';
 
-import { isNil } from 'lodash';
+// import { isNil } from 'lodash';
 
 import { PostWithPartialRelations } from '@api-contracts';
 
-import { baseApiUrl } from '../app/page';
+// import { baseApiUrl } from '../app/page';
 
-import { PostDetail } from './types';
+// import { PostDetail } from './types';
 
-type PostWithThumbnail = Post & { thumbnail: MediaEntity | null };
-export const formatPosts = (posts: PostWithThumbnail[]): PostDetail[] => {
-    return posts.map((post) => ({
-        id: post.id.toString(),
-        title: post.title,
-        slug: post.slug,
-        createdAt: post.createdAt.toString(),
-        thumbnail: !isNil(post.thumbnail)
-            ? `${baseApiUrl}/images/${post.thumbnail.id}${post.thumbnail.ext}`
-            : '',
-        meta: post.meta,
-        tags: post.tags,
-    }));
-};
+// type PostWithThumbnail = Post & { thumbnail: MediaEntity | null };
+// export const formatPosts = (posts: PostWithThumbnail[]): PostDetail[] => {
+//     return posts.map((post) => ({
+//         id: post.id.toString(),
+//         title: post.title,
+//         slug: post.slug,
+//         createdAt: post.createdAt.toString(),
+//         thumbnail: !isNil(post.thumbnail)
+//             ? `${baseApiUrl}/images/${post.thumbnail.id}${post.thumbnail.ext}`
+//             : '',
+//         meta: post.meta,
+//         tags: post.tags,
+//     }));
+// };
 export const filterPosts = (
     posts: PostWithPartialRelations[],
     postToFilter: PostWithPartialRelations,

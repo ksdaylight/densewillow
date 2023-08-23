@@ -152,13 +152,24 @@ export class ContentController {
         id?: string;
     }): Promise<Post> {
         const { data, method, thumbnailId, id } = params;
+        const title = this.extractStringValue(data.title)!;
+        const slug = this.extractStringValue(data.slug)!;
+        const content =
+            data.content !== undefined ? this.extractStringValue(data.content) : undefined;
+        const meta = this.extractStringValue(data.meta)!;
+        const tags =
+            data.tags !== undefined
+                ? this.extractStringValue(data.tags)
+                      ?.split(',')
+                      .map((tag: string) => tag.trim())
+                      .filter((tag: string) => tag.length > 0)
+                : undefined;
+
         const postData = {
-            title: this.extractStringValue(data.title),
-            slug: this.extractStringValue(data.slug),
-            ...(data.content !== undefined
-                ? { content: this.extractStringValue(data.content) }
-                : {}),
-            meta: this.extractStringValue(data.meta),
+            title,
+            slug,
+            ...(content !== undefined ? { content } : {}),
+            meta,
             ...(!isNil(thumbnailId)
                 ? {
                       thumbnail: {
@@ -166,9 +177,7 @@ export class ContentController {
                       },
                   }
                 : {}),
-            ...(data.tags !== undefined
-                ? { tags: { set: this.extractArrayValue(data.tags)! } }
-                : {}),
+            ...(tags !== undefined ? { tags: { set: tags } } : {}),
         };
 
         if (method === 'create') {
@@ -247,11 +256,11 @@ export class ContentController {
         });
     }
 
-    // TODO 封装整合 丑陋 和文件一起传的副作用，
-    extractStringValue(value: string | any): string {
-        // if (value === undefined) {
-        //     return undefined;
-        // }
+    // ts-rest 配合react-query使用,multipart/form-data会有json解析方面的问题
+    extractStringValue(value: string | any): string | undefined {
+        if (value === undefined) {
+            return undefined;
+        }
         let jsonString: string;
         if (typeof value === 'string') {
             jsonString = value;

@@ -160,7 +160,7 @@ const Editor: FC<Props> = ({
                         image: post.thumbnail as any as MultipartFile,
                         slug: post.slug,
                         meta: post.meta,
-                        tags: post.tags.split(',').map((tag: string) => tag.trim()),
+                        tags: post.tags,
                     },
                 });
             } else {
@@ -174,7 +174,10 @@ const Editor: FC<Props> = ({
                     image: post.thumbnail as any as MultipartFile,
                     slug: post.slug,
                     meta: post.meta,
-                    tags: post.tags.split(',').map((tag: string) => tag.trim()),
+                    tags: post.tags,
+                    // .split(',')
+                    // .map((tag: string) => tag.trim())
+                    // .filter((tag: string) => tag.length > 0),
                 },
             });
         }

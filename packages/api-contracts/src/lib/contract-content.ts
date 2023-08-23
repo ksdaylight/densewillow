@@ -11,7 +11,7 @@ import {
     UserSchema,
 } from '../zod';
 
-import { MultipartValueZod, ObjectIdSchema } from './types';
+import { ObjectIdSchema } from './types';
 
 const c = initContract();
 export const CommentWithPartialRelationsAddRepliesSchema = CommentSchema.merge(
@@ -117,12 +117,38 @@ export const contentContract = c.router(
             //     image: MultipartFile;
             // }>(),
             body: z.object({
-                title: MultipartValueZod.or(z.string()),
-                slug: MultipartValueZod.or(z.string()),
-                content: MultipartValueZod.or(z.string()).optional(),
-                meta: MultipartValueZod.or(z.string()),
-                tags: MultipartValueZod.or(z.string().array()).optional(),
-                image: z.unknown().optional(),
+                title: z
+                    .object({
+                        value: z.string().max(30),
+                    })
+                    .passthrough()
+                    .or(z.string().max(30)),
+                slug: z
+                    .object({
+                        value: z.string().max(30),
+                    })
+                    .passthrough()
+                    .or(z.string().max(30)),
+                content: z
+                    .object({
+                        value: z.string().optional(),
+                    })
+                    .passthrough()
+                    .or(z.string().optional())
+                    .optional(),
+                meta: z
+                    .object({
+                        value: z.string().max(100),
+                    })
+                    .passthrough()
+                    .or(z.string().max(100)),
+                tags: z
+                    .object({
+                        value: z.string().max(100),
+                    })
+                    .passthrough()
+                    .or(z.string().max(100)),
+                image: z.any().optional(), // 直接交由服务器处理
             }),
         },
 
@@ -132,13 +158,44 @@ export const contentContract = c.router(
             contentType: 'multipart/form-data',
             responses: { 200: PostSchema, 404: z.object({ message: z.string() }) },
             body: z.object({
-                id: MultipartValueZod.or(ObjectIdSchema), // 没做检验
-                title: MultipartValueZod.or(z.string()),
-                slug: MultipartValueZod.or(z.string()),
-                content: MultipartValueZod.or(z.string()).optional(),
-                meta: MultipartValueZod.or(z.string()),
-                tags: MultipartValueZod.or(z.string().array()).optional(),
-                image: z.unknown().optional(),
+                id: z
+                    .object({
+                        value: ObjectIdSchema,
+                    })
+                    .passthrough()
+                    .or(ObjectIdSchema),
+                title: z
+                    .object({
+                        value: z.string().max(30),
+                    })
+                    .passthrough()
+                    .or(z.string().max(30)),
+                slug: z
+                    .object({
+                        value: z.string().max(30),
+                    })
+                    .passthrough()
+                    .or(z.string().max(30)),
+                content: z
+                    .object({
+                        value: z.string().optional(),
+                    })
+                    .passthrough()
+                    .or(z.string().optional())
+                    .optional(),
+                meta: z
+                    .object({
+                        value: z.string().max(100),
+                    })
+                    .passthrough()
+                    .or(z.string().max(100)),
+                tags: z
+                    .object({
+                        value: z.string().max(100),
+                    })
+                    .passthrough()
+                    .or(z.string().max(100)),
+                image: z.any().optional(), // 直接交由服务器处理
             }),
             summary: 'Update a post',
         },
@@ -312,3 +369,4 @@ export const contentContract = c.router(
         }),
     },
 );
+// TODO 细致的校验规则
