@@ -4,7 +4,9 @@ import { FC, useEffect, useState } from 'react';
 
 import { isNil } from 'lodash';
 
-import { CommentResponse } from '../../utils/types';
+// import { CommentResponse } from '../../utils/types';
+import { CommentWithPartialRelationsAddReplies } from '@api-contracts';
+
 import { GitHubAuthButton } from '../button';
 
 import { apiClient } from '../../app/page';
@@ -25,21 +27,23 @@ const limit = 5;
 // const currentPageNo = 0;
 
 const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
-    const [comments, setComments] = useState<CommentResponse[]>();
+    const [comments, setComments] = useState<CommentWithPartialRelationsAddReplies[]>();
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     // const [reachedToEnd, setReachedToEnd] = useState(false);
     const [busyCommentLike, setBusyCommentLike] = useState(false);
     const [submitting, setSubmitting] = useState(false);
-    const [selectedComment, setSelectedComment] = useState<CommentResponse | null>(null);
-    const [commentToDelete, setCommentToDelete] = useState<CommentResponse | null>(null);
+    const [selectedComment, setSelectedComment] =
+        useState<CommentWithPartialRelationsAddReplies | null>(null);
+    const [commentToDelete, setCommentToDelete] =
+        useState<CommentWithPartialRelationsAddReplies | null>(null);
 
     const { userInfoLocal } = useRoleInfoContext();
 
-    const insertNewReplyComments = (reply: CommentResponse) => {
+    const insertNewReplyComments = (reply: CommentWithPartialRelationsAddReplies) => {
         if (!comments) return;
         const updatedComments = [...comments];
 
-        const chiefCommentIndex = updatedComments.findIndex(({ id }) => id === reply.repliedTo);
+        const chiefCommentIndex = updatedComments.findIndex(({ id }) => id === reply.repliedToID);
         const { replies } = updatedComments[chiefCommentIndex];
         if (replies) {
             updatedComments[chiefCommentIndex].replies = [...replies, reply];
@@ -50,7 +54,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
         setComments([...updatedComments]);
     };
 
-    const updateEditedComment = (newComment: CommentResponse) => {
+    const updateEditedComment = (newComment: CommentWithPartialRelationsAddReplies) => {
         if (!comments) return;
 
         const updatedComments = [...comments];
@@ -64,7 +68,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
         // otherwise updating comment from replies
         else {
             const chiefCommentIndex = updatedComments.findIndex(
-                ({ id }) => id === newComment.repliedTo,
+                ({ id }) => id === newComment.repliedToID,
             );
 
             let newReplies = updatedComments[chiefCommentIndex].replies;
@@ -79,7 +83,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
         setComments([...updatedComments]);
     };
 
-    const updateDeletedComments = (deletedComment: CommentResponse) => {
+    const updateDeletedComments = (deletedComment: CommentWithPartialRelationsAddReplies) => {
         if (!comments) return;
         let newComments = [...comments];
 
@@ -87,7 +91,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
             newComments = newComments.filter(({ id }) => id !== deletedComment.id);
         else {
             const chiefCommentIndex = newComments.findIndex(
-                ({ id }) => id === deletedComment.repliedTo,
+                ({ id }) => id === deletedComment.repliedToID,
             );
             const newReplies = newComments[chiefCommentIndex].replies?.filter(
                 ({ id }) => id !== deletedComment.id,
@@ -98,7 +102,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
         setComments([...newComments]);
     };
 
-    const updateLikedComments = (likedComment: CommentResponse) => {
+    const updateLikedComments = (likedComment: CommentWithPartialRelationsAddReplies) => {
         if (!comments) return;
         let newComments = [...comments];
 
@@ -109,7 +113,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
             });
         } else {
             const chiefCommentIndex = newComments.findIndex(
-                ({ id }) => id === likedComment.repliedTo,
+                ({ id }) => id === likedComment.repliedToID,
             );
             const newReplies = newComments[chiefCommentIndex].replies?.map((reply) => {
                 if (reply.id === likedComment.id) return likedComment;
@@ -123,7 +127,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
 
     const { mutate: addChiefCommentMutate } = apiClient.content.createChiefComment.useMutation({
         onSuccess: (data, variables, context) => {
-            const newComment = data.body as CommentResponse;
+            const newComment = data.body;
             if (newComment && comments) setComments([...comments, newComment]);
             else setComments([newComment]);
         },
@@ -149,7 +153,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
 
     const { mutate: addReplyMutate } = apiClient.content.addReplay.useMutation({
         onSuccess: (data, variables, context) => {
-            insertNewReplyComments(data.body as CommentResponse);
+            insertNewReplyComments(data.body);
         },
         onError: (error, variables, context) => {
             console.log(error);
@@ -164,7 +168,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
 
     const { mutate: updateMutate } = apiClient.content.updateComment.useMutation({
         onSuccess: (data, variables, context) => {
-            updateEditedComment(data.body as CommentResponse);
+            updateEditedComment(data.body);
         },
         onError: (error, variables, context) => {
             console.log(error);
@@ -179,7 +183,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
             },
         });
     };
-    const handleOnDeleteClick = (comment: CommentResponse) => {
+    const handleOnDeleteClick = (comment: CommentWithPartialRelationsAddReplies) => {
         setCommentToDelete(comment);
         setShowConfirmModal(true);
     };
@@ -216,7 +220,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
     };
     const { mutate: updateLikeMutate } = apiClient.content.updateLike.useMutation({
         onSuccess(data, variables, context) {
-            data.body?.replies[0].owner;
+            // data.body?.replies[0].owner;
             updateLikedComments(data.body);
             setSelectedComment(null);
         },
@@ -228,7 +232,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
             setBusyCommentLike(false);
         },
     });
-    const handleOnLikeClick = (comment: CommentResponse) => {
+    const handleOnLikeClick = (comment: CommentWithPartialRelationsAddReplies) => {
         setBusyCommentLike(true);
         setSelectedComment(comment);
         updateLikeMutate({
@@ -276,9 +280,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
     useEffect(() => {
         if (!belongsTo && fetchAll) {
             if (allCommentsData?.pages) {
-                const newComments = allCommentsData.pages.flatMap(
-                    (page) => page.body.comments as CommentResponse[],
-                );
+                const newComments = allCommentsData.pages.flatMap((page) => page.body.comments);
                 setComments(newComments);
             }
         }
@@ -301,7 +303,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
     useEffect(() => {
         if (!belongsTo) return;
         if (!isNil(commentsByBelongsData)) {
-            setComments(commentsByBelongsData.body.comments as CommentResponse[]);
+            setComments(commentsByBelongsData.body.comments);
         }
     }, [commentsByBelongsData, belongsTo]);
 
@@ -331,7 +333,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
                     <div key={comment.id}>
                         <CommentCard
                             comment={comment}
-                            showControls={userInfoLocal?.id === comment.owner.id}
+                            showControls={userInfoLocal?.id === comment.owner?.id}
                             onReplySubmit={(content) =>
                                 handleReplySubmit({ content, repliedTo: comment.id })
                             }
@@ -349,7 +351,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
                                         <CommentCard
                                             key={reply.id}
                                             comment={reply}
-                                            showControls={userInfoLocal?.id === reply.owner.id}
+                                            showControls={userInfoLocal?.id === reply.owner?.id}
                                             onReplySubmit={(content) =>
                                                 handleReplySubmit({
                                                     content,

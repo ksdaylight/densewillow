@@ -2,6 +2,8 @@ import { Post, MediaEntity } from '@prisma/client/blog';
 
 import { isNil } from 'lodash';
 
+import { PostWithPartialRelations } from '@api-contracts';
+
 import { baseApiUrl } from '../app/page';
 
 import { PostDetail } from './types';
@@ -20,7 +22,10 @@ export const formatPosts = (posts: PostWithThumbnail[]): PostDetail[] => {
         tags: post.tags,
     }));
 };
-export const filterPosts = (posts: PostDetail[], postToFilter: PostDetail) => {
+export const filterPosts = (
+    posts: PostWithPartialRelations[],
+    postToFilter: PostWithPartialRelations,
+) => {
     return posts.filter((post) => {
         return post.id !== postToFilter.id;
     });

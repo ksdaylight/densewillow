@@ -4,7 +4,9 @@ import { FC, useEffect, useState } from 'react';
 
 import { isNil } from 'lodash';
 
-import { LatestUserProfile } from '../../../utils/types';
+// import { LatestUserProfile } from '../../../utils/types';
+
+import { User } from '@api-contracts';
 
 import PageNavigator from '../../../components/common/PageNavigator';
 import AdminLayout from '../../../components/layout/AdminLayout';
@@ -15,7 +17,7 @@ import { apiClient } from '../../page';
 interface Props {}
 const limit = 5;
 const AdminUser: FC<Props> = (): JSX.Element => {
-    const [users, setUsers] = useState<LatestUserProfile[]>();
+    const [users, setUsers] = useState<User[]>();
 
     const {
         data: allUsersData,
@@ -54,23 +56,23 @@ const AdminUser: FC<Props> = (): JSX.Element => {
     useEffect(() => {
         const userResult = allUsersData?.pages;
         if (!isNil(userResult)) {
-            const transformUser = userResult.flatMap((page) => {
-                return page.body.users.map(
-                    (item: any): LatestUserProfile => ({
-                        id: item.i,
-                        name: item.name,
-                        avatar: item.avatar,
-                        provider: item.provider,
-                        email: item.email,
-                    }),
-                );
-            });
-            setUsers(transformUser);
+            // const transformUser = userResult.flatMap((page) => {
+            //     return page.body.users.map(
+            //         (item: any): LatestUserProfile => ({
+            //             id: item.i,
+            //             name: item.name,
+            //             avatar: item.avatar,
+            //             provider: item.provider,
+            //             email: item.email,
+            //         }),
+            //     );
+            // });
+            setUsers(userResult.flatMap((page) => page.body.users));
         }
     }, [allUsersData]);
 
     return (
-        <AdminLayout>
+        <>
             <h1 className="text-2xl dark:text-primary text-primary-dark font-semibold py-2 transition">
                 Users
             </h1>
@@ -78,7 +80,7 @@ const AdminUser: FC<Props> = (): JSX.Element => {
             <div className="py-10 flex justify-end">
                 <PageNavigator onNextClick={handleOnNextClick} onPrevClick={handleOnPrevClick} />
             </div>
-        </AdminLayout>
+        </>
     );
 };
 export default AdminUser;

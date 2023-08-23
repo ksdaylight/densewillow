@@ -75,7 +75,6 @@ export class CommentController {
                         },
                     },
                     belongsTo: true,
-                    _count: true,
                 },
             });
 
@@ -126,7 +125,15 @@ export class CommentController {
                         owner: { connect: { id: user.id } },
                         chiefComment: true,
                     },
-                    { owner: true },
+                    {
+                        owner: true,
+                        replies: {
+                            include: {
+                                owner: true,
+                            },
+                        },
+                        belongsTo: true,
+                    },
                 );
                 // const comment = await this.commentService.formatComment(newComment, user.id);
                 return { status: 201 as const, body: newComment };
@@ -148,6 +155,12 @@ export class CommentController {
                     },
                     {
                         owner: true,
+                        replies: {
+                            include: {
+                                owner: true,
+                            },
+                        },
+                        belongsTo: true,
                     },
                 );
                 // const comment = await this.commentService.formatComment(newComment, user.id);
@@ -169,6 +182,12 @@ export class CommentController {
                     },
                     include: {
                         owner: true,
+                        replies: {
+                            include: {
+                                owner: true,
+                            },
+                        },
+                        belongsTo: true,
                     },
                 });
                 return { status: 201 as const, body: newComment };

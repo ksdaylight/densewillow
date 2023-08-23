@@ -2,12 +2,13 @@ import { FC } from 'react';
 import { BsBoxArrowUpRight } from 'react-icons/bs';
 import parse from 'html-react-parser';
 
+import { CommentWithPartialRelationsAddReplies } from '@api-contracts';
+
 import { trimText } from '../../utils/helps';
 import ProfileIcon from '../common/ProfileIcon';
-import { LatestComment } from '../../utils/types';
 
 interface Props {
-    comment: LatestComment;
+    comment: CommentWithPartialRelationsAddReplies;
 }
 
 const LatestCommentListCard: FC<Props> = ({ comment }): JSX.Element => {
@@ -15,24 +16,24 @@ const LatestCommentListCard: FC<Props> = ({ comment }): JSX.Element => {
     return (
         <div className="flex space-x-2">
             <ProfileIcon
-                nameInitial={owner.name[0]}
-                avatar={owner.avatar ? owner.avatar : undefined}
+                nameInitial={owner?.name[0]}
+                avatar={owner?.avatar ? owner.avatar : undefined}
             />
 
             <div className="flex-1">
                 <p className="font-semibold text-primary-dark dark:text-primary transition">
-                    {owner.name} <span className="text-sm text-secondary-dark">commented on</span>
+                    {owner?.name} <span className="text-sm text-secondary-dark">commented on</span>
                 </p>
 
                 <a
-                    href={`/${belongsTo.slug}`}
+                    href={`/${belongsTo?.slug}`}
                     target="_blank"
                     rel="noreferrer noopener"
                     className="text-secondary-dark hover:underline"
                 >
                     <div className="flex items-center space-x-2">
                         <BsBoxArrowUpRight size={12} />
-                        {trimText(belongsTo.title, 30)}
+                        {trimText(belongsTo?.title || '...', 30)}
                     </div>
                 </a>
 

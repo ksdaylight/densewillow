@@ -4,8 +4,12 @@ import { FC, useEffect, useState } from 'react';
 
 import { isNil } from 'lodash';
 
-import { formatPosts } from '../../utils/helps';
-import { LatestComment, LatestUserProfile, PostDetail } from '../../utils/types';
+import {
+    User,
+    PostWithPartialRelations,
+    CommentWithPartialRelationsAddReplies,
+} from '@api-contracts';
+
 import ContentWrapper from '../../components/admin/ContentWrapper';
 import LatesUserTable from '../../components/admin/LatesUserTable';
 import LatestPostListCard from '../../components/admin/LatestPostListCard';
@@ -14,9 +18,9 @@ import { apiClient } from '../page';
 
 interface Props {}
 const AdminHome: FC<Props> = (): JSX.Element => {
-    const [latestPosts, setLatestPosts] = useState<PostDetail[]>();
-    const [latestComments, setLatestComments] = useState<LatestComment[]>();
-    const [latestUsers, setLatestUsers] = useState<LatestUserProfile[]>();
+    const [latestPosts, setLatestPosts] = useState<PostWithPartialRelations[]>();
+    const [latestComments, setLatestComments] = useState<CommentWithPartialRelationsAddReplies[]>();
+    const [latestUsers, setLatestUsers] = useState<User[]>();
 
     const { data: getPostData } = apiClient.content.getPosts.useQuery(
         ['posts', '3'],
@@ -59,7 +63,7 @@ const AdminHome: FC<Props> = (): JSX.Element => {
         const postResult = getPostData?.body.posts;
 
         if (!isNil(postResult)) {
-            setLatestPosts(formatPosts(postResult));
+            setLatestPosts(postResult);
         }
     }, [getPostData]);
 
@@ -67,24 +71,7 @@ const AdminHome: FC<Props> = (): JSX.Element => {
         const commentsResult = latestCommentsData?.body.comments;
 
         if (!isNil(commentsResult)) {
-            const transformResult = commentsResult
-                .filter((item) => item.chiefComment)
-                .map(
-                    (item): LatestComment => ({
-                        id: item.id,
-                        owner: {
-                            id: item.owner.id,
-                            name: item.owner.name,
-                            avatar: item.owner.avatar,
-                        },
-                        content: item.content || '',
-                        belongsTo: {
-                            id: item.belongsTo.id,
-                            title: item.belongsTo.title,
-                            slug: item.belongsTo.slug,
-                        },
-                    }),
-                );
+            const transformResult = commentsResult.filter((item) => item.chiefComment);
             setLatestComments(transformResult);
         }
     }, [latestCommentsData]);
@@ -92,16 +79,7 @@ const AdminHome: FC<Props> = (): JSX.Element => {
     useEffect(() => {
         const userResult = latestUsersData?.body.users;
         if (!isNil(userResult)) {
-            const transformUser = userResult.map(
-                (item: any): LatestUserProfile => ({
-                    id: item.i,
-                    name: item.name,
-                    avatar: item.avatar,
-                    provider: item.provider,
-                    email: item.email,
-                }),
-            );
-            setLatestUsers(transformUser);
+            setLatestUsers(userResult);
         }
     }, [latestUsersData]);
 

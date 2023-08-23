@@ -4,14 +4,16 @@ import dateFormat from 'dateformat';
 import parse from 'html-react-parser';
 import { BsFillReplyAllFill, BsFillTrashFill, BsPencilSquare } from 'react-icons/bs';
 
-import { CommentResponse } from '../../utils/types';
+import { CommentWithPartialRelationsAddReplies } from '@api-contracts';
+
+import { useRoleInfoContext } from '../../context/role-info';
 
 import CommentForm from './CommentForm';
 import ProfileIcon from './ProfileIcon';
 import LikeHeart from './LikeHeart';
 
 interface Props {
-    comment: CommentResponse;
+    comment: CommentWithPartialRelationsAddReplies;
     showControls?: boolean;
     busy?: boolean;
     onUpdateSubmit?(content: string): void;
@@ -29,11 +31,11 @@ const CommentCard: FC<Props> = ({
     onDeleteClick,
     onLikeClick,
 }): JSX.Element => {
-    const { owner, createdAt, content, likedByOwner, likes } = comment;
-    const { name, avatar } = owner;
+    const { owner, createdAt, content, likes, likedByUserIDs } = comment;
+    const { userInfoLocal } = useRoleInfoContext();
     const [showForm, setShowForm] = useState(false);
     const [initialState, setInitialState] = useState('');
-
+    const likedByOwner = userInfoLocal.id ? likedByUserIDs.includes(userInfoLocal.id) : false;
     const displayReplyForm = () => {
         setInitialState('');
         setShowForm(true);
@@ -65,11 +67,14 @@ const CommentCard: FC<Props> = ({
 
     return (
         <div className="flex space-x-3">
-            <ProfileIcon nameInitial={name[0].toUpperCase()} avatar={avatar} />
+            <ProfileIcon
+                nameInitial={owner?.name[0].toUpperCase()}
+                avatar={owner?.avatar || undefined}
+            />
 
             <div className="flex-1">
                 <h1 className="text-lg text-primary-dark dark:text-primary font-semibold">
-                    {name}
+                    {owner?.name}
                 </h1>
                 <span className="text-sm text-secondary-dark">
                     {dateFormat(createdAt, 'd-mmm-yyyy')}

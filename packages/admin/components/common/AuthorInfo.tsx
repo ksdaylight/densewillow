@@ -1,19 +1,17 @@
 import Image from 'next/legacy/image';
 import { FC } from 'react';
-
-export interface AuthorProfile {
-    id: string;
-    name: string;
-    avatar: string;
-    message: string;
-}
+import { User } from '@api-contracts';
 
 interface Props {
-    profile: AuthorProfile;
+    profile: User;
 }
 
 const AuthorInfo: FC<Props> = ({ profile }): JSX.Element => {
-    const { name, message, avatar } = profile;
+    const { name, avatar } = profile;
+    const message = `This post is written by ${name}. ${
+        name.split(' ')[0]
+    } is an full stack JavaScript developer. `;
+
     return (
         <div className="p-2 border-2 border-secondary-dark rounded flex">
             {/* profile icons */}

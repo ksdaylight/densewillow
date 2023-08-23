@@ -22,8 +22,7 @@ import { MediaService } from '../../media/services';
 import { getTime } from '../../core/helpers';
 import { Guest, ReqUser } from '../../user/decorators';
 import { UserService } from '../../user/services';
-// import { UserService } from '../../user/services';
-// import { PostService } from '../services/post.service';
+
 const c = nestControllerContract(apiBlog.content);
 
 // const testChecker: PermissionChecker = async (ab) => ab.can(PermissionAction.MANAGE, 'all');
@@ -70,14 +69,17 @@ export class ContentController {
     @TsRestHandler(c.getPostBySlug)
     async getPostBySlug() {
         return tsRestHandler(c.getPostBySlug, async ({ params }) => {
-            const post = await this.postService.post({ slug: String(params.slug) });
+            const post = await this.postService.post(
+                { slug: String(params.slug) },
+                { thumbnail: true },
+            );
             if (isNil(post)) throw NotFoundException;
             const relatedPosts = await this.postService.findRelatePosts(post);
             const author = await this.userService.getAuthorInfo(post.authorId || undefined);
             if (post === null) {
                 return { status: 404 as const, body: null };
             }
-            return { status: 200 as const, body: { author, relatedPosts, ...post } };
+            return { status: 200 as const, body: { ...post, author, relatedPosts } };
         });
     }
 
@@ -245,7 +247,7 @@ export class ContentController {
         });
     }
 
-    // TODO 封装整合 和文件一起传的副作用，
+    // TODO 封装整合 丑陋 和文件一起传的副作用，
     extractStringValue(value: string | any): string {
         // if (value === undefined) {
         //     return undefined;

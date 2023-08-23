@@ -8,9 +8,9 @@ import { getCookie } from 'cookies-next';
 
 import { isNil } from 'lodash';
 
-import { PostDetail } from '../utils/types';
+import { PostWithPartialRelations } from '@api-contracts';
 
-import { filterPosts, formatPosts } from '../utils/helps';
+import { filterPosts } from '../utils/helps';
 
 import InfiniteScrollPosts from '../components/common/InfiniteScrollPosts';
 
@@ -20,7 +20,7 @@ import { apiClient } from './page'; // './page';
 
 interface Props {}
 const Home: FC<Props> = (): JSX.Element => {
-    const [postsToRender, setPostsToRender] = useState<PostDetail[]>([]);
+    const [postsToRender, setPostsToRender] = useState<PostWithPartialRelations[]>([]);
     const [hasMorePosts, setHasMorePosts] = useState(true);
     const limit = 9;
     const { userInfoLocal, setUserInfoLocal } = useRoleInfoContext();
@@ -74,7 +74,7 @@ const Home: FC<Props> = (): JSX.Element => {
 
     useEffect(() => {
         if (data?.pages) {
-            const newPosts = data.pages.flatMap((page) => formatPosts(page.body.posts));
+            const newPosts = data.pages.flatMap((page) => page.body.posts);
             setPostsToRender(newPosts);
             setHasMorePosts(hasNextPage ?? false);
         }

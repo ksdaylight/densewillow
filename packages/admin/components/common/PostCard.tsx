@@ -4,11 +4,15 @@ import dateformat from 'dateformat';
 
 import Link from 'next/link';
 
-import { PostDetail } from '../../utils/types';
+import { PostWithPartialRelations } from '@api-contracts';
+
+import { isNil } from 'lodash';
+
+import { baseApiUrl } from '../../app/page';
 import { trimText } from '../../utils/helps';
 
 interface Props {
-    post: PostDetail;
+    post: PostWithPartialRelations;
     busy?: boolean;
     controls?: boolean;
     onDeleteClick?(): void;
@@ -16,16 +20,19 @@ interface Props {
 
 const PostCard: FC<Props> = ({ controls = false, post, busy, onDeleteClick }): JSX.Element => {
     const { title, slug, meta, createdAt, tags, thumbnail } = post;
+    const thumbnailUrl = !isNil(thumbnail)
+        ? `${baseApiUrl}/images/${thumbnail.id}${thumbnail.ext}`
+        : null;
     return (
         <div className="rounded shadow-sm shadow-secondary-dark overflow-hidden bg-primary dark:bg-primary-dark transition flex flex-col h-full">
             {/* thumbnail */}
             <div className="aspect-video relative">
-                {!thumbnail ? (
+                {!thumbnailUrl ? (
                     <div className="w-full h-full flex items-center justify-center text-secondary-dark opacity-50 font-semibold">
                         No image
                     </div>
                 ) : (
-                    <Image src={thumbnail} layout="fill" alt="Thumbnail" />
+                    <Image src={thumbnailUrl} layout="fill" alt="Thumbnail" />
                 )}
             </div>
 

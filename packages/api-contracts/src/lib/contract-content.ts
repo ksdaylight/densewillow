@@ -2,30 +2,32 @@ import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
 import {
-    CommentOptionalDefaultsSchema,
-    CommentOptionalDefaultsWithPartialRelationsSchema,
     CommentSchema,
-    PostOptionalDefaultsWithPartialRelationsSchema,
+    CommentWithPartialRelationsSchema,
+    MediaEntitySchema,
     // CommentWithRelationsSchema,
     PostSchema,
+    PostWithPartialRelationsSchema,
     UserSchema,
 } from '../zod';
 
 import { MultipartValueZod, ObjectIdSchema } from './types';
 
 const c = initContract();
-const CommentOptionalDefaultsWithPartialRelationsAddRepliesSchema =
-    CommentOptionalDefaultsSchema.merge(
-        z
-            .object({
-                belongsTo: z.lazy(() => PostSchema).nullable(),
-                owner: z.lazy(() => UserSchema),
-                likes: z.lazy(() => UserSchema).array(),
-                replyTo: z.lazy(() => CommentSchema).nullable(),
-                replies: z.lazy(() => CommentOptionalDefaultsWithPartialRelationsSchema).array(),
-            })
-            .partial(),
-    );
+export const CommentWithPartialRelationsAddRepliesSchema = CommentSchema.merge(
+    z
+        .object({
+            belongsTo: z.lazy(() => PostSchema).nullable(),
+            owner: z.lazy(() => UserSchema),
+            likes: z.lazy(() => UserSchema).array(),
+            replyTo: z.lazy(() => CommentSchema).nullable(),
+            replies: z.lazy(() => CommentWithPartialRelationsSchema).array(),
+        })
+        .partial(),
+);
+export type CommentWithPartialRelationsAddReplies = z.infer<
+    typeof CommentWithPartialRelationsAddRepliesSchema
+>;
 export const contentContract = c.router(
     {
         getPostById: {
@@ -35,7 +37,7 @@ export const contentContract = c.router(
                 id: ObjectIdSchema,
             }),
             responses: {
-                200: PostOptionalDefaultsWithPartialRelationsSchema,
+                200: PostWithPartialRelationsSchema,
                 404: z.null(),
             },
         },
@@ -49,8 +51,11 @@ export const contentContract = c.router(
                 200: PostSchema.merge(
                     z
                         .object({
-                            author: UserSchema.nullable(),
-                            relatePosts: PostSchema.array(),
+                            thumbnail: z.lazy(() => MediaEntitySchema).nullable(),
+                            author: z.lazy(() => UserSchema).nullable(),
+                            likedUsers: z.lazy(() => UserSchema).array(),
+                            comments: z.lazy(() => CommentSchema).array(),
+                            relatedPosts: z.lazy(() => PostSchema).array(),
                         })
                         .partial(),
                 ),
@@ -62,7 +67,7 @@ export const contentContract = c.router(
             path: '/posts',
             responses: {
                 200: z.object({
-                    posts: PostOptionalDefaultsWithPartialRelationsSchema.array(),
+                    posts: PostWithPartialRelationsSchema.array(),
                     count: z.number(),
                     skip: z.number(),
                     take: z.number(),
@@ -92,7 +97,7 @@ export const contentContract = c.router(
                 searchString: z.string().min(1).max(20),
             }),
             responses: {
-                200: PostOptionalDefaultsWithPartialRelationsSchema.array(),
+                200: PostWithPartialRelationsSchema.array(),
             },
         },
         createPost: {
@@ -193,7 +198,7 @@ export const contentContract = c.router(
 
             responses: {
                 200: z.object({
-                    comments: CommentOptionalDefaultsWithPartialRelationsAddRepliesSchema.array(),
+                    comments: CommentWithPartialRelationsAddRepliesSchema.array(),
                     count: z.number(),
                     skip: z.number(),
                     take: z.number(),
@@ -223,7 +228,7 @@ export const contentContract = c.router(
 
             responses: {
                 200: z.object({
-                    comments: CommentOptionalDefaultsWithPartialRelationsAddRepliesSchema.array(),
+                    comments: CommentWithPartialRelationsAddRepliesSchema.array(),
                     count: z.number(),
                     skip: z.number(),
                     take: z.number(),
@@ -240,7 +245,7 @@ export const contentContract = c.router(
                 belongsTo: ObjectIdSchema,
             }),
             responses: {
-                201: CommentOptionalDefaultsWithPartialRelationsSchema,
+                201: CommentWithPartialRelationsAddRepliesSchema,
                 404: z.null(),
             },
         },
@@ -252,7 +257,7 @@ export const contentContract = c.router(
                 repliedTo: ObjectIdSchema,
             }),
             responses: {
-                201: CommentOptionalDefaultsWithPartialRelationsSchema,
+                201: CommentWithPartialRelationsAddRepliesSchema,
                 404: z.null(),
             },
         },
@@ -263,7 +268,7 @@ export const contentContract = c.router(
                 id: ObjectIdSchema,
             }),
             responses: {
-                201: CommentOptionalDefaultsWithPartialRelationsAddRepliesSchema,
+                201: CommentWithPartialRelationsAddRepliesSchema,
                 // CommentOptionalDefaultsWithPartialRelationsSchema.merge,
                 404: z.null(),
             },
@@ -276,7 +281,7 @@ export const contentContract = c.router(
                 id: ObjectIdSchema,
             }),
             responses: {
-                201: CommentOptionalDefaultsWithPartialRelationsSchema,
+                201: CommentWithPartialRelationsAddRepliesSchema,
                 404: z.null(),
             },
         },

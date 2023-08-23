@@ -1,22 +1,21 @@
 import { FC, ReactNode, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { apiClient } from '../../app/page';
-// 'packages/admin/app/admin/page';
+import { PostWithPartialRelations } from '@api-contracts';
 
-import { PostDetail } from '../../utils/types';
+import { apiClient } from '../../app/page';
 
 import PostCard from './PostCard';
 import ConfirmModal from './ConfirmModal';
 
 interface Props {
-    posts: PostDetail[];
+    posts: PostWithPartialRelations[];
     showControls?: boolean;
     hasMore: boolean;
     next(): void;
     dataLength: number;
     loader?: ReactNode;
-    onPostRemoved(post: PostDetail): void;
+    onPostRemoved(post: PostWithPartialRelations): void;
 }
 
 const InfiniteScrollPosts: FC<Props> = ({
@@ -30,9 +29,9 @@ const InfiniteScrollPosts: FC<Props> = ({
 }): JSX.Element => {
     const [removing, setRemoving] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
-    const [postToRemove, setPostToRemove] = useState<PostDetail | null>(null);
+    const [postToRemove, setPostToRemove] = useState<PostWithPartialRelations | null>(null);
 
-    const handleOnDeleteClick = (post: PostDetail) => {
+    const handleOnDeleteClick = (post: PostWithPartialRelations) => {
         setPostToRemove(post);
         setShowConfirmModal(true);
     };

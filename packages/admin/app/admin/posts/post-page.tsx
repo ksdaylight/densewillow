@@ -2,16 +2,16 @@
 
 import { FC, useEffect, useState, useCallback } from 'react';
 
-import { filterPosts, formatPosts } from '../../../utils/helps';
+import { PostWithPartialRelations } from '@api-contracts';
 
-import { PostDetail } from '../../../utils/types';
+import { filterPosts } from '../../../utils/helps';
 
 import InfiniteScrollPosts from '../../../components/common/InfiniteScrollPosts';
 import { apiClient } from '../../page';
 
 interface Props {}
 const PostAdmin: FC<Props> = (): JSX.Element => {
-    const [postsToRender, setPostsToRender] = useState<PostDetail[]>([]);
+    const [postsToRender, setPostsToRender] = useState<PostWithPartialRelations[]>([]);
     const [hasMorePosts, setHasMorePosts] = useState(true);
 
     const limit = 9;
@@ -37,7 +37,7 @@ const PostAdmin: FC<Props> = (): JSX.Element => {
 
     useEffect(() => {
         if (data?.pages) {
-            const newPosts = data.pages.flatMap((page) => formatPosts(page.body.posts));
+            const newPosts = data.pages.flatMap((page) => page.body.posts);
             setPostsToRender(newPosts);
             setHasMorePosts(hasNextPage ?? false);
         }
@@ -48,10 +48,6 @@ const PostAdmin: FC<Props> = (): JSX.Element => {
             fetchNextPage();
         }
     }, [isFetching, fetchNextPage, hasNextPage]);
-
-    // if (data) {
-    //     const posts = data.pages.flatMap((page) => (page.status === 200 ? page.body.posts : []));
-    // }
     return (
         <InfiniteScrollPosts
             hasMore={hasMorePosts}

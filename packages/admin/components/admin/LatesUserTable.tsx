@@ -1,10 +1,12 @@
 import { FC } from 'react';
 
-import { LatestUserProfile } from '../../utils/types';
+// import { LatestUserProfile } from '../../utils/types';
+import { User } from '@api-contracts';
+
 import ProfileIcon from '../common/ProfileIcon';
 
 interface Props {
-    users?: LatestUserProfile[];
+    users?: User[];
 }
 
 const LatesUserTable: FC<Props> = ({ users }): JSX.Element => {
@@ -25,7 +27,7 @@ const LatesUserTable: FC<Props> = ({ users }): JSX.Element => {
                                     <div className="flex items-center space-x-2">
                                         <ProfileIcon
                                             nameInitial={profile.name[0].toUpperCase()}
-                                            avatar={profile.avatar}
+                                            avatar={profile.avatar || undefined}
                                         />
                                         <p>{profile.name}</p>
                                     </div>

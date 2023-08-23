@@ -149,9 +149,7 @@ const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
                     />
                 </div>
 
-                <div className="pt-10">
-                    <AuthorInfo profile={author as any} />
-                </div>
+                <div className="pt-10">{author && <AuthorInfo profile={author} />}</div>
 
                 <div className="pt-5">
                     <h3 className="text-xl font-semibold bg-secondary-dark text-primary p-2 mb-4">
@@ -159,7 +157,7 @@ const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
                     </h3>
 
                     <div className="flex flex-col space-y-4">
-                        {(relatedPosts as any).map((p: any) => {
+                        {relatedPosts?.map((p) => {
                             return (
                                 <Link
                                     key={p.slug}
