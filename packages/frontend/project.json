@@ -1,7 +1,7 @@
 {
-    "name": "admin",
+    "name": "frontend",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/admin",
+    "sourceRoot": "packages/frontend",
     "projectType": "application",
     "targets": {
         "build": {
@@ -9,11 +9,11 @@
             "outputs": ["{options.outputPath}"],
             "defaultConfiguration": "production",
             "options": {
-                "outputPath": "dist/packages/admin"
+                "outputPath": "dist/packages/frontend"
             },
             "configurations": {
                 "development": {
-                    "outputPath": "packages/admin"
+                    "outputPath": "packages/frontend"
                 },
                 "production": {}
             }
@@ -22,16 +22,16 @@
             "executor": "@nx/next:server",
             "defaultConfiguration": "development",
             "options": {
-                "buildTarget": "admin:build",
+                "buildTarget": "frontend:build",
                 "dev": true
             },
             "configurations": {
                 "development": {
-                    "buildTarget": "admin:build:development",
+                    "buildTarget": "frontend:build:development",
                     "dev": true
                 },
                 "production": {
-                    "buildTarget": "admin:build:production",
+                    "buildTarget": "frontend:build:production",
                     "dev": false
                 }
             }
@@ -39,14 +39,14 @@
         "export": {
             "executor": "@nx/next:export",
             "options": {
-                "buildTarget": "admin:build:production"
+                "buildTarget": "frontend:build:production"
             }
         },
         "test": {
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
-                "jestConfig": "packages/admin/jest.config.ts",
+                "jestConfig": "packages/frontend/jest.config.ts",
                 "passWithNoTests": true
             },
             "configurations": {
@@ -60,7 +60,7 @@
             "executor": "@nx/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["packages/admin/**/*.{ts,tsx,js,jsx}"]
+                "lintFilePatterns": ["packages/frontend/**/*.{ts,tsx,js,jsx}"]
             }
         }
     },

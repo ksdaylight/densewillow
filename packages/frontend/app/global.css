@@ -2,19 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 .ProseMirror p.is-editor-empty:first-child::before {
-  color: #adb5bd;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
+    color: #adb5bd;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
 }
 /*custom scroll css*/
 .custom-scroll-bar::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+    width: 4px;
+    height: 4px;
 }
 
 /* Handle */
 .custom-scroll-bar::-webkit-scrollbar-thumb {
-  background: rgb(202, 181, 226);
+    background: rgb(202, 181, 226);
 }

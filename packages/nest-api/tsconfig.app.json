@@ -21,7 +21,7 @@
         "noUnusedLocals": true,
         "noImplicitReturns": true,
         "strictNullChecks": true,
-        "strictBindCallApply": false,
+        "strictBindCallApply": true,
         "noFallthroughCasesInSwitch": true,
         "allowSyntheticDefaultImports": true,
         "pretty": true,
