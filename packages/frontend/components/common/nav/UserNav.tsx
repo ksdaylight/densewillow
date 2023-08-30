@@ -56,19 +56,19 @@ const UserNav: FC<Props> = (): JSX.Element => {
             : [logOutOption];
 
     return (
-        <div className="flex items-center justify-between bg-primary-dark p-3">
+        <div className="flex items-center justify-between py-4">
             {/* Logo */}
             <Link href="/" className="flex  items-center space-x-2 text-highlight-dark">
-                <Logo className="fill-highlight-dark  md:w-8 md:h-8 w-5 h-5" />
-                <span className="md:text-xl font-semibold">{APP_NAME}</span>
+                <Logo className="fill-highlight-light md:w-7 md:h-7 w-4 h-4" />
+                <span className="md:text-xl font-semibold color-highlight-light">{APP_NAME}</span>
             </Link>
 
-            <div className="flex items-center space-x-5">
+            <div className="flex items-center space-x-5 ">
                 <button
                     onClick={toggleTheme}
                     className="dark:text-secondary-dark text-secondary-light"
                 >
-                    <HiLightBulb size={34} />
+                    <HiLightBulb size={30} />
                 </button>
 
                 {userInfoLocal.role !== 'guest' ? (

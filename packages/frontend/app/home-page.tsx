@@ -16,6 +16,8 @@ import InfiniteScrollPosts from '../components/common/InfiniteScrollPosts';
 
 import { useRoleInfoContext } from '../context/role-info';
 
+import PaddingContainer from '../components/layout/padding-container';
+
 import { apiClient } from './page'; // './page';
 
 interface Props {}
@@ -87,14 +89,16 @@ const Home: FC<Props> = (): JSX.Element => {
     }, [isFetching, fetchNextPage, hasNextPage]);
 
     return (
-        <InfiniteScrollPosts
-            hasMore={hasMorePosts}
-            next={fetchMorePosts}
-            dataLength={postsToRender.length}
-            posts={postsToRender}
-            showControls={userInfoLocal.role === 'super-admin'}
-            onPostRemoved={(post) => setPostsToRender(filterPosts(postsToRender, post))}
-        />
+        <PaddingContainer>
+            <InfiniteScrollPosts
+                hasMore={hasMorePosts}
+                next={fetchMorePosts}
+                dataLength={postsToRender.length}
+                posts={postsToRender}
+                showControls={userInfoLocal.role === 'super-admin'}
+                onPostRemoved={(post) => setPostsToRender(filterPosts(postsToRender, post))}
+            />
+        </PaddingContainer>
     );
 };
 

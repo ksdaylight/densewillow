@@ -35,7 +35,7 @@ const Index: NextPage<Props> = async () => {
 
     return (
         <DefaultLayout>
-            <div className="pb-20">
+            <div className="pt-10">
                 <Home />
             </div>
         </DefaultLayout>

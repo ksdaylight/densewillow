@@ -24,3 +24,4 @@ yarn-error.log
 **/*.html
 **/*.png
 **/*.toml
+packages/api-contracts/src/zod/*
