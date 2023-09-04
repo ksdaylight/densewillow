@@ -88,100 +88,56 @@ const InfiniteScrollPosts: FC<Props> = ({
                 dataLength={dataLength}
                 loader={loader || defaultLoader}
             >
-                <div className="mx-auto">
-                    <div className="space-y-10">
-                        {postChunks.map((chunk, chunkIndex) => {
-                            return (
-                                // eslint-disable-next-line react/no-array-index-key
-                                <div key={chunkIndex}>
-                                    {chunk.map((post, index) => {
-                                        if (index === 0) {
-                                            return (
-                                                <PostCard
-                                                    post={post}
-                                                    key={post.slug}
-                                                    controls={showControls}
-                                                    onDeleteClick={() => handleOnDeleteClick(post)}
-                                                    busy={post.id === postToRemove?.id && removing}
-                                                />
-                                            );
-                                        }
+                <div>
+                    {postChunks.map((chunk, chunkIndex) => {
+                        return (
+                            // eslint-disable-next-line react/no-array-index-key
+                            <div key={chunkIndex} className="space-y-10">
+                                {chunk.map((post, index) => {
+                                    if (index === 0) {
+                                        return (
+                                            <PostCard
+                                                post={post}
+                                                key={post.slug}
+                                                controls={showControls}
+                                                onDeleteClick={() => handleOnDeleteClick(post)}
+                                                busy={post.id === postToRemove?.id && removing}
+                                            />
+                                        );
+                                    }
 
-                                        if (index === 3) {
-                                            return (
-                                                <PostCard
-                                                    key={post.slug}
-                                                    post={post}
-                                                    controls={showControls}
-                                                    onDeleteClick={() => handleOnDeleteClick(post)}
-                                                    busy={post.id === postToRemove?.id && removing}
-                                                    reverse
-                                                />
-                                            );
-                                        }
+                                    if (index === 3) {
+                                        return (
+                                            <PostCard
+                                                key={post.slug}
+                                                post={post}
+                                                controls={showControls}
+                                                onDeleteClick={() => handleOnDeleteClick(post)}
+                                                busy={post.id === postToRemove?.id && removing}
+                                                reverse
+                                            />
+                                        );
+                                    }
 
-                                        if (index === 1 || index === 4) {
-                                            const relevantPosts = chunk.slice(index, index + 2);
-                                            return (
-                                                <PostList
-                                                    key={`post-list-${relevantPosts[0].title}`}
-                                                    posts={relevantPosts}
-                                                    controls={showControls}
-                                                    onDeleteClick={handleOnDeleteClick}
-                                                    busy={removing}
-                                                    busyId={postToRemove?.id}
-                                                />
-                                            );
-                                        }
+                                    if (index === 1 || index === 4) {
+                                        const relevantPosts = chunk.slice(index, index + 2);
+                                        return (
+                                            <PostList
+                                                key={`post-list-${relevantPosts[0].title}`}
+                                                posts={relevantPosts}
+                                                controls={showControls}
+                                                onDeleteClick={handleOnDeleteClick}
+                                                busy={removing}
+                                                busyId={postToRemove?.id}
+                                            />
+                                        );
+                                    }
 
-                                        return null; // 需要一个返回值以满足 TypeScript
-                                    })}
-                                </div>
-                            );
-                        })}
-
-                        {/* {posts.map((post, index) => {
-                            if (index % 5 === 0) {
-                                return (
-                                    <PostCard
-                                        post={post}
-                                        key={post.slug}
-                                        controls={showControls}
-                                        onDeleteClick={() => handleOnDeleteClick(post)}
-                                        busy={post.id === postToRemove?.id && removing}
-                                    />
-                                );
-                            }
-                            // 每隔 5 个 posts 显示一个带有 `reverse` 属性的 PostCard
-                            if (index % 5 === 3) {
-                                return (
-                                    <PostCard
-                                        key={post.slug}
-                                        post={post}
-                                        controls={showControls}
-                                        onDeleteClick={() => handleOnDeleteClick(post)}
-                                        busy={post.id === postToRemove?.id && removing}
-                                        reverse
-                                    />
-                                );
-                            }
-                            // 每次在两个独立的 PostCard 之间显示一个 PostList，该 PostList 包含 2 个 posts
-                            if (index % 5 === 1 || index % 5 === 4) {
-                                const relevantPosts = posts.slice(index, index + 2);
-                                return (
-                                    <PostList
-                                        key={`post-list-${relevantPosts[0].title}`}
-                                        posts={relevantPosts}
-                                        controls={showControls}
-                                        onDeleteClick={handleOnDeleteClick}
-                                        busy={removing}
-                                        busyId={postToRemove?.id}
-                                    />
-                                );
-                            }
-                            return null;
-                        })} */}
-                    </div>
+                                    return null; // 需要一个返回值以满足 TypeScript
+                                })}
+                            </div>
+                        );
+                    })}
                 </div>
             </InfiniteScroll>
             <ConfirmModal

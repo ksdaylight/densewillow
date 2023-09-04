@@ -21,7 +21,7 @@ const PostList: FC<Props> = ({
     onDeleteClick,
 }): JSX.Element => {
     return (
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-flow-col lg:auto-cols-fr">
             {posts.map((post) => (
                 <PostCard
                     layout={layout}

@@ -4,7 +4,7 @@ import Hydrate from '../../utils/hydrate.client';
 import getQueryClient from '../../utils/getQueryClient';
 
 import PostSlugPage from './slug-page';
-
+// TODO generateStaticParams
 async function getPost({ queryKey }: QueryFunctionContext) {
     const [, slug] = queryKey;
     const res = await fetch(`http://127.0.0.1:3100/api/post/slug/${slug}`, {

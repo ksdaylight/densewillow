@@ -36,16 +36,17 @@ const PostCard: FC<Props> = ({
         <div>
             <Link
                 href={`/${slug}`}
-                className={`${
-                    layout === 'horizontal' ? 'grid items-center grid-cols-2 gap-10' : 'space-y-10'
+                className={`@container ${
+                    layout === 'horizontal'
+                        ? 'grid items-center  grid-cols-1 md:grid-cols-2  gap-10'
+                        : 'space-y-10'
                 }`}
             >
                 {/* thumbnail */}
                 <div
-                    className={`rounded-md w-full object-cover object-center max-h-[300px] flex justify-center items-center ${
-                        reverse ? 'order-last' : ''
+                    className={`rounded-md w-full object-cover object-center max-h-[300px] max-w-[600px] flex justify-center items-center ${
+                        reverse ? 'md:order-last' : ''
                     }`}
-                    style={{ width: '600px', height: '300px' }} // 设置与 <Image> 组件相同的尺寸
                 >
                     {thumbnailUrl ? (
                         <Image
@@ -63,25 +64,6 @@ const PostCard: FC<Props> = ({
 
                 {/* Post Info */}
                 <PostContent post={post} />
-                {/* <div className="p-2 flex-1 flex flex-col">
-                    <Link href={`/${slug}`}>
-                        <div className="flex items-center justify-between text-sm text-primary-dark dark:text-primary">
-                            <div className="flex items-center space-x-1">
-                                {tags.map((t, index) => (
-                                    <span key={t + index.toString()}>#{t}</span>
-                                ))}
-                            </div>
-                            <span>{dateformat(createdAt, 'd-mmm-yyyy')}</span>
-                        </div>
-
-                        <h1 className="font-semibold text-primary-dark dark:text-primary">
-                            {trimText(title, 50)}
-                        </h1>
-                        <p className="text-secondary-dark">{trimText(meta, 70)}</p>
-                    </Link>
-
-                    
-                </div> */}
             </Link>
         </div>
     );
