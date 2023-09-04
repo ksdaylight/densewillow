@@ -50,7 +50,7 @@ const PostCard: FC<Props> = ({
                 >
                     {thumbnailUrl ? (
                         <Image
-                            className="rounded-md w-full object-cover object-center max-h-[300px]"
+                            className="rounded-md w-full object-cover object-center h-full max-h-[300px]"
                             alt={post.title}
                             src={thumbnailUrl}
                             width={600}

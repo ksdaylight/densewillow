@@ -20,9 +20,7 @@ interface Props {
 
 const Share: FC<Props> = ({ url, title, quote }): JSX.Element => {
     return (
-        <div className="flex items-center space-x-3">
-            <p className="font-semibold text-primary-dark dark:text-primary">Share:</p>
-
+        <div className="flex flex-row md:flex-col gap-5">
             <FacebookShareButton url={url} quote={quote} title={title}>
                 <FacebookIcon round size={32} />
             </FacebookShareButton>
