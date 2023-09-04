@@ -119,16 +119,16 @@ export const contentContract = c.router(
             body: z.object({
                 title: z
                     .object({
-                        value: z.string().max(30),
+                        value: z.string().max(300),
                     })
                     .passthrough()
-                    .or(z.string().max(30)),
+                    .or(z.string().max(300)),
                 slug: z
                     .object({
-                        value: z.string().max(30),
+                        value: z.string().max(300),
                     })
                     .passthrough()
-                    .or(z.string().max(30)),
+                    .or(z.string().max(300)),
                 content: z
                     .object({
                         value: z.string().optional(),
@@ -138,16 +138,16 @@ export const contentContract = c.router(
                     .optional(),
                 meta: z
                     .object({
-                        value: z.string().max(100),
+                        value: z.string().max(1000),
                     })
                     .passthrough()
-                    .or(z.string().max(100)),
+                    .or(z.string().max(1000)),
                 tags: z
                     .object({
-                        value: z.string().max(100),
+                        value: z.string().max(1000),
                     })
                     .passthrough()
-                    .or(z.string().max(100)),
+                    .or(z.string().max(1000)),
                 image: z.any().optional(), // 直接交由服务器处理
             }),
         },
@@ -166,16 +166,16 @@ export const contentContract = c.router(
                     .or(ObjectIdSchema),
                 title: z
                     .object({
-                        value: z.string().max(30),
+                        value: z.string().max(300),
                     })
                     .passthrough()
-                    .or(z.string().max(30)),
+                    .or(z.string().max(300)),
                 slug: z
                     .object({
-                        value: z.string().max(30),
+                        value: z.string().max(300),
                     })
                     .passthrough()
-                    .or(z.string().max(30)),
+                    .or(z.string().max(300)),
                 content: z
                     .object({
                         value: z.string().optional(),
@@ -185,16 +185,16 @@ export const contentContract = c.router(
                     .optional(),
                 meta: z
                     .object({
-                        value: z.string().max(100),
+                        value: z.string().max(1000),
                     })
                     .passthrough()
-                    .or(z.string().max(100)),
+                    .or(z.string().max(1000)),
                 tags: z
                     .object({
-                        value: z.string().max(100),
+                        value: z.string().max(1000),
                     })
                     .passthrough()
-                    .or(z.string().max(100)),
+                    .or(z.string().max(1000)),
                 image: z.any().optional(), // 直接交由服务器处理
             }),
             summary: 'Update a post',

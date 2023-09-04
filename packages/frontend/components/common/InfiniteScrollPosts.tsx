@@ -7,7 +7,7 @@ import { apiClient } from '../../app/page';
 
 import PostCard from './PostCard';
 import ConfirmModal from './ConfirmModal';
-import PostList from './post-lists';
+import PostList from './PostLists';
 
 interface Props {
     posts: PostWithPartialRelations[];

@@ -1,13 +1,14 @@
 'use client';
 
 import { FC, useCallback, useEffect, useState } from 'react';
-import parse from 'html-react-parser';
 
 import { isNil } from 'lodash';
 
 import Link from 'next/link';
 
-import PostHero from '../../components/common/post-hero';
+import PostBody from '../../components/common/PostBody';
+
+import PostHero from '../../components/common/PostHero';
 
 import PaddingContainer from '../../components/layout/padding-container';
 
@@ -138,19 +139,20 @@ const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
                     <PostHero post={postData!.body} />
                     <div className="flex flex-col gap-10 md:flex-row">
                         <div className="relative">
-                            <div className="flex items-center gap-5 md:flex-col top-20">
+                            <div className="sticky flex items-center gap-5 md:flex-col top-20">
                                 <div className="font-medium md:hidden">Share this content:</div>
                                 <Share url={`${host}/${slug}`} />
                             </div>
                         </div>
-                        <div className="h-[1200px] bg-slate-200 w-full">{parse(content || '')}</div>
+                        <PostBody body={content || ''} />
+                        {/* <div className="rich-text">{parse(content || '')}</div> */}
                     </div>
 
-                    <div className="prose prose-lg dark:prose-invert max-w-full mx-auto">
+                    {/* <div className="prose prose-lg dark:prose-invert max-w-full mx-auto rich-text">
                         {parse(content || '')}
-                    </div>
+                    </div> */}
 
-                    <div className="py-10">
+                    <div>
                         <LikeHeart
                             liked={likes.likedByOwner}
                             label={getLikeLabel()}
@@ -159,9 +161,9 @@ const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
                         />
                     </div>
 
-                    <div className="pt-10">{author && <AuthorInfo profile={author} />}</div>
+                    <div>{author && <AuthorInfo profile={author} />}</div>
 
-                    <div className="pt-5">
+                    <div>
                         <h3 className="text-xl font-semibold bg-secondary-dark text-primary p-2 mb-4">
                             Related Posts:
                         </h3>

@@ -21,7 +21,7 @@ const DefaultLayout: FC<Props> = ({ children, title, desc }): JSX.Element => {
                         <UserNav />
                     </PaddingContainer>
                 </div>
-                <div className="pt-10">{children}</div>
+                <div className="pt-10 min-h-[calc(100vh-300px)]">{children}</div>
             </div>
         </>
     );

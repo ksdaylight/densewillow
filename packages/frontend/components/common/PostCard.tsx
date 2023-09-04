@@ -9,7 +9,7 @@ import { isNil } from 'lodash';
 
 import { baseApiUrl } from '../../app/page';
 
-import PostContent from './post-content';
+import PostContent from './PostContent';
 
 interface Props {
     post: PostWithPartialRelations;
