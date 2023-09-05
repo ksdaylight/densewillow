@@ -6,20 +6,20 @@ import { isNil } from 'lodash';
 
 import Link from 'next/link';
 
-import PostBody from '../../components/common/PostBody';
+import PostBody from '../../../components/common/PostBody';
 
-import PostHero from '../../components/common/PostHero';
+import PostHero from '../../../components/common/PostHero';
 
-import PaddingContainer from '../../components/layout/padding-container';
+import PaddingContainer from '../../../components/layout/padding-container';
 
-import LikeHeart from '../../components/common/LikeHeart';
+import LikeHeart from '../../../components/common/LikeHeart';
 
-import AuthorInfo from '../../components/common/AuthorInfo';
-import Comments from '../../components/common/Comments';
+import AuthorInfo from '../../../components/common/AuthorInfo';
+import Comments from '../../../components/common/Comments';
 
-import DefaultLayout from '../../components/layout/DefaultLayout';
+import DefaultLayout from '../../../components/layout/DefaultLayout';
 import { apiClient } from '../page';
-import Share from '../../components/common/Share'; // 'packages/admin/components/common/Share';
+import Share from '../../../components/common/Share'; // 'packages/admin/components/common/Share';
 
 // import { apiClient, baseApiUrl } from '../admin/page';
 const host = 'https://densewillow.com';

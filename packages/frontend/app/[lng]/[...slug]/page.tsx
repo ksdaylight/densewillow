@@ -1,7 +1,7 @@
 import { QueryFunctionContext, dehydrate } from '@tanstack/query-core';
 
-import Hydrate from '../../utils/hydrate.client';
-import getQueryClient from '../../utils/getQueryClient';
+import Hydrate from '../../../utils/hydrate.client';
+import getQueryClient from '../../../utils/getQueryClient';
 
 import PostSlugPage from './slug-page';
 // TODO generateStaticParams
