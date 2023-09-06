@@ -3,7 +3,16 @@ import { QueryFunctionContext, dehydrate } from '@tanstack/query-core';
 import Hydrate from '@frontend/utils/hydrate.client';
 import getQueryClient from '@frontend/utils/getQueryClient';
 
+import { NextPage } from 'next';
+
 import PostSlugPage from './slug-page';
+
+interface Props {
+    params: {
+        lng: string;
+        slug: string[];
+    };
+}
 // TODO generateStaticParams
 async function getPost({ queryKey }: QueryFunctionContext) {
     const [, slug] = queryKey;
@@ -12,16 +21,15 @@ async function getPost({ queryKey }: QueryFunctionContext) {
         cache: 'no-store',
     }); // TODO BASE URL
     const data = await res.json();
-    console.log(data);
     return { body: data };
 }
-const PostSlug = async ({ params }: { params: { slug: string } }) => {
+const PostSlug: NextPage<Props> = async ({ params }) => {
     const queryClient = getQueryClient();
-    await queryClient.prefetchQuery(['getPostBySlug', params.slug], getPost);
+    await queryClient.prefetchQuery(['getPostBySlug', params.slug[0]], getPost);
     const dehydratedState = dehydrate(queryClient);
     return (
         <Hydrate state={dehydratedState}>
-            <PostSlugPage initialSlug={params.slug} />
+            <PostSlugPage initialSlug={params.slug[0]} />
         </Hydrate>
     );
 };

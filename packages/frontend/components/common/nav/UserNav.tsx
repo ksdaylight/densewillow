@@ -31,14 +31,12 @@ const UserNav: FC<Props> = (): JSX.Element => {
     const logOutOption = {
         label: 'Logout',
         async onClick() {
-            console.log(userInfoLocal); // test
             setUserInfoLocal({
                 id: undefined,
                 name: undefined,
                 avatar: undefined,
                 role: 'guest',
             });
-            console.log(userInfoLocal); // test
             deleteCookie('user_role');
             logOutMutate({ body: 'logout' }); // teRest 有问题，必须放在最后
             router.push('/');

@@ -10,7 +10,11 @@ import Home from './home-page';
 
 const headers = import('next/headers');
 
-interface Props {}
+interface Props {
+    params: {
+        lng: string;
+    };
+}
 export const baseApiUrl = `${process.env.SERVER_BASE_URL}/${process.env.APP_PREFIX}`;
 export const apiClient = initQueryClient(apiBlog, {
     baseUrl: `${process.env.SERVER_BASE_URL}`,
@@ -20,7 +24,7 @@ export const apiClient = initQueryClient(apiBlog, {
     credentials: 'include',
 });
 
-const Index: NextPage<Props> = async () => {
+const Index: NextPage<Props> = async ({ params }) => {
     const cookieStore = (await headers).cookies();
     const token = cookieStore.get('auth_token');
     // console.log(cookieStore.getAll());
