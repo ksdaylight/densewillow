@@ -4,9 +4,9 @@ import { FC, useEffect, useState, useCallback } from 'react';
 
 import { PostWithPartialRelations } from '@api-contracts';
 
-import { filterPosts } from '../../../utils/helps';
+import { filterPosts } from '../../../../utils/helps';
 
-import InfiniteScrollPosts from '../../../components/common/InfiniteScrollPosts';
+import InfiniteScrollPosts from '../../../../components/common/InfiniteScrollPosts';
 import { apiClient } from '../../page';
 
 interface Props {}

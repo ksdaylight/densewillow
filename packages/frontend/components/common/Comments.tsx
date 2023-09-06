@@ -9,7 +9,7 @@ import { CommentWithPartialRelationsAddReplies } from '@api-contracts';
 
 import { GitHubAuthButton } from '../button';
 
-import { apiClient } from '../../app/page';
+import { apiClient } from '../../app/[lng]/page';
 
 import { useRoleInfoContext } from '../../context/role-info';
 

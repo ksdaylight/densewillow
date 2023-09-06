@@ -16,7 +16,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useRouter } from 'next/navigation';
 
-import { apiClient, baseApiUrl } from '../../app/page';
+import { apiClient, baseApiUrl } from '../../app/[lng]/page';
 
 import ActionButton from '../common/ActionButton';
 

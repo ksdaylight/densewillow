@@ -7,7 +7,7 @@ import { PostWithPartialRelations } from '@api-contracts';
 
 import { isNil } from 'lodash';
 
-import { baseApiUrl } from '../../app/page';
+import { baseApiUrl } from '../../app/[lng]/page';
 
 import PostContent from './PostContent';
 

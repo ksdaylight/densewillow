@@ -17,7 +17,7 @@ import DropdownOptions, { DropDownOptions } from '../DropdownOptions';
 import Logo from '../Logo';
 import ProfileHead from '../ProfileHead';
 import { useRoleInfoContext } from '../../../context/role-info';
-import { apiClient } from '../../../app/page';
+import { apiClient } from '../../../app/[lng]/page';
 
 interface Props {}
 

@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 
-import { GitHubAuthButton } from '../../components/button';
+import { GitHubAuthButton } from '../../../components/button';
 
 interface Props {}
 

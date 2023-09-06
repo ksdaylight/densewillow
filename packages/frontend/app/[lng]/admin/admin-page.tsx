@@ -10,10 +10,10 @@ import {
     CommentWithPartialRelationsAddReplies,
 } from '@api-contracts';
 
-import ContentWrapper from '../../components/admin/ContentWrapper';
-import LatesUserTable from '../../components/admin/LatesUserTable';
-import LatestPostListCard from '../../components/admin/LatestPostListCard';
-import LatestCommentListCard from '../../components/admin/LatestCommentListCard';
+import ContentWrapper from '../../../components/admin/ContentWrapper';
+import LatesUserTable from '../../../components/admin/LatesUserTable';
+import LatestPostListCard from '../../../components/admin/LatestPostListCard';
+import LatestCommentListCard from '../../../components/admin/LatestCommentListCard';
 import { apiClient } from '../page';
 
 interface Props {}
