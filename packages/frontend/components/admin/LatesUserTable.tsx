@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-// import { LatestUserProfile } from '../../utils/types';
+// import { LatestUserProfile } from '@frontend/utils/types';
 import { User } from '@api-contracts';
 
 import ProfileIcon from '../common/ProfileIcon';

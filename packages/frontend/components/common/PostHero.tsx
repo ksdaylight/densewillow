@@ -6,7 +6,7 @@ import { FC } from 'react';
 
 import { isNil } from 'lodash';
 
-import { baseApiUrl } from '../../app/[lng]/page';
+import { baseApiUrl } from '@frontend/app/[lng]/page';
 
 import PostContent from './PostContent';
 

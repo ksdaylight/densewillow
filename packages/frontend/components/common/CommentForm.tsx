@@ -1,7 +1,7 @@
 import { EditorContent } from '@tiptap/react';
 import { FC, useEffect } from 'react';
 
-import useEditorConfig from '../../hooks/useEditorConfig';
+import useEditorConfig from '@frontend/hooks/useEditorConfig';
 
 import ActionButton from './ActionButton';
 

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 
-import AdminLayout from './AdminLayout';
+// import AdminLayout from './AdminLayout';
 import DefaultLayout from './DefaultLayout';
 
 interface Props {

@@ -1,5 +1,6 @@
-import { UserRoleContextProvider } from '../../context/role-info';
-import Providers from '../../utils/provider';
+import Providers from '@frontend/utils/provider';
+
+import { UserRoleContextProvider } from '@frontend/context/role-info';
 
 import './global.css';
 

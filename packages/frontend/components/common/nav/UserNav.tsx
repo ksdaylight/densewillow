@@ -9,15 +9,17 @@ import { useRouter } from 'next/navigation';
 
 import { deleteCookie } from 'cookies-next';
 
-import useDarkMode from '../../../hooks/useDarkMode';
+import useDarkMode from '@frontend/hooks/useDarkMode';
+
+import { useRoleInfoContext } from '@frontend/context/role-info';
+
+import { apiClient } from '@frontend/app/[lng]/page';
 
 import { GitHubAuthButton } from '../../button';
 import { APP_NAME } from '../AppHead';
 import DropdownOptions, { DropDownOptions } from '../DropdownOptions';
 import Logo from '../Logo';
 import ProfileHead from '../ProfileHead';
-import { useRoleInfoContext } from '../../../context/role-info';
-import { apiClient } from '../../../app/[lng]/page';
 
 interface Props {}
 

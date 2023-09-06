@@ -6,20 +6,22 @@ import { isNil } from 'lodash';
 
 import Link from 'next/link';
 
-import PostBody from '../../../components/common/PostBody';
+import PostBody from '@frontend/components/common/PostBody';
 
-import PostHero from '../../../components/common/PostHero';
+import PostHero from '@frontend/components/common/PostHero';
 
-import PaddingContainer from '../../../components/layout/padding-container';
+import PaddingContainer from '@frontend/components/layout/padding-container';
 
-import LikeHeart from '../../../components/common/LikeHeart';
+import LikeHeart from '@frontend/components/common/LikeHeart';
 
-import AuthorInfo from '../../../components/common/AuthorInfo';
-import Comments from '../../../components/common/Comments';
+import AuthorInfo from '@frontend/components/common/AuthorInfo';
+import Comments from '@frontend/components/common/Comments';
 
-import DefaultLayout from '../../../components/layout/DefaultLayout';
+import DefaultLayout from '@frontend/components/layout/DefaultLayout';
+
+import Share from '@frontend/components/common/Share'; // 'packages/admin/components/common/Share';
+
 import { apiClient } from '../page';
-import Share from '../../../components/common/Share'; // 'packages/admin/components/common/Share';
 
 // import { apiClient, baseApiUrl } from '../admin/page';
 const host = 'https://densewillow.com';

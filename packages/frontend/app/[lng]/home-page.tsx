@@ -10,13 +10,13 @@ import { isNil } from 'lodash';
 
 import { PostWithPartialRelations } from '@api-contracts';
 
-import { filterPosts } from '../../utils/helps';
+import InfiniteScrollPosts from '@frontend/components/common/InfiniteScrollPosts';
 
-import InfiniteScrollPosts from '../../components/common/InfiniteScrollPosts';
+import PaddingContainer from '@frontend/components/layout/padding-container';
 
-import { useRoleInfoContext } from '../../context/role-info';
+import { filterPosts } from '@frontend/utils/helps';
 
-import PaddingContainer from '../../components/layout/padding-container';
+import { useRoleInfoContext } from '@frontend/context/role-info';
 
 import { apiClient } from './page'; // './page';
 

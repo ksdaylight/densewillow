@@ -4,7 +4,7 @@ import { initQueryClient } from '@ts-rest/react-query';
 
 import { apiBlog } from '@api-contracts';
 
-import DefaultLayout from '../../components/layout/DefaultLayout';
+import DefaultLayout from '@frontend/components/layout/DefaultLayout';
 
 import Home from './home-page';
 

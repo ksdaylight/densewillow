@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 
-import Comments from '../../../../components/common/Comments';
-import AdminLayout from '../../../../components/layout/AdminLayout';
+import Comments from '@frontend/components/common/Comments';
+import AdminLayout from '@frontend/components/layout/AdminLayout';
 
 interface Props {}
 

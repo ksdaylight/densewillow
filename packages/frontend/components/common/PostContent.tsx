@@ -2,7 +2,7 @@ import { ArrowRight } from 'lucide-react';
 
 import { PostWithPartialRelations } from '@api-contracts';
 
-import { getReadingTime, getRelativeDate, trimText } from '../../utils/helps';
+import { getReadingTime, getRelativeDate, trimText } from '@frontend/utils/helps';
 
 interface PostContentProps {
     post: PostWithPartialRelations;

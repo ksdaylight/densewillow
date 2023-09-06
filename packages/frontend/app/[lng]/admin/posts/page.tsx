@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 
-import AdminLayout from '../../../../components/layout/AdminLayout';
+import AdminLayout from '@frontend/components/layout/AdminLayout';
 
 import PostAdmin from './post-page';
 

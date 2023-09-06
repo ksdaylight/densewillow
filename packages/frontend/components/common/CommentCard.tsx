@@ -6,7 +6,7 @@ import { BsFillReplyAllFill, BsFillTrashFill, BsPencilSquare } from 'react-icons
 
 import { CommentWithPartialRelationsAddReplies } from '@api-contracts';
 
-import { useRoleInfoContext } from '../../context/role-info';
+import { useRoleInfoContext } from '@frontend/context/role-info';
 
 import CommentForm from './CommentForm';
 import ProfileIcon from './ProfileIcon';

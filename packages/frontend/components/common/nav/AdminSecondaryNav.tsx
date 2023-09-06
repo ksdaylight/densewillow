@@ -4,11 +4,13 @@
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 
-import useDarkMode from '../../../hooks/useDarkMode';
+import useDarkMode from '@frontend/hooks/useDarkMode';
+
+import { useRoleInfoContext } from '@frontend/context/role-info';
+
 import DropdownOptions, { DropDownOptions } from '../DropdownOptions';
 import ProfileHead from '../ProfileHead';
 import SearchBar from '../SearchBar';
-import { useRoleInfoContext } from '../../../context/role-info';
 
 interface Props {}
 

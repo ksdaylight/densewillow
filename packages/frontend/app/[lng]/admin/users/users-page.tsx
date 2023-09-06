@@ -4,14 +4,14 @@ import { FC, useEffect, useState } from 'react';
 
 import { isNil } from 'lodash';
 
-// import { LatestUserProfile } from '../../../utils/types';
+// import { LatestUserProfile } from '@frontend/utils/types';
 
 import { User } from '@api-contracts';
 
-import PageNavigator from '../../../components/common/PageNavigator';
-import AdminLayout from '../../../components/layout/AdminLayout';
+import PageNavigator from '@frontend/components/common/PageNavigator';
 
-import LatesUserTable from '../../../components/admin/LatesUserTable';
+import LatesUserTable from '@frontend/components/admin/LatesUserTable';
+
 import { apiClient } from '../../page';
 
 interface Props {}

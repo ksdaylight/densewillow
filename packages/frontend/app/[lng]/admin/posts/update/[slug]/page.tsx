@@ -1,9 +1,13 @@
 import { QueryFunctionContext, dehydrate } from '@tanstack/query-core';
 
-import AdminLayout from '../../../../../components/layout/AdminLayout';
-import Editor from '../../../../../components/Editor';
-import Hydrate from '../../../../../utils/hydrate.client';
-import getQueryClient from '../../../../../utils/getQueryClient';
+import getQueryClient from '@frontend/utils/getQueryClient';
+
+import AdminLayout from '@frontend/components/layout/AdminLayout';
+
+import Editor from '@frontend/components/Editor';
+
+import Hydrate from '@frontend/utils/hydrate.client';
+// import getQueryClient from '@frontend/utils/getQueryClient';
 
 async function getPost({ queryKey }: QueryFunctionContext) {
     const [, slug] = queryKey;

@@ -17,7 +17,8 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@api-contracts": ["packages/api-contracts/src/index.ts"]
+            "@api-contracts": ["packages/api-contracts/src/index.ts"],
+            "@frontend/*": ["packages/frontend/*"]
         }
     },
     "exclude": ["node_modules", "tmp"]

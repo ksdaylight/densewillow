@@ -4,7 +4,8 @@ import parse from 'html-react-parser';
 
 import { CommentWithPartialRelationsAddReplies } from '@api-contracts';
 
-import { trimText } from '../../utils/helps';
+import { trimText } from '@frontend/utils/helps';
+
 import ProfileIcon from '../common/ProfileIcon';
 
 interface Props {

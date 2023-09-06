@@ -2,11 +2,11 @@ import { NextPage } from 'next';
 
 import { dehydrate } from '@tanstack/query-core';
 
-import getQueryClient from '../../../../../utils/getQueryClient';
+import AdminLayout from '@frontend/components/layout/AdminLayout';
+import Editor from '@frontend/components/Editor';
 
-import AdminLayout from '../../../../../components/layout/AdminLayout';
-import Editor from '../../../../../components/Editor';
-import Hydrate from '../../../../../utils/hydrate.client';
+import getQueryClient from '@frontend/utils/getQueryClient';
+import Hydrate from '@frontend/utils/hydrate.client';
 
 interface Props {}
 

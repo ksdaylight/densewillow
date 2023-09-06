@@ -4,14 +4,14 @@ import { FC, useEffect, useState } from 'react';
 
 import { isNil } from 'lodash';
 
-// import { CommentResponse } from '../../utils/types';
+// import { CommentResponse } from '@frontend/utils/types';
 import { CommentWithPartialRelationsAddReplies } from '@api-contracts';
 
+import { apiClient } from '@frontend/app/[lng]/page';
+
+import { useRoleInfoContext } from '@frontend/context/role-info';
+
 import { GitHubAuthButton } from '../button';
-
-import { apiClient } from '../../app/[lng]/page';
-
-import { useRoleInfoContext } from '../../context/role-info';
 
 import CommentCard from './CommentCard';
 import CommentForm from './CommentForm';
