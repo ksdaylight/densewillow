@@ -14,8 +14,7 @@ import ContentWrapper from '@frontend/components/admin/ContentWrapper';
 import LatesUserTable from '@frontend/components/admin/LatesUserTable';
 import LatestPostListCard from '@frontend/components/admin/LatestPostListCard';
 import LatestCommentListCard from '@frontend/components/admin/LatestCommentListCard';
-
-import { apiClient } from '../page';
+import { apiClient } from '@frontend/utils/helps';
 
 interface Props {}
 const AdminHome: FC<Props> = (): JSX.Element => {

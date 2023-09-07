@@ -35,7 +35,7 @@ export class ContentController {
         private readonly userService: UserService,
     ) {}
 
-    @Guest()
+    // @Guest()
     // @Permission(testChecker)
     @TsRestHandler(c.testGet)
     async getTest(@Req() req: FastifyRequest) {

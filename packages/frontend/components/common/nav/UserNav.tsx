@@ -13,7 +13,7 @@ import useDarkMode from '@frontend/hooks/useDarkMode';
 
 import { useRoleInfoContext } from '@frontend/context/role-info';
 
-import { apiClient } from '@frontend/app/[lng]/page';
+import { apiClient } from '@frontend/utils/helps';
 
 import { GitHubAuthButton } from '../../button';
 import { APP_NAME } from '../AppHead';

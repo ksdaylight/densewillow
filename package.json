@@ -130,7 +130,7 @@
     "lucide-react": "^0.221.0",
     "luxon": "^3.3.0",
     "mime-types": "^2.1.35",
-    "next": "13.4.1",
+    "next": "13.4.19",
     "next-nprogress-bar": "^2.1.2",
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",

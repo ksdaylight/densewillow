@@ -20,8 +20,7 @@ import Comments from '@frontend/components/common/Comments';
 import DefaultLayout from '@frontend/components/layout/DefaultLayout';
 
 import Share from '@frontend/components/common/Share'; // 'packages/admin/components/common/Share';
-
-import { apiClient } from '../page';
+import { apiClient } from '@frontend/utils/helps';
 
 // import { apiClient, baseApiUrl } from '../admin/page';
 const host = 'https://densewillow.com';

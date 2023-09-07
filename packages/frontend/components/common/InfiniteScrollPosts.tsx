@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { PostWithPartialRelations } from '@api-contracts';
 
-import { apiClient } from '@frontend/app/[lng]/page';
+import { apiClient } from '@frontend/utils/helps';
 
 import PostCard from './PostCard';
 import ConfirmModal from './ConfirmModal';

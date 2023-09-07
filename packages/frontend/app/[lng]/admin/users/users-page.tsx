@@ -11,8 +11,7 @@ import { User } from '@api-contracts';
 import PageNavigator from '@frontend/components/common/PageNavigator';
 
 import LatesUserTable from '@frontend/components/admin/LatesUserTable';
-
-import { apiClient } from '../../page';
+import { apiClient } from '@frontend/utils/helps';
 
 interface Props {}
 const limit = 5;

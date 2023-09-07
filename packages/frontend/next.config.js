@@ -23,6 +23,9 @@ const nextConfig = {
         APP_PREFIX: process.env.APP_PREFIX || 'api',
         SERVER_BASE_URL: process.env.SERVER_BASE_URL || '',
     },
+    experimental: {
+        serverActions: true,
+    },
 };
 
 const plugins = [

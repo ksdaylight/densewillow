@@ -7,9 +7,9 @@ import { isNil } from 'lodash';
 // import { CommentResponse } from '@frontend/utils/types';
 import { CommentWithPartialRelationsAddReplies } from '@api-contracts';
 
-import { apiClient } from '@frontend/app/[lng]/page';
-
 import { useRoleInfoContext } from '@frontend/context/role-info';
+
+import { apiClient } from '@frontend/utils/helps';
 
 import { GitHubAuthButton } from '../button';
 

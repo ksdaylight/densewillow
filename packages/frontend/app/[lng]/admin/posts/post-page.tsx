@@ -6,9 +6,7 @@ import { PostWithPartialRelations } from '@api-contracts';
 
 import InfiniteScrollPosts from '@frontend/components/common/InfiniteScrollPosts';
 
-import { filterPosts } from '@frontend/utils/helps';
-
-import { apiClient } from '../../page';
+import { apiClient, filterPosts } from '@frontend/utils/helps';
 
 interface Props {}
 const PostAdmin: FC<Props> = (): JSX.Element => {

@@ -1,8 +1,9 @@
 // import { isNil } from 'lodash';
 import { DateTime } from 'luxon';
 import readingTime from 'reading-time';
+import { initQueryClient } from '@ts-rest/react-query';
 
-import { PostWithPartialRelations } from '@api-contracts';
+import { apiBlog, PostWithPartialRelations } from '@api-contracts';
 
 export const filterPosts = (
     posts: PostWithPartialRelations[],
@@ -23,3 +24,11 @@ export const getReadingTime = (text: string) => {
 export const getRelativeDate = (date: string) => {
     return DateTime.fromISO(date).toRelative();
 };
+export const baseApiUrl = `${process.env.SERVER_BASE_URL}/${process.env.APP_PREFIX}`;
+export const apiClient = initQueryClient(apiBlog, {
+    baseUrl: `${process.env.SERVER_BASE_URL}`,
+    baseHeaders: {
+        Authorization: 'key',
+    }, // 类型需要匹配
+    credentials: 'include',
+});

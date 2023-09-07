@@ -14,11 +14,11 @@ import InfiniteScrollPosts from '@frontend/components/common/InfiniteScrollPosts
 
 import PaddingContainer from '@frontend/components/layout/padding-container';
 
-import { filterPosts } from '@frontend/utils/helps';
+import { apiClient, filterPosts } from '@frontend/utils/helps';
 
 import { useRoleInfoContext } from '@frontend/context/role-info';
 
-import { apiClient } from './page'; // './page';
+import DefaultLayout from '@frontend/components/layout/DefaultLayout';
 
 interface Props {}
 const Home: FC<Props> = (): JSX.Element => {
@@ -89,16 +89,20 @@ const Home: FC<Props> = (): JSX.Element => {
     }, [isFetching, fetchNextPage, hasNextPage]);
 
     return (
-        <PaddingContainer>
-            <InfiniteScrollPosts
-                hasMore={hasMorePosts}
-                next={fetchMorePosts}
-                dataLength={postsToRender.length}
-                posts={postsToRender}
-                showControls={userInfoLocal.role === 'super-admin'}
-                onPostRemoved={(post) => setPostsToRender(filterPosts(postsToRender, post))}
-            />
-        </PaddingContainer>
+        <DefaultLayout>
+            <div className="pt-10">
+                <PaddingContainer>
+                    <InfiniteScrollPosts
+                        hasMore={hasMorePosts}
+                        next={fetchMorePosts}
+                        dataLength={postsToRender.length}
+                        posts={postsToRender}
+                        showControls={userInfoLocal.role === 'super-admin'}
+                        onPostRemoved={(post) => setPostsToRender(filterPosts(postsToRender, post))}
+                    />
+                </PaddingContainer>
+            </div>
+        </DefaultLayout>
     );
 };
 
