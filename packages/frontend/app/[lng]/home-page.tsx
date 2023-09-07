@@ -2,8 +2,6 @@
 
 import { FC, useCallback, useEffect, useState } from 'react';
 
-// import { getCookies } from 'cookies-next';
-
 import { getCookie } from 'cookies-next';
 
 import { isNil } from 'lodash';

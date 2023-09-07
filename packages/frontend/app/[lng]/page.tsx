@@ -1,9 +1,9 @@
 import { NextPage } from 'next';
 import { cookies } from 'next/headers';
 
-import LngSwitcher from '@frontend/components/common/LngSwitcher';
-
 import Link from 'next/link';
+
+import LngSwitcherService from '@frontend/components/common/LngSwitcher';
 
 import { useTranslation } from '../i18n';
 
@@ -58,7 +58,7 @@ const Index: NextPage<Props> = async ({ params }) => {
             <h1>{t('title')}</h1>
             <Link href="/en">to en-------</Link>
             <Link href="/cn">to cn-------</Link>
-            <LngSwitcher lng={params.lng} />
+            <LngSwitcherService lng={params.lng} />
             <Home />
         </>
     );

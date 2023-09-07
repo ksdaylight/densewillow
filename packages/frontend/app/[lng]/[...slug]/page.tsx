@@ -33,7 +33,7 @@ const PostSlug: NextPage<Props> = async ({ params }) => {
     return (
         <Hydrate state={dehydratedState}>
             <h1>{t('title')}</h1>
-            <PostSlugPage initialSlug={params.slug[0]} />
+            <PostSlugPage initialSlug={params.slug[0]} lng={params.lng} />
         </Hydrate>
     );
 };

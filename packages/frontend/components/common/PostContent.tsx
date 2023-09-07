@@ -20,7 +20,7 @@ const PostContent = ({ post, isPostPage = false }: PostContentProps) => {
             >
                 <div
                     className={`font-medium ${
-                        post.tags.includes('TS') ? 'text-emerald-600' : 'text-indigo-600'
+                        post?.tags.includes('TS') ? 'text-emerald-600' : 'text-indigo-600'
                     }`}
                 >
                     {post.tags.map((t, index) => (

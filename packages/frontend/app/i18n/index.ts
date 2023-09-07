@@ -2,9 +2,9 @@ import { createInstance, i18n, ReactOptions } from 'i18next';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import { initReactI18next } from 'react-i18next/initReactI18next';
 
-import { getOptions } from './settings';
+import { fallbackLng, getOptions } from './settings';
 
-const initI18next = async (lng: string, ns?: string | string[]) => {
+const initI18next = async (lng?: string, ns?: string | string[]) => {
     // on server side we create a new instance for each render, because during compilation everything seems to be executed in parallel
     const i18nInstance: i18n = createInstance();
     await i18nInstance
@@ -20,7 +20,7 @@ const initI18next = async (lng: string, ns?: string | string[]) => {
 };
 
 export async function useTranslation(
-    lng: string,
+    lng: string = fallbackLng,
     ns?: string | string[],
     options: ReactOptions = {},
 ) {

@@ -21,14 +21,18 @@ import DefaultLayout from '@frontend/components/layout/DefaultLayout';
 
 import Share from '@frontend/components/common/Share'; // 'packages/admin/components/common/Share';
 import { apiClient } from '@frontend/utils/helps';
+import { useTranslation } from '@frontend/app/i18n/client';
+import LngSwitcherClient from '@frontend/components/common/LngSwitcher/client';
 
 // import { apiClient, baseApiUrl } from '../admin/page';
 const host = 'https://densewillow.com';
 
 interface Props {
     initialSlug?: string;
+    lng?: string;
 }
-const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
+const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
+    const { t } = useTranslation(lng, 'client-page');
     const [likes, setLikes] = useState({ likedByOwner: false, count: 0 });
     const [liking, setLiking] = useState(false);
     const { data: postData } = apiClient.content.getPostBySlug.useQuery(
@@ -112,10 +116,14 @@ const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
         return <>nothing</>;
     }
     return (
-        <DefaultLayout title={title} desc={meta}>
-            <PaddingContainer>
-                {/* <div className="lg:px-0 px-3"> */}
-                {/* <div className="relative aspect-video">
+        <>
+            <h1>{t('title')}</h1>
+            <LngSwitcherClient lng={lng} />
+            <Link href={`/${lng}`}> TO home</Link>
+            <DefaultLayout title={title} desc={meta}>
+                <PaddingContainer>
+                    {/* <div className="lg:px-0 px-3"> */}
+                    {/* <div className="relative aspect-video">
                     {thumbnail && (
                         <Image
                             src={`${baseApiUrl}/images/${thumbnail.id}${thumbnail.ext}`}
@@ -136,59 +144,60 @@ const PostSlugPage: FC<Props> = ({ initialSlug }): JSX.Element => {
                     ))}
                     <span>{dateFormat(createdAt, 'd-mmm-yyyy')}</span>
                 </div> */}
-                <div className="space-y-10">
-                    <PostHero post={postData!.body} />
-                    <div className="flex flex-col gap-10 md:flex-row">
-                        <div className="relative">
-                            <div className="sticky flex items-center gap-5 md:flex-col top-20">
-                                <div className="font-medium md:hidden">Share this content:</div>
-                                <Share url={`${host}/${slug}`} />
+                    <div className="space-y-10">
+                        <PostHero post={postData!.body} />
+                        <div className="flex flex-col gap-10 md:flex-row">
+                            <div className="relative">
+                                <div className="sticky flex items-center gap-5 md:flex-col top-20">
+                                    <div className="font-medium md:hidden">Share this content:</div>
+                                    <Share url={`${host}/${slug}`} />
+                                </div>
                             </div>
+                            <PostBody body={content || ''} />
+                            {/* <div className="rich-text">{parse(content || '')}</div> */}
                         </div>
-                        <PostBody body={content || ''} />
-                        {/* <div className="rich-text">{parse(content || '')}</div> */}
-                    </div>
 
-                    {/* <div className="prose prose-lg dark:prose-invert max-w-full mx-auto rich-text">
+                        {/* <div className="prose prose-lg dark:prose-invert max-w-full mx-auto rich-text">
                         {parse(content || '')}
                     </div> */}
 
-                    <div>
-                        <LikeHeart
-                            liked={likes.likedByOwner}
-                            label={getLikeLabel()}
-                            onClick={!liking ? handleOnLikeClick : undefined}
-                            busy={liking}
-                        />
-                    </div>
-
-                    <div>{author && <AuthorInfo profile={author} />}</div>
-
-                    <div>
-                        <h3 className="text-xl font-semibold bg-secondary-dark text-primary p-2 mb-4">
-                            Related Posts:
-                        </h3>
-
-                        <div className="flex flex-col space-y-4">
-                            {relatedPosts?.map((p) => {
-                                return (
-                                    <Link
-                                        key={p.slug}
-                                        href={p.slug}
-                                        className="font-semibold text-primary-dark dark:text-primary hover:underline"
-                                    >
-                                        {p.title}
-                                    </Link>
-                                );
-                            })}
+                        <div>
+                            <LikeHeart
+                                liked={likes.likedByOwner}
+                                label={getLikeLabel()}
+                                onClick={!liking ? handleOnLikeClick : undefined}
+                                busy={liking}
+                            />
                         </div>
-                    </div>
 
-                    <Comments belongsTo={id} />
-                    {/* </div> */}
-                </div>
-            </PaddingContainer>
-        </DefaultLayout>
+                        <div>{author && <AuthorInfo profile={author} />}</div>
+
+                        <div>
+                            <h3 className="text-xl font-semibold bg-secondary-dark text-primary p-2 mb-4">
+                                Related Posts:
+                            </h3>
+
+                            <div className="flex flex-col space-y-4">
+                                {relatedPosts?.map((p) => {
+                                    return (
+                                        <Link
+                                            key={p.slug}
+                                            href={p.slug}
+                                            className="font-semibold text-primary-dark dark:text-primary hover:underline"
+                                        >
+                                            {p.title}
+                                        </Link>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        <Comments belongsTo={id} />
+                        {/* </div> */}
+                    </div>
+                </PaddingContainer>
+            </DefaultLayout>
+        </>
     );
 };
 
