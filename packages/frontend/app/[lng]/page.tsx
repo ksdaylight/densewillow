@@ -23,11 +23,11 @@ interface Props {
 const Index: NextPage<Props> = async ({ params }) => {
     const { t } = await useTranslation(params.lng);
     const cookieStore = cookies();
-    console.log(cookieStore);
+    // console.log(cookieStore);
     // const cookieStore = (await headers).cookies();
     const token = cookieStore.get('auth_token');
     // console.log(cookieStore.getAll());
-    console.log(token);
+    // console.log(token);
     await fetch(`http://127.0.0.1:3100/api/test`, {
         headers: {
             authorization: `bearer ${token?.value || ''}`,

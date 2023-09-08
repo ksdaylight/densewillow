@@ -1,0 +1,42 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+        "type": "node",
+        "request": "launch",
+        "name": "frontend",
+        "runtimeExecutable": "pnpm",
+        "runtimeArgs": [
+            "nx",
+            "run",
+            "frontend:serve",
+            "-r",
+            "ts-node/register",
+            "-r",
+            "tsconfig-paths/register"
+        ],
+        // "protocol": "inspector",
+        "outputCapture": "std",
+        "internalConsoleOptions": "openOnSessionStart",
+        "console": "internalConsole",
+        "env": {
+            "TS_NODE_IGNORE": "false",
+            "TS_NODE_PROJECT": "${workspaceFolder}/packages/frontend/tsconfig.json"
+        },
+        "cwd": "${workspaceFolder}/packages/frontend/"
+    },
+     {
+      "name": "nest-api",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["nx", "run", "nest-api:serve", "--inspect"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceRoot}/packages/nest-api",
+      "internalConsoleOptions": "neverOpen",
+    }
+  ]
+}
