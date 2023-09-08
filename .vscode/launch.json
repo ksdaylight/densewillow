@@ -33,6 +33,7 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "pnpm",
+      // "runtimeArgs": ["run-script", "start:debug"],
       "runtimeArgs": ["nx", "run", "nest-api:serve", "--inspect"],
       "console": "integratedTerminal",
       "cwd": "${workspaceRoot}/packages/nest-api",

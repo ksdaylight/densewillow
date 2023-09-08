@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import LngSwitcherService from '@frontend/components/common/LngSwitcher';
 
+// import { checkCookie } from '@frontend/actions/i18n-actions';
+
 import { useTranslation } from '../i18n';
 
 import Home from './home-page';
@@ -27,32 +29,13 @@ const Index: NextPage<Props> = async ({ params }) => {
     // const cookieStore = (await headers).cookies();
     const token = cookieStore.get('auth_token');
     // console.log(cookieStore.getAll());
-    // console.log(token);
+    console.log(token);
     await fetch(`http://127.0.0.1:3100/api/test`, {
         headers: {
             authorization: `bearer ${token?.value || ''}`,
         },
     });
 
-    // const userRole = cookieStore.get('user_role');
-    // const fetchTest = async () => {
-    //     'use server';
-
-    //     try {
-    //         const cookieStore = (await headers).cookies();
-    //         const token = cookieStore.get('auth_token');
-    //         // console.log(cookieStore.getAll());
-    //         console.log(token);
-    //         await fetch(`http://127.0.0.1:3100/api/test`, {
-    //             headers: {
-    //                 authorization: `bearer ${token?.value || ''}`,
-    //             },
-    //         });
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
-    // await fetchTest();
     return (
         <>
             <h1>{t('title')}</h1>

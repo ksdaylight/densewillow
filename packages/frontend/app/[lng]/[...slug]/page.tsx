@@ -5,6 +5,8 @@ import getQueryClient from '@frontend/utils/getQueryClient';
 
 import { NextPage } from 'next';
 
+import LngSwitcherService from '@frontend/components/common/LngSwitcher';
+
 import { useTranslation } from '../../i18n';
 
 import PostSlugPage from './slug-page';
@@ -33,6 +35,7 @@ const PostSlug: NextPage<Props> = async ({ params }) => {
     return (
         <Hydrate state={dehydratedState}>
             <h1>{t('title')}</h1>
+            <LngSwitcherService lng={params.lng} />
             <PostSlugPage initialSlug={params.slug[0]} lng={params.lng} />
         </Hydrate>
     );

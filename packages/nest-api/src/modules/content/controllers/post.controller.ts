@@ -43,6 +43,7 @@ export class ContentController {
         return tsRestHandler(c.testGet, async () => {
             // console.log(UserPartialWithRelationsSchema);
             console.log(UserOptionalDefaultsWithPartialRelationsSchema);
+            console.log('test success \n');
             return { status: 200, body: `${await getTime()}test success` };
         });
     }

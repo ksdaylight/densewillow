@@ -17,9 +17,12 @@ import { apiClient, filterPosts } from '@frontend/utils/helps';
 import { useRoleInfoContext } from '@frontend/context/role-info';
 
 import DefaultLayout from '@frontend/components/layout/DefaultLayout';
+import { checkI18nCookie } from '@frontend/actions/i18n-actions';
 
-interface Props {}
-const Home: FC<Props> = (): JSX.Element => {
+interface Props {
+    lng?: string;
+}
+const Home: FC<Props> = ({ lng }): JSX.Element => {
     const [postsToRender, setPostsToRender] = useState<PostWithPartialRelations[]>([]);
     const [hasMorePosts, setHasMorePosts] = useState(true);
     const limit = 9;
@@ -53,15 +56,6 @@ const Home: FC<Props> = (): JSX.Element => {
             },
         );
 
-    // const { data: testData } = apiClient.content.testGet.useQuery(
-    //     ['userAuth2', '1'],
-    //     {},
-    //     {
-    //         staleTime: 18000,
-    //     },
-    // );
-    // console.log(testData);
-
     useEffect(() => {
         if (isNil(userProfile)) return;
         setUserInfoLocal({
@@ -85,7 +79,9 @@ const Home: FC<Props> = (): JSX.Element => {
             fetchNextPage();
         }
     }, [isFetching, fetchNextPage, hasNextPage]);
-
+    useEffect(() => {
+        checkI18nCookie(lng || 'en').then();
+    }, []);
     return (
         <DefaultLayout>
             <div className="pt-10">
