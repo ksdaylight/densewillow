@@ -161,6 +161,7 @@ const Editor: FC<Props> = ({
                         slug: post.slug,
                         meta: post.meta,
                         tags: post.tags,
+                        lng: 'cn', // TODO
                     },
                 });
             } else {
@@ -175,6 +176,7 @@ const Editor: FC<Props> = ({
                     slug: post.slug,
                     meta: post.meta,
                     tags: post.tags,
+                    lng: 'cn', // TODO
                     // .split(',')
                     // .map((tag: string) => tag.trim())
                     // .filter((tag: string) => tag.length > 0),

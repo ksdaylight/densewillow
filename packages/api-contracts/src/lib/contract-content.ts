@@ -142,6 +142,13 @@ export const contentContract = c.router(
                     })
                     .passthrough()
                     .or(z.string().max(1000)),
+                lng: z
+                    .object({
+                        value: z.string().optional(),
+                    })
+                    .passthrough()
+                    .or(z.string().optional())
+                    .optional(),
                 tags: z
                     .object({
                         value: z.string().max(1000),
@@ -177,6 +184,13 @@ export const contentContract = c.router(
                     .passthrough()
                     .or(z.string().max(300)),
                 content: z
+                    .object({
+                        value: z.string().optional(),
+                    })
+                    .passthrough()
+                    .or(z.string().optional())
+                    .optional(),
+                lng: z
                     .object({
                         value: z.string().optional(),
                     })

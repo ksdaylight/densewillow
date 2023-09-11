@@ -182,7 +182,42 @@ export class ContentController {
         };
 
         if (method === 'create') {
+            if (!isNil(data.lng)) {
+                return this.postService.createPost({
+                    ...postData,
+                    translations: {
+                        create: {
+                            language: data.lng,
+                            title: postData.title,
+                            content: postData.content,
+                            meta: postData.meta,
+                        },
+                    },
+                });
+            }
             return this.postService.createPost(postData);
+        }
+        if (!isNil(data.lng)) {
+            return this.postService.updatePost({
+                where: {
+                    id,
+                },
+                data: {
+                    ...postData,
+                    translations: {
+                        updateMany: {
+                            where: {
+                                AND: [{ postId: id }, { language: data.lng }],
+                            },
+                            data: {
+                                title: postData.title,
+                                content: postData.content,
+                                meta: postData.meta,
+                            },
+                        },
+                    },
+                },
+            });
         }
         return this.postService.updatePost({
             where: {

@@ -79,8 +79,19 @@ model Post {
   likedByUserIDs String[] @db.ObjectId 
   likedUsers   User[]   @relation(fields: [likedByUserIDs], references: [id], name: "LikeRelation")
   comments Comment[] @relation("CommentPostRelation")
+  translations  Translation[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Translation {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  language String
+  title    String
+  content  String?
+  meta     String
+  postId   String @db.ObjectId
+  post     Post   @relation(fields: [postId], references: [id])
 }
 
 model MediaEntity {

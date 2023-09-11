@@ -56,6 +56,8 @@ export const PermissionScalarFieldEnumSchema = z.enum(['id','name','label','desc
 
 export const PostScalarFieldEnumSchema = z.enum(['id','title','slug','content','meta','tags','thumbnailId','authorId','likedByUserIDs','createdAt','updatedAt']);
 
+export const TranslationScalarFieldEnumSchema = z.enum(['id','language','title','content','meta','postId']);
+
 export const MediaEntityScalarFieldEnumSchema = z.enum(['id','file','ext','createdAt']);
 
 export const RefreshTokenScalarFieldEnumSchema = z.enum(['id','value','expired_at','createdAt','accessTokenId']);
@@ -451,6 +453,7 @@ export type PostRelations = {
   author?: User | null;
   likedUsers: User[];
   comments: Comment[];
+  translations: Translation[];
 };
 
 export type PostWithRelations = z.infer<typeof PostSchema> & PostRelations
@@ -460,6 +463,7 @@ export const PostWithRelationsSchema: z.ZodType<PostWithRelations> = PostSchema.
   author: z.lazy(() => UserSchema).nullable(),
   likedUsers: z.lazy(() => UserSchema).array(),
   comments: z.lazy(() => CommentSchema).array(),
+  translations: z.lazy(() => TranslationSchema).array(),
 }))
 
 // POST OPTIONAL DEFAULTS RELATION SCHEMA
@@ -470,6 +474,7 @@ export type PostOptionalDefaultsRelations = {
   author?: User | null;
   likedUsers: User[];
   comments: Comment[];
+  translations: Translation[];
 };
 
 export type PostOptionalDefaultsWithRelations = z.infer<typeof PostOptionalDefaultsSchema> & PostOptionalDefaultsRelations
@@ -479,6 +484,7 @@ export const PostOptionalDefaultsWithRelationsSchema: z.ZodType<PostOptionalDefa
   author: z.lazy(() => UserSchema).nullable(),
   likedUsers: z.lazy(() => UserSchema).array(),
   comments: z.lazy(() => CommentSchema).array(),
+  translations: z.lazy(() => TranslationSchema).array(),
 }))
 
 // POST PARTIAL RELATION SCHEMA
@@ -489,6 +495,7 @@ export type PostPartialRelations = {
   author?: User | null;
   likedUsers?: User[];
   comments?: Comment[];
+  translations?: Translation[];
 };
 
 export type PostPartialWithRelations = z.infer<typeof PostPartialSchema> & PostPartialRelations
@@ -498,6 +505,7 @@ export const PostPartialWithRelationsSchema: z.ZodType<PostPartialWithRelations>
   author: z.lazy(() => UserSchema).nullable(),
   likedUsers: z.lazy(() => UserSchema).array(),
   comments: z.lazy(() => CommentSchema).array(),
+  translations: z.lazy(() => TranslationSchema).array(),
 })).partial()
 
 export type PostOptionalDefaultsWithPartialRelations = z.infer<typeof PostOptionalDefaultsSchema> & PostPartialRelations
@@ -507,6 +515,7 @@ export const PostOptionalDefaultsWithPartialRelationsSchema: z.ZodType<PostOptio
   author: z.lazy(() => UserSchema).nullable(),
   likedUsers: z.lazy(() => UserSchema).array(),
   comments: z.lazy(() => CommentSchema).array(),
+  translations: z.lazy(() => TranslationSchema).array(),
 }).partial())
 
 export type PostWithPartialRelations = z.infer<typeof PostSchema> & PostPartialRelations
@@ -516,6 +525,90 @@ export const PostWithPartialRelationsSchema: z.ZodType<PostWithPartialRelations>
   author: z.lazy(() => UserSchema).nullable(),
   likedUsers: z.lazy(() => UserSchema).array(),
   comments: z.lazy(() => CommentSchema).array(),
+  translations: z.lazy(() => TranslationSchema).array(),
+}).partial())
+
+/////////////////////////////////////////
+// TRANSLATION SCHEMA
+/////////////////////////////////////////
+
+export const TranslationSchema = z.object({
+  id: z.string(),
+  language: z.string(),
+  title: z.string(),
+  content: z.string().nullable(),
+  meta: z.string(),
+  postId: z.string(),
+})
+
+export type Translation = z.infer<typeof TranslationSchema>
+
+/////////////////////////////////////////
+// TRANSLATION PARTIAL SCHEMA
+/////////////////////////////////////////
+
+export const TranslationPartialSchema = TranslationSchema.partial()
+
+export type TranslationPartial = z.infer<typeof TranslationPartialSchema>
+
+// TRANSLATION OPTIONAL DEFAULTS SCHEMA
+//------------------------------------------------------
+
+export const TranslationOptionalDefaultsSchema = TranslationSchema.merge(z.object({
+  id: z.string().optional(),
+}))
+
+export type TranslationOptionalDefaults = z.infer<typeof TranslationOptionalDefaultsSchema>
+
+// TRANSLATION RELATION SCHEMA
+//------------------------------------------------------
+
+export type TranslationRelations = {
+  post: Post;
+};
+
+export type TranslationWithRelations = z.infer<typeof TranslationSchema> & TranslationRelations
+
+export const TranslationWithRelationsSchema: z.ZodType<TranslationWithRelations> = TranslationSchema.merge(z.object({
+  post: z.lazy(() => PostSchema),
+}))
+
+// TRANSLATION OPTIONAL DEFAULTS RELATION SCHEMA
+//------------------------------------------------------
+
+export type TranslationOptionalDefaultsRelations = {
+  post: Post;
+};
+
+export type TranslationOptionalDefaultsWithRelations = z.infer<typeof TranslationOptionalDefaultsSchema> & TranslationOptionalDefaultsRelations
+
+export const TranslationOptionalDefaultsWithRelationsSchema: z.ZodType<TranslationOptionalDefaultsWithRelations> = TranslationOptionalDefaultsSchema.merge(z.object({
+  post: z.lazy(() => PostSchema),
+}))
+
+// TRANSLATION PARTIAL RELATION SCHEMA
+//------------------------------------------------------
+
+export type TranslationPartialRelations = {
+  post?: Post;
+};
+
+export type TranslationPartialWithRelations = z.infer<typeof TranslationPartialSchema> & TranslationPartialRelations
+
+export const TranslationPartialWithRelationsSchema: z.ZodType<TranslationPartialWithRelations> = TranslationPartialSchema.merge(z.object({
+  post: z.lazy(() => PostSchema),
+})).partial()
+
+export type TranslationOptionalDefaultsWithPartialRelations = z.infer<typeof TranslationOptionalDefaultsSchema> & TranslationPartialRelations
+
+export const TranslationOptionalDefaultsWithPartialRelationsSchema: z.ZodType<TranslationOptionalDefaultsWithPartialRelations> = TranslationOptionalDefaultsSchema.merge(z.object({
+  post: z.lazy(() => PostSchema),
+}).partial())
+
+export type TranslationWithPartialRelations = z.infer<typeof TranslationSchema> & TranslationPartialRelations
+
+export const TranslationWithPartialRelationsSchema: z.ZodType<TranslationWithPartialRelations> = TranslationSchema.merge(z.object({
+  post: z.lazy(() => PostSchema),
 }).partial())
 
 /////////////////////////////////////////
@@ -1039,6 +1132,7 @@ export const PostCountOutputTypeArgsSchema: z.ZodType<Prisma.PostCountOutputType
 export const PostCountOutputTypeSelectSchema: z.ZodType<Prisma.PostCountOutputTypeSelect> = z.object({
   likedUsers: z.boolean().optional(),
   comments: z.boolean().optional(),
+  translations: z.boolean().optional(),
 }).strict();
 
 export const PostSelectSchema: z.ZodType<Prisma.PostSelect> = z.object({
@@ -1057,7 +1151,29 @@ export const PostSelectSchema: z.ZodType<Prisma.PostSelect> = z.object({
   author: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
   likedUsers: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
   comments: z.union([z.boolean(),z.lazy(() => CommentArgsSchema)]).optional(),
+  translations: z.union([z.boolean(),z.lazy(() => TranslationArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => PostCountOutputTypeArgsSchema)]).optional(),
+}).strict()
+
+// TRANSLATION
+//------------------------------------------------------
+
+export const TranslationIncludeSchema: z.ZodType<Prisma.TranslationInclude> = z.object({
+}).strict()
+
+export const TranslationArgsSchema: z.ZodType<Prisma.TranslationDefaultArgs> = z.object({
+  select: z.lazy(() => TranslationSelectSchema).optional(),
+  include: z.lazy(() => TranslationIncludeSchema).optional(),
+}).strict();
+
+export const TranslationSelectSchema: z.ZodType<Prisma.TranslationSelect> = z.object({
+  id: z.boolean().optional(),
+  language: z.boolean().optional(),
+  title: z.boolean().optional(),
+  content: z.boolean().optional(),
+  meta: z.boolean().optional(),
+  postId: z.boolean().optional(),
+  post: z.union([z.boolean(),z.lazy(() => PostArgsSchema)]).optional(),
 }).strict()
 
 // MEDIA ENTITY
@@ -1472,7 +1588,8 @@ export const PostWhereInputSchema: z.ZodType<Prisma.PostWhereInput> = z.object({
   thumbnail: z.union([ z.lazy(() => MediaEntityNullableRelationFilterSchema),z.lazy(() => MediaEntityWhereInputSchema) ]).optional().nullable(),
   author: z.union([ z.lazy(() => UserNullableRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional().nullable(),
   likedUsers: z.lazy(() => UserListRelationFilterSchema).optional(),
-  comments: z.lazy(() => CommentListRelationFilterSchema).optional()
+  comments: z.lazy(() => CommentListRelationFilterSchema).optional(),
+  translations: z.lazy(() => TranslationListRelationFilterSchema).optional()
 }).strict();
 
 export const PostOrderByWithRelationInputSchema: z.ZodType<Prisma.PostOrderByWithRelationInput> = z.object({
@@ -1490,7 +1607,8 @@ export const PostOrderByWithRelationInputSchema: z.ZodType<Prisma.PostOrderByWit
   thumbnail: z.lazy(() => MediaEntityOrderByWithRelationInputSchema).optional(),
   author: z.lazy(() => UserOrderByWithRelationInputSchema).optional(),
   likedUsers: z.lazy(() => UserOrderByRelationAggregateInputSchema).optional(),
-  comments: z.lazy(() => CommentOrderByRelationAggregateInputSchema).optional()
+  comments: z.lazy(() => CommentOrderByRelationAggregateInputSchema).optional(),
+  translations: z.lazy(() => TranslationOrderByRelationAggregateInputSchema).optional()
 }).strict();
 
 export const PostWhereUniqueInputSchema: z.ZodType<Prisma.PostWhereUniqueInput> = z.union([
@@ -1523,7 +1641,8 @@ export const PostWhereUniqueInputSchema: z.ZodType<Prisma.PostWhereUniqueInput> 
   thumbnail: z.union([ z.lazy(() => MediaEntityNullableRelationFilterSchema),z.lazy(() => MediaEntityWhereInputSchema) ]).optional().nullable(),
   author: z.union([ z.lazy(() => UserNullableRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional().nullable(),
   likedUsers: z.lazy(() => UserListRelationFilterSchema).optional(),
-  comments: z.lazy(() => CommentListRelationFilterSchema).optional()
+  comments: z.lazy(() => CommentListRelationFilterSchema).optional(),
+  translations: z.lazy(() => TranslationListRelationFilterSchema).optional()
 }).strict());
 
 export const PostOrderByWithAggregationInputSchema: z.ZodType<Prisma.PostOrderByWithAggregationInput> = z.object({
@@ -1558,6 +1677,69 @@ export const PostScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.PostScal
   likedByUserIDs: z.lazy(() => StringNullableListFilterSchema).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
+}).strict();
+
+export const TranslationWhereInputSchema: z.ZodType<Prisma.TranslationWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => TranslationWhereInputSchema),z.lazy(() => TranslationWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => TranslationWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => TranslationWhereInputSchema),z.lazy(() => TranslationWhereInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  language: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  title: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  content: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  meta: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  postId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  post: z.union([ z.lazy(() => PostRelationFilterSchema),z.lazy(() => PostWhereInputSchema) ]).optional(),
+}).strict();
+
+export const TranslationOrderByWithRelationInputSchema: z.ZodType<Prisma.TranslationOrderByWithRelationInput> = z.object({
+  id: z.lazy(() => SortOrderSchema).optional(),
+  language: z.lazy(() => SortOrderSchema).optional(),
+  title: z.lazy(() => SortOrderSchema).optional(),
+  content: z.lazy(() => SortOrderSchema).optional(),
+  meta: z.lazy(() => SortOrderSchema).optional(),
+  postId: z.lazy(() => SortOrderSchema).optional(),
+  post: z.lazy(() => PostOrderByWithRelationInputSchema).optional()
+}).strict();
+
+export const TranslationWhereUniqueInputSchema: z.ZodType<Prisma.TranslationWhereUniqueInput> = z.object({
+  id: z.string()
+})
+.and(z.object({
+  id: z.string().optional(),
+  AND: z.union([ z.lazy(() => TranslationWhereInputSchema),z.lazy(() => TranslationWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => TranslationWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => TranslationWhereInputSchema),z.lazy(() => TranslationWhereInputSchema).array() ]).optional(),
+  language: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  title: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  content: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  meta: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  postId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  post: z.union([ z.lazy(() => PostRelationFilterSchema),z.lazy(() => PostWhereInputSchema) ]).optional(),
+}).strict());
+
+export const TranslationOrderByWithAggregationInputSchema: z.ZodType<Prisma.TranslationOrderByWithAggregationInput> = z.object({
+  id: z.lazy(() => SortOrderSchema).optional(),
+  language: z.lazy(() => SortOrderSchema).optional(),
+  title: z.lazy(() => SortOrderSchema).optional(),
+  content: z.lazy(() => SortOrderSchema).optional(),
+  meta: z.lazy(() => SortOrderSchema).optional(),
+  postId: z.lazy(() => SortOrderSchema).optional(),
+  _count: z.lazy(() => TranslationCountOrderByAggregateInputSchema).optional(),
+  _max: z.lazy(() => TranslationMaxOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => TranslationMinOrderByAggregateInputSchema).optional()
+}).strict();
+
+export const TranslationScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.TranslationScalarWhereWithAggregatesInput> = z.object({
+  AND: z.union([ z.lazy(() => TranslationScalarWhereWithAggregatesInputSchema),z.lazy(() => TranslationScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  OR: z.lazy(() => TranslationScalarWhereWithAggregatesInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => TranslationScalarWhereWithAggregatesInputSchema),z.lazy(() => TranslationScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  language: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  title: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  content: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  meta: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  postId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
 }).strict();
 
 export const MediaEntityWhereInputSchema: z.ZodType<Prisma.MediaEntityWhereInput> = z.object({
@@ -2124,7 +2306,8 @@ export const PostCreateInputSchema: z.ZodType<Prisma.PostCreateInput> = z.object
   thumbnail: z.lazy(() => MediaEntityCreateNestedOneWithoutPostInputSchema).optional(),
   author: z.lazy(() => UserCreateNestedOneWithoutPostsInputSchema).optional(),
   likedUsers: z.lazy(() => UserCreateNestedManyWithoutLikedPostsInputSchema).optional(),
-  comments: z.lazy(() => CommentCreateNestedManyWithoutBelongsToInputSchema).optional()
+  comments: z.lazy(() => CommentCreateNestedManyWithoutBelongsToInputSchema).optional(),
+  translations: z.lazy(() => TranslationCreateNestedManyWithoutPostInputSchema).optional()
 }).strict();
 
 export const PostUncheckedCreateInputSchema: z.ZodType<Prisma.PostUncheckedCreateInput> = z.object({
@@ -2140,7 +2323,8 @@ export const PostUncheckedCreateInputSchema: z.ZodType<Prisma.PostUncheckedCreat
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   likedUsers: z.lazy(() => UserUncheckedCreateNestedManyWithoutLikedPostsInputSchema).optional(),
-  comments: z.lazy(() => CommentUncheckedCreateNestedManyWithoutBelongsToInputSchema).optional()
+  comments: z.lazy(() => CommentUncheckedCreateNestedManyWithoutBelongsToInputSchema).optional(),
+  translations: z.lazy(() => TranslationUncheckedCreateNestedManyWithoutPostInputSchema).optional()
 }).strict();
 
 export const PostUpdateInputSchema: z.ZodType<Prisma.PostUpdateInput> = z.object({
@@ -2154,7 +2338,8 @@ export const PostUpdateInputSchema: z.ZodType<Prisma.PostUpdateInput> = z.object
   thumbnail: z.lazy(() => MediaEntityUpdateOneWithoutPostNestedInputSchema).optional(),
   author: z.lazy(() => UserUpdateOneWithoutPostsNestedInputSchema).optional(),
   likedUsers: z.lazy(() => UserUpdateManyWithoutLikedPostsNestedInputSchema).optional(),
-  comments: z.lazy(() => CommentUpdateManyWithoutBelongsToNestedInputSchema).optional()
+  comments: z.lazy(() => CommentUpdateManyWithoutBelongsToNestedInputSchema).optional(),
+  translations: z.lazy(() => TranslationUpdateManyWithoutPostNestedInputSchema).optional()
 }).strict();
 
 export const PostUncheckedUpdateInputSchema: z.ZodType<Prisma.PostUncheckedUpdateInput> = z.object({
@@ -2169,7 +2354,8 @@ export const PostUncheckedUpdateInputSchema: z.ZodType<Prisma.PostUncheckedUpdat
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   likedUsers: z.lazy(() => UserUncheckedUpdateManyWithoutLikedPostsNestedInputSchema).optional(),
-  comments: z.lazy(() => CommentUncheckedUpdateManyWithoutBelongsToNestedInputSchema).optional()
+  comments: z.lazy(() => CommentUncheckedUpdateManyWithoutBelongsToNestedInputSchema).optional(),
+  translations: z.lazy(() => TranslationUncheckedUpdateManyWithoutPostNestedInputSchema).optional()
 }).strict();
 
 export const PostCreateManyInputSchema: z.ZodType<Prisma.PostCreateManyInput> = z.object({
@@ -2207,6 +2393,64 @@ export const PostUncheckedUpdateManyInputSchema: z.ZodType<Prisma.PostUncheckedU
   likedByUserIDs: z.union([ z.lazy(() => PostUpdatelikedByUserIDsInputSchema),z.string().array() ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const TranslationCreateInputSchema: z.ZodType<Prisma.TranslationCreateInput> = z.object({
+  id: z.string().optional(),
+  language: z.string(),
+  title: z.string(),
+  content: z.string().optional().nullable(),
+  meta: z.string(),
+  post: z.lazy(() => PostCreateNestedOneWithoutTranslationsInputSchema)
+}).strict();
+
+export const TranslationUncheckedCreateInputSchema: z.ZodType<Prisma.TranslationUncheckedCreateInput> = z.object({
+  id: z.string().optional(),
+  language: z.string(),
+  title: z.string(),
+  content: z.string().optional().nullable(),
+  meta: z.string(),
+  postId: z.string()
+}).strict();
+
+export const TranslationUpdateInputSchema: z.ZodType<Prisma.TranslationUpdateInput> = z.object({
+  language: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  content: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  meta: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  post: z.lazy(() => PostUpdateOneRequiredWithoutTranslationsNestedInputSchema).optional()
+}).strict();
+
+export const TranslationUncheckedUpdateInputSchema: z.ZodType<Prisma.TranslationUncheckedUpdateInput> = z.object({
+  language: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  content: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  meta: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  postId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const TranslationCreateManyInputSchema: z.ZodType<Prisma.TranslationCreateManyInput> = z.object({
+  id: z.string().optional(),
+  language: z.string(),
+  title: z.string(),
+  content: z.string().optional().nullable(),
+  meta: z.string(),
+  postId: z.string()
+}).strict();
+
+export const TranslationUpdateManyMutationInputSchema: z.ZodType<Prisma.TranslationUpdateManyMutationInput> = z.object({
+  language: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  content: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  meta: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const TranslationUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TranslationUncheckedUpdateManyInput> = z.object({
+  language: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  content: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  meta: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  postId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const MediaEntityCreateInputSchema: z.ZodType<Prisma.MediaEntityCreateInput> = z.object({
@@ -2742,6 +2986,16 @@ export const UserNullableRelationFilterSchema: z.ZodType<Prisma.UserNullableRela
   isNot: z.lazy(() => UserWhereInputSchema).optional().nullable()
 }).strict();
 
+export const TranslationListRelationFilterSchema: z.ZodType<Prisma.TranslationListRelationFilter> = z.object({
+  every: z.lazy(() => TranslationWhereInputSchema).optional(),
+  some: z.lazy(() => TranslationWhereInputSchema).optional(),
+  none: z.lazy(() => TranslationWhereInputSchema).optional()
+}).strict();
+
+export const TranslationOrderByRelationAggregateInputSchema: z.ZodType<Prisma.TranslationOrderByRelationAggregateInput> = z.object({
+  _count: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
 export const PostCountOrderByAggregateInputSchema: z.ZodType<Prisma.PostCountOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   title: z.lazy(() => SortOrderSchema).optional(),
@@ -2778,6 +3032,38 @@ export const PostMinOrderByAggregateInputSchema: z.ZodType<Prisma.PostMinOrderBy
   authorId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const PostRelationFilterSchema: z.ZodType<Prisma.PostRelationFilter> = z.object({
+  is: z.lazy(() => PostWhereInputSchema).optional(),
+  isNot: z.lazy(() => PostWhereInputSchema).optional()
+}).strict();
+
+export const TranslationCountOrderByAggregateInputSchema: z.ZodType<Prisma.TranslationCountOrderByAggregateInput> = z.object({
+  id: z.lazy(() => SortOrderSchema).optional(),
+  language: z.lazy(() => SortOrderSchema).optional(),
+  title: z.lazy(() => SortOrderSchema).optional(),
+  content: z.lazy(() => SortOrderSchema).optional(),
+  meta: z.lazy(() => SortOrderSchema).optional(),
+  postId: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const TranslationMaxOrderByAggregateInputSchema: z.ZodType<Prisma.TranslationMaxOrderByAggregateInput> = z.object({
+  id: z.lazy(() => SortOrderSchema).optional(),
+  language: z.lazy(() => SortOrderSchema).optional(),
+  title: z.lazy(() => SortOrderSchema).optional(),
+  content: z.lazy(() => SortOrderSchema).optional(),
+  meta: z.lazy(() => SortOrderSchema).optional(),
+  postId: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const TranslationMinOrderByAggregateInputSchema: z.ZodType<Prisma.TranslationMinOrderByAggregateInput> = z.object({
+  id: z.lazy(() => SortOrderSchema).optional(),
+  language: z.lazy(() => SortOrderSchema).optional(),
+  title: z.lazy(() => SortOrderSchema).optional(),
+  content: z.lazy(() => SortOrderSchema).optional(),
+  meta: z.lazy(() => SortOrderSchema).optional(),
+  postId: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const MediaEntityCountOrderByAggregateInputSchema: z.ZodType<Prisma.MediaEntityCountOrderByAggregateInput> = z.object({
@@ -3456,6 +3742,13 @@ export const CommentCreateNestedManyWithoutBelongsToInputSchema: z.ZodType<Prism
   connect: z.union([ z.lazy(() => CommentWhereUniqueInputSchema),z.lazy(() => CommentWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
+export const TranslationCreateNestedManyWithoutPostInputSchema: z.ZodType<Prisma.TranslationCreateNestedManyWithoutPostInput> = z.object({
+  create: z.union([ z.lazy(() => TranslationCreateWithoutPostInputSchema),z.lazy(() => TranslationCreateWithoutPostInputSchema).array(),z.lazy(() => TranslationUncheckedCreateWithoutPostInputSchema),z.lazy(() => TranslationUncheckedCreateWithoutPostInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => TranslationCreateOrConnectWithoutPostInputSchema),z.lazy(() => TranslationCreateOrConnectWithoutPostInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => TranslationCreateManyPostInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => TranslationWhereUniqueInputSchema),z.lazy(() => TranslationWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
 export const PostCreatelikedByUserIDsInputSchema: z.ZodType<Prisma.PostCreatelikedByUserIDsInput> = z.object({
   set: z.string().array()
 }).strict();
@@ -3471,6 +3764,13 @@ export const CommentUncheckedCreateNestedManyWithoutBelongsToInputSchema: z.ZodT
   connectOrCreate: z.union([ z.lazy(() => CommentCreateOrConnectWithoutBelongsToInputSchema),z.lazy(() => CommentCreateOrConnectWithoutBelongsToInputSchema).array() ]).optional(),
   createMany: z.lazy(() => CommentCreateManyBelongsToInputEnvelopeSchema).optional(),
   connect: z.union([ z.lazy(() => CommentWhereUniqueInputSchema),z.lazy(() => CommentWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
+export const TranslationUncheckedCreateNestedManyWithoutPostInputSchema: z.ZodType<Prisma.TranslationUncheckedCreateNestedManyWithoutPostInput> = z.object({
+  create: z.union([ z.lazy(() => TranslationCreateWithoutPostInputSchema),z.lazy(() => TranslationCreateWithoutPostInputSchema).array(),z.lazy(() => TranslationUncheckedCreateWithoutPostInputSchema),z.lazy(() => TranslationUncheckedCreateWithoutPostInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => TranslationCreateOrConnectWithoutPostInputSchema),z.lazy(() => TranslationCreateOrConnectWithoutPostInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => TranslationCreateManyPostInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => TranslationWhereUniqueInputSchema),z.lazy(() => TranslationWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
 export const PostUpdatetagsInputSchema: z.ZodType<Prisma.PostUpdatetagsInput> = z.object({
@@ -3525,6 +3825,20 @@ export const CommentUpdateManyWithoutBelongsToNestedInputSchema: z.ZodType<Prism
   deleteMany: z.union([ z.lazy(() => CommentScalarWhereInputSchema),z.lazy(() => CommentScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
+export const TranslationUpdateManyWithoutPostNestedInputSchema: z.ZodType<Prisma.TranslationUpdateManyWithoutPostNestedInput> = z.object({
+  create: z.union([ z.lazy(() => TranslationCreateWithoutPostInputSchema),z.lazy(() => TranslationCreateWithoutPostInputSchema).array(),z.lazy(() => TranslationUncheckedCreateWithoutPostInputSchema),z.lazy(() => TranslationUncheckedCreateWithoutPostInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => TranslationCreateOrConnectWithoutPostInputSchema),z.lazy(() => TranslationCreateOrConnectWithoutPostInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => TranslationUpsertWithWhereUniqueWithoutPostInputSchema),z.lazy(() => TranslationUpsertWithWhereUniqueWithoutPostInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => TranslationCreateManyPostInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => TranslationWhereUniqueInputSchema),z.lazy(() => TranslationWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => TranslationWhereUniqueInputSchema),z.lazy(() => TranslationWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => TranslationWhereUniqueInputSchema),z.lazy(() => TranslationWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => TranslationWhereUniqueInputSchema),z.lazy(() => TranslationWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => TranslationUpdateWithWhereUniqueWithoutPostInputSchema),z.lazy(() => TranslationUpdateWithWhereUniqueWithoutPostInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => TranslationUpdateManyWithWhereWithoutPostInputSchema),z.lazy(() => TranslationUpdateManyWithWhereWithoutPostInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => TranslationScalarWhereInputSchema),z.lazy(() => TranslationScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
 export const PostUpdatelikedByUserIDsInputSchema: z.ZodType<Prisma.PostUpdatelikedByUserIDsInput> = z.object({
   set: z.string().array().optional(),
   push: z.union([ z.string(),z.string().array() ]).optional(),
@@ -3555,6 +3869,34 @@ export const CommentUncheckedUpdateManyWithoutBelongsToNestedInputSchema: z.ZodT
   update: z.union([ z.lazy(() => CommentUpdateWithWhereUniqueWithoutBelongsToInputSchema),z.lazy(() => CommentUpdateWithWhereUniqueWithoutBelongsToInputSchema).array() ]).optional(),
   updateMany: z.union([ z.lazy(() => CommentUpdateManyWithWhereWithoutBelongsToInputSchema),z.lazy(() => CommentUpdateManyWithWhereWithoutBelongsToInputSchema).array() ]).optional(),
   deleteMany: z.union([ z.lazy(() => CommentScalarWhereInputSchema),z.lazy(() => CommentScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
+export const TranslationUncheckedUpdateManyWithoutPostNestedInputSchema: z.ZodType<Prisma.TranslationUncheckedUpdateManyWithoutPostNestedInput> = z.object({
+  create: z.union([ z.lazy(() => TranslationCreateWithoutPostInputSchema),z.lazy(() => TranslationCreateWithoutPostInputSchema).array(),z.lazy(() => TranslationUncheckedCreateWithoutPostInputSchema),z.lazy(() => TranslationUncheckedCreateWithoutPostInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => TranslationCreateOrConnectWithoutPostInputSchema),z.lazy(() => TranslationCreateOrConnectWithoutPostInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => TranslationUpsertWithWhereUniqueWithoutPostInputSchema),z.lazy(() => TranslationUpsertWithWhereUniqueWithoutPostInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => TranslationCreateManyPostInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => TranslationWhereUniqueInputSchema),z.lazy(() => TranslationWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => TranslationWhereUniqueInputSchema),z.lazy(() => TranslationWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => TranslationWhereUniqueInputSchema),z.lazy(() => TranslationWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => TranslationWhereUniqueInputSchema),z.lazy(() => TranslationWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => TranslationUpdateWithWhereUniqueWithoutPostInputSchema),z.lazy(() => TranslationUpdateWithWhereUniqueWithoutPostInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => TranslationUpdateManyWithWhereWithoutPostInputSchema),z.lazy(() => TranslationUpdateManyWithWhereWithoutPostInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => TranslationScalarWhereInputSchema),z.lazy(() => TranslationScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
+export const PostCreateNestedOneWithoutTranslationsInputSchema: z.ZodType<Prisma.PostCreateNestedOneWithoutTranslationsInput> = z.object({
+  create: z.union([ z.lazy(() => PostCreateWithoutTranslationsInputSchema),z.lazy(() => PostUncheckedCreateWithoutTranslationsInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => PostCreateOrConnectWithoutTranslationsInputSchema).optional(),
+  connect: z.lazy(() => PostWhereUniqueInputSchema).optional()
+}).strict();
+
+export const PostUpdateOneRequiredWithoutTranslationsNestedInputSchema: z.ZodType<Prisma.PostUpdateOneRequiredWithoutTranslationsNestedInput> = z.object({
+  create: z.union([ z.lazy(() => PostCreateWithoutTranslationsInputSchema),z.lazy(() => PostUncheckedCreateWithoutTranslationsInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => PostCreateOrConnectWithoutTranslationsInputSchema).optional(),
+  upsert: z.lazy(() => PostUpsertWithoutTranslationsInputSchema).optional(),
+  connect: z.lazy(() => PostWhereUniqueInputSchema).optional(),
+  update: z.union([ z.lazy(() => PostUpdateToOneWithWhereWithoutTranslationsInputSchema),z.lazy(() => PostUpdateWithoutTranslationsInputSchema),z.lazy(() => PostUncheckedUpdateWithoutTranslationsInputSchema) ]).optional(),
 }).strict();
 
 export const PostCreateNestedManyWithoutThumbnailInputSchema: z.ZodType<Prisma.PostCreateNestedManyWithoutThumbnailInput> = z.object({
@@ -3935,7 +4277,8 @@ export const PostCreateWithoutAuthorInputSchema: z.ZodType<Prisma.PostCreateWith
   updatedAt: z.coerce.date().optional(),
   thumbnail: z.lazy(() => MediaEntityCreateNestedOneWithoutPostInputSchema).optional(),
   likedUsers: z.lazy(() => UserCreateNestedManyWithoutLikedPostsInputSchema).optional(),
-  comments: z.lazy(() => CommentCreateNestedManyWithoutBelongsToInputSchema).optional()
+  comments: z.lazy(() => CommentCreateNestedManyWithoutBelongsToInputSchema).optional(),
+  translations: z.lazy(() => TranslationCreateNestedManyWithoutPostInputSchema).optional()
 }).strict();
 
 export const PostUncheckedCreateWithoutAuthorInputSchema: z.ZodType<Prisma.PostUncheckedCreateWithoutAuthorInput> = z.object({
@@ -3950,7 +4293,8 @@ export const PostUncheckedCreateWithoutAuthorInputSchema: z.ZodType<Prisma.PostU
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   likedUsers: z.lazy(() => UserUncheckedCreateNestedManyWithoutLikedPostsInputSchema).optional(),
-  comments: z.lazy(() => CommentUncheckedCreateNestedManyWithoutBelongsToInputSchema).optional()
+  comments: z.lazy(() => CommentUncheckedCreateNestedManyWithoutBelongsToInputSchema).optional(),
+  translations: z.lazy(() => TranslationUncheckedCreateNestedManyWithoutPostInputSchema).optional()
 }).strict();
 
 export const PostCreateOrConnectWithoutAuthorInputSchema: z.ZodType<Prisma.PostCreateOrConnectWithoutAuthorInput> = z.object({
@@ -4095,7 +4439,8 @@ export const PostCreateWithoutLikedUsersInputSchema: z.ZodType<Prisma.PostCreate
   updatedAt: z.coerce.date().optional(),
   thumbnail: z.lazy(() => MediaEntityCreateNestedOneWithoutPostInputSchema).optional(),
   author: z.lazy(() => UserCreateNestedOneWithoutPostsInputSchema).optional(),
-  comments: z.lazy(() => CommentCreateNestedManyWithoutBelongsToInputSchema).optional()
+  comments: z.lazy(() => CommentCreateNestedManyWithoutBelongsToInputSchema).optional(),
+  translations: z.lazy(() => TranslationCreateNestedManyWithoutPostInputSchema).optional()
 }).strict();
 
 export const PostUncheckedCreateWithoutLikedUsersInputSchema: z.ZodType<Prisma.PostUncheckedCreateWithoutLikedUsersInput> = z.object({
@@ -4110,7 +4455,8 @@ export const PostUncheckedCreateWithoutLikedUsersInputSchema: z.ZodType<Prisma.P
   likedByUserIDs: z.union([ z.lazy(() => PostCreatelikedByUserIDsInputSchema),z.string().array() ]).optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  comments: z.lazy(() => CommentUncheckedCreateNestedManyWithoutBelongsToInputSchema).optional()
+  comments: z.lazy(() => CommentUncheckedCreateNestedManyWithoutBelongsToInputSchema).optional(),
+  translations: z.lazy(() => TranslationUncheckedCreateNestedManyWithoutPostInputSchema).optional()
 }).strict();
 
 export const PostCreateOrConnectWithoutLikedUsersInputSchema: z.ZodType<Prisma.PostCreateOrConnectWithoutLikedUsersInput> = z.object({
@@ -4693,6 +5039,31 @@ export const CommentCreateManyBelongsToInputEnvelopeSchema: z.ZodType<Prisma.Com
   data: z.union([ z.lazy(() => CommentCreateManyBelongsToInputSchema),z.lazy(() => CommentCreateManyBelongsToInputSchema).array() ]),
 }).strict();
 
+export const TranslationCreateWithoutPostInputSchema: z.ZodType<Prisma.TranslationCreateWithoutPostInput> = z.object({
+  id: z.string().optional(),
+  language: z.string(),
+  title: z.string(),
+  content: z.string().optional().nullable(),
+  meta: z.string()
+}).strict();
+
+export const TranslationUncheckedCreateWithoutPostInputSchema: z.ZodType<Prisma.TranslationUncheckedCreateWithoutPostInput> = z.object({
+  id: z.string().optional(),
+  language: z.string(),
+  title: z.string(),
+  content: z.string().optional().nullable(),
+  meta: z.string()
+}).strict();
+
+export const TranslationCreateOrConnectWithoutPostInputSchema: z.ZodType<Prisma.TranslationCreateOrConnectWithoutPostInput> = z.object({
+  where: z.lazy(() => TranslationWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => TranslationCreateWithoutPostInputSchema),z.lazy(() => TranslationUncheckedCreateWithoutPostInputSchema) ]),
+}).strict();
+
+export const TranslationCreateManyPostInputEnvelopeSchema: z.ZodType<Prisma.TranslationCreateManyPostInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => TranslationCreateManyPostInputSchema),z.lazy(() => TranslationCreateManyPostInputSchema).array() ]),
+}).strict();
+
 export const MediaEntityUpsertWithoutPostInputSchema: z.ZodType<Prisma.MediaEntityUpsertWithoutPostInput> = z.object({
   update: z.union([ z.lazy(() => MediaEntityUpdateWithoutPostInputSchema),z.lazy(() => MediaEntityUncheckedUpdateWithoutPostInputSchema) ]),
   create: z.union([ z.lazy(() => MediaEntityCreateWithoutPostInputSchema),z.lazy(() => MediaEntityUncheckedCreateWithoutPostInputSchema) ]),
@@ -4795,6 +5166,110 @@ export const CommentUpdateManyWithWhereWithoutBelongsToInputSchema: z.ZodType<Pr
   data: z.union([ z.lazy(() => CommentUpdateManyMutationInputSchema),z.lazy(() => CommentUncheckedUpdateManyWithoutBelongsToInputSchema) ]),
 }).strict();
 
+export const TranslationUpsertWithWhereUniqueWithoutPostInputSchema: z.ZodType<Prisma.TranslationUpsertWithWhereUniqueWithoutPostInput> = z.object({
+  where: z.lazy(() => TranslationWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => TranslationUpdateWithoutPostInputSchema),z.lazy(() => TranslationUncheckedUpdateWithoutPostInputSchema) ]),
+  create: z.union([ z.lazy(() => TranslationCreateWithoutPostInputSchema),z.lazy(() => TranslationUncheckedCreateWithoutPostInputSchema) ]),
+}).strict();
+
+export const TranslationUpdateWithWhereUniqueWithoutPostInputSchema: z.ZodType<Prisma.TranslationUpdateWithWhereUniqueWithoutPostInput> = z.object({
+  where: z.lazy(() => TranslationWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => TranslationUpdateWithoutPostInputSchema),z.lazy(() => TranslationUncheckedUpdateWithoutPostInputSchema) ]),
+}).strict();
+
+export const TranslationUpdateManyWithWhereWithoutPostInputSchema: z.ZodType<Prisma.TranslationUpdateManyWithWhereWithoutPostInput> = z.object({
+  where: z.lazy(() => TranslationScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => TranslationUpdateManyMutationInputSchema),z.lazy(() => TranslationUncheckedUpdateManyWithoutPostInputSchema) ]),
+}).strict();
+
+export const TranslationScalarWhereInputSchema: z.ZodType<Prisma.TranslationScalarWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => TranslationScalarWhereInputSchema),z.lazy(() => TranslationScalarWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => TranslationScalarWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => TranslationScalarWhereInputSchema),z.lazy(() => TranslationScalarWhereInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  language: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  title: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  content: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  meta: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  postId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+}).strict();
+
+export const PostCreateWithoutTranslationsInputSchema: z.ZodType<Prisma.PostCreateWithoutTranslationsInput> = z.object({
+  id: z.string().optional(),
+  title: z.string(),
+  slug: z.string(),
+  content: z.string().optional().nullable(),
+  meta: z.string(),
+  tags: z.union([ z.lazy(() => PostCreatetagsInputSchema),z.string().array() ]).optional(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
+  thumbnail: z.lazy(() => MediaEntityCreateNestedOneWithoutPostInputSchema).optional(),
+  author: z.lazy(() => UserCreateNestedOneWithoutPostsInputSchema).optional(),
+  likedUsers: z.lazy(() => UserCreateNestedManyWithoutLikedPostsInputSchema).optional(),
+  comments: z.lazy(() => CommentCreateNestedManyWithoutBelongsToInputSchema).optional()
+}).strict();
+
+export const PostUncheckedCreateWithoutTranslationsInputSchema: z.ZodType<Prisma.PostUncheckedCreateWithoutTranslationsInput> = z.object({
+  id: z.string().optional(),
+  title: z.string(),
+  slug: z.string(),
+  content: z.string().optional().nullable(),
+  meta: z.string(),
+  tags: z.union([ z.lazy(() => PostCreatetagsInputSchema),z.string().array() ]).optional(),
+  thumbnailId: z.string().optional().nullable(),
+  authorId: z.string().optional().nullable(),
+  likedByUserIDs: z.union([ z.lazy(() => PostCreatelikedByUserIDsInputSchema),z.string().array() ]).optional(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
+  likedUsers: z.lazy(() => UserUncheckedCreateNestedManyWithoutLikedPostsInputSchema).optional(),
+  comments: z.lazy(() => CommentUncheckedCreateNestedManyWithoutBelongsToInputSchema).optional()
+}).strict();
+
+export const PostCreateOrConnectWithoutTranslationsInputSchema: z.ZodType<Prisma.PostCreateOrConnectWithoutTranslationsInput> = z.object({
+  where: z.lazy(() => PostWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => PostCreateWithoutTranslationsInputSchema),z.lazy(() => PostUncheckedCreateWithoutTranslationsInputSchema) ]),
+}).strict();
+
+export const PostUpsertWithoutTranslationsInputSchema: z.ZodType<Prisma.PostUpsertWithoutTranslationsInput> = z.object({
+  update: z.union([ z.lazy(() => PostUpdateWithoutTranslationsInputSchema),z.lazy(() => PostUncheckedUpdateWithoutTranslationsInputSchema) ]),
+  create: z.union([ z.lazy(() => PostCreateWithoutTranslationsInputSchema),z.lazy(() => PostUncheckedCreateWithoutTranslationsInputSchema) ]),
+  where: z.lazy(() => PostWhereInputSchema).optional()
+}).strict();
+
+export const PostUpdateToOneWithWhereWithoutTranslationsInputSchema: z.ZodType<Prisma.PostUpdateToOneWithWhereWithoutTranslationsInput> = z.object({
+  where: z.lazy(() => PostWhereInputSchema).optional(),
+  data: z.union([ z.lazy(() => PostUpdateWithoutTranslationsInputSchema),z.lazy(() => PostUncheckedUpdateWithoutTranslationsInputSchema) ]),
+}).strict();
+
+export const PostUpdateWithoutTranslationsInputSchema: z.ZodType<Prisma.PostUpdateWithoutTranslationsInput> = z.object({
+  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  slug: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  content: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  meta: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  tags: z.union([ z.lazy(() => PostUpdatetagsInputSchema),z.string().array() ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  thumbnail: z.lazy(() => MediaEntityUpdateOneWithoutPostNestedInputSchema).optional(),
+  author: z.lazy(() => UserUpdateOneWithoutPostsNestedInputSchema).optional(),
+  likedUsers: z.lazy(() => UserUpdateManyWithoutLikedPostsNestedInputSchema).optional(),
+  comments: z.lazy(() => CommentUpdateManyWithoutBelongsToNestedInputSchema).optional()
+}).strict();
+
+export const PostUncheckedUpdateWithoutTranslationsInputSchema: z.ZodType<Prisma.PostUncheckedUpdateWithoutTranslationsInput> = z.object({
+  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  slug: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  content: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  meta: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  tags: z.union([ z.lazy(() => PostUpdatetagsInputSchema),z.string().array() ]).optional(),
+  thumbnailId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  authorId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  likedByUserIDs: z.union([ z.lazy(() => PostUpdatelikedByUserIDsInputSchema),z.string().array() ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  likedUsers: z.lazy(() => UserUncheckedUpdateManyWithoutLikedPostsNestedInputSchema).optional(),
+  comments: z.lazy(() => CommentUncheckedUpdateManyWithoutBelongsToNestedInputSchema).optional()
+}).strict();
+
 export const PostCreateWithoutThumbnailInputSchema: z.ZodType<Prisma.PostCreateWithoutThumbnailInput> = z.object({
   id: z.string().optional(),
   title: z.string(),
@@ -4806,7 +5281,8 @@ export const PostCreateWithoutThumbnailInputSchema: z.ZodType<Prisma.PostCreateW
   updatedAt: z.coerce.date().optional(),
   author: z.lazy(() => UserCreateNestedOneWithoutPostsInputSchema).optional(),
   likedUsers: z.lazy(() => UserCreateNestedManyWithoutLikedPostsInputSchema).optional(),
-  comments: z.lazy(() => CommentCreateNestedManyWithoutBelongsToInputSchema).optional()
+  comments: z.lazy(() => CommentCreateNestedManyWithoutBelongsToInputSchema).optional(),
+  translations: z.lazy(() => TranslationCreateNestedManyWithoutPostInputSchema).optional()
 }).strict();
 
 export const PostUncheckedCreateWithoutThumbnailInputSchema: z.ZodType<Prisma.PostUncheckedCreateWithoutThumbnailInput> = z.object({
@@ -4821,7 +5297,8 @@ export const PostUncheckedCreateWithoutThumbnailInputSchema: z.ZodType<Prisma.Po
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   likedUsers: z.lazy(() => UserUncheckedCreateNestedManyWithoutLikedPostsInputSchema).optional(),
-  comments: z.lazy(() => CommentUncheckedCreateNestedManyWithoutBelongsToInputSchema).optional()
+  comments: z.lazy(() => CommentUncheckedCreateNestedManyWithoutBelongsToInputSchema).optional(),
+  translations: z.lazy(() => TranslationUncheckedCreateNestedManyWithoutPostInputSchema).optional()
 }).strict();
 
 export const PostCreateOrConnectWithoutThumbnailInputSchema: z.ZodType<Prisma.PostCreateOrConnectWithoutThumbnailInput> = z.object({
@@ -5038,7 +5515,8 @@ export const PostCreateWithoutCommentsInputSchema: z.ZodType<Prisma.PostCreateWi
   updatedAt: z.coerce.date().optional(),
   thumbnail: z.lazy(() => MediaEntityCreateNestedOneWithoutPostInputSchema).optional(),
   author: z.lazy(() => UserCreateNestedOneWithoutPostsInputSchema).optional(),
-  likedUsers: z.lazy(() => UserCreateNestedManyWithoutLikedPostsInputSchema).optional()
+  likedUsers: z.lazy(() => UserCreateNestedManyWithoutLikedPostsInputSchema).optional(),
+  translations: z.lazy(() => TranslationCreateNestedManyWithoutPostInputSchema).optional()
 }).strict();
 
 export const PostUncheckedCreateWithoutCommentsInputSchema: z.ZodType<Prisma.PostUncheckedCreateWithoutCommentsInput> = z.object({
@@ -5053,7 +5531,8 @@ export const PostUncheckedCreateWithoutCommentsInputSchema: z.ZodType<Prisma.Pos
   likedByUserIDs: z.union([ z.lazy(() => PostCreatelikedByUserIDsInputSchema),z.string().array() ]).optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  likedUsers: z.lazy(() => UserUncheckedCreateNestedManyWithoutLikedPostsInputSchema).optional()
+  likedUsers: z.lazy(() => UserUncheckedCreateNestedManyWithoutLikedPostsInputSchema).optional(),
+  translations: z.lazy(() => TranslationUncheckedCreateNestedManyWithoutPostInputSchema).optional()
 }).strict();
 
 export const PostCreateOrConnectWithoutCommentsInputSchema: z.ZodType<Prisma.PostCreateOrConnectWithoutCommentsInput> = z.object({
@@ -5232,7 +5711,8 @@ export const PostUpdateWithoutCommentsInputSchema: z.ZodType<Prisma.PostUpdateWi
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.lazy(() => MediaEntityUpdateOneWithoutPostNestedInputSchema).optional(),
   author: z.lazy(() => UserUpdateOneWithoutPostsNestedInputSchema).optional(),
-  likedUsers: z.lazy(() => UserUpdateManyWithoutLikedPostsNestedInputSchema).optional()
+  likedUsers: z.lazy(() => UserUpdateManyWithoutLikedPostsNestedInputSchema).optional(),
+  translations: z.lazy(() => TranslationUpdateManyWithoutPostNestedInputSchema).optional()
 }).strict();
 
 export const PostUncheckedUpdateWithoutCommentsInputSchema: z.ZodType<Prisma.PostUncheckedUpdateWithoutCommentsInput> = z.object({
@@ -5246,7 +5726,8 @@ export const PostUncheckedUpdateWithoutCommentsInputSchema: z.ZodType<Prisma.Pos
   likedByUserIDs: z.union([ z.lazy(() => PostUpdatelikedByUserIDsInputSchema),z.string().array() ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  likedUsers: z.lazy(() => UserUncheckedUpdateManyWithoutLikedPostsNestedInputSchema).optional()
+  likedUsers: z.lazy(() => UserUncheckedUpdateManyWithoutLikedPostsNestedInputSchema).optional(),
+  translations: z.lazy(() => TranslationUncheckedUpdateManyWithoutPostNestedInputSchema).optional()
 }).strict();
 
 export const UserUpsertWithoutCommentsInputSchema: z.ZodType<Prisma.UserUpsertWithoutCommentsInput> = z.object({
@@ -5403,7 +5884,8 @@ export const PostUpdateWithoutAuthorInputSchema: z.ZodType<Prisma.PostUpdateWith
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.lazy(() => MediaEntityUpdateOneWithoutPostNestedInputSchema).optional(),
   likedUsers: z.lazy(() => UserUpdateManyWithoutLikedPostsNestedInputSchema).optional(),
-  comments: z.lazy(() => CommentUpdateManyWithoutBelongsToNestedInputSchema).optional()
+  comments: z.lazy(() => CommentUpdateManyWithoutBelongsToNestedInputSchema).optional(),
+  translations: z.lazy(() => TranslationUpdateManyWithoutPostNestedInputSchema).optional()
 }).strict();
 
 export const PostUncheckedUpdateWithoutAuthorInputSchema: z.ZodType<Prisma.PostUncheckedUpdateWithoutAuthorInput> = z.object({
@@ -5417,7 +5899,8 @@ export const PostUncheckedUpdateWithoutAuthorInputSchema: z.ZodType<Prisma.PostU
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   likedUsers: z.lazy(() => UserUncheckedUpdateManyWithoutLikedPostsNestedInputSchema).optional(),
-  comments: z.lazy(() => CommentUncheckedUpdateManyWithoutBelongsToNestedInputSchema).optional()
+  comments: z.lazy(() => CommentUncheckedUpdateManyWithoutBelongsToNestedInputSchema).optional(),
+  translations: z.lazy(() => TranslationUncheckedUpdateManyWithoutPostNestedInputSchema).optional()
 }).strict();
 
 export const PostUncheckedUpdateManyWithoutAuthorInputSchema: z.ZodType<Prisma.PostUncheckedUpdateManyWithoutAuthorInput> = z.object({
@@ -5575,7 +6058,8 @@ export const PostUpdateWithoutLikedUsersInputSchema: z.ZodType<Prisma.PostUpdate
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.lazy(() => MediaEntityUpdateOneWithoutPostNestedInputSchema).optional(),
   author: z.lazy(() => UserUpdateOneWithoutPostsNestedInputSchema).optional(),
-  comments: z.lazy(() => CommentUpdateManyWithoutBelongsToNestedInputSchema).optional()
+  comments: z.lazy(() => CommentUpdateManyWithoutBelongsToNestedInputSchema).optional(),
+  translations: z.lazy(() => TranslationUpdateManyWithoutPostNestedInputSchema).optional()
 }).strict();
 
 export const PostUncheckedUpdateWithoutLikedUsersInputSchema: z.ZodType<Prisma.PostUncheckedUpdateWithoutLikedUsersInput> = z.object({
@@ -5589,7 +6073,8 @@ export const PostUncheckedUpdateWithoutLikedUsersInputSchema: z.ZodType<Prisma.P
   likedByUserIDs: z.union([ z.lazy(() => PostUpdatelikedByUserIDsInputSchema),z.string().array() ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  comments: z.lazy(() => CommentUncheckedUpdateManyWithoutBelongsToNestedInputSchema).optional()
+  comments: z.lazy(() => CommentUncheckedUpdateManyWithoutBelongsToNestedInputSchema).optional(),
+  translations: z.lazy(() => TranslationUncheckedUpdateManyWithoutPostNestedInputSchema).optional()
 }).strict();
 
 export const PostUncheckedUpdateManyWithoutLikedUsersInputSchema: z.ZodType<Prisma.PostUncheckedUpdateManyWithoutLikedUsersInput> = z.object({
@@ -5802,6 +6287,14 @@ export const CommentCreateManyBelongsToInputSchema: z.ZodType<Prisma.CommentCrea
   updatedAt: z.coerce.date().optional()
 }).strict();
 
+export const TranslationCreateManyPostInputSchema: z.ZodType<Prisma.TranslationCreateManyPostInput> = z.object({
+  id: z.string().optional(),
+  language: z.string(),
+  title: z.string(),
+  content: z.string().optional().nullable(),
+  meta: z.string()
+}).strict();
+
 export const UserUpdateWithoutLikedPostsInputSchema: z.ZodType<Prisma.UserUpdateWithoutLikedPostsInput> = z.object({
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -5885,6 +6378,27 @@ export const CommentUncheckedUpdateManyWithoutBelongsToInputSchema: z.ZodType<Pr
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
+export const TranslationUpdateWithoutPostInputSchema: z.ZodType<Prisma.TranslationUpdateWithoutPostInput> = z.object({
+  language: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  content: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  meta: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const TranslationUncheckedUpdateWithoutPostInputSchema: z.ZodType<Prisma.TranslationUncheckedUpdateWithoutPostInput> = z.object({
+  language: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  content: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  meta: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const TranslationUncheckedUpdateManyWithoutPostInputSchema: z.ZodType<Prisma.TranslationUncheckedUpdateManyWithoutPostInput> = z.object({
+  language: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  content: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  meta: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
 export const PostCreateManyThumbnailInputSchema: z.ZodType<Prisma.PostCreateManyThumbnailInput> = z.object({
   id: z.string().optional(),
   title: z.string(),
@@ -5908,7 +6422,8 @@ export const PostUpdateWithoutThumbnailInputSchema: z.ZodType<Prisma.PostUpdateW
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   author: z.lazy(() => UserUpdateOneWithoutPostsNestedInputSchema).optional(),
   likedUsers: z.lazy(() => UserUpdateManyWithoutLikedPostsNestedInputSchema).optional(),
-  comments: z.lazy(() => CommentUpdateManyWithoutBelongsToNestedInputSchema).optional()
+  comments: z.lazy(() => CommentUpdateManyWithoutBelongsToNestedInputSchema).optional(),
+  translations: z.lazy(() => TranslationUpdateManyWithoutPostNestedInputSchema).optional()
 }).strict();
 
 export const PostUncheckedUpdateWithoutThumbnailInputSchema: z.ZodType<Prisma.PostUncheckedUpdateWithoutThumbnailInput> = z.object({
@@ -5922,7 +6437,8 @@ export const PostUncheckedUpdateWithoutThumbnailInputSchema: z.ZodType<Prisma.Po
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   likedUsers: z.lazy(() => UserUncheckedUpdateManyWithoutLikedPostsNestedInputSchema).optional(),
-  comments: z.lazy(() => CommentUncheckedUpdateManyWithoutBelongsToNestedInputSchema).optional()
+  comments: z.lazy(() => CommentUncheckedUpdateManyWithoutBelongsToNestedInputSchema).optional(),
+  translations: z.lazy(() => TranslationUncheckedUpdateManyWithoutPostNestedInputSchema).optional()
 }).strict();
 
 export const PostUncheckedUpdateManyWithoutThumbnailInputSchema: z.ZodType<Prisma.PostUncheckedUpdateManyWithoutThumbnailInput> = z.object({
@@ -6281,6 +6797,68 @@ export const PostFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.PostFindUniqueOrT
   select: PostSelectSchema.optional(),
   include: PostIncludeSchema.optional(),
   where: PostWhereUniqueInputSchema,
+}).strict()
+
+export const TranslationFindFirstArgsSchema: z.ZodType<Prisma.TranslationFindFirstArgs> = z.object({
+  select: TranslationSelectSchema.optional(),
+  include: TranslationIncludeSchema.optional(),
+  where: TranslationWhereInputSchema.optional(),
+  orderBy: z.union([ TranslationOrderByWithRelationInputSchema.array(),TranslationOrderByWithRelationInputSchema ]).optional(),
+  cursor: TranslationWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ TranslationScalarFieldEnumSchema,TranslationScalarFieldEnumSchema.array() ]).optional(),
+}).strict()
+
+export const TranslationFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TranslationFindFirstOrThrowArgs> = z.object({
+  select: TranslationSelectSchema.optional(),
+  include: TranslationIncludeSchema.optional(),
+  where: TranslationWhereInputSchema.optional(),
+  orderBy: z.union([ TranslationOrderByWithRelationInputSchema.array(),TranslationOrderByWithRelationInputSchema ]).optional(),
+  cursor: TranslationWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ TranslationScalarFieldEnumSchema,TranslationScalarFieldEnumSchema.array() ]).optional(),
+}).strict()
+
+export const TranslationFindManyArgsSchema: z.ZodType<Prisma.TranslationFindManyArgs> = z.object({
+  select: TranslationSelectSchema.optional(),
+  include: TranslationIncludeSchema.optional(),
+  where: TranslationWhereInputSchema.optional(),
+  orderBy: z.union([ TranslationOrderByWithRelationInputSchema.array(),TranslationOrderByWithRelationInputSchema ]).optional(),
+  cursor: TranslationWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ TranslationScalarFieldEnumSchema,TranslationScalarFieldEnumSchema.array() ]).optional(),
+}).strict()
+
+export const TranslationAggregateArgsSchema: z.ZodType<Prisma.TranslationAggregateArgs> = z.object({
+  where: TranslationWhereInputSchema.optional(),
+  orderBy: z.union([ TranslationOrderByWithRelationInputSchema.array(),TranslationOrderByWithRelationInputSchema ]).optional(),
+  cursor: TranslationWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict()
+
+export const TranslationGroupByArgsSchema: z.ZodType<Prisma.TranslationGroupByArgs> = z.object({
+  where: TranslationWhereInputSchema.optional(),
+  orderBy: z.union([ TranslationOrderByWithAggregationInputSchema.array(),TranslationOrderByWithAggregationInputSchema ]).optional(),
+  by: TranslationScalarFieldEnumSchema.array(),
+  having: TranslationScalarWhereWithAggregatesInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict()
+
+export const TranslationFindUniqueArgsSchema: z.ZodType<Prisma.TranslationFindUniqueArgs> = z.object({
+  select: TranslationSelectSchema.optional(),
+  include: TranslationIncludeSchema.optional(),
+  where: TranslationWhereUniqueInputSchema,
+}).strict()
+
+export const TranslationFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.TranslationFindUniqueOrThrowArgs> = z.object({
+  select: TranslationSelectSchema.optional(),
+  include: TranslationIncludeSchema.optional(),
+  where: TranslationWhereUniqueInputSchema,
 }).strict()
 
 export const MediaEntityFindFirstArgsSchema: z.ZodType<Prisma.MediaEntityFindFirstArgs> = z.object({
@@ -6689,6 +7267,46 @@ export const PostUpdateManyArgsSchema: z.ZodType<Prisma.PostUpdateManyArgs> = z.
 
 export const PostDeleteManyArgsSchema: z.ZodType<Prisma.PostDeleteManyArgs> = z.object({
   where: PostWhereInputSchema.optional(),
+}).strict()
+
+export const TranslationCreateArgsSchema: z.ZodType<Prisma.TranslationCreateArgs> = z.object({
+  select: TranslationSelectSchema.optional(),
+  include: TranslationIncludeSchema.optional(),
+  data: z.union([ TranslationCreateInputSchema,TranslationUncheckedCreateInputSchema ]),
+}).strict()
+
+export const TranslationUpsertArgsSchema: z.ZodType<Prisma.TranslationUpsertArgs> = z.object({
+  select: TranslationSelectSchema.optional(),
+  include: TranslationIncludeSchema.optional(),
+  where: TranslationWhereUniqueInputSchema,
+  create: z.union([ TranslationCreateInputSchema,TranslationUncheckedCreateInputSchema ]),
+  update: z.union([ TranslationUpdateInputSchema,TranslationUncheckedUpdateInputSchema ]),
+}).strict()
+
+export const TranslationCreateManyArgsSchema: z.ZodType<Prisma.TranslationCreateManyArgs> = z.object({
+  data: z.union([ TranslationCreateManyInputSchema,TranslationCreateManyInputSchema.array() ]),
+}).strict()
+
+export const TranslationDeleteArgsSchema: z.ZodType<Prisma.TranslationDeleteArgs> = z.object({
+  select: TranslationSelectSchema.optional(),
+  include: TranslationIncludeSchema.optional(),
+  where: TranslationWhereUniqueInputSchema,
+}).strict()
+
+export const TranslationUpdateArgsSchema: z.ZodType<Prisma.TranslationUpdateArgs> = z.object({
+  select: TranslationSelectSchema.optional(),
+  include: TranslationIncludeSchema.optional(),
+  data: z.union([ TranslationUpdateInputSchema,TranslationUncheckedUpdateInputSchema ]),
+  where: TranslationWhereUniqueInputSchema,
+}).strict()
+
+export const TranslationUpdateManyArgsSchema: z.ZodType<Prisma.TranslationUpdateManyArgs> = z.object({
+  data: z.union([ TranslationUpdateManyMutationInputSchema,TranslationUncheckedUpdateManyInputSchema ]),
+  where: TranslationWhereInputSchema.optional(),
+}).strict()
+
+export const TranslationDeleteManyArgsSchema: z.ZodType<Prisma.TranslationDeleteManyArgs> = z.object({
+  where: TranslationWhereInputSchema.optional(),
 }).strict()
 
 export const MediaEntityCreateArgsSchema: z.ZodType<Prisma.MediaEntityCreateArgs> = z.object({
