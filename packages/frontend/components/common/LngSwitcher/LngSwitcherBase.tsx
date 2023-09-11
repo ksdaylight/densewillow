@@ -20,24 +20,25 @@ const LngSwitcherBase: FC<Props> = ({ t, lng, pathname }) => {
         return segments.join('/');
     };
     return (
-        <footer style={{ marginTop: 50 }}>
+        <div className="flex items-center gap-1 font-semibold">
             <Trans
                 i18nKey="languageSwitcher"
                 t={t as TFunction<'translation'>}
-                values={{ lng }}
-                components={{ 1: <strong /> }}
+                // values={{ lng }}
+                components={{ 1: <span className="font-thin text-xs" /> }} // "languageSwitcher": "从<1>{{lng}}</1> 切换到: "
             >
-                {` Switch from <strong>{{ lng }}</strong> to: `}
+                {/* {` Switch from <strong>{{ lng }}</strong> to: `} */}
+                {`<span>lng</span>`}
             </Trans>
             {languages
                 .filter((l) => lng !== l)
                 .map((l, index) => (
                     <span key={l}>
                         {index > 0 && ' or '}
-                        <Link href={redirectTarget(l)}>{l}</Link>
+                        <Link href={redirectTarget(l)}>{l.toUpperCase()}</Link>
                     </span>
                 ))}
-        </footer>
+        </div>
     );
 };
 

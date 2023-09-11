@@ -1,13 +1,11 @@
 import { NextPage } from 'next';
 import { cookies } from 'next/headers';
 
-import Link from 'next/link';
-
-import LngSwitcherService from '@frontend/components/common/LngSwitcher';
+// import LngSwitcherService from '@frontend/components/common/LngSwitcher';
 
 // import { checkCookie } from '@frontend/actions/i18n-actions';
 
-import { useTranslation } from '../i18n';
+// import { useTranslation } from '../i18n';
 
 import Home from './home-page';
 
@@ -23,7 +21,7 @@ interface Props {
 }
 
 const Index: NextPage<Props> = async ({ params }) => {
-    const { t } = await useTranslation(params.lng);
+    // const { t } = await useTranslation(params.lng);
     const cookieStore = cookies();
     // console.log(cookieStore);
     // const cookieStore = (await headers).cookies();
@@ -38,10 +36,8 @@ const Index: NextPage<Props> = async ({ params }) => {
 
     return (
         <>
-            <h1>{t('title')}</h1>
-            <Link href="/en">to en-------</Link>
-            <Link href="/cn">to cn-------</Link>
-            <LngSwitcherService lng={params.lng} />
+            {/* <h1>{t('title')}</h1>
+            <LngSwitcherService lng={params.lng} /> */}
             <Home />
         </>
     );

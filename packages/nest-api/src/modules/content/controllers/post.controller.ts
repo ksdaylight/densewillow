@@ -56,6 +56,7 @@ export class ContentController {
                 { id: String(id) },
                 {
                     thumbnail: true,
+                    translations: true,
                 },
             );
 
@@ -72,7 +73,7 @@ export class ContentController {
         return tsRestHandler(c.getPostBySlug, async ({ params }) => {
             const post = await this.postService.post(
                 { slug: String(params.slug) },
-                { thumbnail: true },
+                { thumbnail: true, translations: true },
             );
             if (isNil(post)) throw NotFoundException;
             const relatedPosts = await this.postService.findRelatePosts(post);
@@ -96,6 +97,7 @@ export class ContentController {
                 },
                 include: {
                     thumbnail: true,
+                    translations: true,
                 },
             });
             return { status: 200 as const, body: { posts, count: total, skip, take } };
@@ -122,6 +124,7 @@ export class ContentController {
                 },
                 include: {
                     thumbnail: true,
+                    translations: true,
                 },
             });
 

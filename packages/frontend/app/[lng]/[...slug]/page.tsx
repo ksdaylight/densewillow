@@ -5,9 +5,9 @@ import getQueryClient from '@frontend/utils/getQueryClient';
 
 import { NextPage } from 'next';
 
-import LngSwitcherService from '@frontend/components/common/LngSwitcher';
+// import LngSwitcherService from '@frontend/components/common/LngSwitcher';
 
-import { useTranslation } from '../../i18n';
+// import { useTranslation } from '../../i18n';
 
 import PostSlugPage from './slug-page';
 
@@ -28,14 +28,14 @@ async function getPost({ queryKey }: QueryFunctionContext) {
     return { body: data };
 }
 const PostSlug: NextPage<Props> = async ({ params }) => {
-    const { t } = await useTranslation(params.lng, 'second-page');
+    // const { t } = await useTranslation(params.lng, 'second-page');
     const queryClient = getQueryClient();
     await queryClient.prefetchQuery(['getPostBySlug', params.slug[0]], getPost);
     const dehydratedState = dehydrate(queryClient);
     return (
         <Hydrate state={dehydratedState}>
-            <h1>{t('title')}</h1>
-            <LngSwitcherService lng={params.lng} />
+            {/* <h1>{t('title')}</h1> */}
+            {/* <LngSwitcherService lng={params.lng} /> */}
             <PostSlugPage initialSlug={params.slug[0]} lng={params.lng} />
         </Hydrate>
     );

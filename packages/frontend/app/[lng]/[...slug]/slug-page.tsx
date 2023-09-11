@@ -21,8 +21,8 @@ import DefaultLayout from '@frontend/components/layout/DefaultLayout';
 
 import Share from '@frontend/components/common/Share'; // 'packages/admin/components/common/Share';
 import { apiClient } from '@frontend/utils/helps';
-import { useTranslation } from '@frontend/app/i18n/client';
-import LngSwitcherClient from '@frontend/components/common/LngSwitcher/client';
+// import { useTranslation } from '@frontend/app/i18n/client';
+// import LngSwitcherClient from '@frontend/components/common/LngSwitcher/client';
 
 // import { apiClient, baseApiUrl } from '../admin/page';
 const host = 'https://densewillow.com';
@@ -32,7 +32,7 @@ interface Props {
     lng?: string;
 }
 const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
-    const { t } = useTranslation(lng, 'client-page');
+    // const { t } = useTranslation(lng, 'client-page');
     const [likes, setLikes] = useState({ likedByOwner: false, count: 0 });
     const [liking, setLiking] = useState(false);
     const { data: postData } = apiClient.content.getPostBySlug.useQuery(
@@ -117,10 +117,9 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
     }
     return (
         <>
-            <h1>{t('title')}</h1>
-            <LngSwitcherClient lng={lng} />
-            <Link href={`/${lng}`}> TO home</Link>
-            <DefaultLayout title={title} desc={meta}>
+            {/* <h1>{t('title')}</h1>
+            <LngSwitcherClient lng={lng} /> */}
+            <DefaultLayout title={title} desc={meta} lng={lng}>
                 <PaddingContainer>
                     {/* <div className="lg:px-0 px-3"> */}
                     {/* <div className="relative aspect-video">

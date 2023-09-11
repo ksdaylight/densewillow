@@ -20,10 +20,13 @@ import { APP_NAME } from '../AppHead';
 import DropdownOptions, { DropDownOptions } from '../DropdownOptions';
 import Logo from '../Logo';
 import ProfileHead from '../ProfileHead';
+import LngSwitcherClient from '../LngSwitcher/client';
 
-interface Props {}
+interface Props {
+    lng?: string;
+}
 
-const UserNav: FC<Props> = (): JSX.Element => {
+const UserNav: FC<Props> = ({ lng }): JSX.Element => {
     const { toggleTheme } = useDarkMode();
     const { userInfoLocal, setUserInfoLocal } = useRoleInfoContext();
     const router = useRouter();
@@ -64,6 +67,7 @@ const UserNav: FC<Props> = (): JSX.Element => {
             </Link>
 
             <div className="flex items-center space-x-5 ">
+                <LngSwitcherClient lng={lng} />
                 <button
                     onClick={toggleTheme}
                     className="dark:text-secondary-dark text-secondary-light"
