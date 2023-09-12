@@ -2,6 +2,8 @@ import Providers from '@frontend/utils/provider';
 import { dir } from 'i18next';
 import { UserRoleContextProvider } from '@frontend/context/role-info';
 
+import Script from 'next/script';
+
 import { useTranslation } from '../i18n';
 import { languages } from '../i18n/settings';
 
@@ -29,6 +31,10 @@ export const generateMetadata = async ({ params: { lng } }: { params: { lng: str
                 'zh-CN': `${process.env.NEXT_PUBLIC_SITE_URL}/cn`,
             },
         },
+        /* Verification for Google Search Console */
+        verification: {
+            google: 'l8LGPf1g5I9sw3fXTBWgVoioruy7EFH8Z1kfJf_W_4A',
+        },
     };
 };
 interface RootLayoutProps {
@@ -40,6 +46,14 @@ interface RootLayoutProps {
 const RootLayout = async ({ children, params: { lng } }: RootLayoutProps) => {
     return (
         <html lang={lng} dir={dir(lng)}>
+            <Script
+                strategy="afterInteractive"
+                src="https://www.googletagmanager.com/gtag/js?id=G-FK5NCXNE8L"
+            />
+            <Script id="google-analytics">{`window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FK5NCXNE8L');`}</Script>
             <body>
                 <Providers>
                     <UserRoleContextProvider>{children}</UserRoleContextProvider>

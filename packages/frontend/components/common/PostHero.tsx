@@ -23,6 +23,7 @@ const PostHero: FC<Props> = ({ post }): JSX.Element => {
             <PostContent isPostPage post={post} />
             {thumbnailUrl ? (
                 <Image
+                    priority
                     className="rounded-md object-cover object-center h-[300px] md:h-[500px] mt-6"
                     src={thumbnailUrl}
                     width={1280}
