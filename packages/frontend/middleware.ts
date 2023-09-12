@@ -37,5 +37,7 @@ export default function middleware(req: NextRequest) {
 /* MATCHER */
 export const config = {
     // matcher: '/:lng*'
-    matcher: ['/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)'],
+    matcher: [
+        '/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|opengraph-image|robots.txt|sitemap).*)',
+    ],
 };

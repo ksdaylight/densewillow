@@ -17,12 +17,23 @@ export const trimText = (text: string, trimBy: number) => {
     if (text.length <= trimBy) return text;
     return `${text.substring(0, trimBy).trim()}...`;
 };
-export const getReadingTime = (text: string) => {
-    return readingTime(text).text;
+export const getReadingTime = (text: string, lng?: string) => {
+    const minute = readingTime(text).minutes;
+    // Floor to 1 decimal place
+    const minutesRounded = Math.floor(minute);
+    if (lng === 'cn') {
+        return `${minutesRounded} 分`;
+    }
+    if (minutesRounded === 1) {
+        return `${minutesRounded} minute`;
+    }
+    return `${minutesRounded} minutes`;
 };
 
-export const getRelativeDate = (date: string) => {
-    return DateTime.fromISO(date).toRelative();
+export const getRelativeDate = (date: string, lng?: string) => {
+    return DateTime.fromISO(date)
+        .setLocale(lng || 'en')
+        .toRelative();
 };
 export const baseApiUrl = `${process.env.SERVER_BASE_URL}/${process.env.APP_PREFIX}`;
 export const apiClient = initQueryClient(apiBlog, {
