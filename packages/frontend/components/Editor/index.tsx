@@ -10,13 +10,11 @@ import { MultipartFile } from '@fastify/multipart';
 import { isNil } from 'lodash';
 import TipTapImage from '@tiptap/extension-image';
 
-import { useTsRestQueryClient } from '@ts-rest/react-query';
-
-import { useQueryClient } from '@tanstack/react-query';
-
 import { useRouter } from 'next/navigation';
 
-import { apiClient, baseApiUrl } from '@frontend/utils/helps';
+import { apiClient, publicApiUrl } from '@frontend/utils/helps';
+
+import { fallbackLng } from '@frontend/app/i18n/settings';
 
 import ActionButton from '../common/ActionButton';
 
@@ -57,8 +55,8 @@ const Editor: FC<Props> = ({
         slug: '',
     });
 
-    const apiQueryClient = useTsRestQueryClient(apiClient); // TODO 这个不是自己就有的吗
-    const queryClientOriginal = useQueryClient(); // 这个用refetch就可以吧
+    // const apiQueryClient = useTsRestQueryClient(apiClient);
+    // const queryClientOriginal = useQueryClient(); // 改用refetch()
 
     const router = useRouter();
 
@@ -100,12 +98,12 @@ const Editor: FC<Props> = ({
         editor?.chain().focus().setImage({ src: result.src, alt: result.altText }).run();
     };
 
-    const { data } = apiClient.images.getImages.useQuery(
+    const { data, refetch: refetchImages } = apiClient.images.getImages.useQuery(
         ['getAllImage', '1'],
         {
             query: {
                 skip: String(0),
-                take: String(10),
+                take: String(20), // TODO 添加分页
             },
         },
         {
@@ -115,22 +113,23 @@ const Editor: FC<Props> = ({
 
     const images =
         data?.body?.images.map((image) => ({
-            src: `${baseApiUrl}/images/${image.id}${image.ext}`,
+            src: `${publicApiUrl}/images/${image.id}${image.ext}`,
         })) || [];
 
-    const { mutate } = apiQueryClient.images.uploadImage.useMutation({
+    const { mutate } = apiClient.images.uploadImage.useMutation({
         onSuccess: () => {
             setUploading(false);
-            queryClientOriginal.invalidateQueries(['getAllImage', '1']);
+            refetchImages();
+            // queryClientOriginal.invalidateQueries(['getAllImage', '1']);
         },
     });
-    const { mutate: createPostMutate } = apiQueryClient.content.createPost.useMutation({
+    const { mutate: createPostMutate } = apiClient.content.createPost.useMutation({
         onSuccess: () => {
             console.log('create success');
             router.push(`/admin/posts/update/${post.slug}`);
         },
     });
-    const { mutate: updatePostMutate } = apiQueryClient.content.updatePost.useMutation({
+    const { mutate: updatePostMutate } = apiClient.content.updatePost.useMutation({
         onSuccess: () => {
             console.log('update success');
         },
@@ -161,7 +160,7 @@ const Editor: FC<Props> = ({
                         slug: post.slug,
                         meta: post.meta,
                         tags: post.tags,
-                        lng: 'cn', // TODO
+                        lng: fallbackLng, // TODO 多语言支持
                     },
                 });
             } else {
@@ -176,7 +175,7 @@ const Editor: FC<Props> = ({
                     slug: post.slug,
                     meta: post.meta,
                     tags: post.tags,
-                    lng: 'cn', // TODO
+                    lng: fallbackLng,
                     // .split(',')
                     // .map((tag: string) => tag.trim())
                     // .filter((tag: string) => tag.length > 0),
@@ -217,7 +216,7 @@ const Editor: FC<Props> = ({
                 title,
                 content: content || '',
                 tags: postTags.join(', '),
-                thumbnail: !isNil(image) ? `${baseApiUrl}/images/${image.id}${image.ext}` : '',
+                thumbnail: !isNil(image) ? `${publicApiUrl}/images/${image.id}${image.ext}` : '',
                 slug: initialSlug,
                 meta: postMeta,
             };
@@ -236,7 +235,7 @@ const Editor: FC<Props> = ({
                     {/* Thumbnail Selector and Submit Button */}
                     <div className="flex items-center justify-between mb-3">
                         <ThumbnailSelector
-                            initialValue={post.thumbnail as any as string} // TODO modify
+                            initialValue={post.thumbnail as any as string}
                             onChange={updateThumbnail}
                         />
                         <div className="inline-block">

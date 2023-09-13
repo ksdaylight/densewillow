@@ -7,7 +7,7 @@ import { PostWithPartialRelations } from '@api-contracts';
 
 import { isNil } from 'lodash';
 
-import { baseApiUrl } from '@frontend/utils/helps';
+import { publicApiUrl } from '@frontend/utils/helps';
 
 import PostContent from './PostContent';
 
@@ -30,7 +30,7 @@ const PostCard: FC<Props> = ({
 }): JSX.Element => {
     const { slug, thumbnail } = post;
     const thumbnailUrl = !isNil(thumbnail)
-        ? `${baseApiUrl}/images/${thumbnail.id}${thumbnail.ext}`
+        ? `${publicApiUrl}/images/${thumbnail.id}${thumbnail.ext}`
         : null;
     return (
         <div>

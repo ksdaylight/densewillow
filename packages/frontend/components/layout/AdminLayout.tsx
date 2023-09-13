@@ -3,7 +3,6 @@ import { FC, ReactNode } from 'react';
 import { AiOutlineFileAdd } from 'react-icons/ai';
 
 import AdminNav from '../common/nav/AdminNav';
-import AppHead from '../common/AppHead';
 import AdminSecondaryNav from '../common/nav/AdminSecondaryNav';
 
 interface Props {
@@ -29,7 +28,6 @@ const navItems = [
 const AdminLayout: FC<Props> = ({ title, children }): JSX.Element => {
     return (
         <>
-            <AppHead title={title} />
             <div className="flex ">
                 <AdminNav navItems={navItems} />
                 <div className="flex-1 p-4 dark:bg-primary-dark bg-primary">

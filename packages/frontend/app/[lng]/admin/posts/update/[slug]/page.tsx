@@ -7,11 +7,12 @@ import AdminLayout from '@frontend/components/layout/AdminLayout';
 import Editor from '@frontend/components/Editor';
 
 import Hydrate from '@frontend/utils/hydrate.client';
+import { privateApiUrl } from '@frontend/utils/helps';
 // import getQueryClient from '@frontend/utils/getQueryClient';
 
 async function getPost({ queryKey }: QueryFunctionContext) {
     const [, slug] = queryKey;
-    const res = await fetch(`http://127.0.0.1:3100/api/post/slug/${slug}`); // TODO BASE URL
+    const res = await fetch(`${privateApiUrl}/api/post/slug/${slug}`);
     const data = await res.json();
     return { body: data };
 }

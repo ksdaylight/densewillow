@@ -17,7 +17,7 @@ export const GitHubAuthButton: FC<Props> = ({ lightOnly }): JSX.Element => {
         return 'bg-primary-dark dark:bg-primary dark:text-primary-dark text-primary';
     }, [lightOnly]);
     const handleClick = async () => {
-        window.location.href = 'http://192.168.80.6/api/auth/github'; // TODO 需要改
+        window.location.href = `${process.env.SERVER_PUBLIC_URL}/api/auth/github`;
     };
 
     return (

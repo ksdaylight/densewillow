@@ -4,7 +4,7 @@
 import { ImageResponse } from 'next/server';
 
 import { isNil } from 'lodash';
-import { baseApiUrl, getReadingTime, getRelativeDate } from '@frontend/utils/helps';
+import { publicApiUrl, getReadingTime, getRelativeDate } from '@frontend/utils/helps';
 
 import { getPostData } from './page';
 
@@ -23,7 +23,7 @@ export default async function og({
     const post = await getPostData(slug);
     const { thumbnail } = post;
     const thumbnailUrl = !isNil(thumbnail)
-        ? `${baseApiUrl}/images/${thumbnail.id}${thumbnail.ext}`
+        ? `${publicApiUrl}/images/${thumbnail.id}${thumbnail.ext}`
         : null;
     return new ImageResponse(
         (

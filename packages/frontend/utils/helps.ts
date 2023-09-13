@@ -35,11 +35,12 @@ export const getRelativeDate = (date: string, lng?: string) => {
         .setLocale(lng || 'en')
         .toRelative();
 };
-export const baseApiUrl = `${process.env.SERVER_BASE_URL}/${process.env.APP_PREFIX}`;
+export const publicApiUrl = `${process.env.SERVER_PUBLIC_URL}/${process.env.APP_PREFIX}`;
+export const privateApiUrl = `http://${process.env.APP_HOST}:${process.env.APP_PORT}`;
 export const apiClient = initQueryClient(apiBlog, {
-    baseUrl: `${process.env.SERVER_BASE_URL}`,
+    baseUrl: `${process.env.SERVER_PUBLIC_URL}`,
     baseHeaders: {
         Authorization: 'key',
-    }, // 类型需要匹配
+    },
     credentials: 'include',
 });

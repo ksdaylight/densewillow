@@ -7,12 +7,13 @@ import Editor from '@frontend/components/Editor';
 
 import getQueryClient from '@frontend/utils/getQueryClient';
 import Hydrate from '@frontend/utils/hydrate.client';
+import { privateApiUrl } from '@frontend/utils/helps';
 
 interface Props {}
 
 interface Props {}
 async function getImages() {
-    const res = await fetch('http://127.0.0.1:3100/api/images?skip=0&take=10'); // TODO BASE URL
+    const res = await fetch(`${privateApiUrl}/api/images?skip=0&take=20`);
     const data = await res.json();
 
     return { body: data };

@@ -35,6 +35,7 @@ const ThumbnailSelector: FC<Props> = ({ initialValue, onChange }): JSX.Element =
             />
             <label htmlFor="thumbnail">
                 {selectedThumbnail ? (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                         src={selectedThumbnail}
                         alt=""

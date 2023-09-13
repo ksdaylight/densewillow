@@ -11,6 +11,14 @@ import { NextPage } from 'next';
 
 import { cache } from 'react';
 
+import { privateApiUrl } from '@frontend/utils/helps';
+
+import { PostsResponseSchema } from '@frontend/utils/types';
+
+import { z } from 'zod';
+
+import { languages } from '@frontend/app/i18n/settings';
+
 import PostSlugPage from './slug-page';
 
 interface Props {
@@ -19,8 +27,31 @@ interface Props {
         slug: string;
     };
 }
-// TODO generateStaticParams
+export const generateStaticParams = async () => {
+    try {
+        const res = await fetch(`${privateApiUrl}/api/posts?take=10000&skip=0`, {
+            credentials: 'include',
+        });
 
+        const data: z.infer<typeof PostsResponseSchema> = await res.json();
+        const { posts } = data;
+        const allParams: { lng: string; slug: string }[] = [];
+        languages.forEach((lng) => {
+            const params = posts.map((post) => {
+                return {
+                    lng,
+                    slug: post.slug,
+                };
+            });
+
+            allParams.push(...params);
+        });
+        return allParams || [];
+    } catch (error) {
+        console.log(error);
+        throw new Error('Error fetching posts');
+    }
+};
 // Generate Metadata Function
 export const generateMetadata = async ({
     params: { slug, lng },
@@ -53,10 +84,10 @@ export const generateMetadata = async ({
 };
 export const getPostData = cache(async (slug: string) => {
     try {
-        const res = await fetch(`http://127.0.0.1:3100/api/post/slug/${slug}`, {
+        const res = await fetch(`${privateApiUrl}/api/post/slug/${slug}`, {
             credentials: 'include',
             // cache: 'no-store',
-        }); // TODO BASE URL
+        });
         const data = await res.json();
 
         return data;

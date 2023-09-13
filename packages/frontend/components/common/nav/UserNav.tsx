@@ -16,7 +16,6 @@ import { useRoleInfoContext } from '@frontend/context/role-info';
 import { apiClient } from '@frontend/utils/helps';
 
 import { GitHubAuthButton } from '../../button';
-import { APP_NAME } from '../AppHead';
 import DropdownOptions, { DropDownOptions } from '../DropdownOptions';
 import Logo from '../Logo';
 import ProfileHead from '../ProfileHead';
@@ -63,7 +62,7 @@ const UserNav: FC<Props> = ({ lng }): JSX.Element => {
             {/* Logo */}
             <Link href="/" className="flex  items-center space-x-2 text-highlight-dark">
                 <Logo className="fill-highlight-light md:w-7 md:h-7 w-4 h-4" />
-                <span className="md:text-xl font-semibold color-highlight-light">{APP_NAME}</span>
+                <span className="md:text-xl font-semibold color-highlight-light">DenseWillow</span>
             </Link>
 
             <div className="flex items-center space-x-5 ">

@@ -17,11 +17,13 @@ const nextConfig = {
         svgr: false,
     },
     images: {
-        domains: ['192.168.80.6', 'avatars.githubusercontent.com'],
+        domains: [
+            `${new URL(process.env.NEXT_PUBLIC_SITE_URL || '').hostname}`,
+            'avatars.githubusercontent.com',
+        ],
     },
     env: {
-        APP_PREFIX: process.env.APP_PREFIX || 'api',
-        SERVER_BASE_URL: process.env.SERVER_BASE_URL || '',
+        APP_PREFIX: process.env.APP_PREFIX || 'api', // 编译另外一个api-contract模块时用到的env参数需在此显示写出来
     },
     experimental: {
         serverActions: true,
