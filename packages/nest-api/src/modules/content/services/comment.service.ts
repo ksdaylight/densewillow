@@ -103,7 +103,7 @@ export class CommentService {
             });
             await this.prisma.comment.deleteMany({
                 where: { repliedToID: comment.id },
-            }); // TODO verification
+            });
         } else {
             await this.prisma.comment.update({
                 where: { id: comment.repliedToID! },

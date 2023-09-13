@@ -2,6 +2,7 @@ import { ExecutionContext, Injectable } from '@nestjs/common';
 import { ModuleRef, Reflector } from '@nestjs/core';
 import { isNil } from 'lodash';
 
+import { FastifyRequest } from 'fastify';
 import { ExtractJwt } from 'passport-jwt';
 
 import { RbacResolver } from '../rbac.resolver';
@@ -29,9 +30,12 @@ export class RbacGuard extends JwtAuthGuard {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const authCheck = await super.canActivate(context);
         let request = context.switchToHttp().getRequest();
-        const requestToken = ExtractJwt.fromAuthHeaderAsBearerToken()(request); // TODO add cookie token
+        const requestToken = ExtractJwt.fromAuthHeaderAsBearerToken()(request);
+        const cookieToken = (request as FastifyRequest).cookies.auth_token;
+        const token = isNil(request) ? cookieToken : requestToken;
+
         if (!authCheck) return false;
-        if (authCheck && isNil(requestToken)) return true;
+        if (authCheck && isNil(token)) return true;
         const checkers = getCheckers(context, this.reflector);
         if (isNil(checkers) || checkers.length <= 0) return true;
 

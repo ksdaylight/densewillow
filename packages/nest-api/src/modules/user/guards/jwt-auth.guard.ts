@@ -20,6 +20,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
     IPprefixes = ['127.0.0.1', '192.168.80.6']; // if need, can rm it to config
 
+    // '192.168.80.6'仅仅是测试用的，无意义
     /**
      * 守卫方法
      * @param context
@@ -33,7 +34,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         const defaultGuest = this.reflector.getAllAndOverride<boolean>(ALLOW_GUEST, [
             context.getHandler(),
             context.getClass(),
-        ]); // method and class
+        ]); // method(methodGuest) and class(defaultGuest)
         const allowGuest = methodGuest ?? defaultGuest;
         const request = this.getRequest(context);
         const response = this.getResponse(context);

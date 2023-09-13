@@ -16,7 +16,7 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
         super({
             clientID: process.env.GITHUB_CLIENT_ID,
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
-            callbackURL: 'http://192.168.80.6/api/auth/github/callback', // TODO 更改，以及网络情况验证
+            callbackURL: `${process.env.SERVER_PUBLIC_URL}/api/auth/github/callback`, // TODO 网络情况验证
             scope: ['user:email'],
         });
     }
