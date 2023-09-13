@@ -55,7 +55,7 @@ export const getPostData = cache(async (slug: string) => {
     try {
         const res = await fetch(`http://127.0.0.1:3100/api/post/slug/${slug}`, {
             credentials: 'include',
-            cache: 'no-store',
+            // cache: 'no-store',
         }); // TODO BASE URL
         const data = await res.json();
 

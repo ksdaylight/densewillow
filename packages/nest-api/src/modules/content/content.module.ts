@@ -1,4 +1,5 @@
 import { ModuleMetadata } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 
 import { ModuleBuilder } from '../core/decorators';
 
@@ -15,7 +16,7 @@ import { ContentRbac } from './rbac';
     const providers: ModuleMetadata['providers'] = [...Object.values(services), ContentRbac];
 
     return {
-        imports: [MediaModule, UserModule],
+        imports: [MediaModule, UserModule, HttpModule],
         providers,
         controllers: Object.values(controllers),
         exports: [...Object.values(services)],

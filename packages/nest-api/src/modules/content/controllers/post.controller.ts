@@ -16,7 +16,7 @@ import { FastifyRequest } from 'fastify';
 // import { UserOptionalDefaultsWithPartialRelationsSchema } from '@api-contracts';
 // import { UserPartialWithRelationsSchema } from 'packages/prisma-schema-blog/prisma/generated/zod';
 
-import { PostService } from '../services';
+import { PostService, RevalidateNextService } from '../services';
 import { isValidFile } from '../../media/constraints';
 import { MediaService } from '../../media/services';
 import { getTime } from '../../core/helpers';
@@ -33,6 +33,7 @@ export class ContentController {
         private readonly postService: PostService,
         private readonly mediaService: MediaService,
         private readonly userService: UserService,
+        private readonly revalidateNextService: RevalidateNextService,
     ) {}
 
     // @Guest()
@@ -45,6 +46,20 @@ export class ContentController {
             console.log(UserOptionalDefaultsWithPartialRelationsSchema);
             console.log('test success \n');
             return { status: 200, body: `${await getTime()}test success` };
+        });
+    }
+
+    @Guest()
+    @TsRestHandler(c.revalidateNext)
+    async revalidateNext() {
+        // console.log(req);
+        return tsRestHandler(c.revalidateNext, async () => {
+            // console.log(UserPartialWithRelationsSchema);
+            const result = await this.revalidateNextService.performValidateRequest();
+            if (result.data?.revalidated === true) {
+                return { status: 200, body: { message: `刷新成功` } };
+            }
+            return { status: 400, body: { message: `刷新失败` } };
         });
     }
 
