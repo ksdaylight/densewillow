@@ -105,11 +105,6 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
                 count: postStatusData.body.likesCount,
             });
         }
-        // axios(`/api/posts/like-status?postId=${id}`)
-        //     .then(({ data }) =>
-        //         setLikes({ likedByOwner: data.likedByOwner, count: data.likesCount }),
-        //     )
-        //     .catch((err) => console.log(err));
     }, [postStatusData, id]);
 
     if (!postData) {

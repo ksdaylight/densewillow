@@ -79,11 +79,11 @@ const Home: FC<Props> = ({ lng }): JSX.Element => {
             fetchNextPage();
         }
     }, [isFetching, fetchNextPage, hasNextPage]);
-    useEffect(() => {
-        checkI18nCookie(lng || 'en').then();
-    }, []);
+    // useEffect(() => {
+    //     checkI18nCookie(lng || 'en').then();
+    // }, []);
     return (
-        <DefaultLayout>
+        <DefaultLayout lng={lng}>
             <div className="pt-10">
                 <PaddingContainer>
                     <InfiniteScrollPosts

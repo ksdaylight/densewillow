@@ -3,11 +3,10 @@
     "compilerOptions": {
         "outDir": "../../dist/out-tsc",
         "module": "commonjs",
-        "types": ["node"],
+        "types": ["node", "@nx/react/typings/cssmodule.d.ts", "@nx/react/typings/image.d.ts"],
         "emitDecoratorMetadata": true,
         "target": "es2021",
         "esModuleInterop": true,
-       // 
         "strict": true,
         "moduleResolution": "Node",
         "declaration": true,
@@ -31,9 +30,8 @@
         "allowJs": true,
         "importsNotUsedAsValues": "remove",
         "noEmit": false,
-        "lib": ["esnext", "DOM", "ScriptHost", "WebWorker"],
-        // "baseUrl": ".",
+        "lib": ["esnext", "DOM", "ScriptHost", "WebWorker"]
     },
     "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
-    "include": ["src/**/*.ts","typings/**/*.d.ts"]
+    "include": ["src/**/*.ts", "typings/**/*.d.ts"]
 }

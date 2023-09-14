@@ -4,9 +4,13 @@
 import { ImageResponse } from 'next/server';
 
 import { isNil } from 'lodash';
-import { publicApiUrl, getReadingTime, getRelativeDate } from '@frontend/utils/helps';
-
-import { getPostData } from './page';
+import {
+    publicApiUrl,
+    getReadingTime,
+    getRelativeDate,
+    privateApiUrl,
+} from '@frontend/utils/helps';
+import { cache } from 'react';
 
 export const size = {
     width: 1200,
@@ -14,7 +18,20 @@ export const size = {
 };
 export const alt = 'DenseWillow | Blog';
 export const contentType = 'image/png';
+const getPostData = cache(async (slug: string) => {
+    try {
+        const res = await fetch(`${privateApiUrl}/api/post/slug/${slug}`, {
+            credentials: 'include',
+            // cache: 'no-store',
+        });
+        const data = await res.json();
 
+        return data;
+    } catch (error) {
+        console.log(error);
+        throw new Error('Error fetching post');
+    }
+}); // copy form page.tsx 2 times
 export default async function og({
     params: { slug, lng },
 }: {

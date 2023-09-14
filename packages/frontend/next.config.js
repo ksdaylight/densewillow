@@ -24,6 +24,9 @@ const nextConfig = {
     },
     env: {
         APP_PREFIX: process.env.APP_PREFIX || 'api', // 编译另外一个api-contract模块时用到的env参数需在此显示写出来
+        SERVER_PUBLIC_URL: process.env.SERVER_PUBLIC_URL || '', // 被client引用的env参数需在此显示写出来
+        APP_HOST: process.env.APP_HOST || '',
+        APP_PORT: process.env.APP_PORT || '',
     },
     experimental: {
         serverActions: true,

@@ -27,7 +27,7 @@ const Index: NextPage<Props> = async ({ params }) => {
     // const cookieStore = (await headers).cookies();
     const token = cookieStore.get('auth_token');
     // console.log(cookieStore.getAll());
-    console.log(token);
+    // console.log(token);
     await fetch(`http://127.0.0.1:3100/api/test`, {
         headers: {
             authorization: `bearer ${token?.value || ''}`,
@@ -38,7 +38,7 @@ const Index: NextPage<Props> = async ({ params }) => {
         <>
             {/* <h1>{t('title')}</h1>
             <LngSwitcherService lng={params.lng} /> */}
-            <Home />
+            <Home lng={params.lng} />
         </>
     );
 };

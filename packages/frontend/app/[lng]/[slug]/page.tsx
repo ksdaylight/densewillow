@@ -82,7 +82,7 @@ export const generateMetadata = async ({
         },
     };
 };
-export const getPostData = cache(async (slug: string) => {
+const getPostData = cache(async (slug: string) => {
     try {
         const res = await fetch(`${privateApiUrl}/api/post/slug/${slug}`, {
             credentials: 'include',

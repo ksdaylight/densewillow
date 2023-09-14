@@ -33,39 +33,37 @@ const PostCard: FC<Props> = ({
         ? `${publicApiUrl}/images/${thumbnail.id}${thumbnail.ext}`
         : null;
     return (
-        <div>
-            <Link
-                href={`/${slug}`}
-                className={`@container ${
-                    layout === 'horizontal'
-                        ? 'grid items-center  grid-cols-1 md:grid-cols-2  gap-10'
-                        : 'space-y-10'
+        <Link
+            href={`/${slug}`}
+            className={`@container ${
+                layout === 'horizontal'
+                    ? 'grid items-center  grid-cols-1 md:grid-cols-2  gap-10'
+                    : 'space-y-10'
+            }`}
+        >
+            {/* thumbnail */}
+            <div
+                className={`rounded-md w-full object-cover object-center max-h-[300px] max-w-[600px] flex justify-center items-center ${
+                    reverse ? 'md:order-last' : ''
                 }`}
             >
-                {/* thumbnail */}
-                <div
-                    className={`rounded-md w-full object-cover object-center max-h-[300px] max-w-[600px] flex justify-center items-center ${
-                        reverse ? 'md:order-last' : ''
-                    }`}
-                >
-                    {thumbnailUrl ? (
-                        <Image
-                            className="rounded-md w-full object-cover object-center h-full max-h-[300px]"
-                            alt={post.title}
-                            src={thumbnailUrl}
-                            width={600}
-                            height={300}
-                        />
-                    ) : (
-                        // <Image src={thumbnailUrl} layout="fill" alt="Thumbnail" />
-                        <span>No image</span>
-                    )}
-                </div>
+                {thumbnailUrl ? (
+                    <Image
+                        className="rounded-md w-full object-cover object-center h-full max-h-[300px]"
+                        alt={post.title}
+                        src={thumbnailUrl}
+                        width={600}
+                        height={300}
+                    />
+                ) : (
+                    // <Image src={thumbnailUrl} layout="fill" alt="Thumbnail" />
+                    <span>No image</span>
+                )}
+            </div>
 
-                {/* Post Info */}
-                <PostContent post={post} />
-            </Link>
-        </div>
+            {/* Post Info */}
+            <PostContent post={post} />
+        </Link>
     );
 };
 

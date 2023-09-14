@@ -15,4 +15,6 @@ export async function checkI18nCookie(activeLanguage: string) {
      useEffect(() => {
         checkCookie(lng || 'en').then();
     }, []);
+
+    work with LngSwitcherService
  */
