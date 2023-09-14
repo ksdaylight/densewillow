@@ -24,6 +24,21 @@ export const generateMetadata = async ({ params: { lng } }: { params: { lng: str
             default: 'DenseWillow',
         },
         description: t('description'),
+        openGraph: {
+            title: 'DenseWillow',
+            description: t('description'),
+            url: `${process.env.NEXT_PUBLIC_SITE_URL}/${lng}`,
+            siteName: 'DenseWillow',
+            images: [
+                {
+                    url: `${process.env.NEXT_PUBLIC_SITE_URL}/opengraph-image.jpg`,
+                    width: 1200,
+                    height: 628,
+                },
+            ],
+            locale: lng,
+            type: 'website',
+        },
         alternates: {
             canonical: `${process.env.NEXT_PUBLIC_SITE_URL}`,
             languages: {

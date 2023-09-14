@@ -22,14 +22,14 @@
 
 @layer utilities {
   .rich-text h2 {
-    @apply mb-3 text-3xl font-semibold text-neutral-900;
+    @apply mb-3 text-3xl font-semibold text-neutral-900 dark:text-neutral-100;
   }
 
   .rich-text h3 {
-    @apply mb-3 text-2xl font-semibold text-neutral-900;
+    @apply mb-3 text-2xl font-semibold text-neutral-900 dark:text-neutral-100;
   }
 
   .rich-text p {
-    @apply mb-3 leading-snug text-neutral-700;
+    @apply mb-3 leading-snug text-neutral-700 dark:text-neutral-300;
   }
 }

@@ -116,14 +116,14 @@ const PostSlug: NextPage<Props> = async ({ params }) => {
         headline: post.title,
         image: `${process.env.NEXT_PUBLIC_SITE_URL}/${params.lng}/${params.slug}/opengraph-image.png`,
         author: `${post?.author?.name}`,
-        genre: post.tags[0] || '',
+        genre: post?.tags && post.tags.length > 0 ? post.tags[0] : '',
         publisher: 'DenseWillow',
         url: `${process.env.NEXT_PUBLIC_SITE_URL}/${params.slug}`,
         datePublished: new Date(post.createdAt).toISOString(),
         dateCreated: new Date(post.createdAt).toISOString(),
         dateModified: new Date(post.updatedAt).toISOString(),
-        description: post.meta,
-        articleBody: post.content,
+        description: post?.meta || '',
+        articleBody: post?.content || '',
     };
     return (
         <Hydrate state={dehydratedState}>

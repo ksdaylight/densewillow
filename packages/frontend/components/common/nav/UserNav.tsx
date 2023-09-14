@@ -17,7 +17,6 @@ import { apiClient } from '@frontend/utils/helps';
 
 import { GitHubAuthButton } from '../../button';
 import DropdownOptions, { DropDownOptions } from '../DropdownOptions';
-import Logo from '../Logo';
 import ProfileHead from '../ProfileHead';
 import LngSwitcherClient from '../LngSwitcher/client';
 
@@ -59,10 +58,8 @@ const UserNav: FC<Props> = ({ lng }): JSX.Element => {
 
     return (
         <div className="flex items-center justify-between py-4">
-            {/* Logo */}
-            <Link href="/" className="flex  items-center space-x-2 text-highlight-dark">
-                <Logo className="fill-highlight-light md:w-7 md:h-7 w-4 h-4" />
-                <span className="md:text-xl font-semibold color-highlight-light">DenseWillow</span>
+            <Link href={`/${lng}`} className="text-lg font-bold">
+                DenseWillow
             </Link>
 
             <div className="flex items-center space-x-5 ">

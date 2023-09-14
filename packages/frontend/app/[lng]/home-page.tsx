@@ -17,7 +17,6 @@ import { apiClient, filterPosts } from '@frontend/utils/helps';
 import { useRoleInfoContext } from '@frontend/context/role-info';
 
 import DefaultLayout from '@frontend/components/layout/DefaultLayout';
-import { checkI18nCookie } from '@frontend/actions/i18n-actions';
 
 interface Props {
     lng?: string;
@@ -84,18 +83,16 @@ const Home: FC<Props> = ({ lng }): JSX.Element => {
     // }, []);
     return (
         <DefaultLayout lng={lng}>
-            <div className="pt-10">
-                <PaddingContainer>
-                    <InfiniteScrollPosts
-                        hasMore={hasMorePosts}
-                        next={fetchMorePosts}
-                        dataLength={postsToRender.length}
-                        posts={postsToRender}
-                        showControls={userInfoLocal.role === 'super-admin'}
-                        onPostRemoved={(post) => setPostsToRender(filterPosts(postsToRender, post))}
-                    />
-                </PaddingContainer>
-            </div>
+            <PaddingContainer>
+                <InfiniteScrollPosts
+                    hasMore={hasMorePosts}
+                    next={fetchMorePosts}
+                    dataLength={postsToRender.length}
+                    posts={postsToRender}
+                    showControls={userInfoLocal.role === 'super-admin'}
+                    onPostRemoved={(post) => setPostsToRender(filterPosts(postsToRender, post))}
+                />
+            </PaddingContainer>
         </DefaultLayout>
     );
 };
