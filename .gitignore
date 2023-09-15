@@ -5,6 +5,7 @@ dist
 tmp
 /out-tsc
 /dist
+/logs
 #Env
 .env
 .env.*

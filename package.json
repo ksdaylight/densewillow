@@ -2,7 +2,18 @@
     "name": "densewillow",
     "version": "0.1.0",
     "license": "MIT",
-    "scripts": {},
+    "scripts": {
+        "db:push": "nx run prisma-schema-blog:prisma db push",
+        "db:generate-types": "nx run prisma-schema-blog:generate-types",
+        "build:frontend": "nx run frontend:build",
+        "build:frontend:prod": "nx run frontend:build:production",
+        "build:nest-api": "nx run nest-api:build",
+        "build:nest-api:prod": "nx run nest-api:build:production",
+        "start:frontend:prod": "nx run frontend:serve:production --skip-nx-cache --port=4200",
+        "start:frontend:dev": "nx run frontend:serve:development --skip-nx-cache --port=4200",
+        "start:nest-api:dev": "cross-env NODE_ENV=development nx run nest-api:serve  --skip-nx-cache",
+        "start:nest-api:prod": "nx run nest-api:serve:production  --skip-nx-cache"
+    },
     "private": true,
     "devDependencies": {
         "@babel/core": "^7.22.5",
@@ -147,7 +158,7 @@
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.8.0",
         "slugify": "^1.6.5",
-        "tslib": "^2.3.0",
+        "tslib": "^2.5.3",
         "uuid": "^9.0.0",
         "yaml": "^2.3.1",
         "zod": "3.21.1",
