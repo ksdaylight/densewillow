@@ -1,7 +1,6 @@
 import { ArgumentsHost, Catch, HttpException, HttpStatus, Type } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { isObject } from 'lodash';
-
 /**
  * 全局过滤器,用于响应自定义异常
  */
@@ -9,9 +8,7 @@ import { isObject } from 'lodash';
 export class AppFilter<T = Error> extends BaseExceptionFilter<T> {
     protected resExceptions: Array<{ class: Type<Error>; status?: number } | Type<Error>> = [
         // { class: InternalOAuthError, status: HttpStatus.UNAUTHORIZED },
-        // { class: EntityNotFoundError, status: HttpStatus.NOT_FOUND },
-        // { class: QueryFailedError, status: HttpStatus.BAD_REQUEST },
-        // { class: EntityPropertyNotFoundError, status: HttpStatus.BAD_REQUEST },//TODO 1 自定义异常，2 以及html序列化
+        // TODO 2 以及html序列化
     ];
 
     // eslint-disable-next-line consistent-return
@@ -25,16 +22,16 @@ export class AppFilter<T = Error> extends BaseExceptionFilter<T> {
 
         // 如果不在自定义异常处理类列表也没有继承自HttpException
         if (!resException && !(exception instanceof HttpException)) {
-            // if ((exception as Error).message === 'Failed to obtain access token') {
-            //     // Handle the OAuth error here
-            //     applicationRef!.reply(
-            //         host.getArgByIndex(1),
-            //         { statusCode: 401, message: 'Authentication failed' },
-            //         401,
-            //     );
-            // } else {
-            return this.handleUnknownError(exception, host, applicationRef);
-            // }
+            if ((exception as Error).message === 'Failed to obtain access token') {
+                // Handle the OAuth error here
+                applicationRef!.reply(
+                    host.getArgByIndex(1),
+                    { statusCode: 401, message: 'Authentication failed, please retry!' },
+                    401,
+                );
+            } else {
+                return this.handleUnknownError(exception, host, applicationRef);
+            }
         }
         let res: string | object = '';
         let status = HttpStatus.INTERNAL_SERVER_ERROR;

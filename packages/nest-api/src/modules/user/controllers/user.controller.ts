@@ -5,7 +5,7 @@ import { apiBlog } from '@api-contracts';
 import { User } from '@prisma/client/blog';
 
 import { UserService } from '../services';
-import { Guest, ReqUser } from '../decorators';
+import { ReqUser } from '../decorators';
 
 /**
  * 账户中心控制器
@@ -16,7 +16,6 @@ const c = nestControllerContract(apiBlog.user);
 export class UserController {
     constructor(protected readonly userService: UserService) {}
 
-    @Guest()
     @TsRestHandler(c.getUserProfile)
     async getUserProfile(@ReqUser() user: ClassToPlain<User>) {
         return tsRestHandler(c.getUserProfile, async () => {

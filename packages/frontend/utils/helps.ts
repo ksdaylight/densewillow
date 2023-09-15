@@ -4,6 +4,7 @@ import readingTime from 'reading-time';
 import { initQueryClient } from '@ts-rest/react-query';
 
 import { apiBlog, PostWithPartialRelations } from '@api-contracts';
+// import { tsRestFetchApi } from '@ts-rest/core';
 
 export const filterPosts = (
     posts: PostWithPartialRelations[],
@@ -43,4 +44,14 @@ export const apiClient = initQueryClient(apiBlog, {
         Authorization: 'key',
     },
     credentials: 'include',
+    // api: async (args) => {
+    //     const result = await tsRestFetchApi(args);
+
+    //     if (!String(result.status).startsWith('2')) {
+    //         // eslint-disable-next-line @typescript-eslint/no-throw-literal
+    //         throw result;
+    //     }
+
+    //     return result;
+    // },
 });

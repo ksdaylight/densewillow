@@ -2,7 +2,7 @@
 
 import { FC, useCallback, useEffect, useState } from 'react';
 
-import { getCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 
 import { isNil } from 'lodash';
 
@@ -26,11 +26,15 @@ const Home: FC<Props> = ({ lng }): JSX.Element => {
     const [hasMorePosts, setHasMorePosts] = useState(true);
     const limit = 9;
     const { userInfoLocal, setUserInfoLocal } = useRoleInfoContext();
-    const { data: userProfileData } = apiClient.user.getUserProfile.useQuery(
+    const { data: userProfileData, error } = apiClient.user.getUserProfile.useQuery(
         ['getUserProfile', '1'],
         {},
         {
-            staleTime: 60000,
+            staleTime: Infinity,
+            retry: 0, // 禁用自动重试
+            refetchOnWindowFocus: false, // 禁用当窗口聚焦时的数据重获取
+            refetchOnMount: false, // 禁用当组件重新挂载时的数据重获取
+            // enabled: false,
         },
     );
     const userProfile = userProfileData?.body;
@@ -54,6 +58,19 @@ const Home: FC<Props> = ({ lng }): JSX.Element => {
                 },
             },
         );
+    useEffect(() => {
+        if (isNil(error)) return;
+        const httpStatusCode = error.status;
+        if (httpStatusCode === 403 || httpStatusCode === 401) {
+            setUserInfoLocal({
+                id: undefined,
+                name: undefined,
+                avatar: undefined,
+                role: 'guest',
+            });
+            deleteCookie('user_role');
+        }
+    }, [error]);
 
     useEffect(() => {
         if (isNil(userProfile)) return;
