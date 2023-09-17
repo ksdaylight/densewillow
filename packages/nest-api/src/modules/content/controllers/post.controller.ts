@@ -2,7 +2,7 @@ import { Controller, NotFoundException, Req } from '@nestjs/common';
 
 import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
 
-import { apiBlog, UserOptionalDefaultsWithPartialRelationsSchema } from '@api-contracts';
+import { apiBlog } from '@api-contracts';
 
 import { MultipartFile } from '@fastify/multipart';
 
@@ -43,8 +43,8 @@ export class ContentController {
         // console.log(req);
         return tsRestHandler(c.testGet, async () => {
             // console.log(UserPartialWithRelationsSchema);
-            console.log(UserOptionalDefaultsWithPartialRelationsSchema);
-            console.log('test success \n');
+            // console.log(UserOptionalDefaultsWithPartialRelationsSchema);
+            // console.log('test success \n');
             return { status: 200, body: `${await getTime()}test success` };
         });
     }

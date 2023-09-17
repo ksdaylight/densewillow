@@ -162,6 +162,6 @@
         "uuid": "^9.0.0",
         "yaml": "^2.3.1",
         "zod": "3.21.1",
-        "zod-prisma-types": "^2.7.7"
+        "zod-prisma-types": "^2.7.9"
     }
 }

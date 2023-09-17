@@ -37,6 +37,18 @@ const Home: FC<Props> = ({ lng }): JSX.Element => {
             // enabled: false,
         },
     );
+    const { mutate: zodTestMutate } = apiClient.zodTest.getPostUniqueZod.useMutation({
+        onSuccess(data, variables, context) {
+            console.log(data);
+        },
+        onError(err, variables, context) {
+            console.log(err);
+        },
+        onSettled(data) {
+            console.log(data);
+        },
+    });
+
     const userProfile = userProfileData?.body;
     const roleInfo = getCookie('user_role');
     const { data, isFetching, fetchNextPage, hasNextPage } =
@@ -59,6 +71,19 @@ const Home: FC<Props> = ({ lng }): JSX.Element => {
             },
         );
     useEffect(() => {
+        console.log('postData---\n');
+        zodTestMutate({
+            body: {
+                where: { slug: 'a-lovely-green-city' },
+                // include: {
+                //     thumbnail: true,
+                //     translations: true,
+                // },
+            },
+        });
+        console.log('postData---end\n');
+    }, []);
+    useEffect(() => {
         if (isNil(error)) return;
         const httpStatusCode = error.status;
         if (httpStatusCode === 403 || httpStatusCode === 401) {
@@ -71,7 +96,6 @@ const Home: FC<Props> = ({ lng }): JSX.Element => {
             deleteCookie('user_role');
         }
     }, [error]);
-
     useEffect(() => {
         if (isNil(userProfile)) return;
         setUserInfoLocal({

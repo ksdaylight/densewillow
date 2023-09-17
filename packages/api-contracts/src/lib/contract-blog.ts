@@ -4,6 +4,7 @@ import { initContract } from '@ts-rest/core';
 import { mediaContract } from './contract-media';
 import { contentContract } from './contract-content';
 import { userContract } from './contract-user';
+import { testZodContract } from './contract-zod-test';
 
 const c = initContract();
 
@@ -14,6 +15,8 @@ export const apiBlog = c.router(
         images: mediaContract,
 
         user: userContract,
+
+        zodTest: testZodContract,
     },
     {
         baseHeaders: z.object({
