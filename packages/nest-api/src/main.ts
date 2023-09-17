@@ -19,7 +19,7 @@ const creator = createApp({
             new FastifyAdapter({ bodyLimit: 5 * 1024 * 1024 }),
             {
                 cors: {
-                    origin: 'http://192.168.80.6:4200', // 客户端测试地址
+                    origin: `${configure.env('NEXT_PUBLIC_SITE_URL', 'http://192.168.80.6:4200')}`, // 客户端测试地址
                     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
                     credentials: true, // 这个是关键，允许服务器发送 Cookie
                 },

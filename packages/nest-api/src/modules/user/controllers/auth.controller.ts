@@ -12,6 +12,7 @@ import { FastifyReply } from 'fastify';
 import { AuthService } from '../services';
 import { Guest, ReqUser } from '../decorators';
 import { EnvironmentType } from '../../core/constants';
+import { Configure } from '../../core/configure';
 
 /**
  * 账户中心控制器
@@ -20,7 +21,10 @@ import { EnvironmentType } from '../../core/constants';
 const c = nestControllerContract(apiBlog.user);
 @Controller()
 export class AuthController {
-    constructor(protected readonly authService: AuthService) {}
+    constructor(
+        protected readonly authService: AuthService,
+        protected readonly configure: Configure,
+    ) {}
 
     @TsRestHandler(c.githubAuth)
     @Guest()
@@ -47,13 +51,15 @@ export class AuthController {
             const role = await this.authService.getMainRole({
                 id: user.id,
             });
-
+            const frontendDomain = new URL(
+                this.configure.env('NEXT_PUBLIC_SITE_URL', 'http://192.168.80.6:4200') || '',
+            ).hostname;
             reply.setCookie('auth_token', token, {
                 path: '/',
                 httpOnly: true,
                 secure: process.env.NODE_ENV === EnvironmentType.PRODUCTION,
                 sameSite: 'strict',
-                domain: '192.168.80.6',
+                domain: frontendDomain,
                 maxAge: 3600 * 24 * 7,
             });
             reply.setCookie('user_role', role?.name || 'guest', {
@@ -61,11 +67,14 @@ export class AuthController {
                 httpOnly: false,
                 secure: false,
                 sameSite: 'strict',
-                domain: '192.168.80.6',
+                domain: frontendDomain,
                 maxAge: 3600 * 24 * 7,
             });
             // 重定向
-            const redirectUrl = `http://192.168.80.6:4200`;
+            const redirectUrl = this.configure.env(
+                'NEXT_PUBLIC_SITE_URL',
+                'http://192.168.80.6:4200',
+            );
             reply.status(302).redirect(redirectUrl);
 
             return { status: 200 as const, body: reply }; // 怎么都可以，写这个是为了过类型检测
@@ -84,16 +93,22 @@ export class AuthController {
             } catch (error) {
                 return { status: 404, body: { message: 'error' } };
             }
+            const frontendDomain = new URL(
+                this.configure.env('NEXT_PUBLIC_SITE_URL', 'http://192.168.80.6:4200') || '',
+            ).hostname;
             reply.setCookie('auth_token', 'deleted', {
                 path: '/',
                 expires: new Date(0),
                 httpOnly: true,
                 secure: process.env.NODE_ENV === EnvironmentType.PRODUCTION,
                 sameSite: 'strict',
-                domain: '192.168.80.6',
+                domain: frontendDomain,
                 maxAge: 3600 * 24 * 7,
             });
-            const redirectUrl = `http://192.168.80.6:4200`;
+            const redirectUrl = this.configure.env(
+                'NEXT_PUBLIC_SITE_URL',
+                'http://192.168.80.6:4200',
+            );
             reply.status(302).redirect(redirectUrl); // teRest 有问题， @Res() 后不能正常获取返回
             return { status: 200 as const, body: { message: 'success' } }; // 怎么都可以
         });
