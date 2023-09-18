@@ -71,10 +71,22 @@ export class UserService implements OnModuleInit {
             where: userWhereUniqueInput,
             include: {
                 posts: true,
-                permissions: true,
+                permissions: {
+                    include: {
+                        permission: true,
+                    },
+                },
                 roles: {
                     include: {
-                        permissions: true,
+                        role: {
+                            include: {
+                                permissions: {
+                                    include: {
+                                        permission: true,
+                                    },
+                                },
+                            },
+                        },
                     },
                 },
                 likedPosts: true,
@@ -84,14 +96,15 @@ export class UserService implements OnModuleInit {
 
     protected async syncActivated(user: User) {
         if (user.activated) {
-            const userRoles = await this.prisma.role.findMany({
+            const userRoles = await this.prisma.usersRoles.findMany({
                 where: {
-                    id: {
-                        in: user.roleIDs,
-                    },
+                    userId: user.id,
+                },
+                include: {
+                    role: true,
                 },
             });
-            const roleNames = (userRoles ?? []).map(({ name }) => name);
+            const roleNames = (userRoles ?? []).map(({ role }) => role.name);
             const noRoles =
                 roleNames.length <= 0 ||
                 (!roleNames.includes(SystemRoles.USER) && !roleNames.includes(SystemRoles.ADMIN));
@@ -107,7 +120,31 @@ export class UserService implements OnModuleInit {
                         where: { id: user.id },
                         data: {
                             roles: {
-                                connect: { id: customRole.id },
+                                connectOrCreate: {
+                                    where: {
+                                        userId_roleId: {
+                                            userId: user.id,
+                                            roleId: customRole.id,
+                                        },
+                                    },
+                                    create: {
+                                        assignedBy: 'system',
+                                        assignedAt: new Date(),
+                                        role: {
+                                            connectOrCreate: {
+                                                where: {
+                                                    id: customRole.id,
+                                                },
+                                                create: {
+                                                    name: SystemRoles.USER,
+                                                    label: '普通用户',
+                                                    description: '新用户的默认角色',
+                                                    systemic: true,
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
                             },
                         },
                     });
@@ -121,7 +158,31 @@ export class UserService implements OnModuleInit {
                         where: { id: user.id },
                         data: {
                             roles: {
-                                set: [{ id: adminRole.id }],
+                                connectOrCreate: {
+                                    where: {
+                                        userId_roleId: {
+                                            userId: user.id,
+                                            roleId: adminRole.id,
+                                        },
+                                    },
+                                    create: {
+                                        assignedBy: 'system',
+                                        assignedAt: new Date(),
+                                        role: {
+                                            connectOrCreate: {
+                                                where: {
+                                                    id: adminRole.id,
+                                                },
+                                                create: {
+                                                    name: SystemRoles.ADMIN,
+                                                    label: '超级管理员',
+                                                    description: '拥有整个系统的管理权限',
+                                                    systemic: true,
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
                             },
                         },
                     });
@@ -208,7 +269,16 @@ export class UserService implements OnModuleInit {
                 permissions: true,
                 roles: {
                     include: {
-                        permissions: true,
+                        role: {
+                            include: {
+                                permissions: {
+                                    include: {
+                                        permission: true,
+                                    },
+                                },
+                            },
+                        },
+                        // permissions: true,
                     },
                 },
             },

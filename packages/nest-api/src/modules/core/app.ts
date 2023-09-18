@@ -108,16 +108,15 @@ export class App {
         }
         await configure.sync();
         let appUrl = await configure.get('app.url', '');
-        if (isNil(appUrl) || appUrl.length <=0) {
+        if (isNil(appUrl) || appUrl.length <= 0) {
             const host = await configure.get<string>('app.host');
             const port = await configure.get<number>('app.port')!;
             const https = await configure.get<boolean>('app.https');
             const globalPrefix = await configure.get<string>('app.globalPrefix');
 
-            appUrl =
-                `${https ? 'https' : 'http'}://${host!}:${port}${
-                    isNil(globalPrefix) ? '' : `/${globalPrefix}`
-                }`;
+            appUrl = `${https ? 'https' : 'http'}://${host!}:${port}${
+                isNil(globalPrefix) ? '' : `/${globalPrefix}`
+            }`;
 
             configure.set('app.url', appUrl);
         }

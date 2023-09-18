@@ -12,10 +12,6 @@ import { isNil } from 'lodash';
 
 import { FastifyRequest } from 'fastify';
 
-// import { UserOptionalDefaultsWithPartialRelationsSchema } from '@prisma/client/blog/zod';
-// import { UserOptionalDefaultsWithPartialRelationsSchema } from '@api-contracts';
-// import { UserPartialWithRelationsSchema } from 'packages/prisma-schema-blog/prisma/generated/zod';
-
 import { PostService, RevalidateNextService } from '../services';
 import { isValidFile } from '../../media/constraints';
 import { MediaService } from '../../media/services';
@@ -341,17 +337,14 @@ export class ContentController {
     @TsRestHandler(c.getPostLikeStatus)
     async getPostLikeStatus(@ReqUser() user: ClassToPlain<User>) {
         return tsRestHandler(c.getPostLikeStatus, async ({ query: { postId } }) => {
-            const post = await this.postService.post({ id: String(postId) });
-            if (isNil(post)) throw NotFoundException;
-            const likesCount = post.likedByUserIDs.length;
-            let likedByOwner = false;
-            if (!isNil(user)) {
-                likedByOwner = post.likedByUserIDs.includes(user.id as any);
-            }
-            if (post === null) {
-                return { status: 404 as const, body: { message: 'no post found' } };
-            }
-            return { status: 200 as const, body: { likesCount, likedByOwner } };
+            const result = await this.postService.getPostLikeStatus(
+                { id: postId },
+                user?.id || undefined,
+            );
+            return {
+                status: 200 as const,
+                body: { likesCount: result.likesCount, likedByOwner: result.likedByOwner },
+            };
         });
     }
 
@@ -359,27 +352,13 @@ export class ContentController {
     async updatePostLike(@ReqUser() user: ClassToPlain<User>) {
         return tsRestHandler(c.updatePostLike, async ({ body: { postId } }) => {
             try {
-                const post = await this.postService.post({ id: postId });
-                if (isNil(post)) throw NotFoundException;
-                const oldLikes = post.likedByUserIDs || [];
-                const likedBy = user.id;
-                const operation = oldLikes.includes(likedBy) ? 'disconnect' : 'connect';
-                const updatedPost = await this.postService.updatePost({
-                    where: { id: post.id },
-                    data: {
-                        likedUsers: {
-                            [operation]: {
-                                id: likedBy,
-                            },
-                        },
-                    },
-                    select: {
-                        likedByUserIDs: true,
-                    },
+                const updatedPost = await this.postService.updateLike({
+                    postUniqueWhere: { id: postId },
+                    userId: user.id,
                 });
                 return {
                     status: 201 as const,
-                    body: { newLikes: updatedPost.likedByUserIDs.length },
+                    body: { newLikes: updatedPost.likedUsers.length },
                 };
             } catch (error) {
                 return { status: 400 as const, body: { message: `${(error as Error).message}` } };

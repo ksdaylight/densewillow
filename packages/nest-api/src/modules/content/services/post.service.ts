@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { Prisma, Post } from '@prisma/client/blog';
+
+import { isNil } from 'lodash';
 
 import { Configure } from '../../core/configure';
 import { PrismaService } from '../../core/providers';
@@ -14,6 +16,69 @@ export class PostService {
             where: postWhereUniqueInput,
             include,
         });
+    }
+
+    async getPostLikeStatus(postWhereUniqueInput: Prisma.PostWhereUniqueInput, userId?: string) {
+        const post = await this.prisma.post.findUniqueOrThrow({
+            where: postWhereUniqueInput,
+            include: {
+                likedUsers: true,
+            },
+        });
+
+        const likesCount = post.likedUsers.length;
+        const likedByOwner = userId
+            ? post.likedUsers.map((item) => item.userId).includes(userId)
+            : false;
+        return {
+            likesCount,
+            likedByOwner,
+        };
+    }
+
+    async updateLike(params: { postUniqueWhere: Prisma.PostWhereUniqueInput; userId: string }) {
+        const oldPost = await this.prisma.post.findUniqueOrThrow({
+            where: params.postUniqueWhere,
+            include: { likedUsers: true },
+        });
+        if (isNil(oldPost)) throw NotFoundException;
+        const oldLikes = oldPost.likedUsers.map((item) => item.userId) || [];
+        const likedBy = params.userId;
+
+        const updatedPost = await this.prisma.post.update({
+            where: { id: oldPost.id },
+            data: {
+                likedUsers: {
+                    ...(oldLikes.includes(likedBy)
+                        ? {
+                              delete: {
+                                  userId_postId: {
+                                      userId: likedBy,
+                                      postId: oldPost.id,
+                                  },
+                              },
+                          }
+                        : {
+                              create: {
+                                  assignedBy: likedBy,
+                                  assignedAt: new Date(),
+                                  user: {
+                                      connect: {
+                                          id: likedBy,
+                                      },
+                                  },
+                              },
+                          }),
+                },
+            },
+            include: {
+                likedUsers: true,
+            },
+        });
+
+        if (isNil(updatedPost)) throw NotFoundException;
+
+        return updatedPost;
     }
 
     async findRelatePosts(post: Post) {

@@ -5,11 +5,12 @@ import { ModuleRef, Reflector } from '@nestjs/core';
 import { FastifyRequest as Request } from 'fastify';
 import { isNil } from 'lodash';
 
+import { Permission } from '@prisma/client/blog';
+
 import { PERMISSION_CHECKERS } from '../constants';
 import { RbacResolver } from '../rbac.resolver';
 import { PermissionChecker } from '../types';
 import { PrismaService } from '../../core/providers';
-import { Permission } from '@prisma/client/blog';
 
 type CheckerParams = {
     resolver: RbacResolver;
@@ -40,18 +41,34 @@ export const solveChecker = async ({
     const userDetail = await prisma.user.findUnique({
         where: { id: userId },
         include: {
-            permissions: true,
+            permissions: {
+                include: {
+                    permission: true,
+                },
+            },
             roles: {
                 include: {
-                    permissions: true,
+                    role: {
+                        include: {
+                            permissions: {
+                                include: {
+                                    permission: true,
+                                },
+                            },
+                        },
+                    },
                 },
             },
         },
     });
     if (isNil(userDetail)) throw NotFoundException;
+    // let permissions = [
+    //     ...userDetail.permissions,
+    //     ...userDetail.roles.flatMap((role) => role.permissions),
+    // ];
     let permissions = [
-        ...userDetail.permissions,
-        ...userDetail.roles.flatMap((role) => role.permissions),
+        ...userDetail.permissions.map((p) => p.permission),
+        ...userDetail.roles.flatMap((role) => role.role.permissions.map((p) => p.permission)),
     ];
 
     permissions = permissions.reduce((o, n) => {

@@ -11,20 +11,61 @@ import { PrismaService } from '../../core/providers';
 export class CommentService {
     constructor(protected configure: Configure, protected prisma: PrismaService) {}
 
-    async comment(
-        commentWhereUniqueInput: Prisma.CommentWhereUniqueInput,
-        include?: Prisma.CommentInclude,
-    ) {
-        return this.prisma.comment.findUnique({
-            where: commentWhereUniqueInput,
-            include,
-            // : {
-            //     owner: true,
-            //     likes: true,
-            //     replyTo: true,
-            //     replies: true,
-            // },
+    async comment(args: Prisma.CommentFindUniqueArgs) {
+        return this.prisma.comment.findUnique(args);
+    }
+
+    async updateLike(params: {
+        commentUniqueWhere: Prisma.CommentWhereUniqueInput;
+        userId: string;
+    }) {
+        const oldComment = await this.prisma.comment.findUniqueOrThrow({
+            where: params.commentUniqueWhere,
+            include: { likes: true },
         });
+        if (isNil(oldComment)) throw NotFoundException;
+        const oldLikes = oldComment.likes.map((item) => item.userId) || [];
+        const likedBy = params.userId;
+
+        const updatedComment = await this.prisma.comment.update({
+            where: { id: oldComment.id },
+            data: {
+                likes: {
+                    ...(oldLikes.includes(likedBy)
+                        ? {
+                              delete: {
+                                  userId_commentId: {
+                                      userId: likedBy,
+                                      commentId: oldComment.id,
+                                  },
+                              },
+                          }
+                        : {
+                              create: {
+                                  assignedBy: likedBy,
+                                  assignedAt: new Date(),
+                                  user: {
+                                      connect: {
+                                          id: likedBy,
+                                      },
+                                  },
+                              },
+                          }),
+                },
+            },
+            include: {
+                owner: true,
+                replies: {
+                    include: {
+                        owner: true,
+                    },
+                },
+            },
+        });
+
+        if (isNil(updatedComment)) throw NotFoundException;
+
+        return updatedComment;
     }
 
     async comments(params: {
@@ -60,20 +101,6 @@ export class CommentService {
             include,
         });
     }
-
-    formatComment = async (comment: Comment, userId?: string) => {
-        const owner = await this.prisma.user.findUniqueOrThrow({ where: { id: comment.ownerId } });
-        return {
-            id: comment.id,
-            content: comment.content,
-            likes: comment.likedByUserIDs.length,
-            chiefComment: comment?.chiefComment || false,
-            createdAt: comment.createdAt?.toString(),
-            owner: { id: owner.id, name: owner.name, avatar: owner.avatar },
-            repliedTo: comment?.repliedToID,
-            likedByOwner: userId ? comment.likedByUserIDs.includes(userId) : false,
-        };
-    };
 
     async updateComment(params: {
         where: Prisma.CommentWhereUniqueInput;

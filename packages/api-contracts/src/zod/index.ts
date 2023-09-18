@@ -1327,7 +1327,7 @@ export const AccessTokenWithPartialRelationsSchema: z.ZodType<AccessTokenWithPar
 
 export const CommentSchema = z.object({
   id: z.string().uuid(),
-  belongsToId: z.string(),
+  belongsToId: z.string().nullable(),
   ownerId: z.string(),
   content: z.string(),
   repliedToID: z.string().nullable(),
@@ -1362,7 +1362,7 @@ export type CommentOptionalDefaults = z.infer<typeof CommentOptionalDefaultsSche
 //------------------------------------------------------
 
 export type CommentRelations = {
-  belongsTo: PostWithRelations;
+  belongsTo?: PostWithRelations | null;
   owner: UserWithRelations;
   likes: UserLikeCommentsWithRelations[];
   replyTo?: CommentWithRelations | null;
@@ -1372,7 +1372,7 @@ export type CommentRelations = {
 export type CommentWithRelations = z.infer<typeof CommentSchema> & CommentRelations
 
 export const CommentWithRelationsSchema: z.ZodType<CommentWithRelations> = CommentSchema.merge(z.object({
-  belongsTo: z.lazy(() => PostWithRelationsSchema),
+  belongsTo: z.lazy(() => PostWithRelationsSchema).nullable(),
   owner: z.lazy(() => UserWithRelationsSchema),
   likes: z.lazy(() => UserLikeCommentsWithRelationsSchema).array(),
   replyTo: z.lazy(() => CommentWithRelationsSchema).nullable(),
@@ -1383,7 +1383,7 @@ export const CommentWithRelationsSchema: z.ZodType<CommentWithRelations> = Comme
 //------------------------------------------------------
 
 export type CommentOptionalDefaultsRelations = {
-  belongsTo: PostOptionalDefaultsWithRelations;
+  belongsTo?: PostOptionalDefaultsWithRelations | null;
   owner: UserOptionalDefaultsWithRelations;
   likes: UserLikeCommentsOptionalDefaultsWithRelations[];
   replyTo?: CommentOptionalDefaultsWithRelations | null;
@@ -1393,7 +1393,7 @@ export type CommentOptionalDefaultsRelations = {
 export type CommentOptionalDefaultsWithRelations = z.infer<typeof CommentOptionalDefaultsSchema> & CommentOptionalDefaultsRelations
 
 export const CommentOptionalDefaultsWithRelationsSchema: z.ZodType<CommentOptionalDefaultsWithRelations> = CommentOptionalDefaultsSchema.merge(z.object({
-  belongsTo: z.lazy(() => PostOptionalDefaultsWithRelationsSchema),
+  belongsTo: z.lazy(() => PostOptionalDefaultsWithRelationsSchema).nullable(),
   owner: z.lazy(() => UserOptionalDefaultsWithRelationsSchema),
   likes: z.lazy(() => UserLikeCommentsOptionalDefaultsWithRelationsSchema).array(),
   replyTo: z.lazy(() => CommentOptionalDefaultsWithRelationsSchema).nullable(),
@@ -1404,7 +1404,7 @@ export const CommentOptionalDefaultsWithRelationsSchema: z.ZodType<CommentOption
 //------------------------------------------------------
 
 export type CommentPartialRelations = {
-  belongsTo?: PostPartialWithRelations;
+  belongsTo?: PostPartialWithRelations | null;
   owner?: UserPartialWithRelations;
   likes?: UserLikeCommentsPartialWithRelations[];
   replyTo?: CommentPartialWithRelations | null;
@@ -1414,7 +1414,7 @@ export type CommentPartialRelations = {
 export type CommentPartialWithRelations = z.infer<typeof CommentPartialSchema> & CommentPartialRelations
 
 export const CommentPartialWithRelationsSchema: z.ZodType<CommentPartialWithRelations> = CommentPartialSchema.merge(z.object({
-  belongsTo: z.lazy(() => PostPartialWithRelationsSchema),
+  belongsTo: z.lazy(() => PostPartialWithRelationsSchema).nullable(),
   owner: z.lazy(() => UserPartialWithRelationsSchema),
   likes: z.lazy(() => UserLikeCommentsPartialWithRelationsSchema).array(),
   replyTo: z.lazy(() => CommentPartialWithRelationsSchema).nullable(),
@@ -1424,7 +1424,7 @@ export const CommentPartialWithRelationsSchema: z.ZodType<CommentPartialWithRela
 export type CommentOptionalDefaultsWithPartialRelations = z.infer<typeof CommentOptionalDefaultsSchema> & CommentPartialRelations
 
 export const CommentOptionalDefaultsWithPartialRelationsSchema: z.ZodType<CommentOptionalDefaultsWithPartialRelations> = CommentOptionalDefaultsSchema.merge(z.object({
-  belongsTo: z.lazy(() => PostPartialWithRelationsSchema),
+  belongsTo: z.lazy(() => PostPartialWithRelationsSchema).nullable(),
   owner: z.lazy(() => UserPartialWithRelationsSchema),
   likes: z.lazy(() => UserLikeCommentsPartialWithRelationsSchema).array(),
   replyTo: z.lazy(() => CommentPartialWithRelationsSchema).nullable(),
@@ -1434,7 +1434,7 @@ export const CommentOptionalDefaultsWithPartialRelationsSchema: z.ZodType<Commen
 export type CommentWithPartialRelations = z.infer<typeof CommentSchema> & CommentPartialRelations
 
 export const CommentWithPartialRelationsSchema: z.ZodType<CommentWithPartialRelations> = CommentSchema.merge(z.object({
-  belongsTo: z.lazy(() => PostPartialWithRelationsSchema),
+  belongsTo: z.lazy(() => PostPartialWithRelationsSchema).nullable(),
   owner: z.lazy(() => UserPartialWithRelationsSchema),
   likes: z.lazy(() => UserLikeCommentsPartialWithRelationsSchema).array(),
   replyTo: z.lazy(() => CommentPartialWithRelationsSchema).nullable(),
@@ -2749,14 +2749,14 @@ export const CommentWhereInputSchema: z.ZodType<Prisma.CommentWhereInput> = z.ob
   OR: z.lazy(() => CommentWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => CommentWhereInputSchema),z.lazy(() => CommentWhereInputSchema).array() ]).optional(),
   id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  belongsToId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  belongsToId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ownerId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   content: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   repliedToID: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   chiefComment: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  belongsTo: z.union([ z.lazy(() => PostRelationFilterSchema),z.lazy(() => PostWhereInputSchema) ]).optional(),
+  belongsTo: z.union([ z.lazy(() => PostNullableRelationFilterSchema),z.lazy(() => PostWhereInputSchema) ]).optional().nullable(),
   owner: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
   likes: z.lazy(() => UserLikeCommentsListRelationFilterSchema).optional(),
   replyTo: z.union([ z.lazy(() => CommentNullableRelationFilterSchema),z.lazy(() => CommentWhereInputSchema) ]).optional().nullable(),
@@ -2765,7 +2765,7 @@ export const CommentWhereInputSchema: z.ZodType<Prisma.CommentWhereInput> = z.ob
 
 export const CommentOrderByWithRelationInputSchema: z.ZodType<Prisma.CommentOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  belongsToId: z.lazy(() => SortOrderSchema).optional(),
+  belongsToId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ownerId: z.lazy(() => SortOrderSchema).optional(),
   content: z.lazy(() => SortOrderSchema).optional(),
   repliedToID: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -2787,14 +2787,14 @@ export const CommentWhereUniqueInputSchema: z.ZodType<Prisma.CommentWhereUniqueI
   AND: z.union([ z.lazy(() => CommentWhereInputSchema),z.lazy(() => CommentWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => CommentWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => CommentWhereInputSchema),z.lazy(() => CommentWhereInputSchema).array() ]).optional(),
-  belongsToId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  belongsToId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ownerId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   content: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   repliedToID: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   chiefComment: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  belongsTo: z.union([ z.lazy(() => PostRelationFilterSchema),z.lazy(() => PostWhereInputSchema) ]).optional(),
+  belongsTo: z.union([ z.lazy(() => PostNullableRelationFilterSchema),z.lazy(() => PostWhereInputSchema) ]).optional().nullable(),
   owner: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
   likes: z.lazy(() => UserLikeCommentsListRelationFilterSchema).optional(),
   replyTo: z.union([ z.lazy(() => CommentNullableRelationFilterSchema),z.lazy(() => CommentWhereInputSchema) ]).optional().nullable(),
@@ -2803,7 +2803,7 @@ export const CommentWhereUniqueInputSchema: z.ZodType<Prisma.CommentWhereUniqueI
 
 export const CommentOrderByWithAggregationInputSchema: z.ZodType<Prisma.CommentOrderByWithAggregationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  belongsToId: z.lazy(() => SortOrderSchema).optional(),
+  belongsToId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ownerId: z.lazy(() => SortOrderSchema).optional(),
   content: z.lazy(() => SortOrderSchema).optional(),
   repliedToID: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -2820,7 +2820,7 @@ export const CommentScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Comme
   OR: z.lazy(() => CommentScalarWhereWithAggregatesInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => CommentScalarWhereWithAggregatesInputSchema),z.lazy(() => CommentScalarWhereWithAggregatesInputSchema).array() ]).optional(),
   id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  belongsToId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  belongsToId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   ownerId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   content: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   repliedToID: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
@@ -3661,7 +3661,7 @@ export const CommentCreateInputSchema: z.ZodType<Prisma.CommentCreateInput> = z.
   chiefComment: z.boolean().optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  belongsTo: z.lazy(() => PostCreateNestedOneWithoutCommentsInputSchema),
+  belongsTo: z.lazy(() => PostCreateNestedOneWithoutCommentsInputSchema).optional(),
   owner: z.lazy(() => UserCreateNestedOneWithoutCommentsInputSchema),
   likes: z.lazy(() => UserLikeCommentsCreateNestedManyWithoutCommentInputSchema).optional(),
   replyTo: z.lazy(() => CommentCreateNestedOneWithoutRepliesInputSchema).optional(),
@@ -3670,7 +3670,7 @@ export const CommentCreateInputSchema: z.ZodType<Prisma.CommentCreateInput> = z.
 
 export const CommentUncheckedCreateInputSchema: z.ZodType<Prisma.CommentUncheckedCreateInput> = z.object({
   id: z.string().uuid().optional(),
-  belongsToId: z.string(),
+  belongsToId: z.string().optional().nullable(),
   ownerId: z.string(),
   content: z.string(),
   repliedToID: z.string().optional().nullable(),
@@ -3687,7 +3687,7 @@ export const CommentUpdateInputSchema: z.ZodType<Prisma.CommentUpdateInput> = z.
   chiefComment: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsTo: z.lazy(() => PostUpdateOneRequiredWithoutCommentsNestedInputSchema).optional(),
+  belongsTo: z.lazy(() => PostUpdateOneWithoutCommentsNestedInputSchema).optional(),
   owner: z.lazy(() => UserUpdateOneRequiredWithoutCommentsNestedInputSchema).optional(),
   likes: z.lazy(() => UserLikeCommentsUpdateManyWithoutCommentNestedInputSchema).optional(),
   replyTo: z.lazy(() => CommentUpdateOneWithoutRepliesNestedInputSchema).optional(),
@@ -3696,7 +3696,7 @@ export const CommentUpdateInputSchema: z.ZodType<Prisma.CommentUpdateInput> = z.
 
 export const CommentUncheckedUpdateInputSchema: z.ZodType<Prisma.CommentUncheckedUpdateInput> = z.object({
   id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsToId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  belongsToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   content: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   repliedToID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -3709,7 +3709,7 @@ export const CommentUncheckedUpdateInputSchema: z.ZodType<Prisma.CommentUnchecke
 
 export const CommentCreateManyInputSchema: z.ZodType<Prisma.CommentCreateManyInput> = z.object({
   id: z.string().uuid().optional(),
-  belongsToId: z.string(),
+  belongsToId: z.string().optional().nullable(),
   ownerId: z.string(),
   content: z.string(),
   repliedToID: z.string().optional().nullable(),
@@ -3728,7 +3728,7 @@ export const CommentUpdateManyMutationInputSchema: z.ZodType<Prisma.CommentUpdat
 
 export const CommentUncheckedUpdateManyInputSchema: z.ZodType<Prisma.CommentUncheckedUpdateManyInput> = z.object({
   id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsToId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  belongsToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   content: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   repliedToID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -4376,6 +4376,11 @@ export const AccessTokenMinOrderByAggregateInputSchema: z.ZodType<Prisma.AccessT
   expired_at: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const PostNullableRelationFilterSchema: z.ZodType<Prisma.PostNullableRelationFilter> = z.object({
+  is: z.lazy(() => PostWhereInputSchema).optional().nullable(),
+  isNot: z.lazy(() => PostWhereInputSchema).optional().nullable()
 }).strict();
 
 export const CommentNullableRelationFilterSchema: z.ZodType<Prisma.CommentNullableRelationFilter> = z.object({
@@ -5363,10 +5368,12 @@ export const CommentUncheckedCreateNestedManyWithoutReplyToInputSchema: z.ZodTyp
   connect: z.union([ z.lazy(() => CommentWhereUniqueInputSchema),z.lazy(() => CommentWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
-export const PostUpdateOneRequiredWithoutCommentsNestedInputSchema: z.ZodType<Prisma.PostUpdateOneRequiredWithoutCommentsNestedInput> = z.object({
+export const PostUpdateOneWithoutCommentsNestedInputSchema: z.ZodType<Prisma.PostUpdateOneWithoutCommentsNestedInput> = z.object({
   create: z.union([ z.lazy(() => PostCreateWithoutCommentsInputSchema),z.lazy(() => PostUncheckedCreateWithoutCommentsInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => PostCreateOrConnectWithoutCommentsInputSchema).optional(),
   upsert: z.lazy(() => PostUpsertWithoutCommentsInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => PostWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => PostWhereInputSchema) ]).optional(),
   connect: z.lazy(() => PostWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => PostUpdateToOneWithWhereWithoutCommentsInputSchema),z.lazy(() => PostUpdateWithoutCommentsInputSchema),z.lazy(() => PostUncheckedUpdateWithoutCommentsInputSchema) ]).optional(),
 }).strict();
@@ -5629,7 +5636,7 @@ export const CommentCreateWithoutOwnerInputSchema: z.ZodType<Prisma.CommentCreat
   chiefComment: z.boolean().optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  belongsTo: z.lazy(() => PostCreateNestedOneWithoutCommentsInputSchema),
+  belongsTo: z.lazy(() => PostCreateNestedOneWithoutCommentsInputSchema).optional(),
   likes: z.lazy(() => UserLikeCommentsCreateNestedManyWithoutCommentInputSchema).optional(),
   replyTo: z.lazy(() => CommentCreateNestedOneWithoutRepliesInputSchema).optional(),
   replies: z.lazy(() => CommentCreateNestedManyWithoutReplyToInputSchema).optional()
@@ -5637,7 +5644,7 @@ export const CommentCreateWithoutOwnerInputSchema: z.ZodType<Prisma.CommentCreat
 
 export const CommentUncheckedCreateWithoutOwnerInputSchema: z.ZodType<Prisma.CommentUncheckedCreateWithoutOwnerInput> = z.object({
   id: z.string().uuid().optional(),
-  belongsToId: z.string(),
+  belongsToId: z.string().optional().nullable(),
   content: z.string(),
   repliedToID: z.string().optional().nullable(),
   chiefComment: z.boolean().optional(),
@@ -5824,7 +5831,7 @@ export const CommentScalarWhereInputSchema: z.ZodType<Prisma.CommentScalarWhereI
   OR: z.lazy(() => CommentScalarWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => CommentScalarWhereInputSchema),z.lazy(() => CommentScalarWhereInputSchema).array() ]).optional(),
   id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  belongsToId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  belongsToId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ownerId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   content: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   repliedToID: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
@@ -6009,7 +6016,7 @@ export const CommentCreateWithoutLikesInputSchema: z.ZodType<Prisma.CommentCreat
   chiefComment: z.boolean().optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  belongsTo: z.lazy(() => PostCreateNestedOneWithoutCommentsInputSchema),
+  belongsTo: z.lazy(() => PostCreateNestedOneWithoutCommentsInputSchema).optional(),
   owner: z.lazy(() => UserCreateNestedOneWithoutCommentsInputSchema),
   replyTo: z.lazy(() => CommentCreateNestedOneWithoutRepliesInputSchema).optional(),
   replies: z.lazy(() => CommentCreateNestedManyWithoutReplyToInputSchema).optional()
@@ -6017,7 +6024,7 @@ export const CommentCreateWithoutLikesInputSchema: z.ZodType<Prisma.CommentCreat
 
 export const CommentUncheckedCreateWithoutLikesInputSchema: z.ZodType<Prisma.CommentUncheckedCreateWithoutLikesInput> = z.object({
   id: z.string().uuid().optional(),
-  belongsToId: z.string(),
+  belongsToId: z.string().optional().nullable(),
   ownerId: z.string(),
   content: z.string(),
   repliedToID: z.string().optional().nullable(),
@@ -6094,7 +6101,7 @@ export const CommentUpdateWithoutLikesInputSchema: z.ZodType<Prisma.CommentUpdat
   chiefComment: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsTo: z.lazy(() => PostUpdateOneRequiredWithoutCommentsNestedInputSchema).optional(),
+  belongsTo: z.lazy(() => PostUpdateOneWithoutCommentsNestedInputSchema).optional(),
   owner: z.lazy(() => UserUpdateOneRequiredWithoutCommentsNestedInputSchema).optional(),
   replyTo: z.lazy(() => CommentUpdateOneWithoutRepliesNestedInputSchema).optional(),
   replies: z.lazy(() => CommentUpdateManyWithoutReplyToNestedInputSchema).optional()
@@ -6102,7 +6109,7 @@ export const CommentUpdateWithoutLikesInputSchema: z.ZodType<Prisma.CommentUpdat
 
 export const CommentUncheckedUpdateWithoutLikesInputSchema: z.ZodType<Prisma.CommentUncheckedUpdateWithoutLikesInput> = z.object({
   id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsToId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  belongsToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   content: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   repliedToID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -7522,7 +7529,7 @@ export const CommentCreateWithoutRepliesInputSchema: z.ZodType<Prisma.CommentCre
   chiefComment: z.boolean().optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  belongsTo: z.lazy(() => PostCreateNestedOneWithoutCommentsInputSchema),
+  belongsTo: z.lazy(() => PostCreateNestedOneWithoutCommentsInputSchema).optional(),
   owner: z.lazy(() => UserCreateNestedOneWithoutCommentsInputSchema),
   likes: z.lazy(() => UserLikeCommentsCreateNestedManyWithoutCommentInputSchema).optional(),
   replyTo: z.lazy(() => CommentCreateNestedOneWithoutRepliesInputSchema).optional()
@@ -7530,7 +7537,7 @@ export const CommentCreateWithoutRepliesInputSchema: z.ZodType<Prisma.CommentCre
 
 export const CommentUncheckedCreateWithoutRepliesInputSchema: z.ZodType<Prisma.CommentUncheckedCreateWithoutRepliesInput> = z.object({
   id: z.string().uuid().optional(),
-  belongsToId: z.string(),
+  belongsToId: z.string().optional().nullable(),
   ownerId: z.string(),
   content: z.string(),
   repliedToID: z.string().optional().nullable(),
@@ -7551,7 +7558,7 @@ export const CommentCreateWithoutReplyToInputSchema: z.ZodType<Prisma.CommentCre
   chiefComment: z.boolean().optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  belongsTo: z.lazy(() => PostCreateNestedOneWithoutCommentsInputSchema),
+  belongsTo: z.lazy(() => PostCreateNestedOneWithoutCommentsInputSchema).optional(),
   owner: z.lazy(() => UserCreateNestedOneWithoutCommentsInputSchema),
   likes: z.lazy(() => UserLikeCommentsCreateNestedManyWithoutCommentInputSchema).optional(),
   replies: z.lazy(() => CommentCreateNestedManyWithoutReplyToInputSchema).optional()
@@ -7559,7 +7566,7 @@ export const CommentCreateWithoutReplyToInputSchema: z.ZodType<Prisma.CommentCre
 
 export const CommentUncheckedCreateWithoutReplyToInputSchema: z.ZodType<Prisma.CommentUncheckedCreateWithoutReplyToInput> = z.object({
   id: z.string().uuid().optional(),
-  belongsToId: z.string(),
+  belongsToId: z.string().optional().nullable(),
   ownerId: z.string(),
   content: z.string(),
   chiefComment: z.boolean().optional(),
@@ -7698,7 +7705,7 @@ export const CommentUpdateWithoutRepliesInputSchema: z.ZodType<Prisma.CommentUpd
   chiefComment: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsTo: z.lazy(() => PostUpdateOneRequiredWithoutCommentsNestedInputSchema).optional(),
+  belongsTo: z.lazy(() => PostUpdateOneWithoutCommentsNestedInputSchema).optional(),
   owner: z.lazy(() => UserUpdateOneRequiredWithoutCommentsNestedInputSchema).optional(),
   likes: z.lazy(() => UserLikeCommentsUpdateManyWithoutCommentNestedInputSchema).optional(),
   replyTo: z.lazy(() => CommentUpdateOneWithoutRepliesNestedInputSchema).optional()
@@ -7706,7 +7713,7 @@ export const CommentUpdateWithoutRepliesInputSchema: z.ZodType<Prisma.CommentUpd
 
 export const CommentUncheckedUpdateWithoutRepliesInputSchema: z.ZodType<Prisma.CommentUncheckedUpdateWithoutRepliesInput> = z.object({
   id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsToId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  belongsToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   content: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   repliedToID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -7746,7 +7753,7 @@ export const PostCreateManyAuthorInputSchema: z.ZodType<Prisma.PostCreateManyAut
 
 export const CommentCreateManyOwnerInputSchema: z.ZodType<Prisma.CommentCreateManyOwnerInput> = z.object({
   id: z.string().uuid().optional(),
-  belongsToId: z.string(),
+  belongsToId: z.string().optional().nullable(),
   content: z.string(),
   repliedToID: z.string().optional().nullable(),
   chiefComment: z.boolean().optional(),
@@ -7833,7 +7840,7 @@ export const CommentUpdateWithoutOwnerInputSchema: z.ZodType<Prisma.CommentUpdat
   chiefComment: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsTo: z.lazy(() => PostUpdateOneRequiredWithoutCommentsNestedInputSchema).optional(),
+  belongsTo: z.lazy(() => PostUpdateOneWithoutCommentsNestedInputSchema).optional(),
   likes: z.lazy(() => UserLikeCommentsUpdateManyWithoutCommentNestedInputSchema).optional(),
   replyTo: z.lazy(() => CommentUpdateOneWithoutRepliesNestedInputSchema).optional(),
   replies: z.lazy(() => CommentUpdateManyWithoutReplyToNestedInputSchema).optional()
@@ -7841,7 +7848,7 @@ export const CommentUpdateWithoutOwnerInputSchema: z.ZodType<Prisma.CommentUpdat
 
 export const CommentUncheckedUpdateWithoutOwnerInputSchema: z.ZodType<Prisma.CommentUncheckedUpdateWithoutOwnerInput> = z.object({
   id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsToId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  belongsToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   content: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   repliedToID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   chiefComment: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7853,7 +7860,7 @@ export const CommentUncheckedUpdateWithoutOwnerInputSchema: z.ZodType<Prisma.Com
 
 export const CommentUncheckedUpdateManyWithoutOwnerInputSchema: z.ZodType<Prisma.CommentUncheckedUpdateManyWithoutOwnerInput> = z.object({
   id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsToId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  belongsToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   content: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   repliedToID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   chiefComment: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
@@ -8214,7 +8221,7 @@ export const UserLikeCommentsCreateManyCommentInputSchema: z.ZodType<Prisma.User
 
 export const CommentCreateManyReplyToInputSchema: z.ZodType<Prisma.CommentCreateManyReplyToInput> = z.object({
   id: z.string().uuid().optional(),
-  belongsToId: z.string(),
+  belongsToId: z.string().optional().nullable(),
   ownerId: z.string(),
   content: z.string(),
   chiefComment: z.boolean().optional(),
@@ -8246,7 +8253,7 @@ export const CommentUpdateWithoutReplyToInputSchema: z.ZodType<Prisma.CommentUpd
   chiefComment: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsTo: z.lazy(() => PostUpdateOneRequiredWithoutCommentsNestedInputSchema).optional(),
+  belongsTo: z.lazy(() => PostUpdateOneWithoutCommentsNestedInputSchema).optional(),
   owner: z.lazy(() => UserUpdateOneRequiredWithoutCommentsNestedInputSchema).optional(),
   likes: z.lazy(() => UserLikeCommentsUpdateManyWithoutCommentNestedInputSchema).optional(),
   replies: z.lazy(() => CommentUpdateManyWithoutReplyToNestedInputSchema).optional()
@@ -8254,7 +8261,7 @@ export const CommentUpdateWithoutReplyToInputSchema: z.ZodType<Prisma.CommentUpd
 
 export const CommentUncheckedUpdateWithoutReplyToInputSchema: z.ZodType<Prisma.CommentUncheckedUpdateWithoutReplyToInput> = z.object({
   id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsToId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  belongsToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   content: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   chiefComment: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
@@ -8266,7 +8273,7 @@ export const CommentUncheckedUpdateWithoutReplyToInputSchema: z.ZodType<Prisma.C
 
 export const CommentUncheckedUpdateManyWithoutReplyToInputSchema: z.ZodType<Prisma.CommentUncheckedUpdateManyWithoutReplyToInput> = z.object({
   id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  belongsToId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  belongsToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   content: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   chiefComment: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),

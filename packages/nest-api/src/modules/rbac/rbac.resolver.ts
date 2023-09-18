@@ -1,8 +1,8 @@
-import { AbilityOptions, AbilityTuple, MongoQuery, SubjectType } from '@casl/ability';
+import { AbilityOptions, AbilityTuple, MongoQuery, RawRuleFrom, SubjectType } from '@casl/ability';
 import { Injectable, NotFoundException, OnApplicationBootstrap } from '@nestjs/common';
 import { isNil, omit, isArray } from 'lodash';
 
-import { Prisma } from '@prisma/client/blog';
+import { Prisma, User } from '@prisma/client/blog';
 
 import { Configure } from '../core/configure';
 
@@ -52,7 +52,9 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
             rule: {
                 action: 'manage',
                 subject: 'all',
-            } as any,
+            } as Omit<RawRuleFrom<A, C>, 'conditions'> & {
+                conditions?: (user: ClassToPlain<User>) => Record<string, any>;
+            },
         },
     ];
 
@@ -216,16 +218,24 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
                     },
                 },
             });
-            await prisma.role.update({
-                where: { id: role.id },
-                data: {
-                    permissions: {
-                        set: rolePermissions.map(({ id }) => ({
-                            id,
-                        })),
-                    },
+            // 删除旧的与当前 role 相关的所有权限
+            await prisma.rolesPermissions.deleteMany({
+                where: {
+                    roleId: role.id,
                 },
             });
+
+            // 添加新的与当前 role 相关的所有权限
+            for (const perm of rolePermissions) {
+                await prisma.rolesPermissions.create({
+                    data: {
+                        roleId: role.id,
+                        permissionId: perm.id,
+                        assignedBy: 'system',
+                        assignedAt: new Date(),
+                    },
+                });
+            }
         }
 
         const superRole = await prisma.role.findFirst({
@@ -235,12 +245,21 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
             where: { name: 'system-manage' },
         });
         if (isNil(superRole) || isNil(systemManage)) throw NotFoundException;
-        await prisma.role.update({
-            where: { id: superRole.id },
+        // 删除旧的与当前 role 相关的所有权限
+
+        await prisma.rolesPermissions.deleteMany({
+            where: {
+                roleId: superRole.id,
+            },
+        });
+
+        // 添加新的与当前 role 相关的所有权限
+        await prisma.rolesPermissions.create({
             data: {
-                permissions: {
-                    set: [{ id: systemManage.id }],
-                },
+                roleId: superRole.id,
+                permissionId: systemManage.id,
+                assignedBy: 'system',
+                assignedAt: new Date(),
             },
         });
 
@@ -249,12 +268,19 @@ export class RbacResolver<A extends AbilityTuple = AbilityTuple, C extends Mongo
         });
 
         if (superUser) {
-            await prisma.user.update({
-                where: { id: superUser.id },
+            await prisma.usersRoles.deleteMany({
+                where: {
+                    userId: superUser.id,
+                },
+            });
+
+            // 添加新的与当前 role 相关的所有权限
+            await prisma.usersRoles.create({
                 data: {
-                    roles: {
-                        set: [{ id: superRole.id }],
-                    },
+                    roleId: superRole.id,
+                    userId: superUser.id,
+                    assignedBy: 'system',
+                    assignedAt: new Date(),
                 },
             });
         }

@@ -165,8 +165,8 @@ model AccessToken {
 
 model Comment {
   id            String       @id @default(uuid())
-  belongsToId   String
-  belongsTo     Post  @relation(fields: [belongsToId], references: [id])
+  belongsToId   String?
+  belongsTo     Post?  @relation(fields: [belongsToId], references: [id])
   ownerId       String
   owner         User  @relation(fields: [ownerId], references: [id])
   content       String

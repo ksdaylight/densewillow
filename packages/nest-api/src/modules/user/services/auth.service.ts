@@ -40,7 +40,11 @@ export class AuthService {
         const userInfo = await this.prisma.user.findUnique({
             where: userUnique,
             include: {
-                roles: true,
+                roles: {
+                    include: {
+                        role: true,
+                    },
+                },
             },
         });
         if (isNil(userInfo)) throw NotFoundException;
@@ -53,18 +57,18 @@ export class AuthService {
 
         // 如果用户只有一个角色，直接返回该角色
         if (roles.length === 1) {
-            return roles[0];
+            return roles[0].role;
         }
 
         // 如果用户有多个角色，查找是否有 'admin' 角色
-        for (const role of roles) {
-            if (role.name === SystemRoles.ADMIN) {
-                return role;
+        for (const item of roles) {
+            if (item.role.name === SystemRoles.ADMIN) {
+                return item.role;
             }
         }
 
         // 如果没有 'admin' 角色，返回第一个角色
-        return roles[0];
+        return roles[0].role;
     }
 
     /**
