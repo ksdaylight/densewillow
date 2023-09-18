@@ -4,7 +4,7 @@ import dateFormat from 'dateformat';
 import parse from 'html-react-parser';
 import { BsFillReplyAllFill, BsFillTrashFill, BsPencilSquare } from 'react-icons/bs';
 
-import { CommentWithPartialRelationsAddReplies } from '@api-contracts';
+import { CommentPartialWithRelations } from '@api-contracts';
 
 import { useRoleInfoContext } from '@frontend/context/role-info';
 
@@ -13,7 +13,7 @@ import ProfileIcon from './ProfileIcon';
 import LikeHeart from './LikeHeart';
 
 interface Props {
-    comment: CommentWithPartialRelationsAddReplies;
+    comment: CommentPartialWithRelations;
     showControls?: boolean;
     busy?: boolean;
     onUpdateSubmit?(content: string): void;
@@ -31,11 +31,13 @@ const CommentCard: FC<Props> = ({
     onDeleteClick,
     onLikeClick,
 }): JSX.Element => {
-    const { owner, createdAt, content, likes, likedByUserIDs } = comment;
+    const { owner, createdAt, content, likes } = comment;
     const { userInfoLocal } = useRoleInfoContext();
     const [showForm, setShowForm] = useState(false);
     const [initialState, setInitialState] = useState('');
-    const likedByOwner = userInfoLocal.id ? likedByUserIDs.includes(userInfoLocal.id) : false;
+    const likedByOwner = userInfoLocal.id
+        ? likes?.map((item) => item?.userId).includes(userInfoLocal.id)
+        : false;
     const displayReplyForm = () => {
         setInitialState('');
         setShowForm(true);
@@ -51,7 +53,7 @@ const CommentCard: FC<Props> = ({
 
     const handleOnEditClick = () => {
         displayReplyForm();
-        setInitialState(content);
+        setInitialState(content || '');
     };
 
     const handleCommentSubmit = (inputComment: string) => {
@@ -68,7 +70,7 @@ const CommentCard: FC<Props> = ({
     return (
         <div className="flex space-x-3">
             <ProfileIcon
-                nameInitial={owner?.name[0].toUpperCase()}
+                nameInitial={owner && owner.name ? owner.name[0].toUpperCase() : 'Guest'}
                 avatar={owner?.avatar || undefined}
             />
 
@@ -79,7 +81,7 @@ const CommentCard: FC<Props> = ({
                 <span className="text-sm text-secondary-dark">
                     {dateFormat(createdAt, 'd-mmm-yyyy')}
                 </span>
-                <div className="text-primary-dark dark:text-primary">{parse(content)}</div>
+                <div className="text-primary-dark dark:text-primary">{parse(content || '')}</div>
 
                 <div className="flex space-x-4">
                     <LikeHeart

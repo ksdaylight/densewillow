@@ -36,6 +36,7 @@ export class CommentController {
                     include: {
                         owner: true,
                         belongsTo: true,
+                        likes: true,
                         replies: {
                             include: {
                                 owner: true,

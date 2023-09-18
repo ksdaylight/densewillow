@@ -2,14 +2,14 @@ import { FC } from 'react';
 import { BsBoxArrowUpRight } from 'react-icons/bs';
 import parse from 'html-react-parser';
 
-import { CommentWithPartialRelationsAddReplies } from '@api-contracts';
-
 import { trimText } from '@frontend/utils/helps';
+
+import { CommentWithPartialRelations } from '@api-contracts';
 
 import ProfileIcon from '../common/ProfileIcon';
 
 interface Props {
-    comment: CommentWithPartialRelationsAddReplies;
+    comment: CommentWithPartialRelations;
 }
 
 const LatestCommentListCard: FC<Props> = ({ comment }): JSX.Element => {
@@ -17,7 +17,7 @@ const LatestCommentListCard: FC<Props> = ({ comment }): JSX.Element => {
     return (
         <div className="flex space-x-2">
             <ProfileIcon
-                nameInitial={owner?.name[0]}
+                nameInitial={owner && owner.name ? owner.name[0].toUpperCase() : 'Guest'}
                 avatar={owner?.avatar ? owner.avatar : undefined}
             />
 

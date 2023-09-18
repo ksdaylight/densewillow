@@ -10,8 +10,8 @@ import { MultipartFile } from '@fastify/multipart';
 import { isNil } from 'lodash';
 import TipTapImage from '@tiptap/extension-image';
 
-import { useRouter } from 'next/navigation';
-
+// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 import { apiClient, publicApiUrl } from '@frontend/utils/helps';
 
 import { fallbackLng } from '@frontend/app/i18n/settings';

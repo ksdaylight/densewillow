@@ -4,11 +4,7 @@ import { FC, useEffect, useState } from 'react';
 
 import { isNil } from 'lodash';
 
-import {
-    User,
-    PostWithPartialRelations,
-    CommentWithPartialRelationsAddReplies,
-} from '@api-contracts';
+import { User, PostWithPartialRelations, CommentWithPartialRelations } from '@api-contracts';
 
 import ContentWrapper from '@frontend/components/admin/ContentWrapper';
 import LatesUserTable from '@frontend/components/admin/LatesUserTable';
@@ -19,7 +15,7 @@ import { apiClient } from '@frontend/utils/helps';
 interface Props {}
 const AdminHome: FC<Props> = (): JSX.Element => {
     const [latestPosts, setLatestPosts] = useState<PostWithPartialRelations[]>();
-    const [latestComments, setLatestComments] = useState<CommentWithPartialRelationsAddReplies[]>();
+    const [latestComments, setLatestComments] = useState<CommentWithPartialRelations[]>();
     const [latestUsers, setLatestUsers] = useState<User[]>();
 
     const { data: getPostData } = apiClient.content.getPosts.useQuery(

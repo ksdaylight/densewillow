@@ -51,6 +51,6 @@ export const createMediaConfig: (
 ) => ConfigureFactory<Partial<MediaConfig>, MediaConfig> = (register) => ({
     register,
     defaultRegister: () => ({
-        upload: resolve(__dirname, '../../../../uploads'),
+        upload: resolve(__dirname, '../../../uploads'),
     }),
 });

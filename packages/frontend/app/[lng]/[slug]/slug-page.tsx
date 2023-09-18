@@ -18,13 +18,10 @@ import AuthorInfo from '@frontend/components/common/AuthorInfo';
 import Comments from '@frontend/components/common/Comments';
 
 import DefaultLayout from '@frontend/components/layout/DefaultLayout';
-
-import Share from '@frontend/components/common/Share'; // 'packages/admin/components/common/Share';
+import omit from 'lodash/omit';
+import Share from '@frontend/components/common/Share';
 import { apiClient } from '@frontend/utils/helps';
-// import { useTranslation } from '@frontend/app/i18n/client';
-// import LngSwitcherClient from '@frontend/components/common/LngSwitcher/client';
 
-// import { apiClient, baseApiUrl } from '../admin/page';
 const host = 'https://densewillow.com';
 
 interface Props {
@@ -112,34 +109,10 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
     }
     return (
         <>
-            {/* <h1>{t('title')}</h1>
-            <LngSwitcherClient lng={lng} /> */}
             <DefaultLayout title={title} desc={meta} lng={lng}>
                 <PaddingContainer>
-                    {/* <div className="lg:px-0 px-3"> */}
-                    {/* <div className="relative aspect-video">
-                    {thumbnail && (
-                        <Image
-                            src={`${baseApiUrl}/images/${thumbnail.id}${thumbnail.ext}`}
-                            alt={title}
-                            layout="fill"
-                        />
-                    )}
-                </div>
-
-                <h1 className="text-6xl font-semibold text-primary-dark dark:text-primary py-2">
-                    {title}
-                </h1>
-
-                <div className="flex items-center justify-between py-2 text-secondary-dark dark:text-secondary-light">
-                    {tags.map((t, index) => (
-                        // eslint-disable-next-line react/no-array-index-key
-                        <span key={t + index.toString()}>#{t}</span>
-                    ))}
-                    <span>{dateFormat(createdAt, 'd-mmm-yyyy')}</span>
-                </div> */}
                     <div className="space-y-10">
-                        <PostHero post={postData!.body} />
+                        <PostHero post={omit(postData.body, ['relatedPosts'])} />
                         <div className="flex flex-col gap-10 md:flex-row">
                             <div className="relative">
                                 <div className="sticky flex items-center gap-5 md:flex-col top-20">
@@ -148,12 +121,7 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
                                 </div>
                             </div>
                             <PostBody body={content || ''} />
-                            {/* <div className="rich-text">{parse(content || '')}</div> */}
                         </div>
-
-                        {/* <div className="prose prose-lg dark:prose-invert max-w-full mx-auto rich-text">
-                        {parse(content || '')}
-                    </div> */}
 
                         <div>
                             <LikeHeart
@@ -187,7 +155,6 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
                         </div>
 
                         <Comments belongsTo={id} />
-                        {/* </div> */}
                     </div>
                 </PaddingContainer>
             </DefaultLayout>

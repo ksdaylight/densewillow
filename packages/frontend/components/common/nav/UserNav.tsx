@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { HiLightBulb } from 'react-icons/hi';
 
-import { useRouter } from 'next/navigation';
-
+// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 import { deleteCookie } from 'cookies-next';
 
 import useDarkMode from '@frontend/hooks/useDarkMode';

@@ -1,15 +1,15 @@
 import Image from 'next/legacy/image';
+import { UserPartialWithRelations } from 'packages/api-contracts/src/zod';
 import { FC } from 'react';
-import { User } from '@api-contracts';
 
 interface Props {
-    profile: User;
+    profile: UserPartialWithRelations;
 }
 
 const AuthorInfo: FC<Props> = ({ profile }): JSX.Element => {
     const { name, avatar } = profile;
     const message = `This post is written by ${name}. ${
-        name.split(' ')[0]
+        name?.split(' ')[0]
     } is an full stack JavaScript developer. `;
 
     return (

@@ -5,7 +5,7 @@ import { FC, useEffect, useState } from 'react';
 import { isNil } from 'lodash';
 
 // import { CommentResponse } from '@frontend/utils/types';
-import { CommentWithPartialRelationsAddReplies } from '@api-contracts';
+import { CommentPartialWithRelations, CommentWithPartialRelations } from '@api-contracts';
 
 import { useRoleInfoContext } from '@frontend/context/role-info';
 
@@ -27,22 +27,23 @@ const limit = 5;
 // const currentPageNo = 0;
 
 const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
-    const [comments, setComments] = useState<CommentWithPartialRelationsAddReplies[]>();
+    const [comments, setComments] = useState<CommentWithPartialRelations[]>();
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     // const [reachedToEnd, setReachedToEnd] = useState(false);
     const [busyCommentLike, setBusyCommentLike] = useState(false);
     const [submitting, setSubmitting] = useState(false);
-    const [selectedComment, setSelectedComment] =
-        useState<CommentWithPartialRelationsAddReplies | null>(null);
-    const [commentToDelete, setCommentToDelete] =
-        useState<CommentWithPartialRelationsAddReplies | null>(null);
+    const [selectedComment, setSelectedComment] = useState<CommentPartialWithRelations | null>(
+        null,
+    );
+    const [commentToDelete, setCommentToDelete] = useState<CommentPartialWithRelations | null>(
+        null,
+    );
 
     const { userInfoLocal } = useRoleInfoContext();
 
-    const insertNewReplyComments = (reply: CommentWithPartialRelationsAddReplies) => {
+    const insertNewReplyComments = (reply: CommentWithPartialRelations) => {
         if (!comments) return;
         const updatedComments = [...comments];
-
         const chiefCommentIndex = updatedComments.findIndex(({ id }) => id === reply.repliedToID);
         const { replies } = updatedComments[chiefCommentIndex];
         if (replies) {
@@ -54,7 +55,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
         setComments([...updatedComments]);
     };
 
-    const updateEditedComment = (newComment: CommentWithPartialRelationsAddReplies) => {
+    const updateEditedComment = (newComment: CommentWithPartialRelations) => {
         if (!comments) return;
 
         const updatedComments = [...comments];
@@ -83,7 +84,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
         setComments([...updatedComments]);
     };
 
-    const updateDeletedComments = (deletedComment: CommentWithPartialRelationsAddReplies) => {
+    const updateDeletedComments = (deletedComment: CommentPartialWithRelations) => {
         if (!comments) return;
         let newComments = [...comments];
 
@@ -102,7 +103,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
         setComments([...newComments]);
     };
 
-    const updateLikedComments = (likedComment: CommentWithPartialRelationsAddReplies) => {
+    const updateLikedComments = (likedComment: CommentWithPartialRelations) => {
         if (!comments) return;
         let newComments = [...comments];
 
@@ -175,7 +176,11 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
         },
     });
 
-    const handleUpdateSubmit = (content: string, id: string) => {
+    const handleUpdateSubmit = (content: string, id?: string) => {
+        if (isNil(id)) {
+            console.log('no updated id');
+            return;
+        }
         updateMutate({
             body: {
                 id,
@@ -183,7 +188,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
             },
         });
     };
-    const handleOnDeleteClick = (comment: CommentWithPartialRelationsAddReplies) => {
+    const handleOnDeleteClick = (comment: CommentPartialWithRelations) => {
         setCommentToDelete(comment);
         setShowConfirmModal(true);
     };
@@ -211,7 +216,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
     });
 
     const handleOnDeleteConfirm = () => {
-        if (!commentToDelete) return;
+        if (!commentToDelete?.id) return;
         deleteMutate({
             params: {
                 id: commentToDelete.id,
@@ -232,9 +237,10 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
             setBusyCommentLike(false);
         },
     });
-    const handleOnLikeClick = (comment: CommentWithPartialRelationsAddReplies) => {
+    const handleOnLikeClick = (comment: CommentPartialWithRelations) => {
         setBusyCommentLike(true);
         setSelectedComment(comment);
+        if (!comment?.id) return;
         updateLikeMutate({
             body: {
                 id: comment.id,
