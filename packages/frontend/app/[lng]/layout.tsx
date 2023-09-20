@@ -1,7 +1,5 @@
 import Providers from '@frontend/utils/provider';
 import { dir } from 'i18next';
-import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
 import { Playfair_Display, Ubuntu } from '@next/font/google';
 import { UserRoleContextProvider } from '@frontend/context/role-info';
 
@@ -11,8 +9,6 @@ import { useTranslation } from '../i18n';
 import { languages } from '../i18n/settings';
 
 import './global.css';
-
-config.autoAddCss = false;
 
 const playfairDisplay = Playfair_Display({
     subsets: ['latin'],
