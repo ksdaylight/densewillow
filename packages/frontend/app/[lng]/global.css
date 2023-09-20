@@ -20,6 +20,23 @@
 }
 
 
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfairDisplay; 
+  }
+
+  h1 {
+    @apply text-5xl font-bold;
+  }
+
+  h2 {
+    @apply text-2xl font-bold;
+  }
+  
+  p {
+    @apply font-ubuntu; 
+  }
+}
 @layer utilities {
   .rich-text h2 {
     @apply mb-3 text-3xl font-semibold text-neutral-900 dark:text-neutral-100;

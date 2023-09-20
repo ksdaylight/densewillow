@@ -44,6 +44,9 @@ importers:
       '@nestjs/platform-fastify':
         specifier: ^9.0.11
         version: 9.0.11(@fastify/static@6.10.2)(@nestjs/common@10.0.2)(@nestjs/core@10.0.2)
+      '@next/font':
+        specifier: ^13.5.1
+        version: 13.5.1
       '@prisma/client':
         specifier: ^5.1.1
         version: 5.1.1(prisma@5.1.1)
@@ -3760,6 +3763,10 @@ packages:
     dependencies:
       glob: 7.1.7
     dev: true
+
+  /@next/font@13.5.1:
+    resolution: {integrity: sha512-LrEkQ3z4SC1rq6t4/HwcqoPOITF6GQpQhkW6y/tvBjGwum7CTuj0Ne5uLri6G5suoSd/zb3l0/3Q2jYCI0cKJQ==}
+    dev: false
 
   /@next/swc-darwin-arm64@13.4.19:
     resolution: {integrity: sha512-vv1qrjXeGbuF2mOkhkdxMDtv9np7W4mcBtaDnHU+yJG+bBwa6rYsYSCI/9Xm5+TuF5SbZbrWO6G1NfTh1TMjvQ==}

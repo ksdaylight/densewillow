@@ -1,5 +1,6 @@
 import Providers from '@frontend/utils/provider';
 import { dir } from 'i18next';
+import { Playfair_Display, Ubuntu } from '@next/font/google';
 import { UserRoleContextProvider } from '@frontend/context/role-info';
 
 import Script from 'next/script';
@@ -9,6 +10,17 @@ import { languages } from '../i18n/settings';
 
 import './global.css';
 
+const playfairDisplay = Playfair_Display({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-playfair-display',
+});
+const ubuntu = Ubuntu({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-ubuntu',
+    weight: ['300', '400', '500', '700'],
+});
 interface StaticParams {
     lng: string;
 }
@@ -60,7 +72,11 @@ interface RootLayoutProps {
 }
 const RootLayout = async ({ children, params: { lng } }: RootLayoutProps) => {
     return (
-        <html lang={lng} dir={dir(lng)}>
+        <html
+            lang={lng}
+            dir={dir(lng)}
+            className={`${playfairDisplay.variable} ${ubuntu.variable}`}
+        >
             <Script
                 strategy="afterInteractive"
                 src="https://www.googletagmanager.com/gtag/js?id=G-FK5NCXNE8L"

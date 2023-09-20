@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     if (!token || token !== process.env.REVALIDATE_TOKEN)
         return NextResponse.json({ error: 'Not authorized' }, { status: 401 });
     // Revalidate All Posts
-    revalidatePath(`/[lng]/[slug]`);
+    revalidatePath(`/[lng]/post/[slug]`);
     // Revalidate All Languages
     revalidatePath(`/[lng]`);
 
