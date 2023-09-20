@@ -14,13 +14,16 @@ module.exports = {
         extend: {
             colors: {
                 'primary-dark': '#1f1f1f',
-                primary: '#ffffff',
+                dark_bg: '#151516',
+                primary: '#658DF2',
+                gray: '#B6B7BA',
+                secondary_gray: '#808185',
                 highlight: {
                     dark: '#FFFFFF',
                     light: '#1f1f1f',
                 },
                 secondary: {
-                    dark: '#707070',
+                    dark: '#1E1E20',
                     light: '#e6e6e6',
                 },
                 action: '#3B82F6',

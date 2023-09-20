@@ -20,7 +20,11 @@
 }
 
 
+
 @layer base {
+  * {
+    color: #fff;
+  }
   h1, h2, h3, h4, h5, h6 {
     @apply font-playfairDisplay; 
   }
@@ -50,3 +54,4 @@
     @apply mb-3 leading-snug text-neutral-700 dark:text-neutral-300;
   }
 }
+
