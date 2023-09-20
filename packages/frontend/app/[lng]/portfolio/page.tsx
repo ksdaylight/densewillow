@@ -1,4 +1,6 @@
 import { NextPage } from 'next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {}
 
@@ -25,6 +27,7 @@ const Portfolio: NextPage<Props> = async () => {
                 <h1>Cheetah Academy</h1>
                 <h2>Cheetah Academy</h2>
                 <p className="text-3xl">Paragraph</p>
+                <FontAwesomeIcon icon={faEnvelope} size="6x" />
             </main>
         </>
     );
