@@ -20,7 +20,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
     return (
         <div className="min-h-screen bg-dark_bg ">
             <Sidebar navItems={navItems} onSectionChange={handleSectionChange} />
-            <main className="pl-[102px]">
+            <main className="pl-0 pt-[50px] md:pl-[102px] md:pt-0 ">
                 <section className={`bg-[#666] ${currentSection === '#home' ? 'block' : 'hidden'}`}>
                     Home
                 </section>
