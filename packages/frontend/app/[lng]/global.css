@@ -53,5 +53,9 @@
   .rich-text p {
     @apply mb-3 leading-snug text-neutral-700 dark:text-neutral-300;
   }
+
+  .btn-custom-blue {
+      @apply inline-block relative bg-[#262f48] no-underline text-primary z-[1] overflow-hidden transition-all duration-[0.3s] px-[52px] py-[10px] rounded-[8px] before:content-[''] before:bg-primary before:absolute before:w-[100px] before:h-[100px] before:opacity-30 before:-translate-x-2/4 before:-translate-y-2/4 before:z-[-1] before:transition-all before:duration-[0.3s] before:rounded-[50%] before:scale-0 before:left-2/4 before:top-2/4 hover:text-white hover:before:-translate-x-2/4 hover:before:-translate-y-2/4 hover:before:scale-[2];
+  }
 }
 
