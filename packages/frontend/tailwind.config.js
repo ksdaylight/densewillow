@@ -32,6 +32,12 @@ module.exports = {
                 playfairDisplay: ['var(--font-playfair-display)', ...fontFamily.serif],
                 ubuntu: ['var(--font-ubuntu)', ...fontFamily.sans],
             },
+            keyframes: {
+                meteor: {
+                    '0%': { transform: 'translate(300px, -300px)', opacity: 1 },
+                    '15%': { transform: 'translate(-300px, 300px)', opacity: 0 },
+                },
+            },
         },
         backgroundImage: {
             'png-pattern': "url('/empty-bg.jpg')",
