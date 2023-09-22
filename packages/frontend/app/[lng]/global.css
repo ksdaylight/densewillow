@@ -30,11 +30,11 @@
   }
 
   h1 {
-    @apply text-5xl font-bold;
+    @apply text-4xl md:text-5xl font-bold;
   }
 
   h2 {
-    @apply text-2xl font-bold;
+    @apply text-xl md:text-2xl font-bold;
   }
   
   p {

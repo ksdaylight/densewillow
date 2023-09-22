@@ -76,7 +76,7 @@ export const Sidebar: React.FC<Props> = ({ navItems, onSectionChange }) => {
         <div
             ref={navRef}
             id="sidebar"
-            className="fixed h-screen pl-[39px] pr-[60px] md:pl-[39px] md:pr-[39px] flex flex-col bg-black md:bg-dark_bg duration-[0.3s]"
+            className="fixed h-screen pl-[39px] pr-[60px] md:pl-[39px] md:pr-[39px] flex flex-col bg-black md:bg-dark_bg duration-[0.3s] z-50"
         >
             <button
                 onClick={updateNavState}
