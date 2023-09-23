@@ -29,9 +29,9 @@
     @apply 2xl:max-w-[1200px];
   }
   body {
-     @apply bg-dark_bg font-ubuntu
+    @apply bg-dark_bg font-ubuntu
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h4, h5, h6 {
     @apply font-playfairDisplay; 
   }
 
@@ -43,6 +43,10 @@
     @apply text-xl md:text-2xl font-bold;
   }
   
+  h3 {
+    @apply font-ubuntu text-lg font-normal;
+  }
+
   p {
     @apply font-ubuntu  leading-[175%]; 
   }
@@ -63,8 +67,6 @@
   .btn-custom-base{
       @apply inline-block relative  no-underline text-primary z-[1] overflow-hidden transition-all duration-[0.3s] px-[52px] py-[10px] rounded-[8px] before:content-[''] before:bg-primary before:absolute before:w-[100px] before:h-[100px] before:opacity-30 before:-translate-x-2/4 before:-translate-y-2/4 before:z-[-1] before:transition-all before:duration-[0.3s] before:rounded-[50%] before:scale-0 before:left-2/4 before:top-2/4 hover:text-white hover:before:-translate-x-2/4 hover:before:-translate-y-2/4 hover:before:scale-[2];
   }
-
-
   
   .header-has-bg {
      @apply relative;
@@ -72,5 +74,17 @@
   .header-has-bg-image {
      @apply absolute left-[-13] top-[-4] md:left-[-72px] md:top-[15px];
   }
+
+  .header-custom {
+      @apply relative text-center before:content-[""] before:absolute before:w-full before:h-[2px] before:-translate-y-2/4 before:z-[-1] before:left-0 before:top-2/4 before:bg-secondary-dark
+  }
+
+  .rate-span {
+      @apply relative flex w-[15px] h-[15px] mr-[12px] before:absolute before:content-[""] before:w-[15px] before:h-[15px] before:rounded before:rotate-[40deg] before:bg-primary  after:absolute after:content-[""] after:w-[15px] after:h-[15px] after:rounded after:rotate-[50deg] after:bg-primary
+  }
+  .web-skill {
+      @apply relative text-center z-[1] overflow-hidden mb-4 px-2 py-8 rounded-lg bg-secondary-dark before:absolute before:content-[""] before:w-full before:h-full before:z-[-1] before:translate-x-full before:-translate-y-full before:transition-all before:duration-[0.6s] before:rounded-lg before:left-0 before:top-0 before:bg-[#0b2c80] after:absolute after:content-[""] after:w-full after:h-full after:z-[-1] after:-translate-x-full after:translate-y-full after:transition-all after:duration-[0.6s] after:rounded-lg after:left-0 after:top-0 after:bg-[#0b2c80] hover:before:translate-x-0 hover:before:translate-y-0 hover:after:translate-x-0 hover:after:translate-y-0
+  }
+
 }
 

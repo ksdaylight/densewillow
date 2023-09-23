@@ -12,6 +12,7 @@ import { RiMenuFoldFill, RiMenuUnfoldFill } from 'react-icons/ri';
 type NavItem = { label: string; icon: string; href: string };
 interface Props {
     navItems: NavItem[];
+    activeItem: string | null;
     onSectionChange: (sectionId: string) => void;
 }
 type IconNames = 'home' | 'idCard' | 'file' | 'briefcase' | 'comment' | 'phone';
@@ -28,14 +29,11 @@ const NAV_CLOSE_CLASSES = ['-translate-x-full', 'md:translate-x-0'];
 const NAV_OPEN_CLASSES = ['translate-x-0', 'transition-all', 'duration-[0.3s]'];
 const NAV_VISIBILITY = 'nav-visibility';
 
-export const Sidebar: React.FC<Props> = ({ navItems, onSectionChange }) => {
+export const Sidebar: React.FC<Props> = ({ navItems, onSectionChange, activeItem }) => {
     const navRef = useRef<HTMLDivElement>(null);
     const [visible, setVisible] = useState(true);
 
-    const [active, setActive] = useState<string | null>(null);
-
     const handleClick = (item: NavItem) => {
-        setActive(item.href);
         onSectionChange(item.href);
     };
     const toggleNav = (visibility: boolean) => {
@@ -103,14 +101,14 @@ export const Sidebar: React.FC<Props> = ({ navItems, onSectionChange }) => {
                                 <Link
                                     href={item.href}
                                     className={`group/link ${
-                                        active === item.href
+                                        activeItem === item.href
                                             ? 'before:opacity-[0.15] before:scale-100 before:-translate-y-1/2 before:-translate-x-1/2 text-primary'
                                             : ''
                                     } flex items-center no-underline md:relative before:content-[''] before:absolute before:w-[46px] before:h-[46px] before:rounded-full before:bg-primary before:opacity-0 before:top-1/2 before:left-1/2 before:-translate-y-1/2 before:-translate-x-1/2 before:scale-0 before:transition-all before:duration-300`}
                                 >
                                     <Icon
                                         className={`text-[18px] group-hover/link:fill-white transition-all duration-[0.3s] ${
-                                            active === item.href ? 'fill-primary' : 'fill-gray '
+                                            activeItem === item.href ? 'fill-primary' : 'fill-gray '
                                         }`}
                                     />
                                     <span className="block md:hidden pl-[8px]">{item.label}</span>
@@ -127,7 +125,7 @@ export const Sidebar: React.FC<Props> = ({ navItems, onSectionChange }) => {
                 <div id="outer" className="w-6 h-[35px] rounded-3xl bg-[#1e1e20]">
                     <div
                         id="inner"
-                        className='relative w-3.5 h-3.5 mt-4 mx-auto rounded-[50%] bg-[#658df2]  before:absolute before:content-[""] before:w-3.5 before:h-3.5 before:rounded-[50%] before:left-[3px] before:-top-1 before:bg-[#1e1e20]'
+                        className='relative w-3.5 h-3.5 mt-4 mx-auto rounded-[50%] bg-[#658df2]  before:absolute before:content-[""] before:w-3.5 before:h-3.5 before:rounded-[50%] before:left-[3px] before:-top-1 before:bg-[#24244f]'
                     />
                 </div>
             </div>

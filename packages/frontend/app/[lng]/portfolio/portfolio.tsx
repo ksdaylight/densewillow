@@ -26,6 +26,9 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
     const handleSectionChange = (sectionId: string) => {
         setCurrentSection(sectionId);
     };
+    const handleChangeSectionClick = (sectionId: string) => {
+        setCurrentSection(sectionId);
+    };
 
     useEffect(() => {
         const typed = new Typed(el.current, {
@@ -42,7 +45,11 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
     }, []);
     return (
         <div className="min-h-screen bg-dark_bg ">
-            <Sidebar navItems={navItems} onSectionChange={handleSectionChange} />
+            <Sidebar
+                navItems={navItems}
+                onSectionChange={handleSectionChange}
+                activeItem={currentSection}
+            />
             <main className="pl-0 pt-[50px] md:pl-[102px] md:pt-0 ">
                 <section
                     className={`${
@@ -157,9 +164,9 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                         currentSection === '#about_me' ? 'block' : 'hidden'
                     } md:pt-[64px]`}
                 >
-                    <div className="relative container mx-auto z-20 flex items-center justify-center">
-                        <div className="flex flex-wrap w-3/4 min-w-0">
-                            <div className="w-full lg:w-1/3 2xl:w-1/2  lg:h-screen flex items-start ">
+                    <div className="relative container mx-auto z-20 flex items-center justify-center flex-col">
+                        <div className="flex flex-wrap w-3/4 min-w-0 h-auto">
+                            <div className="w-full lg:w-1/3 2xl:w-1/2 flex items-start ">
                                 <Image
                                     src="/images/person-about.png"
                                     alt="person about"
@@ -192,8 +199,8 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                 </p>
                                 <div id="about_items">
                                     <div className="container">
-                                        <div className="w-full flex">
-                                            <div className="w-1/2 mt-[30px] mb-[48px]">
+                                        <div className="w-full flex flex-col md:flex-row">
+                                            <div className="w-full md:w-1/2 mt-[30px] md:mb-[48px]">
                                                 <div className="flex mb-[16px]">
                                                     <span className="title">Name:</span>
                                                     <span className="text-gray ml-[4px]">
@@ -211,7 +218,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div className="w-1/2 mt-[30px] mb-[48px]">
+                                            <div className="w-full md:w-1/2 md:mt-[30px] mb-[48px]">
                                                 <div className="flex mb-[16px]">
                                                     <span className="title">
                                                         Years of experience:
@@ -249,10 +256,247 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                     <a
                                         href="#contact_me"
                                         className="btn-custom-base bg-secondary-dark w-full md:w-auto text-center"
-                                        download=""
+                                        onClick={() => handleChangeSectionClick('#contact_me')}
                                     >
                                         Message me
                                     </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            id="row-languages-skills"
+                            className="flex flex-wrap w-3/4 min-w-0 mt-[126px]"
+                        >
+                            <div
+                                id="languages-key-skills"
+                                className="w-full lg:w-1/2 md:pr-3 xl:pr-[160px]"
+                            >
+                                <div id="languages">
+                                    <header className="header-custom">
+                                        <h2 className="inline-block px-6 py-0 bg-dark_bg">
+                                            Languages
+                                        </h2>
+                                    </header>
+                                    <ul className="items">
+                                        <li className="flex items-center justify-between mt-[38px] mb-[43px]">
+                                            <div>
+                                                <h3 className="mt-[4px]">English</h3>
+                                                <span className="text-gray">Native</span>
+                                            </div>
+                                            <div className="flex">
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span before:bg-secondary-dark after:bg-secondary-dark" />
+                                            </div>
+                                        </li>
+                                        <li className="flex items-center justify-between mt-[38px] mb-[43px]">
+                                            <div>
+                                                <h3>French</h3>
+                                                <span className="text-gray">Conversational</span>
+                                            </div>
+                                            <div className="flex">
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span before:bg-secondary-dark after:bg-secondary-dark" />
+                                                <span className="rate-span before:bg-secondary-dark after:bg-secondary-dark" />
+                                                <span className="rate-span before:bg-secondary-dark after:bg-secondary-dark" />
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className="key-skills">
+                                    <header className="header-custom">
+                                        <h2 className="inline-block px-6 py-0 bg-dark_bg">
+                                            Key Skills
+                                        </h2>
+                                    </header>
+                                    <ul className="mt-[53px]">
+                                        <li className="flex justify-between items-center mb-[32px]">
+                                            <h3>Problem Solving</h3>
+                                            <div className="flex">
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                            </div>
+                                        </li>
+                                        <li className="flex justify-between items-center mb-[32px]">
+                                            <h3>Team working</h3>
+                                            <div className="flex">
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                            </div>
+                                        </li>
+                                        <li className="flex justify-between items-center">
+                                            <h3>Communication</h3>
+                                            <div className="flex">
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="web-skills" className="w-full lg:w-1/2 mt-12 lg:mt-0">
+                                <header className="header-custom">
+                                    <h2 className="inline-block px-6 py-0 bg-dark_bg">
+                                        My Web Skills
+                                    </h2>
+                                </header>
+                                <div className="container w-full">
+                                    <div className="flex flex-wrap mt-[42px] -mx-5">
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/html5.png"
+                                                    alt="html5"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">HTML 5</h3>
+                                                <span className="text-[#FF9F76]">over 5 years</span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/css3.png"
+                                                    alt="css3"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">CSS 3</h3>
+                                                <span className="text-[#FF9F76]">over 5 years</span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/bootstrap.png"
+                                                    alt="bootstrap"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">Bootstrap</h3>
+                                                <span className="text-[#FF9F76]">4 years</span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/vuejs.png"
+                                                    alt="vuejs"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">Vue.js</h3>
+                                                <span className="text-[#FF9F76]">
+                                                    about 3 years
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/js.png"
+                                                    alt="JavaScript"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">JavaScript</h3>
+                                                <span className="text-[#FF9F76]">3 years</span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/jquery.png"
+                                                    alt="jQuery"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">jQuery</h3>
+                                                <span className="text-[#FF9F76]">
+                                                    about 2 years
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/jquery.png"
+                                                    alt="jQuery"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">jQuery</h3>
+                                                <span className="text-[#FF9F76]">
+                                                    about 2 years
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/jquery.png"
+                                                    alt="jQuery"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">jQuery</h3>
+                                                <span className="text-[#FF9F76]">
+                                                    about 2 years
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/jquery.png"
+                                                    alt="jQuery"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">jQuery</h3>
+                                                <span className="text-[#FF9F76]">
+                                                    about 2 years
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/jquery.png"
+                                                    alt="jQuery"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">jQuery</h3>
+                                                <span className="text-[#FF9F76]">
+                                                    about 2 years
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
