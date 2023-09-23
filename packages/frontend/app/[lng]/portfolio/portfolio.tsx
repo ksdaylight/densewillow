@@ -21,26 +21,11 @@ const navItems = [
 ];
 interface Props {}
 const PortfolioClient: FC<Props> = (): JSX.Element => {
-    const [currentSection, setCurrentSection] = useState<string | null>('#home');
+    const [currentSection, setCurrentSection] = useState<string | null>('#about_me');
     const el = useRef<HTMLHeadingElement>(null);
     const handleSectionChange = (sectionId: string) => {
         setCurrentSection(sectionId);
     };
-    // const randomNumber = [
-    //     58, 75, 7, 90, 95, 85, 59, 86, 15, 17, 67, 50, 20, 3, 62, 4, 86, 28, 38, 16, 17, 16, 9, 11,
-    //     37, 17, 57, 39, 4, 36,
-    // ]; 去除报错 Prop `style` did not match. Server: "top:87vh;left:84vw" Client: "top:54vh;left:82vw"
-    // const generateSpanElements = () => {
-    //     const elements = [];
-    //     for (let i = 0; i < 15; i++) {
-    //         const key = `meteor-${i}`; // Create a unique key
-    //         const classItem = `absolute bg-red-700 w-[60px] h-[49px] left-[${random(
-    //             300,
-    //         )}px] top-[${random(300)}px]`; // bg-[url('/images/meteor.png')]
-    //         elements.push(<span key={key} className={classItem} />);
-    //     }
-    //     return elements;
-    // };
 
     useEffect(() => {
         const typed = new Typed(el.current, {
@@ -85,7 +70,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                     </div>
                     <div className="relative container mx-auto z-20 flex items-center justify-center">
                         <div className="flex flex-wrap md:w-3/4 min-w-0">
-                            <div className="w-full lg:w-1/2 px-[32px] ">
+                            <div className="w-full lg:w-1/2 px-[32px]">
                                 <div id="info" className="pt-[80px] md:pt-[281px]">
                                     <Image
                                         src="/images/person-circle.png"
@@ -110,7 +95,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                     <a
                                         href="assets/files/cv.pdf"
                                         download
-                                        className="btn-custom-blue"
+                                        className="btn-custom-base bg-[#262f48]"
                                     >
                                         Download CV
                                     </a>
@@ -167,34 +152,135 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                     </div>
                 </section>
                 <section
-                    id="about"
-                    className={`bg-[#666] ${currentSection === '#about_me' ? 'block' : 'hidden'}`}
+                    id="about_me"
+                    className={` ${
+                        currentSection === '#about_me' ? 'block' : 'hidden'
+                    } md:pt-[64px]`}
                 >
-                    About
+                    <div className="relative container mx-auto z-20 flex items-center justify-center">
+                        <div className="flex flex-wrap w-3/4 min-w-0">
+                            <div className="w-full lg:w-1/3 2xl:w-1/2  lg:h-screen flex items-start ">
+                                <Image
+                                    src="/images/person-about.png"
+                                    alt="person about"
+                                    className="transition-all duration-[0.3s] rounded-[8px] hover:saturate-[200%] hover:sepia-[1]"
+                                    width={432}
+                                    height={657}
+                                />
+                            </div>
+                            <div className="w-full lg:w-2/3 2xl:w-1/2 px-[12px]">
+                                <header className="header-has-bg mt-[10px] mb-[42px]">
+                                    <Image
+                                        src="/images/h1-bg.png"
+                                        alt="h1 bg"
+                                        width={166}
+                                        height={75}
+                                        className="header-has-bg-image"
+                                    />
+                                    <h1>About Me</h1>
+                                </header>
+                                <h2 className="text-gray mb-[16px]">Front-End web developer</h2>
+                                <p className="max-w-[560px] text-gray">
+                                    {`I'm a web developer with +5 years experience. I work on projects
+                                    as a Front-End and Back-End developer. as a Front-End developer,
+                                    I'm Fluent in HTML, CSS, Bootstrap, SCSS, Javascript, jQuery,
+                                    Vue.js, and as a Back-End developer, I'm fluent in PHP,
+                                    WordPress, and Laravel.
+                                    
+                                    This is my motto: "Everyone can start, but only a few can
+                                    finish`}
+                                </p>
+                                <div id="about_items">
+                                    <div className="container">
+                                        <div className="w-full flex">
+                                            <div className="w-1/2 mt-[30px] mb-[48px]">
+                                                <div className="flex mb-[16px]">
+                                                    <span className="title">Name:</span>
+                                                    <span className="text-gray ml-[4px]">
+                                                        Mojtaba
+                                                    </span>
+                                                </div>
+                                                <div className="flex mb-[16px]">
+                                                    <span className="title">Age:</span>
+                                                    <span className="text-gray  ml-[4px]">29</span>
+                                                </div>
+                                                <div className="flex mb-[16px]">
+                                                    <span className="title">Location:</span>
+                                                    <span className="text-gray  ml-[4px]">
+                                                        Frankfurt
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="w-1/2 mt-[30px] mb-[48px]">
+                                                <div className="flex mb-[16px]">
+                                                    <span className="title">
+                                                        Years of experience:
+                                                    </span>
+                                                    <span className="text-gray  ml-[4px]">
+                                                        +5 Years
+                                                    </span>
+                                                </div>
+                                                <div className="flex mb-[16px]">
+                                                    <span className="title">Phone:</span>
+                                                    <span className="text-gray  ml-[4px]">
+                                                        +1 234 567 8901
+                                                    </span>
+                                                </div>
+                                                <div className="flex mb-[16px]">
+                                                    <span className="title whitespace-nowrap">
+                                                        E-mail:
+                                                    </span>
+                                                    <span className="text-gray ml-[4px]">
+                                                        smo.hayati@gmail.com
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-wrap flex-col md:flex-row">
+                                    <a
+                                        href="assets/files/cv.pdf"
+                                        className="btn-custom-base bg-[#262f48] mr-[24px] mb-[16px] md:mb-0 w-full md:w-auto text-center"
+                                        download=""
+                                    >
+                                        Download CV
+                                    </a>
+                                    <a
+                                        href="#contact_me"
+                                        className="btn-custom-base bg-secondary-dark w-full md:w-auto text-center"
+                                        download=""
+                                    >
+                                        Message me
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
                 <section
                     id="resume"
-                    className={`bg-[#666] ${currentSection === '#my_resume' ? 'block' : 'hidden'}`}
+                    className={`${currentSection === '#my_resume' ? 'block' : 'hidden'} pt-[64px]`}
                 >
                     Resume
                 </section>
                 <section
                     id="work"
-                    className={`bg-[#666] ${currentSection === '#my_work' ? 'block' : 'hidden'}`}
+                    className={` ${currentSection === '#my_work' ? 'block' : 'hidden'} pt-[64px]`}
                 >
                     Work
                 </section>
                 <section
                     id="testimonial"
-                    className={`bg-[#666] ${
+                    className={`${
                         currentSection === '#testimonial' ? 'block' : 'hidden'
-                    }`}
+                    } pt-[64px]`}
                 >
                     Testimonial
                 </section>
                 <section
                     id="contact"
-                    className={`bg-[#666] ${currentSection === '#contact_me' ? 'block' : 'hidden'}`}
+                    className={`${currentSection === '#contact_me' ? 'block' : 'hidden'} pt-[64px]`}
                 >
                     Contact
                 </section>
