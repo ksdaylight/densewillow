@@ -3,6 +3,7 @@
 import { Sidebar } from '@frontend/components/common/Siderbar';
 import { FC, useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
+import Shuffle from 'shufflejs';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,7 +12,7 @@ import { LiaUniversitySolid } from 'react-icons/lia';
 import { BiLogoStackOverflow } from 'react-icons/bi';
 import { BsBriefcase } from 'react-icons/bs';
 import { AiFillGithub } from 'react-icons/ai';
-import { random } from 'lodash';
+import { isNil, random } from 'lodash';
 
 const navItems = [
     { href: '#home', icon: 'home', label: 'Home' },
@@ -23,8 +24,13 @@ const navItems = [
 ];
 interface Props {}
 const PortfolioClient: FC<Props> = (): JSX.Element => {
-    const [currentSection, setCurrentSection] = useState<string | null>('#my_resume');
-    const el = useRef<HTMLHeadingElement>(null);
+    const [currentSection, setCurrentSection] = useState<string | null>('#my_work');
+    const typedEl = useRef<HTMLHeadingElement>(null);
+    const [currentGroup, setCurrentGroup] = useState('All');
+
+    const shuffleRef = useRef<Shuffle | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+
     const handleSectionChange = (sectionId: string) => {
         setCurrentSection(sectionId);
     };
@@ -32,8 +38,38 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
         setCurrentSection(sectionId);
     };
 
+    const handleFilter = (group: string) => {
+        setCurrentGroup(group);
+
+        if (shuffleRef.current) {
+            if (group === 'All') {
+                shuffleRef.current.filter();
+            } else {
+                shuffleRef.current.filter((element) => {
+                    const groups = JSON.parse(element.getAttribute('data-groups') || '[]');
+                    return groups.includes(group);
+                });
+            }
+        }
+    };
+
     useEffect(() => {
-        const typed = new Typed(el.current, {
+        if (isNil(containerRef.current)) return;
+        shuffleRef.current = new Shuffle(containerRef.current, {
+            itemSelector: '.js-item',
+        });
+
+        // eslint-disable-next-line consistent-return
+        return () => {
+            if (shuffleRef.current) {
+                console.log('干掉');
+                shuffleRef.current.destroy();
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        const typed = new Typed(typedEl.current, {
             strings: ['Front-End web developer', 'Back-End web developer', 'Web designer'],
             loop: true,
             typeSpeed: 70,
@@ -92,7 +128,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                         <span className="text-gray">I’m</span> Mojtaba,
                                     </h1>
                                     <div className="flex  items-center mb-[16px]">
-                                        <h2 ref={el} className="text-gray mr-[2px]">
+                                        <h2 ref={typedEl} className="text-gray mr-[2px]">
                                             Front-End web developer
                                         </h2>
                                     </div>
@@ -640,7 +676,177 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                     id="work"
                     className={` ${currentSection === '#my_work' ? 'block' : 'hidden'} pt-[64px]`}
                 >
-                    Work
+                    <div className="text-center">
+                        <header className="header-has-bg">
+                            <Image
+                                src="/images/h1-bg.png"
+                                alt="h1 bg"
+                                width={166}
+                                height={75}
+                                className="header-has-bg-image"
+                            />
+                            <h1>My Work</h1>
+                        </header>
+                    </div>
+                    <div className="filters">
+                        <button
+                            className={`mr-8 my-8 bg-black  ${
+                                currentGroup === 'All' ? 'bg-red-700' : 'bg-black'
+                            }`}
+                            onClick={() => handleFilter('All')}
+                        >
+                            <h4>All</h4>
+                        </button>
+                        <button
+                            className={`mr-8 my-8 bg-black  ${
+                                currentGroup === 'Web Developing' ? 'active' : ''
+                            }`}
+                            onClick={() => handleFilter('Web Developing')}
+                        >
+                            <h4>Web Developing</h4>
+                        </button>
+                        <button
+                            className={`mr-8 my-8 bg-black ${
+                                currentGroup === 'Video' ? 'active' : ''
+                            }`}
+                            onClick={() => handleFilter('Video')}
+                        >
+                            <h4>Video</h4>
+                        </button>
+                        <button
+                            className={`mr-8 my-8 bg-black  ${
+                                currentGroup === 'SEO' ? 'active' : ''
+                            }`}
+                            onClick={() => handleFilter('SEO')}
+                        >
+                            <h4>SEO</h4>
+                        </button>
+                    </div>
+                    <div className="container">
+                        <div
+                            ref={containerRef}
+                            id="work-items"
+                            className="flex flex-wrap w-3/4 min-w-0 h-auto mx-auto"
+                        >
+                            <div
+                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                data-groups='["Web Developing", "SEO"]'
+                            >
+                                <div className="wrap">
+                                    <Image
+                                        src="/images/works/1.png"
+                                        alt="work"
+                                        width={1053}
+                                        height={817}
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                data-groups='["Web Developing", "SEO"]'
+                            >
+                                <div className="wrap">
+                                    <Image
+                                        src="/images/works/2.png"
+                                        alt="work"
+                                        width={1053}
+                                        height={817}
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                data-groups='["SEO", "Video"]'
+                            >
+                                <div className="wrap">
+                                    <Image
+                                        src="/images/works/3.png"
+                                        alt="work"
+                                        width={1053}
+                                        height={817}
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                data-groups='["SEO"]'
+                            >
+                                <div className="wrap">
+                                    <Image
+                                        src="/images/works/4.png"
+                                        alt="work"
+                                        width={1053}
+                                        height={817}
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                data-groups='["Web Developing"]'
+                            >
+                                <div className="wrap">
+                                    <Image
+                                        src="/images/works/5.png"
+                                        alt="work"
+                                        width={1053}
+                                        height={817}
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                data-groups='["Video", "SEO"]'
+                            >
+                                <div className="wrap">
+                                    <Image
+                                        src="/images/works/6.png"
+                                        alt="work"
+                                        width={1053}
+                                        height={817}
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                data-groups='["Video", "SEO"]'
+                            >
+                                <div className="wrap">
+                                    <Image
+                                        src="/images/works/7.png"
+                                        alt="work"
+                                        width={1053}
+                                        height={817}
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                data-groups='["Web Developing"]'
+                            >
+                                <div className="wrap">
+                                    <Image
+                                        src="/images/works/8.png"
+                                        alt="work"
+                                        width={1053}
+                                        height={817}
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                data-groups='["Web Developing"]'
+                            >
+                                <div className="wrap">
+                                    <Image
+                                        src="/images/works/9.png"
+                                        alt="work"
+                                        width={1053}
+                                        height={817}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
                 <section
                     id="testimonial"

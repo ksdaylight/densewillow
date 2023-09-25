@@ -158,6 +158,7 @@
         "reading-time": "^1.5.0",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.8.0",
+        "shufflejs": "^6.1.0",
         "slugify": "^1.6.5",
         "tslib": "^2.5.3",
         "typed.js": "^2.0.16",
