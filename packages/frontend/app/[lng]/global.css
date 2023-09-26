@@ -47,6 +47,10 @@
     @apply font-ubuntu text-lg font-normal;
   }
 
+  h4 {
+    @apply text-xl font-bold
+  }
+
   p {
     @apply font-ubuntu  leading-[175%]; 
   }
@@ -71,7 +75,7 @@
   .header-has-bg {
      @apply relative inline-flex;
   }
-  .header-has-bg-image {
+  .header-has-bg img {
      @apply absolute left-[-13] top-[-4] md:left-[-72px] md:top-[15px];
   }
 
@@ -92,6 +96,11 @@
 
    .resume-item-box {
       @apply relative grow text-left z-[1] transition-all duration-[0.3s] p-8 rounded-lg bg-[#1e1e20bf] before:hidden md:before:flex before:content-[""] before:absolute  before:border-r-[9px] before:border-r-[#1e1e20bf] before:border-y-[9px] before:border-y-transparent before:border-solid before:top-9 before:left-[-9px] after:content-[""] after:absolute after:w-0 after:h-full after:z-[-1] after:transition-all after:duration-[0.3s] after:rounded-lg after:left-0 after:top-0 after:bg-[#0b2c8066] group-hover:bg-transparent group-hover:before:border-r-[#0b2c8066] group-hover:after:w-full
+  }
+
+  .work-item-wrap {
+      @apply relative overflow-hidden before:content-[""] before:absolute before:w-full before:h-full before:z-[1] before:cursor-pointer before:rotate-[-100deg] before:origin-top-left before:transition-all before:duration-[0.3s] before:rounded-lg before:bg-[#658df299]  after:content-["View"] after:absolute after:w-[96%] after:h-[95%] after:origin-bottom-left after:-translate-x-2/4 after:-translate-y-2/4 after:rotate-[100deg] after:flex after:justify-center after:items-center after:text-2xl after:tracking-[3px] after:z-[2] after:cursor-pointer after:transition-all after:duration-[0.3s] after:rounded-lg after:left-2/4 after:top-2/4 after:bg-[#151516cc] hover:before:rotate-0 hover:after:-translate-x-2/4 hover:after:-translate-y-2/4 hover:after:rotate-0
+
   }
 
 }

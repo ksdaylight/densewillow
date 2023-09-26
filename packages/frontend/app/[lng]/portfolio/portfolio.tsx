@@ -13,6 +13,7 @@ import { BiLogoStackOverflow } from 'react-icons/bi';
 import { BsBriefcase } from 'react-icons/bs';
 import { AiFillGithub } from 'react-icons/ai';
 import { isNil, random } from 'lodash';
+import WorksDialog, { WorkInfo } from '@frontend/components/common/WorksDialog';
 
 const navItems = [
     { href: '#home', icon: 'home', label: 'Home' },
@@ -31,11 +32,19 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
     const shuffleRef = useRef<Shuffle | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
+    const [workDialogIsOpen, setWorkDialogIsOpen] = useState(false);
+    const [workDialogInfo, setWorkDialogInfo] = useState<WorkInfo | null>(null);
+
     const handleSectionChange = (sectionId: string) => {
         setCurrentSection(sectionId);
     };
     const handleChangeSectionClick = (sectionId: string) => {
         setCurrentSection(sectionId);
+    };
+
+    const handleWorkItemOnClick = (info?: WorkInfo) => {
+        setWorkDialogInfo(info || null);
+        setWorkDialogIsOpen(true);
     };
 
     const handleFilter = (group: string) => {
@@ -62,7 +71,6 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
         // eslint-disable-next-line consistent-return
         return () => {
             if (shuffleRef.current) {
-                console.log('干掉');
                 shuffleRef.current.destroy();
             }
         };
@@ -87,6 +95,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                 navItems={navItems}
                 onSectionChange={handleSectionChange}
                 activeItem={currentSection}
+                className={`${workDialogIsOpen ? 'blur-sm' : 'blur-none'}`}
             />
             <main className="pl-0 pt-[50px] md:pl-[102px] md:pt-0 ">
                 <section
@@ -220,7 +229,6 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                         alt="h1 bg"
                                         width={166}
                                         height={75}
-                                        className="header-has-bg-image"
                                     />
                                     <h1>About Me</h1>
                                 </header>
@@ -548,13 +556,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                 >
                     <div className="text-center">
                         <header className="header-has-bg mb-16">
-                            <Image
-                                src="/images/h1-bg.png"
-                                alt="h1 bg"
-                                width={166}
-                                height={75}
-                                className="header-has-bg-image"
-                            />
+                            <Image src="/images/h1-bg.png" alt="h1 bg" width={166} height={75} />
                             <h1>My Resume</h1>
                         </header>
                         <div className="relative flex items-center justify-center z-20">
@@ -674,180 +676,265 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                 </section>
                 <section
                     id="work"
-                    className={` ${currentSection === '#my_work' ? 'block' : 'hidden'} pt-[64px]`}
+                    className={` ${currentSection === '#my_work' ? 'block' : 'hidden'} ${
+                        workDialogIsOpen ? 'blur-sm' : 'blur-none'
+                    } pt-[64px]`}
                 >
                     <div className="text-center">
                         <header className="header-has-bg">
-                            <Image
-                                src="/images/h1-bg.png"
-                                alt="h1 bg"
-                                width={166}
-                                height={75}
-                                className="header-has-bg-image"
-                            />
+                            <Image src="/images/h1-bg.png" alt="h1 bg" width={166} height={75} />
                             <h1>My Work</h1>
                         </header>
                     </div>
-                    <div className="filters">
+                    <div className="text-center mt-[81px] mb-[55px]">
                         <button
-                            className={`mr-8 my-8 bg-black  ${
-                                currentGroup === 'All' ? 'bg-red-700' : 'bg-black'
+                            className={`mx-2 px-4 py-2 border-none mb-4 ${
+                                currentGroup === 'All'
+                                    ? 'rounded-lg bg-secondary-dark text-[#fff]'
+                                    : 'rounded-none bg-transparent text-secondary_gray'
                             }`}
                             onClick={() => handleFilter('All')}
                         >
-                            <h4>All</h4>
+                            <h4
+                                className={
+                                    currentGroup === 'All' ? 'text-[#fff]' : 'text-secondary_gray'
+                                }
+                            >
+                                All
+                            </h4>
                         </button>
                         <button
-                            className={`mr-8 my-8 bg-black  ${
-                                currentGroup === 'Web Developing' ? 'active' : ''
+                            className={`mx-2 px-4 py-2 border-none mb-4 ${
+                                currentGroup === 'Web Developing'
+                                    ? 'rounded-lg bg-secondary-dark text-[#fff]'
+                                    : 'rounded-none bg-transparent text-secondary_gray'
                             }`}
                             onClick={() => handleFilter('Web Developing')}
                         >
-                            <h4>Web Developing</h4>
+                            <h4
+                                className={
+                                    currentGroup === 'Web Developing'
+                                        ? 'text-[#fff]'
+                                        : 'text-secondary_gray'
+                                }
+                            >
+                                Web Developing
+                            </h4>
                         </button>
                         <button
-                            className={`mr-8 my-8 bg-black ${
-                                currentGroup === 'Video' ? 'active' : ''
+                            className={`mx-2 px-4 py-2 border-none mb-4 ${
+                                currentGroup === 'Video'
+                                    ? 'rounded-lg bg-secondary-dark text-[#fff]'
+                                    : 'rounded-none bg-transparent text-secondary_gray'
                             }`}
                             onClick={() => handleFilter('Video')}
                         >
-                            <h4>Video</h4>
+                            <h4
+                                className={
+                                    currentGroup === 'Video' ? 'text-[#fff]' : 'text-secondary_gray'
+                                }
+                            >
+                                Video
+                            </h4>
                         </button>
                         <button
-                            className={`mr-8 my-8 bg-black  ${
-                                currentGroup === 'SEO' ? 'active' : ''
+                            className={`mx-2 px-4 py-2 border-none mb-4 ${
+                                currentGroup === 'SEO'
+                                    ? 'rounded-lg bg-secondary-dark text-[#fff]'
+                                    : 'rounded-none bg-transparent text-secondary_gray'
                             }`}
                             onClick={() => handleFilter('SEO')}
                         >
-                            <h4>SEO</h4>
+                            <h4
+                                className={
+                                    currentGroup === 'SEO' ? 'text-[#fff]' : 'text-secondary_gray'
+                                }
+                            >
+                                SEO
+                            </h4>
                         </button>
                     </div>
-                    <div className="container">
+                    <div className="container mx-auto">
                         <div
                             ref={containerRef}
                             id="work-items"
                             className="flex flex-wrap w-3/4 min-w-0 h-auto mx-auto"
                         >
                             <div
-                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
                                 data-groups='["Web Developing", "SEO"]'
+                                onClick={() => {
+                                    handleWorkItemOnClick();
+                                }}
                             >
-                                <div className="wrap">
+                                <div className="work-item-wrap">
                                     <Image
                                         src="/images/works/1.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
+                                        className="w-full opacity-50 cursor-pointer rounded-lg"
                                     />
                                 </div>
                             </div>
                             <div
-                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
                                 data-groups='["Web Developing", "SEO"]'
+                                onClick={() => {
+                                    handleWorkItemOnClick({
+                                        imgUrl: '/images/works/2.png',
+                                        title: 'Antelope Canyon',
+                                        description: `It is a long established fact that a reader will be distracted by the
+                            readable content of a page when looking at its layout. The point of using
+                            Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
+                            opposed to using 'Content here, content here', making it look like readable
+                            English`,
+                                        client: 'Cheetah Academy',
+                                        Completed: 'December 29 2022',
+                                        skill: 'HTML, CSS, Javascript TS',
+                                        project_link: '#2',
+                                    });
+                                }}
                             >
-                                <div className="wrap">
+                                <div className="work-item-wrap">
                                     <Image
                                         src="/images/works/2.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
+                                        className="w-full opacity-50 cursor-pointer rounded-lg"
                                     />
                                 </div>
                             </div>
                             <div
-                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
                                 data-groups='["SEO", "Video"]'
+                                onClick={() => {
+                                    handleWorkItemOnClick();
+                                }}
                             >
-                                <div className="wrap">
+                                <div className="work-item-wrap">
                                     <Image
                                         src="/images/works/3.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
+                                        className="w-full opacity-50 cursor-pointer rounded-lg"
                                     />
                                 </div>
                             </div>
                             <div
-                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
                                 data-groups='["SEO"]'
+                                onClick={() => {
+                                    handleWorkItemOnClick();
+                                }}
                             >
-                                <div className="wrap">
+                                <div className="work-item-wrap">
                                     <Image
                                         src="/images/works/4.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
+                                        className="w-full opacity-50 cursor-pointer rounded-lg"
                                     />
                                 </div>
                             </div>
                             <div
-                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
                                 data-groups='["Web Developing"]'
+                                onClick={() => {
+                                    handleWorkItemOnClick();
+                                }}
                             >
-                                <div className="wrap">
+                                <div className="work-item-wrap">
                                     <Image
                                         src="/images/works/5.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
+                                        className="w-full opacity-50 cursor-pointer rounded-lg"
                                     />
                                 </div>
                             </div>
                             <div
-                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
                                 data-groups='["Video", "SEO"]'
+                                onClick={() => {
+                                    handleWorkItemOnClick();
+                                }}
                             >
-                                <div className="wrap">
+                                <div className="work-item-wrap">
                                     <Image
                                         src="/images/works/6.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
+                                        className="w-full opacity-50 cursor-pointer rounded-lg"
                                     />
                                 </div>
                             </div>
                             <div
-                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
                                 data-groups='["Video", "SEO"]'
+                                onClick={() => {
+                                    handleWorkItemOnClick();
+                                }}
                             >
-                                <div className="wrap">
+                                <div className="work-item-wrap">
                                     <Image
                                         src="/images/works/7.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
+                                        className="w-full opacity-50 cursor-pointer rounded-lg"
                                     />
                                 </div>
                             </div>
                             <div
-                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
                                 data-groups='["Web Developing"]'
+                                onClick={() => {
+                                    handleWorkItemOnClick();
+                                }}
                             >
-                                <div className="wrap">
+                                <div className="work-item-wrap">
                                     <Image
                                         src="/images/works/8.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
+                                        className="w-full opacity-50 cursor-pointer rounded-lg"
                                     />
                                 </div>
                             </div>
                             <div
-                                className="w-full lg:w-1/3 px-3 py-3 js-item"
+                                className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
                                 data-groups='["Web Developing"]'
+                                onClick={() => {
+                                    handleWorkItemOnClick();
+                                }}
                             >
-                                <div className="wrap">
+                                <div className="work-item-wrap">
                                     <Image
                                         src="/images/works/9.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
+                                        className="w-full opacity-50 cursor-pointer rounded-lg"
                                     />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
+                <WorksDialog
+                    workDialogIsOpen={workDialogIsOpen}
+                    workInfo={workDialogInfo || undefined}
+                    onOpenStatusChange={(isOpen: boolean) => {
+                        setWorkDialogIsOpen(isOpen);
+                    }}
+                />
                 <section
                     id="testimonial"
                     className={`${

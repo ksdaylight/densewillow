@@ -14,6 +14,7 @@ interface Props {
     navItems: NavItem[];
     activeItem: string | null;
     onSectionChange: (sectionId: string) => void;
+    className?: string;
 }
 type IconNames = 'home' | 'idCard' | 'file' | 'briefcase' | 'comment' | 'phone';
 
@@ -29,7 +30,7 @@ const NAV_CLOSE_CLASSES = ['-translate-x-full', 'md:translate-x-0'];
 const NAV_OPEN_CLASSES = ['translate-x-0', 'transition-all', 'duration-[0.3s]'];
 const NAV_VISIBILITY = 'nav-visibility';
 
-export const Sidebar: React.FC<Props> = ({ navItems, onSectionChange, activeItem }) => {
+export const Sidebar: React.FC<Props> = ({ navItems, onSectionChange, activeItem, className }) => {
     const navRef = useRef<HTMLDivElement>(null);
     const [visible, setVisible] = useState(true);
 
@@ -74,7 +75,7 @@ export const Sidebar: React.FC<Props> = ({ navItems, onSectionChange, activeItem
         <div
             ref={navRef}
             id="sidebar"
-            className="fixed h-screen pl-[39px] pr-[60px] md:pl-[39px] md:pr-[39px] flex flex-col bg-black md:bg-dark_bg duration-[0.3s] z-50"
+            className={`fixed h-screen pl-[39px] pr-[60px] md:pl-[39px] md:pr-[39px] flex flex-col bg-black md:bg-dark_bg duration-[0.3s] z-40 ${className}`}
         >
             <button
                 onClick={updateNavState}
