@@ -8,12 +8,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { FaLinkedinIn } from 'react-icons/fa';
-import { LiaUniversitySolid } from 'react-icons/lia';
+import { LiaUniversitySolid, LiaMapMarkerSolid } from 'react-icons/lia';
 import { BiLogoStackOverflow } from 'react-icons/bi';
-import { BsBriefcase } from 'react-icons/bs';
+import { BsBriefcase, BsTelephone, BsEnvelope } from 'react-icons/bs';
 import { AiFillGithub } from 'react-icons/ai';
 import { isNil, random } from 'lodash';
 import WorksDialog, { WorkInfo } from '@frontend/components/common/WorksDialog';
+import ContactForm from '@frontend/components/common/contactForm';
 
 const navItems = [
     { href: '#home', icon: 'home', label: 'Home' },
@@ -25,7 +26,7 @@ const navItems = [
 ];
 interface Props {}
 const PortfolioClient: FC<Props> = (): JSX.Element => {
-    const [currentSection, setCurrentSection] = useState<string | null>('#my_work');
+    const [currentSection, setCurrentSection] = useState<string | null>('#contact_me');
     const typedEl = useRef<HTMLHeadingElement>(null);
     const [currentGroup, setCurrentGroup] = useState('All');
 
@@ -101,7 +102,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                 <section
                     className={`${
                         currentSection === '#home' ? 'block' : 'hidden'
-                    } bg-bg-none md:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[40vw_-24px]`}
+                    } bg-none md:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[40vw_-24px]`}
                 >
                     <div
                         id="meteor-shower"
@@ -552,7 +553,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                     id="resume"
                     className={`${
                         currentSection === '#my_resume' ? 'block' : 'hidden'
-                    } pt-[64px] pb-[115px] bg-bg-none md:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[40vw_374px]`}
+                    } pt-[64px] pb-[115px] bg-none md:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[40vw_374px]`}
                 >
                     <div className="text-center">
                         <header className="header-has-bg mb-16">
@@ -945,9 +946,65 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                 </section>
                 <section
                     id="contact"
-                    className={`${currentSection === '#contact_me' ? 'block' : 'hidden'} pt-[64px]`}
+                    className={`${
+                        currentSection === '#contact_me' ? 'block' : 'hidden'
+                    } pt-[64px] bg-none md:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[53vw_574px] min-h-screen`}
                 >
-                    Contact
+                    <div className="text-center">
+                        <header className="header-has-bg ">
+                            <Image src="/images/h1-bg.png" alt="h1 bg" width={166} height={75} />
+                            <h1>Contact Me</h1>
+                        </header>
+                    </div>
+                    <div className="relative container mx-auto z-20 flex items-center justify-center flex-col mt-[123px]">
+                        <div className="flex flex-wrap w-3/4 min-w-0 h-auto">
+                            <div className="w-full lg:w-1/2 pr-3 xl:pr-[69px]">
+                                <ContactForm />
+                            </div>
+                            <div className="w-full lg:w-1/2 pl-3 xl:pl-[69px] lg:mt-0 mt-20">
+                                <div className="flex mb-8 group flex-col md:flex-row text-center justify-center items-center md:justify-start md:items-start md:text-left">
+                                    <div className="flex justify-center items-center min-w-[46px] min-h-[46px]  w-[46px] h-[46px] p-[14px] transition-all duration-[0.3s] md:mr-4 rounded-[50%] bg-[#ffffff0d] group-hover:bg-primary mr-0 mb-2 md:mb-0">
+                                        <BsTelephone className="text-lg" />
+                                    </div>
+                                    <div className="text">
+                                        <span className="text-gray">Phone number:</span>
+                                        <a
+                                            href="tel:+1234567890"
+                                            className="block text-white no-underline"
+                                        >
+                                            044 20 7946 0499 - 044 20 7946 0135
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="flex mb-8 group flex-col md:flex-row text-center justify-center items-center md:justify-start md:items-start md:text-left">
+                                    <div className="flex justify-center items-center min-w-[46px] min-h-[46px]  w-[46px] h-[46px] p-[14px] transition-all duration-[0.3s] md:mr-4 rounded-[50%] bg-[#ffffff0d] group-hover:bg-primary mr-0 mb-2 md:mb-0">
+                                        <BsEnvelope className="text-lg" />
+                                    </div>
+                                    <div className="text">
+                                        <span className="text-gray">Email:</span>
+                                        <a
+                                            href="mailto:cheetah.academy.sp@gmail.com"
+                                            className="block text-white no-underline"
+                                        >
+                                            cheetah.academy.sp@gmail.com
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="flex mb-8 group flex-col md:flex-row text-center justify-center items-center md:justify-start md:items-start md:text-left">
+                                    <div className="flex justify-center items-center min-w-[46px] min-h-[46px]  w-[46px] h-[46px] p-[14px] transition-all duration-[0.3s] md:mr-4 rounded-[50%] bg-[#ffffff0d] group-hover:bg-primary mr-0 mb-2 md:mb-0">
+                                        <LiaMapMarkerSolid className="text-lg" />
+                                    </div>
+                                    <div className="text">
+                                        <span className="text-gray">Location:</span>
+                                        <p>
+                                            989 Springfield Road London EC49 3OE
+                                            <br /> United kingdom 3466e.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </main>
         </div>
