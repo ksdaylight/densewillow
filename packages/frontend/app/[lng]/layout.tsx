@@ -75,7 +75,7 @@ const RootLayout = async ({ children, params: { lng } }: RootLayoutProps) => {
         <html
             lang={lng}
             dir={dir(lng)}
-            className={`${playfairDisplay.variable} ${ubuntu.variable}`}
+            className={`${playfairDisplay.variable} ${ubuntu.variable} dark`}
         >
             <Script
                 strategy="afterInteractive"

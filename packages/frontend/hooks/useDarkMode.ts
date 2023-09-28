@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 
 const THEME_MODE = 'theme-mode';
-const defaultTheme = 'light';
-const darkTheme = 'dark';
+const defaultTheme = 'dark';
+// const darkTheme = 'dark';
+const lightTheme = 'light';
 
 const useDarkMode = () => {
     const storeThemeToLs = (themeMode: string) => {
@@ -20,7 +21,7 @@ const useDarkMode = () => {
 
     const toggleTheme = () => {
         const previousTheme = readThemeFromLs();
-        const newTheme = previousTheme === defaultTheme ? darkTheme : defaultTheme;
+        const newTheme = previousTheme === defaultTheme ? lightTheme : defaultTheme;
         updateTheme(newTheme, previousTheme);
         storeThemeToLs(newTheme);
     };
@@ -31,15 +32,9 @@ const useDarkMode = () => {
             return updateTheme(oldTheme);
         }
 
-        const runningOnDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        updateTheme(defaultTheme);
+        storeThemeToLs(defaultTheme);
 
-        if (runningOnDarkMode) {
-            updateTheme(darkTheme);
-            storeThemeToLs(darkTheme);
-        } else {
-            updateTheme(defaultTheme);
-            storeThemeToLs(defaultTheme);
-        }
         return undefined;
     }, []);
 

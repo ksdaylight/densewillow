@@ -17,7 +17,10 @@ module.exports = {
                 dark_bg: '#151516',
                 primary: '#658DF2',
                 gray: '#B6B7BA',
+                gray_light: '#83848E',
                 secondary_gray: '#808185',
+                secondary_gray_light: '#F4F4F8',
+                paragraph_light: '#0D0D0D',
                 highlight: {
                     dark: '#FFFFFF',
                     light: '#1f1f1f',

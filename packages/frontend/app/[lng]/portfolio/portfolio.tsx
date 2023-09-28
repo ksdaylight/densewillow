@@ -26,7 +26,7 @@ const navItems = [
 ];
 interface Props {}
 const PortfolioClient: FC<Props> = (): JSX.Element => {
-    const [currentSection, setCurrentSection] = useState<string | null>('#contact_me');
+    const [currentSection, setCurrentSection] = useState<string | null>('#home');
     const typedEl = useRef<HTMLHeadingElement>(null);
     const [currentGroup, setCurrentGroup] = useState('All');
 
@@ -91,7 +91,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
         };
     }, []);
     return (
-        <div className="min-h-screen bg-dark_bg ">
+        <div className="min-h-scree">
             <Sidebar
                 navItems={navItems}
                 onSectionChange={handleSectionChange}
@@ -102,7 +102,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                 <section
                     className={`${
                         currentSection === '#home' ? 'block' : 'hidden'
-                    } bg-none md:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[40vw_-24px]`}
+                    } bg-none md:bg-[url('/images/bg-shape-light.png')] md:dark:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[40vw_-24px]`}
                 >
                     <div
                         id="meteor-shower"
@@ -135,10 +135,14 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                         className="mb-[24px]"
                                     />
                                     <h1 className="mb-[24px]">
-                                        <span className="text-gray">I’m</span> Mojtaba,
+                                        <span className="text-gray_light dark:text-gray">I’m</span>
+                                        Mojtaba,
                                     </h1>
                                     <div className="flex  items-center mb-[16px]">
-                                        <h2 ref={typedEl} className="text-gray mr-[2px]">
+                                        <h2
+                                            ref={typedEl}
+                                            className="text-gray_light dark:text-gray mr-[2px]"
+                                        >
                                             Front-End web developer
                                         </h2>
                                     </div>
@@ -150,7 +154,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                     <a
                                         href="assets/files/cv.pdf"
                                         download
-                                        className="btn-custom-base bg-[#262f48]"
+                                        className="btn-custom-base bg-[#E9EFFF] dark:bg-[#262f48] text-primary"
                                     >
                                         Download CV
                                     </a>
@@ -159,10 +163,10 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                             <li className="mr-[8px]">
                                                 <Link
                                                     href="#"
-                                                    className="flex items-center no-underline transition-all duration-[0.3s] px-[11px] py-[9px] hover:bg-secondary-dark hover:rounded-[6px] group/link"
+                                                    className="flex items-center no-underline transition-all duration-[0.3s] px-[11px] py-[9px] hover:bg-secondary_gray_light dark:hover:bg-secondary-dark hover:rounded-[6px] group/link"
                                                 >
-                                                    <FaLinkedinIn className="text-[18px] fill-gray transition-all duration-[0.3s] mr-2 group-hover/link:fill-white" />
-                                                    <span className="text-gray transition-all duration-[0.3s] group-hover/link:fill-white">
+                                                    <FaLinkedinIn className="text-[18px] fill-gray_light dark:fill-gray transition-all duration-[0.3s] mr-2 group-hover/link:fill-paragraph_light dark:group-hover/link:fill-white" />
+                                                    <span className="text-gray_light dark:text-gray transition-all duration-[0.3s] group-hover/link:text-paragraph_light dark:group-hover/link:text-white">
                                                         Linkedin
                                                     </span>
                                                 </Link>
@@ -171,10 +175,10 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                             <li className="mr-[8px]">
                                                 <Link
                                                     href="#"
-                                                    className="flex items-center no-underline transition-all duration-[0.3s] px-[11px] py-[9px] hover:bg-secondary-dark hover:rounded-[6px] group/link"
+                                                    className="flex items-center no-underline transition-all duration-[0.3s] px-[11px] py-[9px] hover:bg-secondary_gray_light dark:hover:bg-secondary-dark hover:rounded-[6px] group/link"
                                                 >
-                                                    <AiFillGithub className="text-[18px] fill-gray transition-all duration-[0.3s] mr-2 group-hover/link:fill-white" />
-                                                    <span className="text-gray transition-all duration-[0.3s] group-hover/link:fill-white">
+                                                    <AiFillGithub className="text-[18px] fill-gray_light dark:fill-gray transition-all duration-[0.3s] mr-2 group-hover/link:fill-paragraph_light dark:group-hover/link:fill-white" />
+                                                    <span className="text-gray_light dark:text-gray transition-all duration-[0.3s] group-hover/link:text-paragraph_light dark:group-hover/link:text-white">
                                                         Github
                                                     </span>
                                                 </Link>
@@ -182,10 +186,10 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                             <li className="mr-[8px]">
                                                 <Link
                                                     href="#"
-                                                    className="flex items-center no-underline transition-all duration-[0.3s] px-[11px] py-[9px] hover:bg-secondary-dark hover:rounded-[6px] group/link"
+                                                    className="flex items-center no-underline transition-all duration-[0.3s] px-[11px] py-[9px] hover:bg-secondary_gray_light dark:hover:bg-secondary-dark hover:rounded-[6px] group/link"
                                                 >
-                                                    <BiLogoStackOverflow className="text-[18px] fill-gray transition-all duration-[0.3s] mr-2 group-hover/link:fill-white" />
-                                                    <span className="text-gray transition-all duration-[0.3s] group-hover/link:fill-white">
+                                                    <BiLogoStackOverflow className="text-[18px] fill-gray_light dark:fill-gray transition-all duration-[0.3s] mr-2 group-hover/link:fill-paragraph_light dark:group-hover/link:fill-white" />
+                                                    <span className="text-gray_light dark:text-gray transition-all duration-[0.3s] group-hover/link:text-paragraph_light dark:group-hover/link:text-white">
                                                         Stack Overflow
                                                     </span>
                                                 </Link>
@@ -226,15 +230,25 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                             <div className="w-full lg:w-2/3 2xl:w-1/2 px-[12px]">
                                 <header className="header-has-bg mt-[10px] mb-[42px]">
                                     <Image
+                                        src="/images/h1-bg-light.png"
+                                        alt="h1 bg"
+                                        width={166}
+                                        height={75}
+                                        className="dark:hidden"
+                                    />
+                                    <Image
                                         src="/images/h1-bg.png"
                                         alt="h1 bg"
                                         width={166}
                                         height={75}
+                                        className="hidden dark:block"
                                     />
                                     <h1>About Me</h1>
                                 </header>
-                                <h2 className="text-gray mb-[16px]">Front-End web developer</h2>
-                                <p className="max-w-[560px] text-gray">
+                                <h2 className="text-gray_light dark:text-gray mb-[16px]">
+                                    Front-End web developer
+                                </h2>
+                                <p className="max-w-[560px] text-paragraph_light dark:text-gray">
                                     {`I'm a web developer with +5 years experience. I work on projects
                                     as a Front-End and Back-End developer. as a Front-End developer,
                                     I'm Fluent in HTML, CSS, Bootstrap, SCSS, Javascript, jQuery,
@@ -250,17 +264,19 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                             <div className="w-full md:w-1/2 mt-[30px] md:mb-[48px]">
                                                 <div className="flex mb-[16px]">
                                                     <span className="title">Name:</span>
-                                                    <span className="text-gray ml-[4px]">
+                                                    <span className="text-gray_light dark:text-gray ml-[4px]">
                                                         Mojtaba
                                                     </span>
                                                 </div>
                                                 <div className="flex mb-[16px]">
                                                     <span className="title">Age:</span>
-                                                    <span className="text-gray  ml-[4px]">29</span>
+                                                    <span className="text-gray_light dark:text-gray  ml-[4px]">
+                                                        29
+                                                    </span>
                                                 </div>
                                                 <div className="flex mb-[16px]">
                                                     <span className="title">Location:</span>
-                                                    <span className="text-gray  ml-[4px]">
+                                                    <span className="text-gray_light dark:text-gray ml-[4px]">
                                                         Frankfurt
                                                     </span>
                                                 </div>
@@ -270,13 +286,13 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     <span className="title">
                                                         Years of experience:
                                                     </span>
-                                                    <span className="text-gray  ml-[4px]">
+                                                    <span className="text-gray_light dark:text-gray ml-[4px]">
                                                         +5 Years
                                                     </span>
                                                 </div>
                                                 <div className="flex mb-[16px]">
                                                     <span className="title">Phone:</span>
-                                                    <span className="text-gray  ml-[4px]">
+                                                    <span className="text-gray_light dark:text-gray ml-[4px]">
                                                         +1 234 567 8901
                                                     </span>
                                                 </div>
@@ -284,7 +300,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     <span className="title whitespace-nowrap">
                                                         E-mail:
                                                     </span>
-                                                    <span className="text-gray ml-[4px]">
+                                                    <span className="text-gray_light dark:text-gray ml-[4px]">
                                                         smo.hayati@gmail.com
                                                     </span>
                                                 </div>
@@ -295,14 +311,14 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                 <div className="flex flex-wrap flex-col md:flex-row">
                                     <a
                                         href="assets/files/cv.pdf"
-                                        className="btn-custom-base bg-[#262f48] mr-[24px] mb-[16px] md:mb-0 w-full md:w-auto text-center"
+                                        className="btn-custom-base bg-[#E9EFFF] dark:bg-[#262f48] text-primary mr-[24px] mb-[16px] md:mb-0 w-full md:w-auto text-center"
                                         download=""
                                     >
                                         Download CV
                                     </a>
                                     <a
                                         href="#contact_me"
-                                        className="btn-custom-base bg-secondary-dark w-full md:w-auto text-center"
+                                        className="btn-custom-base bg-secondary_gray_light dark:bg-secondary-dark text-paragraph_light dark:text-primary  w-full md:w-auto text-center"
                                         onClick={() => handleChangeSectionClick('#contact_me')}
                                     >
                                         Message me
@@ -320,44 +336,44 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                             >
                                 <div id="languages">
                                     <header className="header-custom">
-                                        <h2 className="inline-block px-6 py-0 bg-dark_bg">
-                                            Languages
-                                        </h2>
+                                        <h2>Languages</h2>
                                     </header>
                                     <ul className="items">
                                         <li className="flex items-center justify-between mt-[38px] mb-[43px]">
                                             <div>
                                                 <h3 className="mt-[4px]">English</h3>
-                                                <span className="text-gray">Native</span>
+                                                <span className="text-gray_light dark:text-gray">
+                                                    Native
+                                                </span>
                                             </div>
                                             <div className="flex">
                                                 <span className="rate-span" />
                                                 <span className="rate-span" />
                                                 <span className="rate-span" />
                                                 <span className="rate-span" />
-                                                <span className="rate-span before:bg-secondary-dark after:bg-secondary-dark" />
+                                                <span className="rate-span before:bg-gray_light after:bg-gray_light dark:before:bg-secondary-dark dark:after:bg-secondary-dark" />
                                             </div>
                                         </li>
                                         <li className="flex items-center justify-between mt-[38px] mb-[43px]">
                                             <div>
                                                 <h3>French</h3>
-                                                <span className="text-gray">Conversational</span>
+                                                <span className="text-gray_light dark:text-gray">
+                                                    Conversational
+                                                </span>
                                             </div>
                                             <div className="flex">
                                                 <span className="rate-span" />
                                                 <span className="rate-span" />
-                                                <span className="rate-span before:bg-secondary-dark after:bg-secondary-dark" />
-                                                <span className="rate-span before:bg-secondary-dark after:bg-secondary-dark" />
-                                                <span className="rate-span before:bg-secondary-dark after:bg-secondary-dark" />
+                                                <span className="rate-span before:bg-gray_light after:bg-gray_light dark:before:bg-secondary-dark dark:after:bg-secondary-dark" />
+                                                <span className="rate-span before:bg-gray_light after:bg-gray_light dark:before:bg-secondary-dark dark:after:bg-secondary-dark" />
+                                                <span className="rate-span before:bg-gray_light after:bg-gray_light dark:before:bg-secondary-dark dark:after:bg-secondary-dark" />
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="key-skills">
                                     <header className="header-custom">
-                                        <h2 className="inline-block px-6 py-0 bg-dark_bg">
-                                            Key Skills
-                                        </h2>
+                                        <h2>Key Skills</h2>
                                     </header>
                                     <ul className="mt-[53px]">
                                         <li className="flex justify-between items-center mb-[32px]">
@@ -395,9 +411,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                             </div>
                             <div id="web-skills" className="w-full lg:w-1/2 mt-12 lg:mt-0">
                                 <header className="header-custom">
-                                    <h2 className="inline-block px-6 py-0 bg-dark_bg">
-                                        My Web Skills
-                                    </h2>
+                                    <h2>My Web Skills</h2>
                                 </header>
                                 <div className="container w-full">
                                     <div className="flex flex-wrap mt-[42px] -mx-5">
@@ -411,7 +425,9 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     className="mb-[21px] mx-auto"
                                                 />
                                                 <h3 className="mb-2">HTML 5</h3>
-                                                <span className="text-[#FF9F76]">over 5 years</span>
+                                                <span className="dark:dark:text-[#FF9F76] text-gray_light text-gray_light">
+                                                    over 5 years
+                                                </span>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
@@ -424,7 +440,9 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     className="mb-[21px] mx-auto"
                                                 />
                                                 <h3 className="mb-2">CSS 3</h3>
-                                                <span className="text-[#FF9F76]">over 5 years</span>
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
+                                                    over 5 years
+                                                </span>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
@@ -437,7 +455,9 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     className="mb-[21px] mx-auto"
                                                 />
                                                 <h3 className="mb-2">Bootstrap</h3>
-                                                <span className="text-[#FF9F76]">4 years</span>
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
+                                                    4 years
+                                                </span>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
@@ -450,7 +470,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     className="mb-[21px] mx-auto"
                                                 />
                                                 <h3 className="mb-2">Vue.js</h3>
-                                                <span className="text-[#FF9F76]">
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
                                                     about 3 years
                                                 </span>
                                             </div>
@@ -465,7 +485,9 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     className="mb-[21px] mx-auto"
                                                 />
                                                 <h3 className="mb-2">JavaScript</h3>
-                                                <span className="text-[#FF9F76]">3 years</span>
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
+                                                    3 years
+                                                </span>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
@@ -478,7 +500,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     className="mb-[21px] mx-auto"
                                                 />
                                                 <h3 className="mb-2">jQuery</h3>
-                                                <span className="text-[#FF9F76]">
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
                                                     about 2 years
                                                 </span>
                                             </div>
@@ -493,7 +515,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     className="mb-[21px] mx-auto"
                                                 />
                                                 <h3 className="mb-2">jQuery</h3>
-                                                <span className="text-[#FF9F76]">
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
                                                     about 2 years
                                                 </span>
                                             </div>
@@ -508,7 +530,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     className="mb-[21px] mx-auto"
                                                 />
                                                 <h3 className="mb-2">jQuery</h3>
-                                                <span className="text-[#FF9F76]">
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
                                                     about 2 years
                                                 </span>
                                             </div>
@@ -523,7 +545,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     className="mb-[21px] mx-auto"
                                                 />
                                                 <h3 className="mb-2">jQuery</h3>
-                                                <span className="text-[#FF9F76]">
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
                                                     about 2 years
                                                 </span>
                                             </div>
@@ -538,7 +560,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     className="mb-[21px] mx-auto"
                                                 />
                                                 <h3 className="mb-2">jQuery</h3>
-                                                <span className="text-[#FF9F76]">
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
                                                     about 2 years
                                                 </span>
                                             </div>
@@ -553,11 +575,24 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                     id="resume"
                     className={`${
                         currentSection === '#my_resume' ? 'block' : 'hidden'
-                    } pt-[64px] pb-[115px] bg-none md:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[40vw_374px]`}
+                    } pt-[64px] pb-[115px] bg-none md:bg-[url('/images/bg-shape-light.png')] md:dark:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[40vw_374px]`}
                 >
                     <div className="text-center">
                         <header className="header-has-bg mb-16">
-                            <Image src="/images/h1-bg.png" alt="h1 bg" width={166} height={75} />
+                            <Image
+                                src="/images/h1-bg-light.png"
+                                alt="h1 bg"
+                                width={166}
+                                height={75}
+                                className="dark:hidden"
+                            />
+                            <Image
+                                src="/images/h1-bg.png"
+                                alt="h1 bg"
+                                width={166}
+                                height={75}
+                                className="hidden dark:block"
+                            />
                             <h1>My Resume</h1>
                         </header>
                         <div className="relative flex items-center justify-center z-20">
@@ -567,9 +602,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                     className="w-full xl:w-1/2 flex flex-col md:pr-[34px] px-3"
                                 >
                                     <header className="header-custom mb-[42px]">
-                                        <h2 className="inline-block px-6 py-0 bg-dark_bg">
-                                            Education
-                                        </h2>
+                                        <h2>Education</h2>
                                     </header>
                                     <div className="items">
                                         <div className="flex mb-[42px] group relative md:static">
@@ -581,7 +614,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     2014 - 2018
                                                 </span>
                                                 <h2 className="text-primary mb-4">{`Engineer's degree`}</h2>
-                                                <p className="text-lg font-normal text-gray max-w-[345px]">
+                                                <p className="text-lg font-normal text-gray_light dark:text-gray max-w-[345px]">
                                                     Bmet minim mollit deserunt llamco est sit aliqua
                                                 </p>
                                             </div>
@@ -595,7 +628,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     2010 - 2014
                                                 </span>
                                                 <h2 className="mb-4">High School</h2>
-                                                <p className="text-lg font-normal text-gray max-w-[345px]">
+                                                <p className="text-lg font-normal text-gray_light dark:text-gray max-w-[345px]">
                                                     Bmet minim mollit deserunt llamco est sit aliqua
                                                 </p>
                                             </div>
@@ -609,7 +642,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     2001 - 2010
                                                 </span>
                                                 <h2 className="mb-4">Elementary School</h2>
-                                                <p className="text-lg font-normal text-gray max-w-[345px]">
+                                                <p className="text-lg font-normal text-gray_light dark:text-gray max-w-[345px]">
                                                     Bmet minim mollit deserunt llamco est sit aliqua
                                                 </p>
                                             </div>
@@ -621,9 +654,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                     className="w-full xl:w-1/2 flex flex-col px-3 md:pl-[34px] mt-[100px] xl:mt-0"
                                 >
                                     <header className="header-custom mb-[42px]">
-                                        <h2 className="inline-block px-6 py-0 bg-dark_bg">
-                                            Experience
-                                        </h2>
+                                        <h2>Experience</h2>
                                     </header>
                                     <div className="items">
                                         <div className="flex mb-[42px] group relative md:static">
@@ -637,7 +668,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                 <h2 className="text-primary mb-4">
                                                     Senior Web Developer
                                                 </h2>
-                                                <p className="text-lg font-normal text-gray max-w-[345px]">
+                                                <p className="text-lg font-normal text-gray_light dark:text-gray max-w-[345px]">
                                                     Bmet minim mollit deserunt llamco est sit aliqua
                                                 </p>
                                             </div>
@@ -651,7 +682,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     2019 - 2020
                                                 </span>
                                                 <h2 className="mb-4">Mid-Level Web Developer</h2>
-                                                <p className="text-lg font-normal text-gray max-w-[345px]">
+                                                <p className="text-lg font-normal text-gray_light dark:text-gray max-w-[345px]">
                                                     Bmet minim mollit deserunt llamco est sit aliqua
                                                 </p>
                                             </div>
@@ -663,7 +694,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                             <div className="resume-item-box">
                                                 <span className="year">2017 - 2019</span>
                                                 <h2 className="mb-4">Junior Web Developer</h2>
-                                                <p className="text-lg font-normal text-gray max-w-[345px]">
+                                                <p className="text-lg font-normal text-gray_light dark:text-gray max-w-[345px]">
                                                     Bmet minim mollit deserunt llamco est sit aliqua
                                                     Bmet minim mollit deserunt llamco est sit aliqua
                                                 </p>
@@ -683,7 +714,20 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                 >
                     <div className="text-center">
                         <header className="header-has-bg">
-                            <Image src="/images/h1-bg.png" alt="h1 bg" width={166} height={75} />
+                            <Image
+                                src="/images/h1-bg-light.png"
+                                alt="h1 bg"
+                                width={166}
+                                height={75}
+                                className="dark:hidden"
+                            />
+                            <Image
+                                src="/images/h1-bg.png"
+                                alt="h1 bg"
+                                width={166}
+                                height={75}
+                                className="hidden dark:block"
+                            />
                             <h1>My Work</h1>
                         </header>
                     </div>
@@ -691,14 +735,16 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                         <button
                             className={`mx-2 px-4 py-2 border-none mb-4 ${
                                 currentGroup === 'All'
-                                    ? 'rounded-lg bg-secondary-dark text-[#fff]'
+                                    ? 'rounded-lg bg-secondary_gray_light dark:bg-secondary-dark text-[#fff]'
                                     : 'rounded-none bg-transparent text-secondary_gray'
                             }`}
                             onClick={() => handleFilter('All')}
                         >
                             <h4
                                 className={
-                                    currentGroup === 'All' ? 'text-[#fff]' : 'text-secondary_gray'
+                                    currentGroup === 'All'
+                                        ? 'text-paragraph_light dark:text-[#fff]'
+                                        : 'text-gray_light dark:text-secondary_gray'
                                 }
                             >
                                 All
@@ -707,7 +753,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                         <button
                             className={`mx-2 px-4 py-2 border-none mb-4 ${
                                 currentGroup === 'Web Developing'
-                                    ? 'rounded-lg bg-secondary-dark text-[#fff]'
+                                    ? 'rounded-lg bg-secondary_gray_light dark:bg-secondary-dark text-[#fff]'
                                     : 'rounded-none bg-transparent text-secondary_gray'
                             }`}
                             onClick={() => handleFilter('Web Developing')}
@@ -715,8 +761,8 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                             <h4
                                 className={
                                     currentGroup === 'Web Developing'
-                                        ? 'text-[#fff]'
-                                        : 'text-secondary_gray'
+                                        ? 'text-paragraph_light dark:text-[#fff]'
+                                        : 'text-gray_light dark:text-secondary_gray'
                                 }
                             >
                                 Web Developing
@@ -725,14 +771,16 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                         <button
                             className={`mx-2 px-4 py-2 border-none mb-4 ${
                                 currentGroup === 'Video'
-                                    ? 'rounded-lg bg-secondary-dark text-[#fff]'
+                                    ? 'rounded-lg bg-secondary_gray_light dark:bg-secondary-dark text-[#fff]'
                                     : 'rounded-none bg-transparent text-secondary_gray'
                             }`}
                             onClick={() => handleFilter('Video')}
                         >
                             <h4
                                 className={
-                                    currentGroup === 'Video' ? 'text-[#fff]' : 'text-secondary_gray'
+                                    currentGroup === 'Video'
+                                        ? 'text-paragraph_light dark:text-[#fff]'
+                                        : 'text-gray_light dark:text-secondary_gray'
                                 }
                             >
                                 Video
@@ -741,14 +789,16 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                         <button
                             className={`mx-2 px-4 py-2 border-none mb-4 ${
                                 currentGroup === 'SEO'
-                                    ? 'rounded-lg bg-secondary-dark text-[#fff]'
+                                    ? 'rounded-lg bg-secondary_gray_light dark:bg-secondary-dark text-[#fff]'
                                     : 'rounded-none bg-transparent text-secondary_gray'
                             }`}
                             onClick={() => handleFilter('SEO')}
                         >
                             <h4
                                 className={
-                                    currentGroup === 'SEO' ? 'text-[#fff]' : 'text-secondary_gray'
+                                    currentGroup === 'SEO'
+                                        ? 'text-paragraph_light dark:text-[#fff]'
+                                        : 'text-gray_light dark:text-secondary_gray'
                                 }
                             >
                                 SEO
@@ -948,11 +998,24 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                     id="contact"
                     className={`${
                         currentSection === '#contact_me' ? 'block' : 'hidden'
-                    } pt-[64px] bg-none md:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[53vw_574px] min-h-screen`}
+                    } pt-[64px] bg-none md:bg-[url('/images/bg-shape-light.png')] md:dark:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[53vw_574px] min-h-screen`}
                 >
                     <div className="text-center">
                         <header className="header-has-bg ">
-                            <Image src="/images/h1-bg.png" alt="h1 bg" width={166} height={75} />
+                            <Image
+                                src="/images/h1-bg-light.png"
+                                alt="h1 bg"
+                                width={166}
+                                height={75}
+                                className="dark:hidden"
+                            />
+                            <Image
+                                src="/images/h1-bg.png"
+                                alt="h1 bg"
+                                width={166}
+                                height={75}
+                                className="hidden dark:block"
+                            />
                             <h1>Contact Me</h1>
                         </header>
                     </div>
@@ -963,39 +1026,45 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                             </div>
                             <div className="w-full lg:w-1/2 pl-3 xl:pl-[69px] lg:mt-0 mt-20">
                                 <div className="flex mb-8 group flex-col md:flex-row text-center justify-center items-center md:justify-start md:items-start md:text-left">
-                                    <div className="flex justify-center items-center min-w-[46px] min-h-[46px]  w-[46px] h-[46px] p-[14px] transition-all duration-[0.3s] md:mr-4 rounded-[50%] bg-[#ffffff0d] group-hover:bg-primary mr-0 mb-2 md:mb-0">
-                                        <BsTelephone className="text-lg" />
+                                    <div className="flex justify-center items-center min-w-[46px] min-h-[46px]  w-[46px] h-[46px] p-[14px] transition-all duration-[0.3s] md:mr-4 rounded-[50%] bg-secondary_gray_light dark:bg-[#ffffff0d] group-hover:bg-primary mr-0 mb-2 md:mb-0">
+                                        <BsTelephone className="text-lg group-hover:fill-white" />
                                     </div>
                                     <div className="text">
-                                        <span className="text-gray">Phone number:</span>
+                                        <span className="text-gray_light dark:text-gray">
+                                            Phone number:
+                                        </span>
                                         <a
                                             href="tel:+1234567890"
-                                            className="block text-white no-underline"
+                                            className="block text-paragraph_light dark:text-white no-underline"
                                         >
                                             044 20 7946 0499 - 044 20 7946 0135
                                         </a>
                                     </div>
                                 </div>
                                 <div className="flex mb-8 group flex-col md:flex-row text-center justify-center items-center md:justify-start md:items-start md:text-left">
-                                    <div className="flex justify-center items-center min-w-[46px] min-h-[46px]  w-[46px] h-[46px] p-[14px] transition-all duration-[0.3s] md:mr-4 rounded-[50%] bg-[#ffffff0d] group-hover:bg-primary mr-0 mb-2 md:mb-0">
-                                        <BsEnvelope className="text-lg" />
+                                    <div className="flex justify-center items-center min-w-[46px] min-h-[46px]  w-[46px] h-[46px] p-[14px] transition-all duration-[0.3s] md:mr-4 rounded-[50%] bg-secondary_gray_light dark:bg-[#ffffff0d] group-hover:bg-primary mr-0 mb-2 md:mb-0">
+                                        <BsEnvelope className="text-lg group-hover:fill-white" />
                                     </div>
                                     <div className="text">
-                                        <span className="text-gray">Email:</span>
+                                        <span className="text-gray_light dark:text-gray">
+                                            Email:
+                                        </span>
                                         <a
                                             href="mailto:cheetah.academy.sp@gmail.com"
-                                            className="block text-white no-underline"
+                                            className="block text-paragraph_light dark:text-white no-underline"
                                         >
                                             cheetah.academy.sp@gmail.com
                                         </a>
                                     </div>
                                 </div>
                                 <div className="flex mb-8 group flex-col md:flex-row text-center justify-center items-center md:justify-start md:items-start md:text-left">
-                                    <div className="flex justify-center items-center min-w-[46px] min-h-[46px]  w-[46px] h-[46px] p-[14px] transition-all duration-[0.3s] md:mr-4 rounded-[50%] bg-[#ffffff0d] group-hover:bg-primary mr-0 mb-2 md:mb-0">
-                                        <LiaMapMarkerSolid className="text-lg" />
+                                    <div className="flex justify-center items-center min-w-[46px] min-h-[46px]  w-[46px] h-[46px] p-[14px] transition-all duration-[0.3s] md:mr-4 rounded-[50%] bg-secondary_gray_light dark:bg-[#ffffff0d] group-hover:bg-primary mr-0 mb-2 md:mb-0">
+                                        <LiaMapMarkerSolid className="text-lg group-hover:fill-white" />
                                     </div>
                                     <div className="text">
-                                        <span className="text-gray">Location:</span>
+                                        <span className="text-gray_light dark:text-gray">
+                                            Location:
+                                        </span>
                                         <p>
                                             989 Springfield Road London EC49 3OE
                                             <br /> United kingdom 3466e.
