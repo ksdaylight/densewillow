@@ -135,7 +135,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                         className="mb-[24px]"
                                     />
                                     <h1 className="mb-[24px]">
-                                        <span className="text-gray_light dark:text-gray">I’m</span>
+                                        <span className="text-gray_light dark:text-gray">I’m </span>
                                         Mojtaba,
                                     </h1>
                                     <div className="flex  items-center mb-[16px]">
@@ -425,7 +425,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                                                     className="mb-[21px] mx-auto"
                                                 />
                                                 <h3 className="mb-2">HTML 5</h3>
-                                                <span className="dark:dark:text-[#FF9F76] text-gray_light text-gray_light">
+                                                <span className="dark:dark:text-[#FF9F76] text-gray_light">
                                                     over 5 years
                                                 </span>
                                             </div>
@@ -990,15 +990,33 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                     id="testimonial"
                     className={`${
                         currentSection === '#testimonial' ? 'block' : 'hidden'
-                    } pt-[64px]`}
+                    } pt-[64px] bg-none md:bg-[url('/images/bg-shape-light.png')] md:dark:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[60vw_374px] min-h-screen`}
                 >
-                    Testimonial
+                    <div className="text-center">
+                        <header className="header-has-bg ">
+                            <Image
+                                src="/images/h1-bg-light.png"
+                                alt="h1 bg"
+                                width={166}
+                                height={75}
+                                className="dark:hidden"
+                            />
+                            <Image
+                                src="/images/h1-bg.png"
+                                alt="h1 bg"
+                                width={166}
+                                height={75}
+                                className="hidden dark:block"
+                            />
+                            <h1>My Blog</h1>
+                        </header>
+                    </div>
                 </section>
                 <section
                     id="contact"
                     className={`${
                         currentSection === '#contact_me' ? 'block' : 'hidden'
-                    } pt-[64px] bg-none md:bg-[url('/images/bg-shape-light.png')] md:dark:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[53vw_574px] min-h-screen`}
+                    } pt-[65px] bg-none md:bg-[url('/images/bg-shape-light.png')] md:dark:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[53vw_574px] min-h-screen`}
                 >
                     <div className="text-center">
                         <header className="header-has-bg ">
