@@ -38,8 +38,8 @@ const PostContent = ({ post, isPostPage = false }: PostContentProps) => {
             <h2
                 className={`${
                     isPostPage
-                        ? 'text-2xl md:text-3xl lg:text-4xl font-bold dark:text-primary'
-                        : '@lg:text-3xl text-xl @md:text-2xl font-medium dark:text-primary'
+                        ? 'text-2xl md:text-3xl lg:text-4xl font-bold dark:text-white'
+                        : '@lg:text-3xl text-xl @md:text-2xl font-medium dark:text-white'
                 } `}
             >
                 {post.title}
@@ -52,7 +52,7 @@ const PostContent = ({ post, isPostPage = false }: PostContentProps) => {
 
             {/* Read More */}
             {!isPostPage && (
-                <div className="flex items-center gap-2 pt-3 dark:text-primary">
+                <div className="flex items-center gap-2 pt-3 dark:text-white">
                     Read More <ArrowRight size="14" />
                 </div>
             )}

@@ -16,7 +16,7 @@ const ProfileHead: FC<Props> = ({ avatar, nameInitial, lightOnly }): JSX.Element
             <ProfileIcon avatar={avatar} nameInitial={nameInitial} lightOnly />
             {/* down icon */}
             <AiFillCaretDown
-                className={lightOnly ? 'text-primary' : 'text-primary-dark dark:text-primary'}
+                className={lightOnly ? 'text-white' : 'text-primary-dark dark:text-white'}
             />
         </div>
     );

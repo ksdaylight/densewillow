@@ -72,7 +72,7 @@ const AdminUser: FC<Props> = (): JSX.Element => {
 
     return (
         <>
-            <h1 className="text-2xl dark:text-primary text-primary-dark font-semibold py-2 transition">
+            <h1 className="text-2xl dark:text-white text-primary-dark font-semibold py-2 transition">
                 Users
             </h1>
             <LatesUserTable users={users} />

@@ -9,7 +9,7 @@ const AdminComments: NextPage<Props> = () => {
     return (
         <AdminLayout>
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-2xl dark:text-primary text-primary-dark font-semibold py-2 transition">
+                <h1 className="text-2xl dark:text-white text-primary-dark font-semibold py-2 transition">
                     Comments
                 </h1>
                 <Comments fetchAll />

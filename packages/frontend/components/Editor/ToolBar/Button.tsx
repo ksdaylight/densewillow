@@ -11,8 +11,8 @@ interface Props {
 
 const Button: FC<Props> = ({ children, active, disabled, onMouseDown, onClick }): JSX.Element => {
     const getActiveStyle = useCallback((): string => {
-        if (active) return 'dark:bg-primary dark:text-primary-dark bg-primary-dark text-primary';
-        return 'text-secondary-light bg-secondary-dark';
+        if (active) return '  button-active';
+        return 'bg-secondary-gray button-fill';
     }, [active]);
 
     const commonClasses = 'p-2 rounded text-lg hover:scale-110 hover:shadow-md transition';

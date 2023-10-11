@@ -326,7 +326,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
                 />
             ) : (
                 <div className="flex flex-col items-end space-y-2">
-                    <h3 className="text-secondary-dark text-xl font-semibold">
+                    <h3 className="text-secondary-gray text-xl font-semibold">
                         Log in to add comment
                     </h3>
                     <GitHubAuthButton />
@@ -351,7 +351,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
 
                         {replies?.length ? (
                             <div className="w-[93%] ml-auto space-y-3">
-                                <h1 className="text-secondary-dark mb-3">Replies</h1>
+                                <h1 className="text-secondary-gray mb-3">Replies</h1>
                                 {replies.map((reply) => {
                                     return (
                                         <CommentCard

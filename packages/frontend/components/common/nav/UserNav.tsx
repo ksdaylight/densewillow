@@ -66,7 +66,7 @@ const UserNav: FC<Props> = ({ lng }): JSX.Element => {
                 <LngSwitcherClient lng={lng} />
                 <button
                     onClick={toggleTheme}
-                    className="dark:text-secondary-dark text-secondary-light"
+                    className="dark:text-secondary-gray text-secondary-light"
                 >
                     <HiLightBulb size={30} />
                 </button>

@@ -74,7 +74,7 @@ const AdminNav: FC<Props> = ({ navItems }): JSX.Element => {
     return (
         <nav
             ref={navRef}
-            className="h-screen w-60 shadow-sm bg-secondary-light dark:bg-secondary-dark flex flex-col justify-between transition-width overflow-hidden sticky top-0"
+            className="h-screen w-60 shadow-sm bg-secondary-light dark:bg-secondary-gray flex flex-col justify-between transition-width overflow-hidden sticky top-0"
         >
             <div>
                 {/* logo */}

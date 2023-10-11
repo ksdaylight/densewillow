@@ -65,7 +65,7 @@ const InfiniteScrollPosts: FC<Props> = ({
         return undefined;
     };
     const defaultLoader = (
-        <p className="p-3 text-secondary-dark opacity-50 text-center font-semibold text-xl animate-pulse">
+        <p className="p-3 text-secondary-gray opacity-50 text-center font-semibold text-xl animate-pulse">
             Loading...
         </p>
     );

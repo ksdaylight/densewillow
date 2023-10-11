@@ -75,13 +75,13 @@ const CommentCard: FC<Props> = ({
             />
 
             <div className="flex-1">
-                <h1 className="text-lg text-primary-dark dark:text-primary font-semibold">
+                <h1 className="text-lg text-primary-dark dark:text-white font-semibold">
                     {owner?.name}
                 </h1>
                 <span className="text-sm text-secondary-dark">
                     {dateFormat(createdAt, 'd-mmm-yyyy')}
                 </span>
-                <div className="text-primary-dark dark:text-primary">{parse(content || '')}</div>
+                <div className="text-primary-dark dark:text-white">{parse(content || '')}</div>
 
                 <div className="flex space-x-4">
                     <LikeHeart
@@ -132,7 +132,7 @@ const Button: FC<ButtonProps> = ({ children, onClick }) => {
     return (
         <button
             onClick={onClick}
-            className="flex items-center text-primary-dark dark:text-primary space-x-2"
+            className="flex items-center text-primary-dark dark:text-white space-x-2"
         >
             {children}
         </button>

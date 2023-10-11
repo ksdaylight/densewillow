@@ -53,7 +53,7 @@ const GalleryModal: FC<Props> = ({
 
     return (
         <ModalContainer visible={visible} onClose={onClose}>
-            <div className="max-w-4xl p-2 bg-primary-dark dark:bg-primary rounded">
+            <div className="max-w-4xl p-2 bg-primary-dark dark:bg-white rounded">
                 <div className="flex">
                     {/* gallery */}
                     <div className="basis-[75%] max-h-[450px] overflow-y-auto custom-scroll-bar">
@@ -77,8 +77,8 @@ const GalleryModal: FC<Props> = ({
                                 />
                                 <label htmlFor="image-input">
                                     <div className="w-full border-2 border-action text-action flex items-center justify-center space-x-2 p-2 cursor-pointer rounded">
-                                        <AiOutlineCloudUpload />
-                                        <span>Upload Image</span>
+                                        <AiOutlineCloudUpload className="fill-action" />
+                                        <span className="text-action">Upload Image</span>
                                     </div>
                                 </label>
                             </div>
@@ -86,7 +86,7 @@ const GalleryModal: FC<Props> = ({
                             {selectedImage ? (
                                 <>
                                     <textarea
-                                        className="resize-none w-full bg-transparent rounded border-2 border-secondary-dark focus:ring-1 text-primary dark:text-primary-dark h-32 p-1"
+                                        className="resize-none w-full bg-transparent rounded border-2 border-secondary-gray focus:ring-1 text-white dark:text-primary-dark h-32 p-1"
                                         placeholder="Alt text"
                                         value={altText}
                                         onChange={({ target }) => setAltText(target.value)}

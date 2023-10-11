@@ -27,6 +27,7 @@ module.exports = {
                 },
                 secondary: {
                     dark: '#1E1E20',
+                    gray: '#707070',
                     light: '#e6e6e6',
                 },
                 action: '#3B82F6',

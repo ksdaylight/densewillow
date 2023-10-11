@@ -6,7 +6,7 @@ interface Props {}
 
 const SignInPage: NextPage<Props> = () => {
     return (
-        <div className="h-screen flex items-center justify-center bg-primary dark:bg-primary-dark">
+        <div className="h-screen flex items-center justify-center bg-white dark:bg-primary-dark">
             <GitHubAuthButton />
         </div>
     );

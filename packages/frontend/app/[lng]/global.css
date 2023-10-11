@@ -115,6 +115,16 @@
   .contact-form-item input,textarea{
         @apply w-full px-0 py-4 border-[none] bg-transparent outline-none
   }
+ 
+ .button-active{
+     @apply  dark:bg-white  bg-primary-dark
+ }
+  .button-fill svg {
+        @apply fill-secondary-light
+  }
 
+  .button-active svg {
+        @apply dark:fill-primary-dark fill-white
+  }
 }
 

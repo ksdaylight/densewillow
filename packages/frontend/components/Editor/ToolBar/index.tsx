@@ -96,7 +96,7 @@ const ToolBar: FC<Props> = ({ editor, onOpenImageClick }): JSX.Element | null =>
     // eslint-disable-next-line react/no-unstable-nested-components
     const Head = () => {
         return (
-            <div className="flex items-center space-x-2 text-primary-dark dark:text-primary">
+            <div className="flex items-center space-x-2 text-primary-dark dark:text-white">
                 <p>{getLabel()}</p>
                 <AiFillCaretDown />
             </div>
@@ -106,7 +106,7 @@ const ToolBar: FC<Props> = ({ editor, onOpenImageClick }): JSX.Element | null =>
     return (
         <div className="flex items-center">
             <DropdownOptions options={options} head={<Head />} />
-            <div className="h-4 w-[1px] bg-secondary-dark dark:bg-secondary-light mx-8" />
+            <div className="h-4 w-[1px] bg-secondary-gray dark:bg-secondary-light mx-8" />
 
             <div className="flex items-center space-x-3">
                 <Button
@@ -138,7 +138,7 @@ const ToolBar: FC<Props> = ({ editor, onOpenImageClick }): JSX.Element | null =>
                 </Button>
             </div>
 
-            <div className="h-4 w-[1px] bg-secondary-dark dark:bg-secondary-light mx-8" />
+            <div className="h-4 w-[1px] bg-secondary-gray dark:bg-secondary-light mx-8" />
 
             <div className="flex items-center space-x-3">
                 <Button
@@ -179,7 +179,7 @@ const ToolBar: FC<Props> = ({ editor, onOpenImageClick }): JSX.Element | null =>
                 </Button>
             </div>
 
-            <div className="h-4 w-[1px] bg-secondary-dark dark:bg-secondary-light mx-8" />
+            <div className="h-4 w-[1px] bg-secondary-gray dark:bg-secondary-light mx-8" />
             <div className="flex items-center space-x-3">
                 <EmbedVideo onSubmit={handleEmbedVideo} />
                 <Button onClick={onOpenImageClick}>

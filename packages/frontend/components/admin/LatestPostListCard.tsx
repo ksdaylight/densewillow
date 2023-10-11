@@ -13,22 +13,22 @@ interface Props {
 const LatestPostListCard: FC<Props> = ({ title, slug, meta, onDeleteClick }): JSX.Element => {
     return (
         <div>
-            <h1 className="font-semibold text-lg text-primary-dark dark:text-primary transition">
+            <h1 className="font-semibold text-lg text-primary-dark dark:text-white transition">
                 {trimText(title, 50)}
             </h1>
-            <p className="text-sm text-secondary-dark">{trimText(meta, 100)}</p>
+            <p className="text-sm text-secondary-gray">{trimText(meta, 100)}</p>
 
             <div className="flex items-center justify-end space-x-3">
                 <Link
                     href={`/admin/posts/update/${slug}`}
-                    className="text-primary-dark dark:text-primary transition hover:underline"
+                    className="text-primary-dark dark:text-white transition hover:underline"
                 >
                     Edit
                 </Link>
 
                 <button
                     onClick={onDeleteClick}
-                    className="text-primary-dark dark:text-primary transition hover:underline"
+                    className="text-primary-dark dark:text-white transition hover:underline"
                 >
                     Delete
                 </button>

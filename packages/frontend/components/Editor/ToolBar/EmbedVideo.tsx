@@ -41,14 +41,14 @@ const EmbedVideo: FC<Props> = ({ onSubmit }): JSX.Element => {
                             // eslint-disable-next-line jsx-a11y/no-autofocus
                             autoFocus
                             type="text"
-                            className="bg-transparent rounded border-2 border-secondary-dark focus:border-primary-dark dark:focus:border-primary transition p-2 text-primary-dark dark:text-primary"
+                            className="bg-transparent rounded border-2 border-secondary-dark focus:border-primary-dark dark:focus:border-white transition p-2 text-primary-dark dark:text-white"
                             placeholder="https://example.com"
                             value={url}
                             onChange={({ target }) => setUrl(target.value)}
                         />
                         <button
                             onClick={handleSubmit}
-                            className="bg-action p-2 text-primary rounded text-sm"
+                            className="bg-action p-2 text-white rounded text-sm"
                         >
                             Embed
                         </button>

@@ -230,8 +230,8 @@ const Editor: FC<Props> = ({
 
     return (
         <>
-            <div className="p-3 dark:bg-primary-dark bg-primary transition">
-                <div className="sticky top-0 z-10 dark:bg-primary-dark bg-primary">
+            <div className="p-3 dark:bg-primary-dark bg-white transition">
+                <div className="sticky top-0 z-10 dark:bg-primary-dark bg-white">
                     {/* Thumbnail Selector and Submit Button */}
                     <div className="flex items-center justify-between mb-3">
                         <ThumbnailSelector
@@ -245,18 +245,18 @@ const Editor: FC<Props> = ({
                     {/* Title Input */}
                     <input
                         type="text"
-                        className="py-2 outline-none bg-transparent w-full border-0 border-b-[1px] border-secondary-dark dark:border-secondary-light text-3xl font-semibold italic text-primary-dark dark:text-primary mb-3"
+                        className="py-2 outline-none bg-transparent w-full border-0 border-b-[1px] border-secondary-gray dark:border-secondary-light text-3xl font-semibold italic text-primary-dark dark:text-white mb-3"
                         placeholder="Title"
                         onChange={updateTitle}
                         value={post.title}
                     />
                     <ToolBar editor={editor} onOpenImageClick={() => setShowGallery(true)} />
-                    <div className="h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3" />
+                    <div className="h-[1px] w-full bg-secondary-gray dark:bg-secondary-light my-3" />
                 </div>
 
                 {editor ? <EditLink editor={editor} /> : null}
                 <EditorContent editor={editor} className="min-h-[300px]" />
-                <div className="h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3" />
+                <div className="h-[1px] w-full bg-secondary-gray dark:bg-secondary-light my-3" />
                 <SEOForm
                     onChange={updateSeoValue}
                     title={post.title}

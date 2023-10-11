@@ -43,12 +43,12 @@ const CommentForm: FC<Props> = ({
     return (
         <div>
             {title ? (
-                <h1 className="text-xl text-primary-dark dark:text-primary font-semibold py-3">
+                <h1 className="text-xl text-primary-dark dark:text-white font-semibold py-3">
                     {title}
                 </h1>
             ) : null}
             <EditorContent
-                className="min-h-[200px] border-2 border-secondary-dark rounded p-2"
+                className="min-h-[200px] border-2 border-secondary-gray rounded p-2"
                 editor={editor}
             />
 
@@ -57,7 +57,7 @@ const CommentForm: FC<Props> = ({
                     <ActionButton busy={busy} title="Submit" onClick={handleSubmit} />
 
                     {onClose ? (
-                        <button onClick={onClose} className="text-primary-dark dark:text-primary">
+                        <button onClick={onClose} className="text-primary-dark dark:text-white">
                             close
                         </button>
                     ) : null}

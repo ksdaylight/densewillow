@@ -83,7 +83,7 @@ const ContactForm: FC<Props> = (): JSX.Element => {
             <div className="text-right">
                 <button
                     type="submit"
-                    className="btn-custom-base bg-secondary_gray_light dark:bg-secondary-dark text-paragraph_light dark:text-primary"
+                    className="btn-custom-base bg-secondary_gray_light dark:bg-secondary-dark text-paragraph_light dark:text-white"
                 >
                     Send message
                 </button>

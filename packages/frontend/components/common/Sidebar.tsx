@@ -112,7 +112,7 @@ export const Sidebar: React.FC<Props> = ({ navItems, onSectionChange, activeItem
                                         activeItem === item.href
                                             ? 'before:opacity-[0.15] before:scale-100 before:-translate-y-1/2 before:-translate-x-1/2 text-primary'
                                             : ''
-                                    } flex items-center no-underline md:relative before:content-[''] before:absolute before:w-[46px] before:h-[46px] before:rounded-full before:bg-primary before:opacity-0 before:top-1/2 before:left-1/2 before:-translate-y-1/2 before:-translate-x-1/2 before:scale-0 before:transition-all before:duration-300`}
+                                    } flex items-center no-underline md:relative before:content-[''] before:absolute before:w-[46px] before:h-[46px] before:rounded-full before:bg-primary before:opacity-0 before:top-1/2 before:left-1/2 before:-translate-y-1/2 before:-translate-x-1/2 before:scale-0 before:tran sition-all before:duration-300`}
                                 >
                                     <Icon
                                         className={`text-[18px]  group-hover/link:fill-paragraph_light dark:group-hover/link:fill-white transition-all duration-[0.3s] ${

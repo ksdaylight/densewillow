@@ -29,7 +29,7 @@ const ModalContainer: FC<Props> = ({ visible, children, onClose }): JSX.Element 
         <div
             id={containerId}
             onClick={handleClick}
-            className="fixed inset-0 bg-primary dark:bg-primary-dark dark:bg-opacity-5 bg-opacity-5 backdrop-blur-[2px] z-50 flex items-center justify-center"
+            className="fixed inset-0 bg-white dark:bg-primary-dark dark:bg-opacity-5 bg-opacity-5 backdrop-blur-[2px] z-50 flex items-center justify-center"
         >
             {children}
         </div>

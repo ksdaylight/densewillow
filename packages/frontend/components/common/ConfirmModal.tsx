@@ -25,14 +25,14 @@ const ConfirmModal: FC<Props> = ({
 }): JSX.Element => {
     return (
         <ModalContainer visible={visible} onClose={onClose}>
-            <div className="bg-primary-dark dark:bg-primary rounded p-3 max-w-[380px]">
+            <div className="bg-primary-dark dark:bg-white rounded p-3 max-w-[380px]">
                 {/* title */}
-                <p className="dark:text-primary-dark text-primary font-semibold text-lg">{title}</p>
+                <p className="dark:text-primary-dark text-white font-semibold text-lg">{title}</p>
                 {/* sub title */}
-                <p className="dark:text-primary-dark text-primary">{subTitle}</p>
+                <p className="dark:text-primary-dark text-white">{subTitle}</p>
                 {/* buttons */}
                 {busy && (
-                    <p className="flex items-center space-x-2 dark:text-primary-dark text-primary pt-2">
+                    <p className="flex items-center space-x-2 dark:text-primary-dark text-white pt-2">
                         <ImSpinner3 className="animate-spin" />
                         <span>Please wait</span>
                     </p>

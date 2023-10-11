@@ -20,13 +20,13 @@ const DropdownOptions: FC<Props> = ({ head, options }): JSX.Element => {
         >
             {head}
             {showOptions && (
-                <div className="min-w-max absolute top-full mt-4 right-2 z-40 border-2 border-primary-dark dark:border-primary rounded text-left bg-primary dark:bg-primary-dark">
+                <div className="min-w-max absolute top-full mt-4 right-2 z-40 border-2 border-primary-dark dark:border-white rounded text-left bg-white dark:bg-primary-dark">
                     <ul className="p-3 space-y-3">
                         {options.map(({ label, onClick }, index) => {
                             return (
                                 // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
                                 <li
-                                    className="text-primary-dark dark:text-primary"
+                                    className="text-primary-dark dark:text-white"
                                     key={label + index.toString()}
                                     onMouseDown={onClick}
                                 >

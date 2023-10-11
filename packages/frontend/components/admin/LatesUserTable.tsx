@@ -12,9 +12,9 @@ interface Props {
 const LatesUserTable: FC<Props> = ({ users }): JSX.Element => {
     return (
         <div>
-            <table className="w-full text-left text-primary-dark dark:text-primary">
+            <table className="w-full text-left text-primary-dark dark:text-white">
                 <tbody>
-                    <tr className="text-left bg-secondary-dark text-primary">
+                    <tr className="text-left bg-secondary-gray text-white">
                         <th className="p-2">Profile</th>
                         <th className="p-2">Email</th>
                         <th className="p-2">Provider</th>

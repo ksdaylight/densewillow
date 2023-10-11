@@ -15,7 +15,7 @@ interface Props {
 }
 
 const commonInput =
-    'w-full bg-transparent outline-none border-2 border-secondary-dark focus:border-primary-dark focus:dark:border-primary rounded transition text-primary-dark dark:text-primary p-2';
+    'w-full bg-transparent outline-none border-2 border-secondary-gray focus:border-primary-dark focus:dark:border-primary rounded transition text-primary-dark dark:text-white p-2';
 
 const SEOForm: FC<Props> = ({ initialValue, title = '', onChange }): JSX.Element => {
     const [values, setValues] = useState({ meta: '', slug: '', tags: '' });
@@ -55,9 +55,7 @@ const SEOForm: FC<Props> = ({ initialValue, title = '', onChange }): JSX.Element
 
     return (
         <div className="space-y-4">
-            <h1 className="text-primary-dark dark:text-primary text-xl font-semibold">
-                SEO Section
-            </h1>
+            <h1 className="text-primary-dark dark:text-white text-xl font-semibold">SEO Section</h1>
 
             <Input
                 value={slug}
@@ -82,7 +80,7 @@ const SEOForm: FC<Props> = ({ initialValue, title = '', onChange }): JSX.Element
                     className={classnames(commonInput, 'text-lg h-20 resize-none')}
                     placeholder="Meta description 150 characters will be fine"
                 />
-                <p className="absolute bottom-3 right-3 text-primary-dark dark:text-primary text-sm">
+                <p className="absolute bottom-3 right-3 text-primary-dark dark:text-white text-sm">
                     {meta.length}/150
                 </p>
             </div>
@@ -99,7 +97,7 @@ const Input: FC<{
 }> = ({ name, value, placeholder, label, onChange }) => {
     return (
         <label className="block relative">
-            <span className="absolute top-1/2 -translate-y-1/2 text-sm font-semibold text-primary-dark dark:text-primary pl-2">
+            <span className="absolute top-1/2 -translate-y-1/2 text-sm font-semibold text-primary-dark dark:text-white pl-2">
                 {label}
             </span>
 

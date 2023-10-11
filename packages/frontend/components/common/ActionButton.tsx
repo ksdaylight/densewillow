@@ -15,7 +15,7 @@ const ActionButton: FC<Props> = ({ disabled, busy = false, title, onClick }): JS
             onClick={onClick}
             disabled={disabled}
         >
-            <span>{title}</span>
+            <span className="text-white">{title}</span>
             {busy && <BiLoader className="animate-spin" size={20} />}
         </button>
     );

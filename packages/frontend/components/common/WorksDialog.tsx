@@ -48,7 +48,7 @@ const WorksDialog: FC<Props> = ({
                         <div id="modal-body" className="static p-0">
                             <button
                                 type="button"
-                                className="absolute right-[10px] top-[10px] lg:right-[-23px] lg:top-[-23px] text-[22px] w-[46px] h-[46px] transition-all duration-[0.3s] rounded-[50%] hover:bg-primary dark:hover:bg-[#0b2c80] border-none bg-secondary_gray_light dark:bg-secondary-dark outline-none flex items-center justify-center group"
+                                className="absolute right-[10px] top-[10px] lg:right-[-23px] lg:top-[-23px] text-[22px] w-[46px] h-[46px] transition-all duration-[0.3s] rounded-[50%] hover:bg-white dark:hover:bg-[#0b2c80] border-none bg-secondary_gray_light dark:bg-secondary-dark outline-none flex items-center justify-center group"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
                                 onClick={() => onOpenStatusChange(false)}
@@ -97,10 +97,10 @@ const WorksDialog: FC<Props> = ({
                                         </span>
                                     </div>
                                     <div className="mt-4 flex items-center">
-                                        <BiLink className="text-lg mr-0.5 fill-primary no-underline" />
+                                        <BiLink className="text-lg mr-0.5 fill-white no-underline" />
                                         <a
                                             href={`${workInfo?.project_link || '#'}`}
-                                            className="text-primary no-underline hover:underline"
+                                            className="text-white no-underline hover:underline"
                                         >
                                             Project link
                                         </a>

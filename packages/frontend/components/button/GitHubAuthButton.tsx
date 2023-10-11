@@ -13,8 +13,8 @@ const commonClasses =
 
 export const GitHubAuthButton: FC<Props> = ({ lightOnly }): JSX.Element => {
     const getStyle = useCallback(() => {
-        if (lightOnly) return 'text-primary-dark bg-primary';
-        return 'bg-primary-dark dark:bg-primary dark:text-primary-dark text-primary';
+        if (lightOnly) return 'text-primary-dark bg-white';
+        return 'bg-primary-dark dark:bg-white dark:text-primary-dark text-white';
     }, [lightOnly]);
     const handleClick = async () => {
         window.location.href = `${process.env.SERVER_PUBLIC_URL}/api/auth/github`;

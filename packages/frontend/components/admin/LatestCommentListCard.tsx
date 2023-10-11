@@ -22,15 +22,15 @@ const LatestCommentListCard: FC<Props> = ({ comment }): JSX.Element => {
             />
 
             <div className="flex-1">
-                <p className="font-semibold text-primary-dark dark:text-primary transition">
-                    {owner?.name} <span className="text-sm text-secondary-dark">commented on</span>
+                <p className="font-semibold text-primary-dark dark:text-white transition">
+                    {owner?.name} <span className="text-sm text-secondary-gray">commented on</span>
                 </p>
 
                 <a
                     href={`/${belongsTo?.slug}`}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="text-secondary-dark hover:underline"
+                    className="text-secondary-gray hover:underline"
                 >
                     <div className="flex items-center space-x-2">
                         <BsBoxArrowUpRight size={12} />
@@ -38,9 +38,7 @@ const LatestCommentListCard: FC<Props> = ({ comment }): JSX.Element => {
                     </div>
                 </a>
 
-                <div className="text-primary-dark dark:text-primary transition">
-                    {parse(content)}
-                </div>
+                <div className="text-primary-dark dark:text-white transition">{parse(content)}</div>
             </div>
         </div>
     );

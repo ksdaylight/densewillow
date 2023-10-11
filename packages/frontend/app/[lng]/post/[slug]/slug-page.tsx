@@ -135,7 +135,7 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
                         <div>{author && <AuthorInfo profile={author} />}</div>
 
                         <div>
-                            <h3 className="text-xl font-semibold bg-secondary-dark text-primary p-2 mb-4">
+                            <h3 className="text-xl font-semibold bg-secondary-gray text-white p-2 mb-4">
                                 Related Posts:
                             </h3>
 
@@ -145,7 +145,7 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
                                         <Link
                                             key={p.slug}
                                             href={p.slug}
-                                            className="font-semibold text-primary-dark dark:text-primary hover:underline"
+                                            className="font-semibold text-primary-dark dark:text-white hover:underline"
                                         >
                                             {p.title}
                                         </Link>

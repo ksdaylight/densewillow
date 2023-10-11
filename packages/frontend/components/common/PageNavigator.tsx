@@ -17,7 +17,7 @@ const PageNavigator: FC<Props> = ({ onNextClick, onPrevClick }): JSX.Element => 
 const Button: FC<{ title: string; onClick?: MouseEventHandler }> = ({ title, onClick }) => {
     return (
         <button
-            className="text-primary-dark dark:text-primary hover:underline transition"
+            className="text-primary-dark dark:text-white hover:underline transition"
             onClick={onClick}
         >
             {title}

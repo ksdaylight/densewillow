@@ -13,8 +13,8 @@ const commonClasses =
 const ProfileIcon: FC<Props> = ({ avatar, nameInitial, lightOnly }): JSX.Element => {
     const getStyle = useCallback(() => {
         return lightOnly
-            ? 'text-primary-dark bg-primary'
-            : 'bg-primary-dark dark:bg-primary dark:text-primary-dark text-primary';
+            ? 'text-primary-dark bg-white'
+            : 'bg-primary-dark dark:bg-white dark:text-primary-dark text-white';
     }, [lightOnly]);
 
     return (

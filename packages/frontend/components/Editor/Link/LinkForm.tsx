@@ -37,12 +37,12 @@ const LinkForm: FC<Props> = ({ visible, initialState, onSubmit }): JSX.Element |
     if (!visible) return null;
 
     return (
-        <div className="rounded p-2 bg-primary dark:bg-primary-dark shadow-sm shadow-secondary-dark">
+        <div className="rounded p-2 bg-white dark:bg-primary-dark shadow-sm shadow-secondary-gray">
             <input
                 // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 type="text"
-                className="bg-transparent rounded border-2 border-secondary-dark focus:border-primary-dark dark:focus:border-primary transition p-2 text-primary-dark dark:text-primary w-full"
+                className="bg-transparent rounded border-2 border-secondary-gray focus:border-primary-dark dark:focus:border-white transition p-2 text-primary-dark dark:text-white w-full"
                 placeholder="https://example.com"
                 value={link.url}
                 onChange={({ target }) => setLink({ ...link, url: target.value })}
@@ -56,7 +56,7 @@ const LinkForm: FC<Props> = ({ visible, initialState, onSubmit }): JSX.Element |
                     onChange={({ target }) => setLink({ ...link, openInNewTab: target.checked })}
                 />
                 <label
-                    className="text-secondary-dark dark:text-secondary-light"
+                    className="text-secondary-gray dark:text-secondary-light"
                     htmlFor="open-in-new-tab"
                 >
                     open in new tab
@@ -65,7 +65,7 @@ const LinkForm: FC<Props> = ({ visible, initialState, onSubmit }): JSX.Element |
                 <div className="flex-1 text-right">
                     <button
                         onClick={handleSubmit}
-                        className="bg-action px-2 py-1 text-primary rounded text-sm"
+                        className="bg-action px-2 py-1 text-white rounded text-sm"
                     >
                         Apply
                     </button>
