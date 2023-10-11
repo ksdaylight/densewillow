@@ -17,12 +17,12 @@ interface Props {
 type IconNames = 'home' | 'idCard' | 'file' | 'briefcase' | 'comment' | 'phone';
 
 const navItems = [
-    { href: '#home', icon: 'home', label: 'Home' },
+    { href: '/', icon: 'home', label: 'Home' },
     { href: '/about-me', icon: 'idCard', label: ' About Me' },
-    { href: '#my_resume', icon: 'file', label: 'My Resume' },
-    { href: '#my_work', icon: 'briefcase', label: 'My Work' },
-    { href: '#testimonial', icon: 'comment', label: 'Testimonial' },
-    { href: '#contact_me', icon: 'phone', label: 'Contact Me' },
+    { href: '/my-resume', icon: 'file', label: 'My Resume' },
+    { href: '/my-work', icon: 'briefcase', label: 'My Work' },
+    { href: '/blogs', icon: 'comment', label: 'My Blog' },
+    { href: '/contact-me', icon: 'phone', label: 'Contact Me' },
 ];
 
 const ICONS: Record<IconNames, IconType> = {
@@ -37,7 +37,7 @@ const NAV_CLOSE_CLASSES = ['-translate-x-full', 'md:translate-x-0'];
 const NAV_OPEN_CLASSES = ['translate-x-0', 'transition-all', 'duration-[0.3s]'];
 const NAV_VISIBILITY = 'nav-visibility';
 
-export const Sidebar: React.FC<Props> = ({ activeItem, className }) => {
+export const PortfolioSidebar: React.FC<Props> = ({ activeItem, className }) => {
     const navRef = useRef<HTMLDivElement>(null);
     const [visible, setVisible] = useState(true);
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { Sidebar } from '@frontend/components/common/Siderbar';
+import { Sidebar } from '@frontend/components/common/Sidebar';
 import { FC, useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
 import Shuffle from 'shufflejs';

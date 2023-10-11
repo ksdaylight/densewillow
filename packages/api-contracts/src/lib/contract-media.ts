@@ -5,8 +5,6 @@ import { MultipartFile } from '@fastify/multipart';
 
 import { MediaEntitySchema } from '../zod';
 
-import { ObjectIdSchema } from './types';
-
 // import { MediaContract } from './contract-media';
 
 const c = initContract();
@@ -24,7 +22,7 @@ export const mediaContract = c.router(
             method: 'GET',
             path: `/images/:id.:ext`,
             pathParams: z.object({
-                id: ObjectIdSchema,
+                id: z.string().uuid(),
                 ext: createStringSchema(1, 10),
             }),
             summary: 'get image ',

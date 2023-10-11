@@ -179,7 +179,7 @@ export class ContentController {
                       .map((tag: string) => tag.trim())
                       .filter((tag: string) => tag.length > 0)
                 : undefined;
-
+        const lng = this.extractStringValue(data.lng);
         const postData = {
             title,
             slug,
@@ -196,12 +196,12 @@ export class ContentController {
         };
 
         if (method === 'create') {
-            if (!isNil(data.lng)) {
+            if (!isNil(lng)) {
                 return this.postService.createPost({
                     ...postData,
                     translations: {
                         create: {
-                            language: data.lng,
+                            language: lng,
                             title: postData.title,
                             content: postData.content,
                             meta: postData.meta,
@@ -211,7 +211,7 @@ export class ContentController {
             }
             return this.postService.createPost(postData);
         }
-        if (!isNil(data.lng)) {
+        if (!isNil(lng)) {
             return this.postService.updatePost({
                 where: {
                     id,
@@ -221,7 +221,7 @@ export class ContentController {
                     translations: {
                         updateMany: {
                             where: {
-                                AND: [{ postId: id }, { language: data.lng }],
+                                AND: [{ postId: id }, { language: lng }],
                             },
                             data: {
                                 title: postData.title,

@@ -13,8 +13,6 @@ import {
     UserPartialWithRelationsSchema,
 } from '../zod';
 
-import { ObjectIdSchema } from './types';
-
 const c = initContract();
 
 export const contentContract = c.router(
@@ -23,7 +21,7 @@ export const contentContract = c.router(
             method: 'GET',
             path: `/post/:id`,
             pathParams: z.object({
-                id: ObjectIdSchema,
+                id: z.string().uuid(),
             }),
             responses: {
                 200: PostWithPartialRelationsSchema,
@@ -163,10 +161,10 @@ export const contentContract = c.router(
             body: z.object({
                 id: z
                     .object({
-                        value: ObjectIdSchema,
+                        value: z.string().uuid(),
                     })
                     .passthrough()
-                    .or(ObjectIdSchema),
+                    .or(z.string().uuid()),
                 title: z
                     .object({
                         value: z.string().max(300),
@@ -213,7 +211,7 @@ export const contentContract = c.router(
             method: 'DELETE',
             path: `/post/:id`,
             pathParams: z.object({
-                id: ObjectIdSchema,
+                id: z.string().uuid(),
             }),
             responses: {
                 200: z.object({ message: z.string() }),
@@ -247,7 +245,7 @@ export const contentContract = c.router(
             method: 'GET',
             path: `/comments-by-post`,
             query: z.object({
-                belongsTo: ObjectIdSchema,
+                belongsTo: z.string().uuid(),
                 take: z
                     .string()
                     .transform(Number)
@@ -309,7 +307,7 @@ export const contentContract = c.router(
             path: '/comment',
             body: z.object({
                 content: z.string(),
-                belongsTo: ObjectIdSchema,
+                belongsTo: z.string().uuid(),
             }),
             responses: {
                 201: CommentWithPartialRelationsSchema,
@@ -321,7 +319,7 @@ export const contentContract = c.router(
             path: '/comment/add-replay',
             body: z.object({
                 content: z.string(),
-                repliedTo: ObjectIdSchema,
+                repliedTo: z.string().uuid(),
             }),
             responses: {
                 201: CommentWithPartialRelationsSchema,
@@ -332,7 +330,7 @@ export const contentContract = c.router(
             method: 'POST',
             path: '/comment/update-like',
             body: z.object({
-                id: ObjectIdSchema,
+                id: z.string().uuid(),
             }),
             responses: {
                 201: CommentWithPartialRelationsSchema,
@@ -345,7 +343,7 @@ export const contentContract = c.router(
             path: `/comment`,
             body: z.object({
                 content: z.string(),
-                id: ObjectIdSchema,
+                id: z.string().uuid(),
             }),
             responses: {
                 201: CommentWithPartialRelationsSchema,
@@ -356,7 +354,7 @@ export const contentContract = c.router(
             method: 'DELETE',
             path: `/comment/:id`,
             pathParams: z.object({
-                id: ObjectIdSchema,
+                id: z.string().uuid(),
             }),
             responses: {
                 200: z.object({ message: z.string() }),
