@@ -12,8 +12,8 @@ import {
     AiOutlineContacts,
 } from 'react-icons/ai';
 
-import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css';
+import Tippy from '@tippyjs/react/headless';
+// import 'tippy.js/dist/tippy.css';
 
 import Logo from '../Logo';
 
@@ -92,7 +92,18 @@ const AdminNav: FC<Props> = ({ navItems }): JSX.Element => {
                     {navItems.map((item) => {
                         const Icon = ICONS[item.icon as IconNames];
                         return (
-                            <Tippy key={item.href} content={item.label}>
+                            <Tippy
+                                key={item.href}
+                                render={(attrs) => (
+                                    <div
+                                        className=" py-[7px] px-[13px] whitespace-nowrap bg-secondary_gray_light dark:bg-secondary-dark/75 rounded-[6px] transition-all duration-300"
+                                        tabIndex={-1}
+                                        {...attrs}
+                                    >
+                                        {item.label}
+                                    </div>
+                                )}
+                            >
                                 <div>
                                     <Link
                                         key={item.href}
