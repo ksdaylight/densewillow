@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { PostWithPartialRelations } from '@api-contracts';
 
 import { getReadingTime, getRelativeDate, trimText } from '@frontend/utils/helps';
+import { isNil } from 'lodash';
 
 interface PostContentProps {
     post: PostWithPartialRelations;
@@ -28,7 +29,11 @@ const PostContent = ({ post, isPostPage = false }: PostContentProps) => {
                     ))}
                 </div>
                 <div className="w-2 h-2 rounded-full bg-neutral-200" />
-                <div>{`${post.author?.name}`}</div>
+                <div>{`${
+                    isNil(post?.author?.name) || post?.author?.name === 'admin'
+                        ? 'denseWillow'
+                        : post?.author?.name
+                }`}</div>
                 <div className="w-2 h-2 rounded-full bg-neutral-200" />
                 <div>{getReadingTime(post.content || '')}</div>
                 <div className="w-2 h-2 rounded-full bg-neutral-200" />

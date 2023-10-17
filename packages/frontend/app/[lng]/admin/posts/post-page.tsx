@@ -7,6 +7,7 @@ import { PostWithPartialRelations } from '@api-contracts';
 import InfiniteScrollPosts from '@frontend/components/common/InfiniteScrollPosts';
 
 import { apiClient, filterPosts } from '@frontend/utils/helps';
+import PaddingContainer from '@frontend/components/layout/padding-container';
 
 interface Props {}
 const PostAdmin: FC<Props> = (): JSX.Element => {
@@ -48,14 +49,16 @@ const PostAdmin: FC<Props> = (): JSX.Element => {
         }
     }, [isFetching, fetchNextPage, hasNextPage]);
     return (
-        <InfiniteScrollPosts
-            hasMore={hasMorePosts}
-            next={fetchMorePosts}
-            dataLength={postsToRender.length}
-            posts={postsToRender}
-            showControls
-            onPostRemoved={(post) => setPostsToRender(filterPosts(postsToRender, post))}
-        />
+        <PaddingContainer className="pt-6">
+            <InfiniteScrollPosts
+                hasMore={hasMorePosts}
+                next={fetchMorePosts}
+                dataLength={postsToRender.length}
+                posts={postsToRender}
+                showControls
+                onPostRemoved={(post) => setPostsToRender(filterPosts(postsToRender, post))}
+            />
+        </PaddingContainer>
     );
 };
 

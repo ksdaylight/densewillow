@@ -74,7 +74,11 @@ export default async function og({
                             ))}
                         </div>
                         <div tw="w-4 h-4 mx-6 rounded-full bg-neutral-300 " />
-                        <div>{`${post?.author.name}`}</div>
+                        <div>{`${
+                            isNil(post?.author?.name) || post?.author?.name === 'admin'
+                                ? 'denseWillow'
+                                : post?.author?.name
+                        }`}</div>
                         <div tw="w-4 h-4 mx-6 rounded-full bg-neutral-300" />
                         <div>{getReadingTime(post?.content, lng)}</div>
                         <div tw="w-4 h-4 mx-6 rounded-full bg-neutral-300" />

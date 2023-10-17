@@ -12,6 +12,7 @@ import {
     UserLikedPostsPartialWithRelationsSchema,
     UserPartialWithRelationsSchema,
 } from '../zod';
+import { ObjectIdSchema } from './types';
 
 const c = initContract();
 
@@ -161,10 +162,10 @@ export const contentContract = c.router(
             body: z.object({
                 id: z
                     .object({
-                        value: z.string().uuid(),
+                        value: ObjectIdSchema,
                     })
                     .passthrough()
-                    .or(z.string().uuid()),
+                    .or(ObjectIdSchema),
                 title: z
                     .object({
                         value: z.string().max(300),

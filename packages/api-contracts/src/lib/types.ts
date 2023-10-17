@@ -1,10 +1,13 @@
 import { z } from 'zod';
 
+const uuidRegex =
+    /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/;
+
 export const ObjectIdSchema = z.string().refine(
     (value) => {
         // 移除可能存在的额外引号
         const cleanedValue = value.replace(/^"|"$/g, '');
-        return /^[a-f\d]{24}$/i.test(cleanedValue);
+        return uuidRegex.test(cleanedValue);
     },
     (val) => ({ message: `${val}` }),
 );

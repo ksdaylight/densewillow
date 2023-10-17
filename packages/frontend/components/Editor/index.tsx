@@ -14,9 +14,11 @@ import TipTapImage from '@tiptap/extension-image';
 import { useRouter } from 'next-nprogress-bar';
 import { apiClient, publicApiUrl } from '@frontend/utils/helps';
 
-import { fallbackLng } from '@frontend/app/i18n/settings';
+import { AiFillCaretDown } from 'react-icons/ai';
 
 import ActionButton from '../common/ActionButton';
+
+import DropdownOptions, { DropDownOptions } from '../common/DropdownOptions';
 
 import ToolBar from './ToolBar';
 import EditLink from './Link/EditLink';
@@ -45,6 +47,7 @@ const Editor: FC<Props> = ({
     // onSubmit,
 }): JSX.Element => {
     const [selectionRange, setSelectionRange] = useState<Range>();
+    const [postLng, setPostLng] = useState<string>('default');
     const [showGallery, setShowGallery] = useState(false);
     const [seoInitialValue, setSeoInitialValue] = useState<SeoResult>();
     const [post, setPost] = useState<FinalPost>({
@@ -160,7 +163,7 @@ const Editor: FC<Props> = ({
                         slug: post.slug,
                         meta: post.meta,
                         tags: post.tags,
-                        lng: fallbackLng, // TODO 多语言支持
+                        ...(postLng === 'default' ? {} : { lng: postLng }),
                     },
                 });
             } else {
@@ -175,7 +178,7 @@ const Editor: FC<Props> = ({
                     slug: post.slug,
                     meta: post.meta,
                     tags: post.tags,
-                    lng: fallbackLng,
+                    ...(postLng === 'default' ? {} : { lng: postLng }),
                     // .split(',')
                     // .map((tag: string) => tag.trim())
                     // .filter((tag: string) => tag.length > 0),
@@ -183,7 +186,24 @@ const Editor: FC<Props> = ({
             });
         }
     };
-
+    const lngOptions: DropDownOptions = [
+        {
+            label: `Save as 'en'`,
+            onClick: () => {
+                setPostLng('en');
+            },
+        },
+        {
+            label: `Save as 'cn'`,
+            onClick: () => {
+                setPostLng('cn');
+            },
+        },
+        // {
+        //     label: 'Log out',
+        //     // onClick: handleLogOut,
+        // },
+    ];
     useEffect(() => {
         if (editor && selectionRange) {
             editor.commands.setTextSelection(selectionRange);
@@ -238,7 +258,19 @@ const Editor: FC<Props> = ({
                             initialValue={post.thumbnail as any as string}
                             onChange={updateThumbnail}
                         />
-                        <div className="inline-block">
+                        <div className="flex space-x-4">
+                            <DropdownOptions
+                                head={
+                                    <div className="flex items-center">
+                                        <span className="whitespace-nowrap">
+                                            {`Save as '${postLng}'`}
+                                        </span>
+                                        {/* down icon */}
+                                        <AiFillCaretDown className="text-primary-dark dark:text-white" />
+                                    </div>
+                                }
+                                options={lngOptions}
+                            />
                             <ActionButton busy={busy} title={btnTitle} onClick={handleSubmit} />
                         </div>
                     </div>

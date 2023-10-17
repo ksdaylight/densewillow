@@ -48,9 +48,7 @@ export class ContentController {
     @Guest()
     @TsRestHandler(c.revalidateNext)
     async revalidateNext() {
-        // console.log(req);
         return tsRestHandler(c.revalidateNext, async () => {
-            // console.log(UserPartialWithRelationsSchema);
             const result = await this.revalidateNextService.performValidateRequest();
             if (result.data?.revalidated === true) {
                 return { status: 200, body: { message: `刷新成功` } };
@@ -212,25 +210,12 @@ export class ContentController {
             return this.postService.createPost(postData);
         }
         if (!isNil(lng)) {
-            return this.postService.updatePost({
+            return this.postService.addOrUpdatePostTranslation({
                 where: {
                     id,
                 },
-                data: {
-                    ...postData,
-                    translations: {
-                        updateMany: {
-                            where: {
-                                AND: [{ postId: id }, { language: lng }],
-                            },
-                            data: {
-                                title: postData.title,
-                                content: postData.content,
-                                meta: postData.meta,
-                            },
-                        },
-                    },
-                },
+                data: postData,
+                lng,
             });
         }
         return this.postService.updatePost({
@@ -291,6 +276,13 @@ export class ContentController {
                     method: 'update',
                     id: this.extractStringValue(reqData.id),
                 });
+                const revalidateNextResult =
+                    await this.revalidateNextService.performValidateRequest();
+                if (revalidateNextResult.data?.revalidated === true) {
+                    console.log(`刷新Next成功`);
+                } else {
+                    console.log(`刷新Next失败`);
+                }
                 return { status: 201 as const, body: post };
             } catch (error) {
                 return { status: 400 as const, body: { message: `${(error as Error).message}` } };

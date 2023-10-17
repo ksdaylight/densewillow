@@ -19,6 +19,8 @@ import { z } from 'zod';
 
 import { languages } from '@frontend/app/i18n/settings';
 
+import { isNil } from 'lodash';
+
 import PostSlugPage from './slug-page';
 
 interface Props {
@@ -115,7 +117,11 @@ const PostSlug: NextPage<Props> = async ({ params }) => {
         '@type': 'Article',
         headline: post.title,
         image: `${process.env.NEXT_PUBLIC_SITE_URL}/${params.lng}/${params.slug}/opengraph-image.png`,
-        author: `${post?.author?.name}`,
+        author: `${
+            isNil(post?.author?.name) || post?.author?.name === 'admin'
+                ? 'denseWillow'
+                : post?.author?.name
+        }`,
         genre: post?.tags && post.tags.length > 0 ? post.tags[0] : '',
         publisher: 'DenseWillow',
         url: `${process.env.NEXT_PUBLIC_SITE_URL}/${params.slug}`,

@@ -149,6 +149,56 @@ export class PostService {
         });
     }
 
+    async addOrUpdatePostTranslation(params: {
+        where: Prisma.PostWhereUniqueInput;
+        data: Prisma.PostUpdateInput;
+        lng: string;
+        select?: Prisma.PostSelect;
+    }): Promise<Post> {
+        const { data, where, select, lng } = params;
+        const postWithTranslations = await this.prisma.post.findUniqueOrThrow({
+            where,
+            select: {
+                translations: true,
+            },
+        });
+        const matchingTranslation = postWithTranslations.translations.find(
+            (translation) => translation.language === lng,
+        );
+
+        if (matchingTranslation) {
+            const translationId = matchingTranslation.id;
+            await this.prisma.translation.update({
+                where: {
+                    id: translationId,
+                },
+                data: {
+                    title: data.title,
+                    content: data.content,
+                    meta: data.meta,
+                },
+            });
+        } else {
+            await this.prisma.post.update({
+                where,
+                data: {
+                    translations: {
+                        create: {
+                            language: lng,
+                            title: data.title as string,
+                            content: data.content as string,
+                            meta: data.meta as string,
+                        },
+                    },
+                },
+            });
+        }
+        return this.prisma.post.findUniqueOrThrow({
+            where,
+            select,
+        });
+    }
+
     async deletePost(where: Prisma.PostWhereUniqueInput): Promise<Post> {
         return this.prisma.post.delete({
             where,

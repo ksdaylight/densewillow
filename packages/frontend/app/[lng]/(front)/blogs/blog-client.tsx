@@ -21,7 +21,7 @@ const MyBlogsClient: FC<Props> = (): JSX.Element => {
     const [postsToRender, setPostsToRender] = useState<PostWithPartialRelations[]>([]);
     const [hasMorePosts, setHasMorePosts] = useState(true);
     const limit = 9;
-    const { userInfoLocal, setUserInfoLocal } = useRoleInfoContext();
+    const { setUserInfoLocal } = useRoleInfoContext();
     const { data: userProfileData, error } = apiClient.user.getUserProfile.useQuery(
         ['getUserProfile', '1'],
         {},
@@ -129,7 +129,7 @@ const MyBlogsClient: FC<Props> = (): JSX.Element => {
                             next={fetchMorePosts}
                             dataLength={postsToRender.length}
                             posts={postsToRender}
-                            showControls={userInfoLocal.role === 'super-admin'}
+                            // showControls={userInfoLocal.role === 'super-admin'}
                             onPostRemoved={(post) =>
                                 setPostsToRender(filterPosts(postsToRender, post))
                             }
