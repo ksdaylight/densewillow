@@ -2,7 +2,7 @@
 import { DateTime } from 'luxon';
 import readingTime from 'reading-time';
 import { initQueryClient } from '@ts-rest/react-query';
-
+import axios, { Method, AxiosError, AxiosResponse, isAxiosError } from 'axios';
 import { apiBlog, PostWithPartialRelations } from '@api-contracts';
 // import { tsRestFetchApi } from '@ts-rest/core';
 
@@ -36,22 +36,44 @@ export const getRelativeDate = (date: string, lng?: string) => {
         .setLocale(lng || 'en')
         .toRelative();
 };
+export const baseUrl = `${process.env.SERVER_PUBLIC_URL}`;
 export const publicApiUrl = `${process.env.SERVER_PUBLIC_URL}/${process.env.APP_PREFIX}`;
 export const privateApiUrl = `http://${process.env.APP_HOST}:${process.env.APP_PORT}`;
 export const apiClient = initQueryClient(apiBlog, {
-    baseUrl: `${process.env.SERVER_PUBLIC_URL}`,
+    baseUrl: '',
     baseHeaders: {
         Authorization: 'key',
     },
     credentials: 'include',
-    // api: async (args) => {
-    //     const result = await tsRestFetchApi(args);
-
-    //     if (!String(result.status).startsWith('2')) {
-    //         // eslint-disable-next-line @typescript-eslint/no-throw-literal
-    //         throw result;
-    //     }
-
-    //     return result;
-    // },
+    jsonQuery: true,
+    api: async ({ path, method, headers, body }) => {
+        try {
+            const result = await axios.request({
+                method: method as Method,
+                url: `${baseUrl}${path}`,
+                headers,
+                data: body,
+            });
+            const convertedHeaders = new Headers();
+            for (const key in result.headers) {
+                convertedHeaders.set(key, result.headers[key] as string);
+            }
+            return { status: result.status, body: result.data, headers: convertedHeaders };
+        } catch (e: Error | AxiosError | any) {
+            if (isAxiosError(e)) {
+                const error = e as AxiosError;
+                const response = error.response as AxiosResponse;
+                if (response.status === 401 || response.status === 403) {
+                    window.location.href = '/auth';
+                    // return; // 或者 throw new Error("Unauthorized or Forbidden");
+                }
+                const convertedHeaders = new Headers();
+                for (const key in response.headers) {
+                    convertedHeaders.set(key, response.headers[key] as string);
+                }
+                return { status: response.status, body: response.data, headers: convertedHeaders };
+            }
+            throw e;
+        }
+    },
 });

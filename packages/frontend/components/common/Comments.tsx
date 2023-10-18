@@ -296,8 +296,8 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll = false }): JSX.Element => {
         ['comments', belongsTo],
         {
             query: {
-                take: String(100),
-                skip: String(0),
+                take: 100,
+                skip: 0,
                 belongsTo: belongsTo || '',
             },
         },

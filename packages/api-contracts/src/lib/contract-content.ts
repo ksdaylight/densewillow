@@ -270,18 +270,20 @@ export const contentContract = c.router(
             path: `/comments-by-post`,
             query: z.object({
                 belongsTo: z.string().uuid(),
-                take: z
-                    .string()
-                    .transform(Number)
-                    .refine((n) => !Number.isNaN(n), {
-                        message: 'take must be a valid number',
-                    }),
-                skip: z
-                    .string()
-                    .transform(Number)
-                    .refine((n) => !Number.isNaN(n), {
-                        message: 'take must be a valid number',
-                    }),
+                // take: z
+                //     .string()
+                //     .transform(Number)
+                //     .refine((n) => !Number.isNaN(n), {
+                //         message: 'take must be a valid number',
+                //     }),
+                // skip: z
+                //     .string()
+                //     .transform(Number)
+                //     .refine((n) => !Number.isNaN(n), {
+                //         message: 'take must be a valid number',
+                //     }),
+                take: z.number().default(50),
+                skip: z.number().default(0),
             }),
             summary: 'Get all Comments',
 

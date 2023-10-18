@@ -19,7 +19,7 @@ export class CommentController {
     constructor(private readonly commentService: CommentService) {}
 
     @Guest()
-    @TsRestHandler(c.getCommentsByPostId)
+    @TsRestHandler(c.getCommentsByPostId, { jsonQuery: true })
     async getCommentByPost(@ReqUser() user: ClassToPlain<User>) {
         return tsRestHandler(
             c.getCommentsByPostId,
