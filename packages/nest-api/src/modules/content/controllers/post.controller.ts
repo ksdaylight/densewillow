@@ -357,4 +357,22 @@ export class ContentController {
             }
         });
     }
+
+    @Guest()
+    @TsRestHandler(c.getPostUniqueWithRelatedPosts)
+    async getPostUniqueWithRelatedPosts() {
+        return tsRestHandler(c.getPostUniqueWithRelatedPosts, async ({ body: { args } }) => {
+            try {
+                return {
+                    status: 200 as const,
+                    body: await this.postService.findUniqueOrThrowWithRelatedPosts(args),
+                };
+            } catch (error) {
+                return {
+                    status: 404 as const,
+                    body: { message: `${(error as Error).message}` },
+                };
+            }
+        });
+    }
 }

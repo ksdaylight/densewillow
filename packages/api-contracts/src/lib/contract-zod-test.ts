@@ -14,7 +14,7 @@ export const testZodContract = c.router(
                 200: PostWithPartialRelationsSchema,
                 404: z.null(),
             },
-        },
+        }, // 不需要Hydration、GET、提升速度等ssr相关的东西时，用这种很方便 important
 
         getPostsZod: {
             method: 'GET',

@@ -6,16 +6,32 @@ import { isNil } from 'lodash';
 
 import { Configure } from '../../core/configure';
 import { PrismaService } from '../../core/providers';
+import { UserService } from '../../user/services';
 
 @Injectable()
 export class PostService {
-    constructor(protected configure: Configure, protected prisma: PrismaService) {}
+    constructor(
+        protected configure: Configure,
+        protected prisma: PrismaService,
+        protected readonly userService: UserService,
+    ) {}
 
     async post(postWhereUniqueInput: Prisma.PostWhereUniqueInput, include?: Prisma.PostInclude) {
         return this.prisma.post.findUnique({
             where: postWhereUniqueInput,
             include,
         });
+    }
+
+    async findUniqueOrThrowWithRelatedPosts(args: Prisma.PostFindUniqueOrThrowArgs) {
+        const post = await this.prisma.post.findUniqueOrThrow(args);
+        const relatedPosts = await this.findRelatePosts(post);
+        const author = await this.userService.getAuthorInfo(post.authorId || undefined);
+        return {
+            ...post,
+            author,
+            relatedPosts,
+        };
     }
 
     async getPostLikeStatus(postWhereUniqueInput: Prisma.PostWhereUniqueInput, userId?: string) {

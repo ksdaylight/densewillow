@@ -13,7 +13,7 @@ import { Guest, ReqUser } from '../../user/decorators';
 const c = nestControllerContract(apiBlog.content);
 
 // const testChecker: PermissionChecker = async (ab) => ab.can(PermissionAction.MANAGE, 'all');
-
+// TODO deprecated all 集成 Waline
 @Controller()
 export class CommentController {
     constructor(private readonly commentService: CommentService) {}
@@ -52,7 +52,7 @@ export class CommentController {
         );
     }
 
-    @Guest() // TODO add admin permission
+    @Guest()
     @TsRestHandler(c.getComments)
     async getComments(@ReqUser() user: ClassToPlain<User>) {
         return tsRestHandler(c.getComments, async ({ query: { take, skip } }) => {

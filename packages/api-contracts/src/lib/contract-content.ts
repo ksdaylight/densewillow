@@ -5,6 +5,8 @@ import {
     CommentPartialWithRelationsSchema,
     CommentWithPartialRelationsSchema,
     MediaEntityPartialWithRelationsSchema,
+    PostFindUniqueOrThrowArgsSchema,
+    PostPartialSchema,
     // CommentWithRelationsSchema,
     PostSchema,
     PostWithPartialRelationsSchema,
@@ -12,6 +14,7 @@ import {
     UserLikedPostsPartialWithRelationsSchema,
     UserPartialWithRelationsSchema,
 } from '../zod';
+
 import { ObjectIdSchema } from './types';
 
 const c = initContract();
@@ -28,6 +31,26 @@ export const contentContract = c.router(
                 200: PostWithPartialRelationsSchema,
                 404: z.null(),
             },
+        },
+        getPostUniqueWithRelatedPosts: {
+            method: 'POST',
+            path: `/post-find-unique`,
+            responses: {
+                200: PostPartialSchema.merge(
+                    z.object({
+                        thumbnail: z.lazy(() => MediaEntityPartialWithRelationsSchema).nullable(),
+                        author: z.lazy(() => UserPartialWithRelationsSchema).nullable(),
+                        likedUsers: z.lazy(() => UserLikedPostsPartialWithRelationsSchema).array(),
+                        comments: z.lazy(() => CommentPartialWithRelationsSchema).array(),
+                        translations: z.lazy(() => TranslationPartialWithRelationsSchema).array(),
+                        relatedPosts: z.lazy(() => PostSchema).array(),
+                    }),
+                ).partial(),
+                404: z.object({ message: z.string() }),
+            },
+            body: z.object({
+                args: PostFindUniqueOrThrowArgsSchema,
+            }),
         },
         getPostBySlug: {
             method: 'GET',
@@ -386,4 +409,4 @@ export const contentContract = c.router(
         }),
     },
 );
-// TODO 细致的校验规则
+// TODO prismaSchema + 此处  都添加细致的校验规则

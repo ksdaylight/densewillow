@@ -71,7 +71,6 @@ const Home: FC<Props> = ({ lng }): JSX.Element => {
             },
         );
     useEffect(() => {
-        console.log('postData---\n');
         zodTestMutate({
             body: {
                 where: { slug: 'a-lovely-green-city' },
