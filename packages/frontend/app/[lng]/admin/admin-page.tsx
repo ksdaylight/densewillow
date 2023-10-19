@@ -22,8 +22,8 @@ const AdminHome: FC<Props> = (): JSX.Element => {
         ['posts', '3'],
         {
             query: {
-                take: String(5),
-                skip: String(0),
+                take: 5,
+                skip: 0,
             },
         },
         {
@@ -34,8 +34,8 @@ const AdminHome: FC<Props> = (): JSX.Element => {
         ['comments', '3'],
         {
             query: {
-                take: String(5),
-                skip: String(0),
+                take: 5,
+                skip: 0,
             },
         },
         {
@@ -46,8 +46,8 @@ const AdminHome: FC<Props> = (): JSX.Element => {
         ['users', '3'],
         {
             query: {
-                take: String(5),
-                skip: String(0),
+                take: 5,
+                skip: 0,
             },
         },
         {

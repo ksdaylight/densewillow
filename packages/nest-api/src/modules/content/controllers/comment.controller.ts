@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 
-import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
+import { TsRest, TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
 
 import { apiBlog } from '@api-contracts';
 
@@ -15,6 +15,7 @@ const c = nestControllerContract(apiBlog.content);
 // const testChecker: PermissionChecker = async (ab) => ab.can(PermissionAction.MANAGE, 'all');
 // TODO deprecated all 集成 Waline
 @Controller()
+@TsRest({ jsonQuery: true })
 export class CommentController {
     constructor(private readonly commentService: CommentService) {}
 

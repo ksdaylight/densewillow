@@ -44,18 +44,8 @@ export const userContract = c.router(
                 404: z.null(),
             },
             query: z.object({
-                take: z
-                    .string()
-                    .transform(Number)
-                    .refine((n) => !Number.isNaN(n), {
-                        message: 'take must be a valid number',
-                    }),
-                skip: z
-                    .string()
-                    .transform(Number)
-                    .refine((n) => !Number.isNaN(n), {
-                        message: 'take must be a valid number',
-                    }),
+                take: z.number().default(50),
+                skip: z.number().default(0),
             }),
             summary: 'Get all user',
         },

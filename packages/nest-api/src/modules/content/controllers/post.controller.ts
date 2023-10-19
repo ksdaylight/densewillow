@@ -1,6 +1,6 @@
 import { Controller, NotFoundException, Req } from '@nestjs/common';
 
-import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
+import { TsRest, TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
 
 import { apiBlog } from '@api-contracts';
 
@@ -24,6 +24,7 @@ const c = nestControllerContract(apiBlog.content);
 // const testChecker: PermissionChecker = async (ab) => ab.can(PermissionAction.MANAGE, 'all');
 
 @Controller()
+@TsRest({ jsonQuery: true })
 export class ContentController {
     constructor(
         private readonly postService: PostService,

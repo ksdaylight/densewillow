@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
+import { TsRest, TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
 import { apiBlog } from '@api-contracts';
 
 import { User } from '@prisma/client/blog';
@@ -13,6 +13,7 @@ import { ReqUser } from '../decorators';
 
 const c = nestControllerContract(apiBlog.user);
 @Controller()
+@TsRest({ jsonQuery: true })
 export class UserController {
     constructor(protected readonly userService: UserService) {}
 

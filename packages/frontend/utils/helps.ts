@@ -53,6 +53,7 @@ export const apiClient = initQueryClient(apiBlog, {
                 url: `${baseUrl}${path}`,
                 headers,
                 data: body,
+                withCredentials: true,
             });
             const convertedHeaders = new Headers();
             for (const key in result.headers) {

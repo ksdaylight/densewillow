@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 
-import { TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
+import { TsRest, TsRestHandler, nestControllerContract, tsRestHandler } from '@ts-rest/nest';
 
 import { apiBlog } from '@api-contracts';
 
@@ -10,6 +10,7 @@ import { ZodTestService } from '../services';
 
 const c = nestControllerContract(apiBlog.zodTest);
 @Controller()
+@TsRest({ jsonQuery: true })
 export class ZodTestController {
     constructor(private readonly zodTestService: ZodTestService) {}
 
