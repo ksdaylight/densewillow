@@ -76,6 +76,9 @@ export class ContentController {
         });
     }
 
+    /**
+     * @deprecated  替换为{@link getPostUniqueWithRelatedPosts} .
+     */
     @Guest()
     @TsRestHandler(c.getPostBySlug)
     async getPostBySlug() {
@@ -359,9 +362,9 @@ export class ContentController {
     }
 
     @Guest()
-    @TsRestHandler(c.getPostUniqueWithRelatedPosts)
+    @TsRestHandler(c.getPostUniqueWithRelatedPosts, { jsonQuery: true })
     async getPostUniqueWithRelatedPosts() {
-        return tsRestHandler(c.getPostUniqueWithRelatedPosts, async ({ body: { args } }) => {
+        return tsRestHandler(c.getPostUniqueWithRelatedPosts, async ({ query: { args } }) => {
             try {
                 return {
                     status: 200 as const,

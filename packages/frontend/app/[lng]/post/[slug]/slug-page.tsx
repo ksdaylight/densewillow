@@ -32,17 +32,31 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
     // const { t } = useTranslation(lng, 'client-page');
     const [likes, setLikes] = useState({ likedByOwner: false, count: 0 });
     const [liking, setLiking] = useState(false);
-    const { data: postData } = apiClient.content.getPostBySlug.useQuery(
+    // const { data: postData } = apiClient.content.getPostBySlug.useQuery(
+    //     ['getPostBySlug', initialSlug || ''],
+    //     {
+    //         params: { slug: initialSlug || '' },
+    //     },
+    //     {
+    //         enabled: false,
+    //     },
+    // );
+    const { data: postData } = apiClient.content.getPostUniqueWithRelatedPosts.useQuery(
         ['getPostBySlug', initialSlug || ''],
         {
-            params: { slug: initialSlug || '' },
+            query: {
+                args: {
+                    where: { slug: initialSlug || '' },
+                    include: { thumbnail: true, translations: true },
+                },
+            },
         },
         {
             enabled: false,
+            // staleTime: 10000,
         },
     );
-
-    const { id, title, content, meta, author, slug, relatedPosts } = postData!.body;
+    // const { id, title, content, meta, author, slug, relatedPosts } = postData?.body;
 
     const getLikeLabel = useCallback((): string => {
         const { likedByOwner, count } = likes;
@@ -69,7 +83,7 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
 
         updatePostLikeMutate({
             body: {
-                postId: id,
+                postId: postData?.body?.id || '',
             },
         });
         setLiking(false);
@@ -84,43 +98,45 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
         ['likeStatus', '1'],
         {
             query: {
-                postId: id,
+                postId: postData?.body?.id || '',
             },
         },
         {
-            enabled: !!id,
+            enabled: !!postData?.body?.id,
         },
     );
     if (isQueryError) {
         console.log(queryError.body);
     }
     useEffect(() => {
-        if (!id) return;
+        if (!postData?.body?.id) return;
         if (!isNil(postStatusData)) {
             setLikes({
                 likedByOwner: postStatusData.body.likedByOwner,
                 count: postStatusData.body.likesCount,
             });
         }
-    }, [postStatusData, id]);
+    }, [postStatusData, postData?.body?.id]);
 
     if (!postData) {
         return <>nothing</>;
     }
     return (
         <>
-            <DefaultLayout title={title} desc={meta} lng={lng}>
+            <DefaultLayout title={postData?.body?.title} desc={postData?.body?.meta} lng={lng}>
                 <PaddingContainer>
                     <div className="space-y-10">
-                        <PostHero post={omit(postData.body, ['relatedPosts'])} />
+                        {postData?.body?.id && (
+                            <PostHero post={omit(postData?.body, ['relatedPosts'])} />
+                        )}
                         <div className="flex flex-col gap-10 md:flex-row">
                             <div className="relative">
                                 <div className="sticky flex items-center gap-5 md:flex-col top-20">
                                     <div className="font-medium md:hidden">Share this content:</div>
-                                    <Share url={`${host}/${slug}`} />
+                                    <Share url={`${host}/${postData?.body?.slug}`} />
                                 </div>
                             </div>
-                            <PostBody body={content || ''} />
+                            <PostBody body={postData?.body?.content || ''} />
                         </div>
 
                         <div>
@@ -132,7 +148,11 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
                             />
                         </div>
 
-                        <div>{author && <AuthorInfo profile={author} />}</div>
+                        <div>
+                            {postData?.body?.author && (
+                                <AuthorInfo profile={postData?.body?.author} />
+                            )}
+                        </div>
 
                         <div>
                             <h3 className="text-xl font-semibold bg-secondary-gray text-white p-2 mb-4">
@@ -140,7 +160,7 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
                             </h3>
 
                             <div className="flex flex-col space-y-4">
-                                {relatedPosts?.map((p) => {
+                                {postData?.body?.relatedPosts?.map((p) => {
                                     return (
                                         <Link
                                             key={p.slug}
@@ -154,7 +174,7 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
                             </div>
                         </div>
 
-                        <Comments belongsTo={id} />
+                        <Comments belongsTo={postData?.body?.id} />
                     </div>
                 </PaddingContainer>
             </DefaultLayout>

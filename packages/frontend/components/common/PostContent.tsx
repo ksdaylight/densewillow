@@ -1,12 +1,12 @@
 import { ArrowRight } from 'lucide-react';
 
-import { PostWithPartialRelations } from '@api-contracts';
+import { PostPartialWithRelations } from '@api-contracts';
 
 import { getReadingTime, getRelativeDate, trimText } from '@frontend/utils/helps';
 import { isNil } from 'lodash';
 
 interface PostContentProps {
-    post: PostWithPartialRelations;
+    post: PostPartialWithRelations;
     isPostPage?: boolean;
 }
 const PostContent = ({ post, isPostPage = false }: PostContentProps) => {
@@ -21,10 +21,10 @@ const PostContent = ({ post, isPostPage = false }: PostContentProps) => {
             >
                 <div
                     className={`font-medium ${
-                        post?.tags.includes('TS') ? 'text-emerald-600' : 'text-indigo-600'
+                        post?.tags?.includes('TS') ? 'text-emerald-600' : 'text-indigo-600'
                     }`}
                 >
-                    {post.tags.map((t, index) => (
+                    {post?.tags?.map((t, index) => (
                         <span key={t + index.toString()}>#{t}</span>
                     ))}
                 </div>
@@ -52,7 +52,7 @@ const PostContent = ({ post, isPostPage = false }: PostContentProps) => {
 
             {/* Description */}
             <p className="text-base @lg:text-lg leading-snug text-neutral-600">
-                {trimText(post.meta, 70)}
+                {trimText(post?.meta || '', 70)}
             </p>
 
             {/* Read More */}

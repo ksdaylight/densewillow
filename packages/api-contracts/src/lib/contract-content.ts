@@ -33,7 +33,7 @@ export const contentContract = c.router(
             },
         },
         getPostUniqueWithRelatedPosts: {
-            method: 'POST',
+            method: 'GET',
             path: `/post-find-unique`,
             responses: {
                 200: PostPartialSchema.merge(
@@ -48,7 +48,7 @@ export const contentContract = c.router(
                 ).partial(),
                 404: z.object({ message: z.string() }),
             },
-            body: z.object({
+            query: z.object({
                 args: PostFindUniqueOrThrowArgsSchema,
             }),
         },

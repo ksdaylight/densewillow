@@ -1,17 +1,17 @@
 import Image from 'next/image';
 
-import { PostWithPartialRelations } from '@api-contracts';
-
 import { FC } from 'react';
 
 import { isNil } from 'lodash';
 
 import { publicApiUrl } from '@frontend/utils/helps';
 
+import { PostPartialWithRelations } from 'packages/api-contracts/src/zod';
+
 import PostContent from './PostContent';
 
 interface Props {
-    post: PostWithPartialRelations;
+    post: PostPartialWithRelations;
 }
 const PostHero: FC<Props> = ({ post }): JSX.Element => {
     const { thumbnail } = post;
@@ -28,7 +28,7 @@ const PostHero: FC<Props> = ({ post }): JSX.Element => {
                     src={thumbnailUrl}
                     width={1280}
                     height={500}
-                    alt={post.title}
+                    alt={post?.title || ''}
                 />
             ) : (
                 <span>No image</span>

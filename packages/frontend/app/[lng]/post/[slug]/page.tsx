@@ -63,6 +63,7 @@ export const generateMetadata = async ({
         lng: string;
     };
 }) => {
+    // const post = await getPostData(slug);
     const post = await getPostData(slug);
     return {
         title: post?.title,
@@ -98,10 +99,40 @@ const getPostData = cache(async (slug: string) => {
         throw new Error('Error fetching post');
     }
 });
+const getPostDataByJsonQuery = cache(async (slug: string) => {
+    try {
+        const queryArgs = {
+            where: {
+                slug,
+            },
+            include: {
+                thumbnail: true,
+                translations: true,
+            },
+        };
+        const res = await fetch(
+            `${privateApiUrl}/api/post-find-unique?args=${encodeURIComponent(
+                JSON.stringify(queryArgs),
+            )}`,
+            {
+                credentials: 'include',
+                // cache: 'no-store',
+            },
+        ); // ${encodeURIComponent(JSON.stringify(data))}
+        const data = await res.json();
+
+        // console.log(data);
+        return data;
+    } catch (error) {
+        console.log(error);
+        throw new Error('Error fetching post');
+    }
+});
 async function getPost({ queryKey }: QueryFunctionContext) {
     const [, slug] = queryKey;
 
-    const data = await getPostData(slug as string);
+    // const data = await getPostData(slug as string);
+    const data = await getPostDataByJsonQuery(slug as string);
     return { body: data };
 }
 const PostSlug: NextPage<Props> = async ({ params }) => {
