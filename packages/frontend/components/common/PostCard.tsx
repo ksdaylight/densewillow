@@ -35,8 +35,8 @@ const PostCard: FC<Props> = ({
     return (
         <div className="p-2 flex-1 flex flex-col">
             <Link
-                href={`/${slug}`}
-                className={`@container ${
+                href={`blogs/${slug}`}
+                className={`group @container ${
                     layout === 'horizontal'
                         ? 'grid items-center  grid-cols-1 md:grid-cols-2  gap-10'
                         : 'space-y-10'
@@ -50,7 +50,7 @@ const PostCard: FC<Props> = ({
                 >
                     {thumbnailUrl ? (
                         <Image
-                            className="rounded-md w-full object-cover object-center h-full max-h-[300px]"
+                            className="rounded-md w-full object-cover object-center h-full max-h-[300px] transform transition-transform duration-300 group-hover:scale-105"
                             alt={post.title}
                             src={thumbnailUrl}
                             width={600}

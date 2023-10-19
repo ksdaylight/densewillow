@@ -19,7 +19,7 @@ const errorPage: FC<Props> = ({ error, reset }) => {
                 <p className="mt-6 text-base leading-7 text-zinc-600 dark:text-zinc-400">
                     Please try again later or contact support if the problem persists.
                 </p>
-                <div className="mt-10 flex items-center justify-center gap-x-6">
+                <div className="mt-10 flex items-center justify-center gap-x-6 flex-wrap flex-col md:flex-row">
                     <button
                         onClick={reset}
                         className="btn-custom-base bg-[#E9EFFF] dark:bg-[#262f48] text-primary mr-[24px] mb-[16px] md:mb-0 w-full md:w-auto text-center"
