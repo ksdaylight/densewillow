@@ -1,5 +1,6 @@
 'use client';
 
+import { apiClient } from '@frontend/utils/helps';
 import React, { FC, useState } from 'react';
 
 export type WorkInfo = {};
@@ -7,6 +8,20 @@ interface Props {}
 
 const ContactForm: FC<Props> = (): JSX.Element => {
     const [focused, setFocused] = useState<Record<string, boolean>>({});
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+    });
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
 
     const handleFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name } = e.target;
@@ -29,8 +44,34 @@ const ContactForm: FC<Props> = (): JSX.Element => {
     const isFocused4Div = (name: string) => (focused[name] ? 'after:w-full' : '');
     const isFocused4Label = (name: string) => (focused[name] ? 'top-[-3px] text-xs' : 'top-[17px]');
 
+    const { mutate: addContactMessageMutate } = apiClient.portfolio.addContactMessage.useMutation({
+        onSuccess: (data, variables, context) => {
+            // eslint-disable-next-line no-alert, no-restricted-globals
+            const userConfirmed = confirm('提交成功！点击确定以刷新页面。'); // TODO 翻译
+            // 如果用户点击了"确定"，则刷新页面
+            if (userConfirmed) {
+                window.location.reload();
+            }
+        },
+        onError: (error, variables, context) => {
+            console.log(error); // ti shi
+            // eslint-disable-next-line no-alert
+            alert('提交失败，请重试！');
+        },
+    });
+
+    const handleNewContactMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        // setSubmitting(true);
+        addContactMessageMutate({
+            body: {
+                data: { ...formData },
+            },
+        });
+        // setSubmitting(false);
+    };
     return (
-        <form>
+        <form onSubmit={handleNewContactMessageSubmit}>
             <div className={`contact-form-item ${isFocused4Div('name')}`}>
                 <label htmlFor="name" className={`${isFocused4Label('name')}`}>
                     Name
@@ -39,6 +80,8 @@ const ContactForm: FC<Props> = (): JSX.Element => {
                     type="text"
                     id="name"
                     name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                 />
@@ -51,6 +94,8 @@ const ContactForm: FC<Props> = (): JSX.Element => {
                     type="email"
                     id="email"
                     name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                 />
@@ -63,6 +108,8 @@ const ContactForm: FC<Props> = (): JSX.Element => {
                     type="text"
                     id="subject"
                     name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                 />
@@ -74,7 +121,8 @@ const ContactForm: FC<Props> = (): JSX.Element => {
                 <textarea
                     id="message"
                     name="message"
-                    defaultValue=""
+                    value={formData.message}
+                    onChange={handleInputChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     className="resize-none min-h-[171px]"

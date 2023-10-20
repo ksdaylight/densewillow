@@ -5,6 +5,7 @@ import { mediaContract } from './contract-media';
 import { contentContract } from './contract-content';
 import { userContract } from './contract-user';
 import { testZodContract } from './contract-zod-test';
+import { portfolioContract } from './contract-portfolio';
 
 const c = initContract();
 
@@ -17,6 +18,8 @@ export const apiBlog = c.router(
         user: userContract,
 
         zodTest: testZodContract,
+
+        portfolio: portfolioContract,
     },
     {
         baseHeaders: z.object({
