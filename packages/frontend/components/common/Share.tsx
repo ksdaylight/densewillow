@@ -38,7 +38,7 @@ const Share: FC<Props> = ({ url, title, quote }): JSX.Element => {
 
             <LinkedinShareButton url={url} source={quote} title={title}>
                 <div className={iconDivClass}>
-                    <FaLinkedinIn    size={18} className={iconClass} />
+                    <FaLinkedinIn size={18} className={iconClass} />
                 </div>
             </LinkedinShareButton>
 

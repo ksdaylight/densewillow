@@ -2,7 +2,6 @@ import { NextPage } from 'next';
 
 import { dehydrate } from '@tanstack/query-core';
 
-import AdminLayout from '@frontend/components/layout/AdminLayout';
 import Editor from '@frontend/components/Editor';
 
 import getQueryClient from '@frontend/utils/getQueryClient';
@@ -26,13 +25,11 @@ const Create: NextPage<Props> = async () => {
     const dehydratedState = dehydrate(queryClient);
 
     return (
-        <AdminLayout title="New Post">
-            <div className="max-w-4xl mx-auto">
-                <Hydrate state={dehydratedState}>
-                    <Editor />
-                </Hydrate>
-            </div>
-        </AdminLayout>
+        <div className="max-w-4xl mx-auto">
+            <Hydrate state={dehydratedState}>
+                <Editor />
+            </Hydrate>
+        </div>
     );
 };
 
