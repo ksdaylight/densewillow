@@ -2,12 +2,16 @@ import { PortfolioSidebar } from '@frontend/components/common/PortfolioSidebar';
 import { NextPage } from 'next';
 import Image from 'next/image';
 
-interface Props {}
+interface Props {
+    params: {
+        lng: string;
+    };
+}
 
-const PortfolioAboutMe: NextPage<Props> = async () => {
+const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
     return (
         <>
-            <PortfolioSidebar activeItem="/about-me" />
+            <PortfolioSidebar activeItem="/about-me" lng={params.lng} />
             <main className="pl-0 pt-[50px] md:pl-[102px] md:pt-0 ">
                 <section id="about_me" className="block md:pt-[64px]">
                     <div className="relative container mx-auto z-20 flex items-center justify-center flex-col">

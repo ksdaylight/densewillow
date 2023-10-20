@@ -6,12 +6,16 @@ import { LiaMapMarkerSolid } from 'react-icons/lia';
 import { BsTelephone, BsEnvelope } from 'react-icons/bs';
 import ContactForm from '@frontend/components/common/contactForm';
 
-interface Props {}
+interface Props {
+    params: {
+        lng: string;
+    };
+}
 
-const PortfolioContactMe: NextPage<Props> = async () => {
+const PortfolioContactMe: NextPage<Props> = async ({ params }) => {
     return (
         <>
-            <PortfolioSidebar activeItem="/contact-me" />
+            <PortfolioSidebar activeItem="/contact-me" lng={params.lng} />
             <main className="pl-0 pt-[50px] md:pl-[102px] md:pt-0 ">
                 <section
                     id="contact"

@@ -8,8 +8,10 @@ import Image from 'next/image';
 import { isNil } from 'lodash';
 import WorksDialog, { WorkInfo } from '@frontend/components/common/WorksDialog';
 
-interface Props {}
-const MyWorkClient: FC<Props> = (): JSX.Element => {
+interface Props {
+    lng?: string;
+}
+const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
     const [currentGroup, setCurrentGroup] = useState('All');
 
     const shuffleRef = useRef<Shuffle | null>(null);
@@ -56,6 +58,7 @@ const MyWorkClient: FC<Props> = (): JSX.Element => {
             <PortfolioSidebar
                 activeItem="/my-work"
                 className={`${workDialogIsOpen ? 'blur-sm' : 'blur-none'}`}
+                lng={lng}
             />
             <main className="pl-0 pt-[50px] md:pl-[102px] md:pt-0 ">
                 <section

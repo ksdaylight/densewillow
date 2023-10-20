@@ -16,8 +16,10 @@ import { apiClient, filterPosts } from '@frontend/utils/helps';
 import { useRoleInfoContext } from '@frontend/context/role-info';
 import PaddingContainer from '@frontend/components/layout/padding-container';
 
-interface Props {}
-const MyBlogsClient: FC<Props> = (): JSX.Element => {
+interface Props {
+    lng: string;
+}
+const MyBlogsClient: FC<Props> = ({ lng }): JSX.Element => {
     const [postsToRender, setPostsToRender] = useState<PostWithPartialRelations[]>([]);
     const [hasMorePosts, setHasMorePosts] = useState(true);
     const limit = 9;
@@ -95,7 +97,7 @@ const MyBlogsClient: FC<Props> = (): JSX.Element => {
     }, [isFetching, fetchNextPage, hasNextPage]);
     return (
         <>
-            <PortfolioSidebar activeItem="/blogs" />
+            <PortfolioSidebar activeItem="/blogs" lng={lng} />
             <main className="pl-0 pt-[50px] md:pl-[102px] md:pt-0 ">
                 <section
                     id="blogs"

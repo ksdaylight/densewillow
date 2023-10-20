@@ -9,10 +9,12 @@ import { BsBriefcase, BsTelephone } from 'react-icons/bs';
 import { LiaCommentAltSolid } from 'react-icons/lia';
 import { RiMenuFoldFill, RiMenuUnfoldFill } from 'react-icons/ri';
 import useDarkMode from '@frontend/hooks/useDarkMode';
+import { fallbackLng } from '@frontend/app/i18n/settings';
 
 interface Props {
     activeItem: string | null;
     className?: string;
+    lng?: string;
 }
 type IconNames = 'home' | 'idCard' | 'file' | 'briefcase' | 'comment' | 'phone';
 
@@ -37,7 +39,7 @@ const NAV_CLOSE_CLASSES = ['-translate-x-full', 'md:translate-x-0'];
 const NAV_OPEN_CLASSES = ['translate-x-0', 'transition-all', 'duration-[0.3s]'];
 const NAV_VISIBILITY = 'nav-visibility';
 
-export const PortfolioSidebar: React.FC<Props> = ({ activeItem, className }) => {
+export const PortfolioSidebar: React.FC<Props> = ({ activeItem, className, lng = fallbackLng }) => {
     const navRef = useRef<HTMLDivElement>(null);
     const [visible, setVisible] = useState(true);
 
@@ -113,7 +115,7 @@ export const PortfolioSidebar: React.FC<Props> = ({ activeItem, className }) => 
                                 // onClick={() => handleClick(item)}
                             >
                                 <Link
-                                    href={item.href}
+                                    href={`/${lng}${item.href}`}
                                     className={`group/link ${
                                         activeItem === item.href
                                             ? 'before:opacity-[0.15] before:scale-100 before:-translate-y-1/2 before:-translate-x-1/2 text-primary'

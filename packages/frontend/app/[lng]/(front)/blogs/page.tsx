@@ -2,9 +2,13 @@ import { NextPage } from 'next';
 
 import MyBlogsClient from './blog-client';
 
-interface Props {}
+interface Props {
+    params: {
+        lng: string;
+    };
+}
 
-const MyBlogs: NextPage<Props> = async () => {
-    return <MyBlogsClient />;
+const MyBlogs: NextPage<Props> = async ({ params }) => {
+    return <MyBlogsClient lng={params.lng} />;
 };
 export default MyBlogs;

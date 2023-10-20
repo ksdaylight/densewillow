@@ -42,7 +42,7 @@ const PostSlugPage: FC<Props> = ({ initialSlug, lng }): JSX.Element => {
     }
     return (
         <>
-            <PortfolioSidebar activeItem="/blogs" />
+            <PortfolioSidebar activeItem="/blogs" lng={lng} />
             <div className="pl-0 pt-[50px] md:pl-[102px] md:pt-0">
                 <PaddingContainer>
                     <div className="space-y-10 pt-0 md:pt-[100px] mb-2 md:mb-[100px]">

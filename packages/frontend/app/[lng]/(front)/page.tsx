@@ -9,12 +9,16 @@ import { random } from 'lodash';
 import TypedH2 from '@frontend/components/common/TypedH2';
 import { PortfolioSidebar } from '@frontend/components/common/PortfolioSidebar';
 
-interface Props {}
+interface Props {
+    params: {
+        lng: string;
+    };
+}
 
-const PortfolioHome: NextPage<Props> = async () => {
+const PortfolioHome: NextPage<Props> = async ({ params }) => {
     return (
         <>
-            <PortfolioSidebar activeItem="/" />
+            <PortfolioSidebar activeItem="/" lng={params.lng} />
             <main className="pl-0 pt-[50px] md:pl-[102px] md:pt-0 ">
                 <section
                     className={`block bg-none md:bg-[url('/images/bg-shape-light.png')] md:dark:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[40vw_-24px]`}

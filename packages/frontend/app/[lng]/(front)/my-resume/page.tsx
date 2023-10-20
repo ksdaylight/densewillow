@@ -5,12 +5,16 @@ import Image from 'next/image';
 import { LiaUniversitySolid } from 'react-icons/lia';
 import { BsBriefcase } from 'react-icons/bs';
 
-interface Props {}
+interface Props {
+    params: {
+        lng: string;
+    };
+}
 
-const PortfolioMyResume: NextPage<Props> = async () => {
+const PortfolioMyResume: NextPage<Props> = async ({ params }) => {
     return (
         <>
-            <PortfolioSidebar activeItem="/my-resume" />
+            <PortfolioSidebar activeItem="/my-resume" lng={params.lng} />
             <main className="pl-0 pt-[50px] md:pl-[102px] md:pt-0 ">
                 <section
                     id="resume"
