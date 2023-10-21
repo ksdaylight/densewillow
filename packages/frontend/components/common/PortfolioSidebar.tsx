@@ -11,6 +11,8 @@ import { RiMenuFoldFill, RiMenuUnfoldFill } from 'react-icons/ri';
 import useDarkMode from '@frontend/hooks/useDarkMode';
 import { fallbackLng } from '@frontend/app/i18n/settings';
 
+import LngSwitcherClient from './LngSwitcher/client';
+
 interface Props {
     activeItem: string | null;
     className?: string;
@@ -139,16 +141,19 @@ export const PortfolioSidebar: React.FC<Props> = ({ activeItem, className, lng =
                     })}
                 </ul>
             </nav>
-            <div id="toggle-mode" className="h-1/5 flex items-end pb-[62px]">
-                <div
-                    id="outer"
-                    className="w-6 h-[35px] rounded-3xl bg-secondary_gray_light dark:bg-[#1e1e20] cursor-pointer transition-all duration-[0.3s]"
-                    onClick={toggleTheme}
-                >
+            <div id="toggle-mode" className="h-1/5 flex items-center">
+                <div className="flex flex-col gap-y-4">
                     <div
-                        id="inner"
-                        className='relative w-3.5 h-3.5 mt-[5px] dark:mt-4 mx-auto rounded-[50%] bg-[#658df2] transition-all duration-[0.3s] before:absolute before:content-[""] before:w-3.5 before:h-3.5 before:rounded-[50%] before:left-[3px] before:-top-1 before:bg-secondary_gray_light dark:before:bg-[#24244f] before:opacity-0 dark:before:opacity-100 before:transition-all before:duration-[0.3s]'
-                    />
+                        id="outer"
+                        className="w-6 h-[35px] rounded-3xl bg-secondary_gray_light dark:bg-[#1e1e20] cursor-pointer transition-all duration-[0.3s]"
+                        onClick={toggleTheme}
+                    >
+                        <div
+                            id="inner"
+                            className='relative w-3.5 h-3.5 mt-[5px] dark:mt-4 mx-auto rounded-[50%] bg-[#658df2] transition-all duration-[0.3s] before:absolute before:content-[""] before:w-3.5 before:h-3.5 before:rounded-[50%] before:left-[3px] before:-top-1 before:bg-secondary_gray_light dark:before:bg-[#24244f] before:opacity-0 dark:before:opacity-100 before:transition-all before:duration-[0.3s]'
+                        />
+                    </div>
+                    <LngSwitcherClient lng={lng} />
                 </div>
             </div>
         </div>

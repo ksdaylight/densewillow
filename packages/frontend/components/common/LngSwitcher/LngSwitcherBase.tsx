@@ -20,7 +20,15 @@ const LngSwitcherBase: FC<Props> = ({ t, lng, pathname }) => {
         return segments.join('/');
     };
     return (
-        <div className="flex items-center gap-1 font-semibold">
+        <div className="flex items-center gap-1 font-semibold flex-col">
+            {languages
+                .filter((l) => lng !== l)
+                .map((l, index) => (
+                    <span key={l}>
+                        {index > 0 && ' or '}
+                        <Link href={redirectTarget(l)}>{l.toUpperCase()}</Link>
+                    </span>
+                ))}
             <Trans
                 i18nKey="languageSwitcher"
                 t={t as TFunction<'translation'>}
@@ -30,14 +38,6 @@ const LngSwitcherBase: FC<Props> = ({ t, lng, pathname }) => {
                 {/* {` Switch from <strong>{{ lng }}</strong> to: `} */}
                 {`<span>lng</span>`}
             </Trans>
-            {languages
-                .filter((l) => lng !== l)
-                .map((l, index) => (
-                    <span key={l}>
-                        {index > 0 && ' or '}
-                        <Link href={redirectTarget(l)}>{l.toUpperCase()}</Link>
-                    </span>
-                ))}
         </div>
     );
 };
