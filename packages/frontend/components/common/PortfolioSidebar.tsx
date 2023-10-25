@@ -11,6 +11,8 @@ import { RiMenuFoldFill, RiMenuUnfoldFill } from 'react-icons/ri';
 import useDarkMode from '@frontend/hooks/useDarkMode';
 import { fallbackLng } from '@frontend/app/i18n/settings';
 
+import { useTranslation } from '@frontend/app/i18n/client';
+
 import LngSwitcherClient from './LngSwitcher/client';
 
 interface Props {
@@ -19,15 +21,6 @@ interface Props {
     lng?: string;
 }
 type IconNames = 'home' | 'idCard' | 'file' | 'briefcase' | 'comment' | 'phone';
-
-const navItems = [
-    { href: '/', icon: 'home', label: 'Home' },
-    { href: '/about-me', icon: 'idCard', label: ' About Me' },
-    { href: '/my-resume', icon: 'file', label: 'My Resume' },
-    { href: '/my-work', icon: 'briefcase', label: 'My Work' },
-    { href: '/blogs', icon: 'comment', label: 'My Blog' },
-    { href: '/contact-me', icon: 'phone', label: 'Contact Me' },
-];
 
 const ICONS: Record<IconNames, IconType> = {
     home: AiOutlineHome,
@@ -42,8 +35,18 @@ const NAV_OPEN_CLASSES = ['translate-x-0', 'transition-all', 'duration-[0.3s]'];
 const NAV_VISIBILITY = 'nav-visibility';
 
 export const PortfolioSidebar: React.FC<Props> = ({ activeItem, className, lng = fallbackLng }) => {
+    const { t } = useTranslation(lng, 'sidebar');
     const navRef = useRef<HTMLDivElement>(null);
     const [visible, setVisible] = useState(true);
+
+    const navItems = [
+        { href: '/', icon: 'home', label: t('home') },
+        { href: '/about-me', icon: 'idCard', label: t('about-me') },
+        { href: '/my-resume', icon: 'file', label: t('my-resume') },
+        { href: '/my-work', icon: 'briefcase', label: t('my-work') },
+        { href: '/blogs', icon: 'comment', label: t('blogs') },
+        { href: '/contact-me', icon: 'phone', label: t('contact-me') },
+    ];
 
     const { toggleTheme } = useDarkMode();
     // const handleClick = (item: NavItem) => {

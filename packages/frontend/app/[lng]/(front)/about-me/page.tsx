@@ -18,9 +18,9 @@ const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
                         <div className="flex flex-wrap w-3/4 min-w-0 h-auto">
                             <div className="w-full lg:w-1/3 2xl:w-1/2 flex items-start ">
                                 <Image
-                                    src="/images/person-about.png"
+                                    src="/images/person-about.jpg"
                                     alt="person about"
-                                    className="transition-all duration-[0.3s] rounded-[8px] hover:saturate-[200%] hover:sepia-[1]"
+                                    className="transition-all duration-[0.3s] rounded-[8px] hover:scale-105"
                                     width={432}
                                     height={657}
                                 />
