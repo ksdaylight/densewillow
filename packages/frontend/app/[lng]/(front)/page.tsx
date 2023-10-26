@@ -67,6 +67,7 @@ const PortfolioHome: NextPage<Props> = async ({ params }) => {
                                                 t('web-full-stack'),
                                                 t('front-end'),
                                                 t('back-end'),
+                                                t('Ops'),
                                             ]}
                                             lng={params.lng}
                                             className="text-gray_light dark:text-gray mr-[2px]"

@@ -1,3 +1,4 @@
+import { useTranslation } from '@frontend/app/i18n';
 import { PortfolioSidebar } from '@frontend/components/common/PortfolioSidebar';
 import { NextPage } from 'next';
 import Image from 'next/image';
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
+    const { t } = await useTranslation(params.lng, 'about-me-page');
     return (
         <>
             <PortfolioSidebar activeItem="/about-me" lng={params.lng} />
@@ -41,65 +43,62 @@ const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
                                         height={75}
                                         className="hidden dark:block"
                                     />
-                                    <h1>About Me</h1>
+                                    <h1>{t('about-me')}</h1>
                                 </header>
                                 <h2 className="text-gray_light dark:text-gray mb-[16px]">
-                                    Front-End web developer
+                                    {t('main-introduction')}
                                 </h2>
                                 <p className="max-w-[560px] text-paragraph_light dark:text-gray">
-                                    {`I'm a web developer with +5 years experience. I work on projects
-                                    as a Front-End and Back-End developer. as a Front-End developer,
-                                    I'm Fluent in HTML, CSS, Bootstrap, SCSS, Javascript, jQuery,
-                                    Vue.js, and as a Back-End developer, I'm fluent in PHP,
-                                    WordPress, and Laravel.
-                                    
-                                    This is my motto: "Everyone can start, but only a few can
-                                    finish`}
+                                    {t('detail-introduction')}
                                 </p>
                                 <div id="about_items">
                                     <div className="container">
                                         <div className="w-full flex flex-col md:flex-row">
                                             <div className="w-full md:w-1/2 mt-[30px] md:mb-[48px]">
                                                 <div className="flex mb-[16px]">
-                                                    <span className="title">Name:</span>
+                                                    <span className="title">{t('name-title')}</span>
                                                     <span className="text-gray_light dark:text-gray ml-[4px]">
-                                                        Mojtaba
+                                                        {t('name')}
                                                     </span>
                                                 </div>
                                                 <div className="flex mb-[16px]">
-                                                    <span className="title">Age:</span>
+                                                    <span className="title">{t('age-title')}</span>
                                                     <span className="text-gray_light dark:text-gray  ml-[4px]">
-                                                        29
+                                                        {t('age')}
                                                     </span>
                                                 </div>
                                                 <div className="flex mb-[16px]">
-                                                    <span className="title">Location:</span>
+                                                    <span className="title">
+                                                        {t('location-title')}
+                                                    </span>
                                                     <span className="text-gray_light dark:text-gray ml-[4px]">
-                                                        Frankfurt
+                                                        {t('location')}
                                                     </span>
                                                 </div>
                                             </div>
                                             <div className="w-full md:w-1/2 md:mt-[30px] mb-[48px]">
                                                 <div className="flex mb-[16px]">
                                                     <span className="title">
-                                                        Years of experience:
+                                                        {t('y-o-e-title')}
                                                     </span>
                                                     <span className="text-gray_light dark:text-gray ml-[4px]">
-                                                        +5 Years
+                                                        {t('y-o-e')}
                                                     </span>
                                                 </div>
                                                 <div className="flex mb-[16px]">
-                                                    <span className="title">Phone:</span>
+                                                    <span className="title">
+                                                        {t('WeChat-title')}
+                                                    </span>
                                                     <span className="text-gray_light dark:text-gray ml-[4px]">
-                                                        +1 234 567 8901
+                                                        {t('WeChat')}
                                                     </span>
                                                 </div>
                                                 <div className="flex mb-[16px]">
                                                     <span className="title whitespace-nowrap">
-                                                        E-mail:
+                                                        {t('e-mail-title')}
                                                     </span>
                                                     <span className="text-gray_light dark:text-gray ml-[4px]">
-                                                        smo.hayati@gmail.com
+                                                        {t('e-mail')}
                                                     </span>
                                                 </div>
                                             </div>
@@ -108,19 +107,19 @@ const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
                                 </div>
                                 <div className="flex flex-wrap flex-col md:flex-row">
                                     <a
-                                        href="assets/files/cv.pdf"
+                                        href="/contact-me"
                                         className="btn-custom-base bg-[#E9EFFF] dark:bg-[#262f48] text-primary mr-[24px] mb-[16px] md:mb-0 w-full md:w-auto text-center"
                                         download=""
                                     >
-                                        Download CV
+                                        {t('contact-me')}
                                     </a>
-                                    <a
+                                    {/* <a
                                         href="/contact-me"
                                         className="btn-custom-base bg-secondary_gray_light dark:bg-secondary-dark text-paragraph_light dark:text-primary  w-full md:w-auto text-center"
                                         // href onClick={() => handleChangeSectionClick('#contact_me')}
                                     >
                                         Message me
-                                    </a>
+                                    </a> */}
                                 </div>
                             </div>
                         </div>
@@ -139,9 +138,9 @@ const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
                                     <ul className="items">
                                         <li className="flex items-center justify-between mt-[38px] mb-[43px]">
                                             <div>
-                                                <h3 className="mt-[4px]">English</h3>
+                                                <h3 className="mt-[4px]">{t('mandarin')}</h3>
                                                 <span className="text-gray_light dark:text-gray">
-                                                    Native
+                                                    {t('mandarin-level')}
                                                 </span>
                                             </div>
                                             <div className="flex">
@@ -154,15 +153,15 @@ const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
                                         </li>
                                         <li className="flex items-center justify-between mt-[38px] mb-[43px]">
                                             <div>
-                                                <h3>French</h3>
+                                                <h3>{t('english')}</h3>
                                                 <span className="text-gray_light dark:text-gray">
-                                                    Conversational
+                                                    {t('english-level')}
                                                 </span>
                                             </div>
                                             <div className="flex">
                                                 <span className="rate-span" />
                                                 <span className="rate-span" />
-                                                <span className="rate-span before:bg-gray_light after:bg-gray_light dark:before:bg-secondary-dark dark:after:bg-secondary-dark" />
+                                                <span className="rate-span" />
                                                 <span className="rate-span before:bg-gray_light after:bg-gray_light dark:before:bg-secondary-dark dark:after:bg-secondary-dark" />
                                                 <span className="rate-span before:bg-gray_light after:bg-gray_light dark:before:bg-secondary-dark dark:after:bg-secondary-dark" />
                                             </div>
@@ -194,8 +193,28 @@ const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
                                                 <span className="rate-span" />
                                             </div>
                                         </li>
-                                        <li className="flex justify-between items-center">
+                                        <li className="flex justify-between items-center mb-[32px]">
                                             <h3>Communication</h3>
+                                            <div className="flex">
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                            </div>
+                                        </li>
+                                        <li className="flex justify-between items-center mb-[32px]">
+                                            <h3>Cooperation</h3>
+                                            <div className="flex">
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                                <span className="rate-span" />
+                                            </div>
+                                        </li>
+                                        <li className="flex justify-between items-center">
+                                            <h3>Availability</h3>
                                             <div className="flex">
                                                 <span className="rate-span" />
                                                 <span className="rate-span" />
@@ -216,45 +235,105 @@ const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
                                             <div className="web-skill">
                                                 <Image
-                                                    src="/images/web-skills/html5.png"
-                                                    alt="html5"
+                                                    src="/images/web-skills/js.png"
+                                                    alt="JavaScript"
                                                     width={51}
                                                     height={51}
                                                     className="mb-[21px] mx-auto"
                                                 />
-                                                <h3 className="mb-2">HTML 5</h3>
-                                                <span className="dark:dark:text-[#FF9F76] text-gray_light">
-                                                    over 5 years
+                                                <h3 className="mb-2">JavaScript</h3>
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
+                                                    +5 years
                                                 </span>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
                                             <div className="web-skill">
                                                 <Image
-                                                    src="/images/web-skills/css3.png"
-                                                    alt="css3"
+                                                    src="/images/web-skills/typescript.png"
+                                                    alt="TypeScript"
                                                     width={51}
                                                     height={51}
                                                     className="mb-[21px] mx-auto"
                                                 />
-                                                <h3 className="mb-2">CSS 3</h3>
+                                                <h3 className="mb-2">TypeScript</h3>
                                                 <span className="dark:text-[#FF9F76] text-gray_light">
-                                                    over 5 years
+                                                    +3 years
                                                 </span>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
                                             <div className="web-skill">
                                                 <Image
-                                                    src="/images/web-skills/bootstrap.png"
-                                                    alt="bootstrap"
+                                                    src="/images/web-skills/nodejs.png"
+                                                    alt="jQuery"
                                                     width={51}
                                                     height={51}
                                                     className="mb-[21px] mx-auto"
                                                 />
-                                                <h3 className="mb-2">Bootstrap</h3>
+                                                <h3 className="mb-2">Node.js</h3>
                                                 <span className="dark:text-[#FF9F76] text-gray_light">
-                                                    4 years
+                                                    +4 years
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/react.png"
+                                                    alt="React"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">React</h3>
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
+                                                    +4 years
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/nestjs.png"
+                                                    alt="NestJS"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">NestJS</h3>
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
+                                                    +2 years
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/tailwindcss.png"
+                                                    alt="Tailwind CSS"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">Tailwind CSS</h3>
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
+                                                    +2 years
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
+                                                    src="/images/web-skills/nextjs.png"
+                                                    alt="Next.js"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">Next.js</h3>
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
+                                                    +3 years
                                                 </span>
                                             </div>
                                         </div>
@@ -269,97 +348,98 @@ const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
                                                 />
                                                 <h3 className="mb-2">Vue.js</h3>
                                                 <span className="dark:text-[#FF9F76] text-gray_light">
-                                                    about 3 years
+                                                    +1 years
                                                 </span>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
                                             <div className="web-skill">
                                                 <Image
-                                                    src="/images/web-skills/js.png"
-                                                    alt="JavaScript"
+                                                    src="/images/web-skills/nuxt.png"
+                                                    alt="Nuxt"
                                                     width={51}
                                                     height={51}
                                                     className="mb-[21px] mx-auto"
                                                 />
-                                                <h3 className="mb-2">JavaScript</h3>
+                                                <h3 className="mb-2">Nuxt</h3>
                                                 <span className="dark:text-[#FF9F76] text-gray_light">
-                                                    3 years
+                                                    +1 years
                                                 </span>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
                                             <div className="web-skill">
                                                 <Image
-                                                    src="/images/web-skills/jquery.png"
-                                                    alt="jQuery"
+                                                    src="/images/web-skills/docker.png"
+                                                    alt="Docker"
                                                     width={51}
                                                     height={51}
                                                     className="mb-[21px] mx-auto"
                                                 />
-                                                <h3 className="mb-2">jQuery</h3>
+                                                <h3 className="mb-2">Docker</h3>
                                                 <span className="dark:text-[#FF9F76] text-gray_light">
-                                                    about 2 years
+                                                    +3 years
                                                 </span>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
                                             <div className="web-skill">
                                                 <Image
-                                                    src="/images/web-skills/jquery.png"
-                                                    alt="jQuery"
+                                                    src="/images/web-skills/git.png"
+                                                    alt="Git"
                                                     width={51}
                                                     height={51}
                                                     className="mb-[21px] mx-auto"
                                                 />
-                                                <h3 className="mb-2">jQuery</h3>
+                                                <h3 className="mb-2">Git</h3>
                                                 <span className="dark:text-[#FF9F76] text-gray_light">
-                                                    about 2 years
+                                                    +6 years
                                                 </span>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
                                             <div className="web-skill">
                                                 <Image
-                                                    src="/images/web-skills/jquery.png"
-                                                    alt="jQuery"
+                                                    src="/images/web-skills/github.png"
+                                                    alt="GitHub"
                                                     width={51}
                                                     height={51}
                                                     className="mb-[21px] mx-auto"
                                                 />
-                                                <h3 className="mb-2">jQuery</h3>
+                                                <h3 className="mb-2">GitHub</h3>
                                                 <span className="dark:text-[#FF9F76] text-gray_light">
-                                                    about 2 years
+                                                    +5 years
                                                 </span>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
                                             <div className="web-skill">
                                                 <Image
-                                                    src="/images/web-skills/jquery.png"
-                                                    alt="jQuery"
+                                                    src="/images/web-skills/mysql.png"
+                                                    alt="MySQL"
                                                     width={51}
                                                     height={51}
                                                     className="mb-[21px] mx-auto"
                                                 />
-                                                <h3 className="mb-2">jQuery</h3>
+                                                <h3 className="mb-2">MySQL</h3>
                                                 <span className="dark:text-[#FF9F76] text-gray_light">
-                                                    about 2 years
+                                                    +4 years
                                                 </span>
                                             </div>
                                         </div>
+
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
                                             <div className="web-skill">
                                                 <Image
-                                                    src="/images/web-skills/jquery.png"
-                                                    alt="jQuery"
+                                                    src="/images/web-skills/postgresql.png"
+                                                    alt="PostgreSQL"
                                                     width={51}
                                                     height={51}
                                                     className="mb-[21px] mx-auto"
                                                 />
-                                                <h3 className="mb-2">jQuery</h3>
+                                                <h3 className="mb-2">PostgreSQL</h3>
                                                 <span className="dark:text-[#FF9F76] text-gray_light">
-                                                    about 2 years
+                                                    +1 years
                                                 </span>
                                             </div>
                                         </div>

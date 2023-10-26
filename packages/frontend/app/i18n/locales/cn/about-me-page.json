@@ -1,0 +1,22 @@
+{
+    "about-me": "关于我",
+    "main-introduction":"web全栈工程师",
+    "detail-introduction":"我是一名拥有超过4年经验的网页开发者，精通前端和后端技术。在前端方面，我擅长使用HTML、CSS、Tailwind、JavaScript、React以及Next.js。而在后端开发上，我专精于TypeScript、Node.js和NestJS。另外，我也熟练掌握Linux运维以及CI/CD流程，确保部署的稳定与高效。我的座右铭是：“千里之行，始于足下”",
+    "name-title": "姓名:",
+    "name": "密文",
+    "age-title":"年龄:",
+    "age":"27",
+    "location-title":"地址:",
+    "location":"福建 宁德",
+    "y-o-e-title":"开发经验:",
+    "y-o-e":"4年以上",
+    "WeChat-title":"微信:",
+    "WeChat":"ksdaylight",
+    "e-mail-title":"E-mail:",
+    "e-mail":"ksmiloyuan@gmail.com",
+    "mandarin":"中文",
+    "mandarin-level":"母语",
+    "english":"English",
+    "english-level":"会话",
+    "contact-me": "联系我"
+}

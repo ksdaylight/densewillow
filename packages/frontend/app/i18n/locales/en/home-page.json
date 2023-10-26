@@ -2,9 +2,10 @@
     "web-full-stack": "web full-stack",
     "front-end": "Front-End web developer",
     "back-end": "Back-End web developer",
+    "Ops": "CI/CD",
     "Im": "I’m ",
     "my-name": "Miwen",
-    "introduction": "I'm a web developer with over 5 years of experience, specializing as a full-stack developer. On the front-end, I'm proficient in HTML, CSS, Tailwind, JavaScript, React, and Next.js. For back-end development, my expertise lies in TypeScript, Node.js, and NestJS.",
+    "introduction": "I'm a web developer with over 4 years of experience, specializing as a full-stack developer. On the front-end, I'm proficient in HTML, CSS, Tailwind, JavaScript, React, and Next.js. For back-end development, my expertise lies in TypeScript, Node.js, and NestJS. Additionally, I'm well-versed in CI/CD processes and Linux operations.",
     "weChat":"WeChat",
     "contact-me": "Message me"
 }

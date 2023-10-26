@@ -1,0 +1,22 @@
+{
+    "about-me": "About Me",
+    "main-introduction":"web full-stack developer",
+    "detail-introduction":"I'm a web developer with over 4 years of experience, fully immersing myself in both front-end and back-end technologies. On the front-end side, I'm adept at using HTML, CSS, Tailwind, JavaScript, React, and Next.js. When it comes to back-end development, I specialize in TypeScript, Node.js, and NestJS. Additionally, I'm well-versed in Linux operations and CI/CD processes, ensuring robust and smooth deployments. My commitment to the field remains unwavering, guided by the belief, 'A thousand mile trip begins with one step.'",
+    "name-title": "Name:",
+    "name": "Miwen",
+    "age-title":"Age:",
+    "age":"27",
+    "location-title":"Location:",
+    "location":"Fujian China",
+    "y-o-e-title":"Years of experience:",
+    "y-o-e":"+4 Years",
+    "WeChat-title":"WeChat:",
+    "WeChat":"ksdaylight",
+    "e-mail-title":"E-mail:",
+    "e-mail":"ksmiloyuan@gmail.com",
+    "mandarin":"Mandarin",
+    "mandarin-level":"Native",
+    "english":"English",
+    "english-level":"Conversational",
+    "contact-me": "Message me"
+}
