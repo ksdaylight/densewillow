@@ -1,0 +1,10 @@
+{
+    "web-full-stack": "web 全栈",
+    "front-end": "web 前端开发",
+    "back-end": "web 后端开发",
+    "Im": "你好，我是",
+    "my-name": "密文",
+    "introduction": "我是一名有超过5年经验的网页开发者，专长于全栈开发。在前端方面，我擅长HTML、CSS、Tailwind、JavaScript、React以及Next.js。而在后端开发上，擅长TypeScript、Node.js和NestJS。",
+    "weChat":"微信",
+    "contact-me": "联系我"
+}

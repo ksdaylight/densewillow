@@ -115,9 +115,9 @@ const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
                                         Download CV
                                     </a>
                                     <a
-                                        href="/"
+                                        href="/contact-me"
                                         className="btn-custom-base bg-secondary_gray_light dark:bg-secondary-dark text-paragraph_light dark:text-primary  w-full md:w-auto text-center"
-                                        // TODO href onClick={() => handleChangeSectionClick('#contact_me')}
+                                        // href onClick={() => handleChangeSectionClick('#contact_me')}
                                     >
                                         Message me
                                     </a>

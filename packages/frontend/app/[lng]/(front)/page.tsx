@@ -2,12 +2,12 @@ import { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { FaLinkedinIn } from 'react-icons/fa';
-import { BiLogoStackOverflow } from 'react-icons/bi';
 import { AiFillGithub } from 'react-icons/ai';
 import { random } from 'lodash';
 import TypedH2 from '@frontend/components/common/TypedH2';
 import { PortfolioSidebar } from '@frontend/components/common/PortfolioSidebar';
+import { useTranslation } from '@frontend/app/i18n';
+import WeChatIcon from '@frontend/components/common/WeChatIcon';
 
 interface Props {
     params: {
@@ -16,6 +16,7 @@ interface Props {
 }
 
 const PortfolioHome: NextPage<Props> = async ({ params }) => {
+    const { t } = await useTranslation(params.lng, 'home-page');
     return (
         <>
             <PortfolioSidebar activeItem="/" lng={params.lng} />
@@ -54,12 +55,20 @@ const PortfolioHome: NextPage<Props> = async ({ params }) => {
                                         className="mb-[24px]"
                                     />
                                     <h1 className="mb-[24px]">
-                                        <span className="text-gray_light dark:text-gray">I’m </span>
-                                        Mojtaba,
+                                        <span className="text-gray_light dark:text-gray">
+                                            {t('Im')}
+                                        </span>
+                                        {t('my-name')}
                                     </h1>
                                     <div className="flex  items-center mb-[16px]">
                                         <TypedH2
-                                            initialText="Front-End web developer"
+                                            initialText={t('web-full-stack')}
+                                            typedStrings={[
+                                                t('web-full-stack'),
+                                                t('front-end'),
+                                                t('back-end'),
+                                            ]}
+                                            lng={params.lng}
                                             className="text-gray_light dark:text-gray mr-[2px]"
                                         />
                                         {/* <h2
@@ -69,21 +78,16 @@ const PortfolioHome: NextPage<Props> = async ({ params }) => {
                                     Front-End web developer
                                 </h2> */}
                                     </div>
-                                    <p className="max-w-[430px] mb-[74px]">
-                                        I design and develop services for customers of all sizes,
-                                        specializing in creating stylish, modern websites, web
-                                        services, and online stores.
-                                    </p>
+                                    <p className="max-w-[430px] mb-[74px]">{t('introduction')}</p>
                                     <a
-                                        href="assets/files/cv.pdf"
-                                        download
+                                        href="/contact-me"
                                         className="btn-custom-base bg-[#E9EFFF] dark:bg-[#262f48] text-primary"
                                     >
-                                        Download CV
+                                        {t('contact-me')}
                                     </a>
                                     <div className="socials mt-[70px] md:mt-[191px]">
                                         <ul className="flex m-0 p-0 list-none flex-wrap justify-between md:justify-start">
-                                            <li className="mr-[8px]">
+                                            {/* <li className="mr-[8px]">
                                                 <Link
                                                     href="#"
                                                     className="flex items-center no-underline transition-all duration-[0.3s] px-[11px] py-[9px] hover:bg-secondary_gray_light dark:hover:bg-secondary-dark hover:rounded-[6px] group/link"
@@ -93,11 +97,11 @@ const PortfolioHome: NextPage<Props> = async ({ params }) => {
                                                         Linkedin
                                                     </span>
                                                 </Link>
-                                            </li>
+                                            </li> */}
 
                                             <li className="mr-[8px]">
                                                 <Link
-                                                    href="#"
+                                                    href="https://github.com/ksdaylight"
                                                     className="flex items-center no-underline transition-all duration-[0.3s] px-[11px] py-[9px] hover:bg-secondary_gray_light dark:hover:bg-secondary-dark hover:rounded-[6px] group/link"
                                                 >
                                                     <AiFillGithub className="text-[18px] fill-gray_light dark:fill-gray transition-all duration-[0.3s] mr-2 group-hover/link:fill-paragraph_light dark:group-hover/link:fill-white" />
@@ -107,15 +111,7 @@ const PortfolioHome: NextPage<Props> = async ({ params }) => {
                                                 </Link>
                                             </li>
                                             <li className="mr-[8px]">
-                                                <Link
-                                                    href="#"
-                                                    className="flex items-center no-underline transition-all duration-[0.3s] px-[11px] py-[9px] hover:bg-secondary_gray_light dark:hover:bg-secondary-dark hover:rounded-[6px] group/link"
-                                                >
-                                                    <BiLogoStackOverflow className="text-[18px] fill-gray_light dark:fill-gray transition-all duration-[0.3s] mr-2 group-hover/link:fill-paragraph_light dark:group-hover/link:fill-white" />
-                                                    <span className="text-gray_light dark:text-gray transition-all duration-[0.3s] group-hover/link:text-paragraph_light dark:group-hover/link:text-white">
-                                                        Stack Overflow
-                                                    </span>
-                                                </Link>
+                                                <WeChatIcon initialText={t('weChat')} />
                                             </li>
                                         </ul>
                                     </div>

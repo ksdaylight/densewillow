@@ -1,20 +1,28 @@
 'use client';
 
+import { fallbackLng } from '@frontend/app/i18n/settings';
 import { FC, useEffect, useRef } from 'react';
 import Typed from 'typed.js';
 
 interface Props {
     initialText: string;
+    typedStrings: string[];
+    lng: string;
     className?: string;
 }
-const TypedH2: FC<Props> = ({ initialText, className }): JSX.Element => {
+const TypedH2: FC<Props> = ({
+    initialText,
+    className,
+    typedStrings,
+    lng = fallbackLng,
+}): JSX.Element => {
     const typedEl = useRef<HTMLHeadingElement>(null);
 
     useEffect(() => {
         const typed = new Typed(typedEl.current, {
-            strings: ['Front-End web developer', 'Back-End web developer', 'Web designer'],
+            strings: typedStrings, // ['Front-End web developer', 'Back-End web developer', 'Web designer'],
             loop: true,
-            typeSpeed: 70,
+            typeSpeed: lng === 'en' ? 70 : 150,
             backSpeed: 10,
         });
 
