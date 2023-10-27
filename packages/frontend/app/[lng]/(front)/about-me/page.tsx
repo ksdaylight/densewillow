@@ -325,6 +325,21 @@ const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
                                         <div className="w-full md:w-1/2 xl:w-1/3 px-4">
                                             <div className="web-skill">
                                                 <Image
+                                                    src="/images/web-skills/express.png"
+                                                    alt="Express"
+                                                    width={51}
+                                                    height={51}
+                                                    className="mb-[21px] mx-auto"
+                                                />
+                                                <h3 className="mb-2">Express</h3>
+                                                <span className="dark:text-[#FF9F76] text-gray_light">
+                                                    +1 years
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/3 px-4">
+                                            <div className="web-skill">
+                                                <Image
                                                     src="/images/web-skills/nextjs.png"
                                                     alt="Next.js"
                                                     width={51}

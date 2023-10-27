@@ -2,12 +2,12 @@ import { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { AiFillGithub } from 'react-icons/ai';
+import { AiFillWechat, AiFillGithub } from 'react-icons/ai';
 import { random } from 'lodash';
 import TypedH2 from '@frontend/components/common/TypedH2';
 import { PortfolioSidebar } from '@frontend/components/common/PortfolioSidebar';
 import { useTranslation } from '@frontend/app/i18n';
-import WeChatIcon from '@frontend/components/common/WeChatIcon';
+import WeChatWrap from '@frontend/components/common/WeChatIcon';
 
 interface Props {
     params: {
@@ -112,7 +112,17 @@ const PortfolioHome: NextPage<Props> = async ({ params }) => {
                                                 </Link>
                                             </li>
                                             <li className="mr-[8px]">
-                                                <WeChatIcon initialText={t('weChat')} />
+                                                <WeChatWrap>
+                                                    <Link
+                                                        href="#"
+                                                        className="flex items-center no-underline transition-all duration-[0.3s] px-[11px] py-[9px] hover:bg-secondary_gray_light dark:hover:bg-secondary-dark hover:rounded-[6px] group/link"
+                                                    >
+                                                        <AiFillWechat className="text-[18px] fill-gray_light dark:fill-gray transition-all duration-[0.3s] mr-2 group-hover/link:fill-paragraph_light dark:group-hover/link:fill-white" />
+                                                        <span className="text-gray_light dark:text-gray transition-all duration-[0.3s] group-hover/link:text-paragraph_light dark:group-hover/link:text-white">
+                                                            {t('weChat')}
+                                                        </span>
+                                                    </Link>
+                                                </WeChatWrap>
                                             </li>
                                         </ul>
                                     </div>

@@ -1,12 +1,15 @@
 'use client';
 
+import { useTranslation } from '@frontend/app/i18n/client';
 import { apiClient } from '@frontend/utils/helps';
 import React, { FC, useState } from 'react';
 
-export type WorkInfo = {};
-interface Props {}
+interface Props {
+    lng: string;
+}
 
-const ContactForm: FC<Props> = (): JSX.Element => {
+const ContactForm: FC<Props> = ({ lng }): JSX.Element => {
+    const { t } = useTranslation(lng, 'contact-me-page');
     const [focused, setFocused] = useState<Record<string, boolean>>({});
     const [formData, setFormData] = useState({
         name: '',
@@ -47,7 +50,7 @@ const ContactForm: FC<Props> = (): JSX.Element => {
     const { mutate: addContactMessageMutate } = apiClient.portfolio.addContactMessage.useMutation({
         onSuccess: (data, variables, context) => {
             // eslint-disable-next-line no-alert, no-restricted-globals
-            const userConfirmed = confirm('提交成功！点击确定以刷新页面。'); // TODO 翻译
+            const userConfirmed = confirm(t('send-success'));
             // 如果用户点击了"确定"，则刷新页面
             if (userConfirmed) {
                 window.location.reload();
@@ -56,7 +59,7 @@ const ContactForm: FC<Props> = (): JSX.Element => {
         onError: (error, variables, context) => {
             console.log(error); // ti shi
             // eslint-disable-next-line no-alert
-            alert('提交失败，请重试！');
+            alert(t('send-failed'));
         },
     });
 
@@ -74,7 +77,7 @@ const ContactForm: FC<Props> = (): JSX.Element => {
         <form onSubmit={handleNewContactMessageSubmit}>
             <div className={`contact-form-item ${isFocused4Div('name')}`}>
                 <label htmlFor="name" className={`${isFocused4Label('name')}`}>
-                    Name
+                    {t('name')}
                 </label>
                 <input
                     type="text"
@@ -88,7 +91,7 @@ const ContactForm: FC<Props> = (): JSX.Element => {
             </div>
             <div className={`contact-form-item ${isFocused4Div('email')}`}>
                 <label htmlFor="email" className={`${isFocused4Label('email')}`}>
-                    Email
+                    {t('email')}
                 </label>
                 <input
                     type="email"
@@ -102,7 +105,7 @@ const ContactForm: FC<Props> = (): JSX.Element => {
             </div>
             <div className={`contact-form-item ${isFocused4Div('subject')}`}>
                 <label htmlFor="subject" className={`${isFocused4Label('subject')}`}>
-                    Subject
+                    {t('subject')}
                 </label>
                 <input
                     type="text"
@@ -116,7 +119,7 @@ const ContactForm: FC<Props> = (): JSX.Element => {
             </div>
             <div className={`contact-form-item ${isFocused4Div('message')}`}>
                 <label htmlFor="message" className={`${isFocused4Label('message')}`}>
-                    Message
+                    {t('message')}
                 </label>
                 <textarea
                     id="message"
@@ -133,7 +136,7 @@ const ContactForm: FC<Props> = (): JSX.Element => {
                     type="submit"
                     className="btn-custom-base bg-secondary_gray_light dark:bg-secondary-dark text-paragraph_light dark:text-white"
                 >
-                    Send message
+                    {t('send-message')}
                 </button>
             </div>
         </form>

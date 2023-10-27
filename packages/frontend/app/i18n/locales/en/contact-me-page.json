@@ -1,0 +1,13 @@
+{
+    "weChat": "WeChat",
+    "location-title":"Location:",
+    "location":"Fujian China",
+    "contact-me": "Contact Me",
+    "name":"Name",
+    "email":"Email",
+    "subject":"Subject",
+    "message":"Message",
+    "send-success": "Submission successful! Click OK to refresh the page.",
+    "send-failed": "Submission failed, please try again!",
+    "send-message":"Send Message"
+}

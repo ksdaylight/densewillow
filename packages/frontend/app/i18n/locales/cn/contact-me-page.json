@@ -1,0 +1,13 @@
+{
+    "weChat": "微信账号",
+    "location-title":"地址:",
+    "location":"福建 宁德",
+    "contact-me": "联系我",
+    "name":"姓名",
+    "email":"Email",
+    "subject":"主题",
+    "message":"消息",
+    "send-success":"提交成功！点击确定以刷新页面。",
+    "send-failed":"提交失败，请重试！",
+    "send-message":"发送"
+}
