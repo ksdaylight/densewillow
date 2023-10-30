@@ -1,0 +1,16 @@
+{
+    "high-school-title": "Hight School",
+    "high-school": "My high school experience was much like that of many students in the large inland provinces that participate in the college entrance exam. I attended a school with a six-day week,filled with morning and evening self-study sessions, sat through classes that weren't of the highest educational quality, and endlessly worked on exam papers. This routine continued until I finally took the college entrance examination, marking the end of that chapter.",
+    "university-title":"Bachelor's degree in Computer Science and Technology",
+    "university":"I graduated from Fujian University of Technology with a major in Computer Science and Technology. My focus was on Java web development. I achieved a GPA of 3.3 out of 4.00, and was awarded the National Inspirational Scholarship, as well as several term-based academic scholarships.",
+    "trainee-title": "Trainee Web Developer",
+    "trainee":"Before graduating from university, I started my internship, embarking on my journey as a web developer. At the time, I worked on the Java web back-end using frameworks related to Spring.",
+    "junior-web-title ":"Junior Web Developer",
+    "junior-web":"After graduating, I officially joined a company, still working on Java web back-end development. Although I learned a lot in my role, the 996 work schedule, consistently high housing prices, and the various impacts brought about by the COVID-19 pandemic pushed me to seek new breakthroughs. I chose the path of TypeScript full-stack development, spending my free time and gaps at work learning technologies such as React, NestJS, and Next.js.",
+    "mid-Level-title":"Mid-Level full-stack Web Developer",
+    "mid-Level":"After leaving the company, I began to secure projects as a freelancer. Despite the initial challenges and stumbles, I gradually started to see results. Having been through multiple projects, I've accumulated vast experience as a solo full-stack developer, mastering both front-end and back-end technologies. I can independently handle the entire process from project architecture to deployment. While confronting various technical challenges, I also recognized my shortcomings in certain areas. To address these gaps, I frequently engage in community discussions and exchange groups, communicating with other developers, learning from their best practices and suggestions, and making a host of like-minded friends. Now, I am not just a developer, but an engineer who solves real-world problems, an explorer with boundless enthusiasm for technology. I believe that with continuous learning and dedication, I can go even further on the path of full-stack development.",
+    "to-present":"2021 - Present",
+    "work-experience":"Experience",
+    "education-experience":"Education",
+    "my-resume": "My Resume"
+}

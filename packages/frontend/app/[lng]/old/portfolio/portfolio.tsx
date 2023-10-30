@@ -1040,7 +1040,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                     <div className="relative container mx-auto z-20 flex items-center justify-center flex-col mt-[123px]">
                         <div className="flex flex-wrap w-3/4 min-w-0 h-auto">
                             <div className="w-full lg:w-1/2 pr-3 xl:pr-[69px]">
-                                <ContactForm />
+                                <ContactForm lng="cn" />
                             </div>
                             <div className="w-full lg:w-1/2 pl-3 xl:pl-[69px] lg:mt-0 mt-20">
                                 <div className="flex mb-8 group flex-col md:flex-row text-center justify-center items-center md:justify-start md:items-start md:text-left">

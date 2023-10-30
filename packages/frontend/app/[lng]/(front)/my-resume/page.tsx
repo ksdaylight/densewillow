@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import { LiaUniversitySolid } from 'react-icons/lia';
 import { BsBriefcase } from 'react-icons/bs';
+import { useTranslation } from '@frontend/app/i18n';
 
 interface Props {
     params: {
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const PortfolioMyResume: NextPage<Props> = async ({ params }) => {
+    const { t } = await useTranslation(params.lng, 'my-resume-page');
     return (
         <>
             <PortfolioSidebar activeItem="/my-resume" lng={params.lng} />
@@ -36,7 +38,7 @@ const PortfolioMyResume: NextPage<Props> = async ({ params }) => {
                                 height={75}
                                 className="hidden dark:block"
                             />
-                            <h1>My Resume</h1>
+                            <h1>{t('my-resume')}</h1>
                         </header>
                         <div className="relative flex items-center justify-center z-20">
                             <div className="flex flex-wrap w-3/4 min-w-0 h-auto">
@@ -45,7 +47,7 @@ const PortfolioMyResume: NextPage<Props> = async ({ params }) => {
                                     className="w-full xl:w-1/2 flex flex-col md:pr-[34px] px-3"
                                 >
                                     <header className="header-custom mb-[42px]">
-                                        <h2>Education</h2>
+                                        <h2>{t('education-experience')}</h2>
                                     </header>
                                     <div className="items">
                                         <div className="flex mb-[42px] group relative md:static">
@@ -54,25 +56,13 @@ const PortfolioMyResume: NextPage<Props> = async ({ params }) => {
                                             </div>
                                             <div className="resume-item-box">
                                                 <span className="inline-block text-lg font-normal mb-4">
-                                                    2014 - 2018
+                                                    2015 - 2019
                                                 </span>
-                                                <h2 className="text-primary mb-4">{`Engineer's degree`}</h2>
-                                                <p className="text-lg font-normal text-gray_light dark:text-gray max-w-[345px]">
-                                                    Bmet minim mollit deserunt llamco est sit aliqua
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div className="flex mb-[42px] group relative md:static">
-                                            <div className="resume-item-icon">
-                                                <LiaUniversitySolid className="las la-university" />
-                                            </div>
-                                            <div className="resume-item-box">
-                                                <span className="inline-block text-lg font-normal mb-4">
-                                                    2010 - 2014
-                                                </span>
-                                                <h2 className="mb-4">High School</h2>
-                                                <p className="text-lg font-normal text-gray_light dark:text-gray max-w-[345px]">
-                                                    Bmet minim mollit deserunt llamco est sit aliqua
+                                                <h2 className="text-primary mb-4">
+                                                    {t('university-title')}
+                                                </h2>
+                                                <p className="text-lg font-normal text-gray_light dark:text-gray ">
+                                                    {t('university')}
                                                 </p>
                                             </div>
                                         </div>
@@ -82,11 +72,11 @@ const PortfolioMyResume: NextPage<Props> = async ({ params }) => {
                                             </div>
                                             <div className="resume-item-box">
                                                 <span className="inline-block text-lg font-normal mb-4">
-                                                    2001 - 2010
+                                                    2012 - 2015
                                                 </span>
-                                                <h2 className="mb-4">Elementary School</h2>
-                                                <p className="text-lg font-normal text-gray_light dark:text-gray max-w-[345px]">
-                                                    Bmet minim mollit deserunt llamco est sit aliqua
+                                                <h2 className="mb-4">{t('high-school-title')}</h2>
+                                                <p className="text-lg font-normal text-gray_light dark:text-gray ">
+                                                    {t('high-school')}
                                                 </p>
                                             </div>
                                         </div>
@@ -97,7 +87,7 @@ const PortfolioMyResume: NextPage<Props> = async ({ params }) => {
                                     className="w-full xl:w-1/2 flex flex-col px-3 md:pl-[34px] mt-[100px] xl:mt-0"
                                 >
                                     <header className="header-custom mb-[42px]">
-                                        <h2>Experience</h2>
+                                        <h2>{t('work-experience')}</h2>
                                     </header>
                                     <div className="items">
                                         <div className="flex mb-[42px] group relative md:static">
@@ -106,13 +96,13 @@ const PortfolioMyResume: NextPage<Props> = async ({ params }) => {
                                             </div>
                                             <div className="resume-item-box">
                                                 <span className="inline-block text-lg font-normal mb-4">
-                                                    2020 - Present
+                                                    {t('to-present')}
                                                 </span>
                                                 <h2 className="text-primary mb-4">
-                                                    Senior Web Developer
+                                                    {t('mid-Level-title')}
                                                 </h2>
-                                                <p className="text-lg font-normal text-gray_light dark:text-gray max-w-[345px]">
-                                                    Bmet minim mollit deserunt llamco est sit aliqua
+                                                <p className="text-lg font-normal text-gray_light dark:text-gray ">
+                                                    {t('mid-Level')}
                                                 </p>
                                             </div>
                                         </div>
@@ -122,11 +112,11 @@ const PortfolioMyResume: NextPage<Props> = async ({ params }) => {
                                             </div>
                                             <div className="resume-item-box">
                                                 <span className="inline-block text-lg font-normal mb-4">
-                                                    2019 - 2020
+                                                    2019 - 2021
                                                 </span>
-                                                <h2 className="mb-4">Mid-Level Web Developer</h2>
-                                                <p className="text-lg font-normal text-gray_light dark:text-gray max-w-[345px]">
-                                                    Bmet minim mollit deserunt llamco est sit aliqua
+                                                <h2 className="mb-4">{t('junior-web-title')}</h2>
+                                                <p className="text-lg font-normal text-gray_light dark:text-gray ">
+                                                    {t('junior-web')}
                                                 </p>
                                             </div>
                                         </div>
@@ -135,11 +125,10 @@ const PortfolioMyResume: NextPage<Props> = async ({ params }) => {
                                                 <BsBriefcase className="las la-briefcase" />
                                             </div>
                                             <div className="resume-item-box">
-                                                <span className="year">2017 - 2019</span>
-                                                <h2 className="mb-4">Junior Web Developer</h2>
-                                                <p className="text-lg font-normal text-gray_light dark:text-gray max-w-[345px]">
-                                                    Bmet minim mollit deserunt llamco est sit aliqua
-                                                    Bmet minim mollit deserunt llamco est sit aliqua
+                                                <span className="year">2018 - 2019</span>
+                                                <h2 className="mb-4">{t('trainee-title')}</h2>
+                                                <p className="text-lg font-normal text-gray_light dark:text-gray ">
+                                                    {t('trainee')}
                                                 </p>
                                             </div>
                                         </div>
