@@ -42,7 +42,7 @@ const AdminSecondaryNav: FC<Props> = (props): JSX.Element => {
             <SearchBar />
             {/* options / profile head */}
             <DropdownOptions
-                head={<ProfileHead nameInitial={userInfoLocal?.name?.toUpperCase()} />}
+                head={<ProfileHead nameInitial={userInfoLocal?.name?.toUpperCase() || 'M'} />}
                 options={options}
             />
         </div>

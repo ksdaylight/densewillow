@@ -77,7 +77,7 @@ export class TokenService {
                 if (isNil(user)) throw NotFoundException;
                 token = await this.generateAccessToken(user, now);
                 const frontendDomain = new URL(
-                    this.configure.env('NEXT_PUBLIC_SITE_URL', 'http://192.168.80.6:4200') || '',
+                    this.configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com') || '',
                 ).hostname;
                 response.setCookie('auth_token', token.accessToken.value, {
                     path: '/',

@@ -5,15 +5,15 @@ import Image from 'next/image';
 import InfiniteScrollPosts from '@frontend/components/common/InfiniteScrollPosts';
 import { FC, useCallback, useEffect, useState } from 'react';
 
-import { deleteCookie, getCookie } from 'cookies-next';
+// import { deleteCookie, getCookie } from 'cookies-next';
 
-import { isNil } from 'lodash';
+// import { isNil } from 'lodash';
 
 import { PostWithPartialRelations } from '@api-contracts';
 
 import { apiClient, filterPosts } from '@frontend/utils/helps';
 
-import { useRoleInfoContext } from '@frontend/context/role-info';
+// import { useRoleInfoContext } from '@frontend/context/role-info';
 import PaddingContainer from '@frontend/components/layout/padding-container';
 
 interface Props {
@@ -23,21 +23,24 @@ const MyBlogsClient: FC<Props> = ({ lng }): JSX.Element => {
     const [postsToRender, setPostsToRender] = useState<PostWithPartialRelations[]>([]);
     const [hasMorePosts, setHasMorePosts] = useState(true);
     const limit = 9;
-    const { setUserInfoLocal } = useRoleInfoContext();
-    const { data: userProfileData, error } = apiClient.user.getUserProfile.useQuery(
-        ['getUserProfile', '1'],
-        {},
-        {
-            staleTime: Infinity,
-            retry: 0, // 禁用自动重试
-            refetchOnWindowFocus: false, // 禁用当窗口聚焦时的数据重获取
-            refetchOnMount: false, // 禁用当组件重新挂载时的数据重获取
-            // enabled: false,
-        },
-    );
+    /**
+     * 暂时不需要获取用户信息这套操作，完善评论，或者 admin后才需要
+     */
+    // const { setUserInfoLocal } = useRoleInfoContext();
+    // const { data: userProfileData, error } = apiClient.user.getUserProfile.useQuery(
+    //     ['getUserProfile', '1'],
+    //     {},
+    //     {
+    //         staleTime: Infinity,
+    //         retry: 0, // 禁用自动重试
+    //         refetchOnWindowFocus: false, // 禁用当窗口聚焦时的数据重获取
+    //         refetchOnMount: false, // 禁用当组件重新挂载时的数据重获取
+    //         // enabled: false,
+    //     },
+    // );
 
-    const userProfile = userProfileData?.body;
-    const roleInfo = getCookie('user_role');
+    // const userProfile = userProfileData?.body;
+    // const roleInfo = getCookie('user_role');
     const { data, isFetching, fetchNextPage, hasNextPage } =
         apiClient.content.getPosts.useInfiniteQuery(
             ['getPosts', '1'],
@@ -58,29 +61,29 @@ const MyBlogsClient: FC<Props> = ({ lng }): JSX.Element => {
             },
         );
 
-    useEffect(() => {
-        if (isNil(error)) return;
-        const httpStatusCode = error.status;
-        if (httpStatusCode === 403 || httpStatusCode === 401) {
-            setUserInfoLocal({
-                id: undefined,
-                name: undefined,
-                avatar: undefined,
-                role: 'guest',
-            });
-            deleteCookie('user_role');
-        }
-    }, [error]);
+    // useEffect(() => {
+    //     if (isNil(error)) return;
+    //     const httpStatusCode = error.status;
+    //     if (httpStatusCode === 403 || httpStatusCode === 401) {
+    //         setUserInfoLocal({
+    //             id: undefined,
+    //             name: undefined,
+    //             avatar: undefined,
+    //             role: 'guest',
+    //         });
+    //         deleteCookie('user_role');
+    //     }
+    // }, [error]);
 
-    useEffect(() => {
-        if (isNil(userProfile)) return;
-        setUserInfoLocal({
-            id: userProfile.id,
-            name: userProfile.name,
-            avatar: userProfile.avatar || undefined,
-            role: roleInfo as string,
-        });
-    }, [userProfile]);
+    // useEffect(() => {
+    //     if (isNil(userProfile)) return;
+    //     setUserInfoLocal({
+    //         id: userProfile.id,
+    //         name: userProfile.name,
+    //         avatar: userProfile.avatar || undefined,
+    //         role: roleInfo as string,
+    //     });
+    // }, [userProfile]);
 
     useEffect(() => {
         if (data?.pages) {

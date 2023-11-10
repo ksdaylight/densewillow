@@ -52,7 +52,7 @@ export class AuthController {
                 id: user.id,
             });
             const frontendDomain = new URL(
-                this.configure.env('NEXT_PUBLIC_SITE_URL', 'http://192.168.80.6:4200') || '',
+                this.configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com') || '',
             ).hostname;
             reply.setCookie('auth_token', token, {
                 path: '/',
@@ -73,7 +73,7 @@ export class AuthController {
             // 重定向
             const redirectUrl = this.configure.env(
                 'NEXT_PUBLIC_SITE_URL',
-                'http://192.168.80.6:4200',
+                'https://densewillow.com',
             );
             reply.status(302).redirect(redirectUrl);
 
@@ -94,7 +94,7 @@ export class AuthController {
                 return { status: 404, body: { message: 'error' } };
             }
             const frontendDomain = new URL(
-                this.configure.env('NEXT_PUBLIC_SITE_URL', 'http://192.168.80.6:4200') || '',
+                this.configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com') || '',
             ).hostname;
             reply.setCookie('auth_token', 'deleted', {
                 path: '/',
@@ -107,7 +107,7 @@ export class AuthController {
             });
             const redirectUrl = this.configure.env(
                 'NEXT_PUBLIC_SITE_URL',
-                'http://192.168.80.6:4200',
+                'https://densewillow.com',
             );
             reply.status(302).redirect(redirectUrl); // teRest 有问题， @Res() 后不能正常获取返回
             return { status: 200 as const, body: { message: 'success' } }; // 怎么都可以

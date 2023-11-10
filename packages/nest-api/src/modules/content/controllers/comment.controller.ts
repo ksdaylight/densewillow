@@ -12,7 +12,7 @@ import { Guest, ReqUser } from '../../user/decorators';
 // import { PostService } from '../services/post.service';
 const c = nestControllerContract(apiBlog.content);
 
-// const testChecker: PermissionChecker = async (ab) => ab.can(PermissionAction.MANAGE, 'all');
+// const testChecker: PermissionChecker = async (ab) => ab.can(PermissionAction.MANAGE, 'all');//TODO 将这个应用到admin页面的那几个接口
 // TODO deprecated all 集成 Waline
 @Controller()
 @TsRest({ jsonQuery: true })
