@@ -24,7 +24,10 @@ const createCorsOptions = (configure: Configure) => {
         exit(0);
     }
 
-    const originRegExp = new RegExp(`${parsedDomain}.*`); // 取舍的正则写法，可改
+    const originRegExp =
+        typeof parsedDomain === 'string'
+            ? new RegExp(`${parsedDomain}.*`)
+            : new RegExp(`${parsedDomain.sld}.*`); // 取舍的正则写法，可改
     return (origin: string, callback: (err: Error | null, allow?: boolean) => void) => {
         const isAllowed = originRegExp.test(origin);
         if (isAllowed) {

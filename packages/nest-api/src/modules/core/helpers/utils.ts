@@ -116,7 +116,7 @@ export function isIPAddress(str: string): boolean {
     return ipPattern.test(str);
 }
 
-export function getDomain(siteUrl: string): string | null {
+export function getDomain(siteUrl: string): psl.ParsedDomain | string | null {
     if (isIPAddress(siteUrl)) {
         return siteUrl;
     }
@@ -127,5 +127,5 @@ export function getDomain(siteUrl: string): string | null {
         return null;
     }
 
-    return (parsed as psl.ParsedDomain).sld;
+    return parsed as psl.ParsedDomain;
 }

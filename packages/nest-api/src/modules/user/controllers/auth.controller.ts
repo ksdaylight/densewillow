@@ -9,12 +9,13 @@ import { User } from '@prisma/client/blog';
 
 import { FastifyReply } from 'fastify';
 
+import { isNil } from 'lodash';
+
 import { AuthService } from '../services';
 import { Guest, ReqUser } from '../decorators';
 import { EnvironmentType } from '../../core/constants';
 import { Configure } from '../../core/configure';
 import { getDomain } from '../../core/helpers';
-
 /**
  * 账户中心控制器
  */
@@ -55,7 +56,12 @@ export class AuthController {
             const siteUrl = new URL(
                 this.configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com'),
             ).hostname;
-            const parsedDomain = getDomain(siteUrl);
+            let parsedDomain = getDomain(siteUrl);
+            if (isNil(parsedDomain)) {
+                parsedDomain = 'densewillow.com';
+            } else if (typeof parsedDomain !== 'string') {
+                parsedDomain = parsedDomain.domain;
+            }
 
             reply.setCookie('auth_token', token, {
                 path: '/',
