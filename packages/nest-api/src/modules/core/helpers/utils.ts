@@ -1,6 +1,8 @@
 import { Module, ModuleMetadata, Type } from '@nestjs/common';
 import deepmerge from 'deepmerge';
 import { isArray, isNil, isObject } from 'lodash';
+
+import * as psl from 'psl';
 /**
  * 用于请求验证中的boolean数据转义
  * @param value
@@ -108,4 +110,22 @@ export function CreateModule(
     }
     Module(metaSetter())(ModuleClass);
     return ModuleClass;
+}
+export function isIPAddress(str: string): boolean {
+    const ipPattern = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
+    return ipPattern.test(str);
+}
+
+export function getDomain(siteUrl: string): string | null {
+    if (isIPAddress(siteUrl)) {
+        return siteUrl;
+    }
+    const parsed = psl.parse(siteUrl);
+    if ((parsed as psl.ParseError).error) {
+        // 解析主域名失败，处理错误 // 注:127.0.0.1等ip等非域名的，不会有错，有需要可特殊处理
+        console.error('解析主域名失败:', (parsed as psl.ParseError).error.message);
+        return null;
+    }
+
+    return (parsed as psl.ParsedDomain).sld;
 }

@@ -11,7 +11,7 @@ import { isNil } from 'lodash';
 import { getUserConfig } from '../helpers';
 import { JwtConfig, JwtPayload } from '../types';
 import { PrismaService } from '../../core/providers';
-import { getTime } from '../../core/helpers';
+import { getDomain, getTime } from '../../core/helpers';
 import { EnvironmentType } from '../../core/constants';
 import { Configure } from '../../core/configure';
 
@@ -76,15 +76,16 @@ export class TokenService {
                 });
                 if (isNil(user)) throw NotFoundException;
                 token = await this.generateAccessToken(user, now);
-                const frontendDomain = new URL(
-                    this.configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com') || '',
+                const siteUrl = new URL(
+                    this.configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com'),
                 ).hostname;
+                const parsedDomain = getDomain(siteUrl);
                 response.setCookie('auth_token', token.accessToken.value, {
                     path: '/',
                     httpOnly: true,
                     secure: process.env.NODE_ENV === EnvironmentType.PRODUCTION,
                     sameSite: 'strict',
-                    domain: frontendDomain,
+                    domain: parsedDomain || 'densewillow.com',
                     maxAge: 3600 * 24 * 7,
                 });
 

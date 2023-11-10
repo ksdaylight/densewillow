@@ -1,14 +1,41 @@
+import { exit } from 'process';
+
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { NestFactory } from '@nestjs/core';
 
-import { bootApp, createApp, echoApi } from './modules/core/helpers';
+import { isNil } from 'lodash';
+
+import { bootApp, createApp, echoApi, getDomain } from './modules/core/helpers';
 import * as configs from './config';
 import { MediaModule } from './modules/media/media.modules';
 import { ContentModule } from './modules/content/content.module';
 import { UserModule } from './modules/user/user.module';
 import { RbacModule } from './modules/rbac/rbac.module';
 import { RbacGuard } from './modules/rbac/guards';
+import { Configure } from './modules/core/configure';
 
+const createCorsOptions = (configure: Configure) => {
+    const siteUrl = new URL(configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com'))
+        .hostname;
+
+    const parsedDomain = getDomain(siteUrl);
+
+    if (isNil(parsedDomain)) {
+        exit(0);
+    }
+
+    const originRegExp = new RegExp(`${parsedDomain}.*`); // 取舍的正则写法，可改
+    return (origin: string, callback: (err: Error | null, allow?: boolean) => void) => {
+        const isAllowed = originRegExp.test(origin);
+        if (isAllowed) {
+            callback(null, true);
+        } else if (origin) {
+            console.log('blocked cors for:', origin);
+            callback(new Error(`Not allowed by CORS-> ${origin}`), false);
+        }
+        callback(null, false);
+    };
+};
 const creator = createApp({
     configs,
     configure: { enableDynamicStorage: true },
@@ -19,13 +46,7 @@ const creator = createApp({
             new FastifyAdapter({ bodyLimit: 5 * 1024 * 1024 }),
             {
                 cors: {
-                    origin: new RegExp(
-                        `.${
-                            new URL(
-                                configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com'),
-                            ).hostname
-                        }.`,
-                    ),
+                    origin: createCorsOptions(configure), // 客户端测试地址
                     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
                     credentials: true, // 这个是关键，允许服务器发送 Cookie
                 },

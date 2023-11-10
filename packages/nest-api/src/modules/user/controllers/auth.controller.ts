@@ -13,6 +13,7 @@ import { AuthService } from '../services';
 import { Guest, ReqUser } from '../decorators';
 import { EnvironmentType } from '../../core/constants';
 import { Configure } from '../../core/configure';
+import { getDomain } from '../../core/helpers';
 
 /**
  * 账户中心控制器
@@ -51,15 +52,17 @@ export class AuthController {
             const role = await this.authService.getMainRole({
                 id: user.id,
             });
-            const frontendDomain = new URL(
-                this.configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com') || '',
+            const siteUrl = new URL(
+                this.configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com'),
             ).hostname;
+            const parsedDomain = getDomain(siteUrl);
+
             reply.setCookie('auth_token', token, {
                 path: '/',
                 httpOnly: true,
                 secure: process.env.NODE_ENV === EnvironmentType.PRODUCTION,
                 sameSite: 'strict',
-                domain: frontendDomain,
+                domain: parsedDomain || 'densewillow.com',
                 maxAge: 3600 * 24 * 7,
             });
             reply.setCookie('user_role', role?.name || 'guest', {
@@ -67,7 +70,7 @@ export class AuthController {
                 httpOnly: false,
                 secure: false,
                 sameSite: 'strict',
-                domain: frontendDomain,
+                domain: parsedDomain || 'densewillow.com',
                 maxAge: 3600 * 24 * 7,
             });
             // 重定向
@@ -93,16 +96,19 @@ export class AuthController {
             } catch (error) {
                 return { status: 404, body: { message: 'error' } };
             }
-            const frontendDomain = new URL(
-                this.configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com') || '',
+
+            const siteUrl = new URL(
+                this.configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com'),
             ).hostname;
+            const parsedDomain = getDomain(siteUrl);
+
             reply.setCookie('auth_token', 'deleted', {
                 path: '/',
                 expires: new Date(0),
                 httpOnly: true,
                 secure: process.env.NODE_ENV === EnvironmentType.PRODUCTION,
                 sameSite: 'strict',
-                domain: frontendDomain,
+                domain: parsedDomain || 'densewillow.com',
                 maxAge: 3600 * 24 * 7,
             });
             const redirectUrl = this.configure.env(
