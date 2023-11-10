@@ -106,7 +106,13 @@ export class AuthController {
             const siteUrl = new URL(
                 this.configure.env('NEXT_PUBLIC_SITE_URL', 'https://densewillow.com'),
             ).hostname;
-            const parsedDomain = getDomain(siteUrl);
+            let parsedDomain = getDomain(siteUrl);
+
+            if (isNil(parsedDomain)) {
+                parsedDomain = 'densewillow.com';
+            } else if (typeof parsedDomain !== 'string') {
+                parsedDomain = parsedDomain.domain;
+            }
 
             reply.setCookie('auth_token', 'deleted', {
                 path: '/',
