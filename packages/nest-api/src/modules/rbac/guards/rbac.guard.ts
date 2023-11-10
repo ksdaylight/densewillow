@@ -32,7 +32,7 @@ export class RbacGuard extends JwtAuthGuard {
         let request = context.switchToHttp().getRequest();
         const requestToken = ExtractJwt.fromAuthHeaderAsBearerToken()(request);
         const cookieToken = (request as FastifyRequest).cookies.auth_token;
-        const token = isNil(request) ? cookieToken : requestToken;
+        const token = isNil(requestToken) ? cookieToken : requestToken;
 
         if (!authCheck) return false;
         if (authCheck && isNil(token)) return true;

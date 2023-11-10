@@ -5,7 +5,7 @@ import { ModuleRef, Reflector } from '@nestjs/core';
 import { FastifyRequest as Request } from 'fastify';
 import { isNil } from 'lodash';
 
-import { Permission } from '@prisma/client/blog';
+import { Permission, Prisma } from '@prisma/client/blog';
 
 import { PERMISSION_CHECKERS } from '../constants';
 import { RbacResolver } from '../rbac.resolver';
@@ -66,15 +66,28 @@ export const solveChecker = async ({
     //     ...userDetail.permissions,
     //     ...userDetail.roles.flatMap((role) => role.permissions),
     // ];
+    // 用于解析 rule 字符串
+    function parseRule(rule: string | Prisma.JsonValue): Prisma.JsonValue {
+        // 如果 rule 是字符串，解析为对象；如果已经是对象，直接返回
+        return typeof rule === 'string' ? JSON.parse(rule) : rule;
+    }
     let permissions = [
-        ...userDetail.permissions.map((p) => p.permission),
-        ...userDetail.roles.flatMap((role) => role.role.permissions.map((p) => p.permission)),
+        ...userDetail.permissions.map((p) => ({
+            ...p.permission,
+            rule: parseRule(p.permission.rule),
+        })),
+        ...userDetail.roles.flatMap((role) =>
+            role.role.permissions.map((p) => ({
+                ...p.permission,
+                rule: parseRule(p.permission.rule),
+            })),
+        ),
     ];
-
-    permissions = permissions.reduce((o, n) => {
+    permissions = permissions = permissions.reduce((o, n) => {
         if (o.find(({ name }) => name === n.name)) return o;
         return [...o, n];
     }, [] as Permission[]);
+
     const ability = createMongoAbility(
         permissions.map(({ rule, name }) => {
             const resolve = resolver.permissions.find((p) => p.name === name);

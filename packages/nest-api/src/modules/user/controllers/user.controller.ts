@@ -6,7 +6,11 @@ import { User } from '@prisma/client/blog';
 
 import { UserService } from '../services';
 import { ReqUser } from '../decorators';
+import { PermissionChecker } from '../../rbac/types';
+import { PermissionAction } from '../../rbac/constants';
+import { Permission } from '../../rbac/decorators';
 
+const adminChecker: PermissionChecker = async (ab) => ab.can(PermissionAction.MANAGE, 'all');
 /**
  * 账户中心控制器
  */
@@ -27,6 +31,7 @@ export class UserController {
         });
     }
 
+    @Permission(adminChecker)
     @TsRestHandler(c.getUsers)
     async getUsers() {
         return tsRestHandler(c.getUsers, async ({ query: { take, skip } }) => {
