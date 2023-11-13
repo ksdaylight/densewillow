@@ -1,0 +1,18 @@
+{
+    "my-work": "项目",
+    "project-overview":"项目概览",
+    "back-end":"后端",
+    "front-end":"前端",
+    "all-works":"全部",
+    "title-hi-ni":"校园社交平台 NestJS+Next.js+Vben",
+    "description-hi-ni":"本项目是一个基于 TypeScript 的全栈应用，具有高度的类型安全性、可维护性和可扩展性。项目涵盖了以下几个方面：\n\n前端：使用 Next.js 框架，结合 Ant Design Mobile、MUI、Taro UI 等优秀的 UI 库，打造了一个美观、动态和响应式的用户界面。前端支持服务端渲染（SSR），提高了页面的加载速度和 SEO 效果。\n\n后端：使用 NestJS 框架，搭建了一个安全、高效和模块化的后端架构。后端采用了 JWT、Passport、等中间件和库，增强了应用的安全性和鲁棒性。后端还提供了 RESTful API，方便了前端和后台管理系统的数据交互。\n\n后台管理系统：使用 Vben Admin 模板，构建了一个独立运行的后台管理系统，用于管理整个应用的数据和功能。后台管理系统界面简洁，功能丰富，提升了管理员的操作体验和效率。\n\n多语言支持：使用 i18n 库，实现了多语言功能，确保了应用的国际化和本地化。应用可以根据用户的语言偏好，自动切换到相应的语言环境，提供了一个包容性和友好性的导航。\n\nCI/CD 管道：使用 Gitea 和 Drone 搭建了一个自动化的持续集成和部署流程，促进了项目的快速迭代和更新。通过 Gitea 和 Drone，可以实现代码的版本控制、测试、构建、发布和部署，提高了项目的质量和效率。",
+    "title-hi-ni-backend":"校园社交平台 NestJS后端",
+    "description-hi-ni-backend":"-语言： TypeScript：利用 TypeScript 的静态类型特性，编写清晰、可维护的代码，实现早期错误检测和代码补全等功能。\n\n-框架： NestJS：使用 NestJS 框架，构建可扩展、模块化的服务端应用。NestJS 是一个强大的框架，它利用了 TypeScript 的特性，并提供了一致的结构和依赖注入系统。\n\n-Fastify：选择 Fastify 作为 web 服务器框架，因为它具有高性能和低开销的优势，确保了快速、高效的请求处理。\n\n-WebSocket：通过 @nestjs/platform-socket.io，实现了服务端和客户端之间的实时通信。@nestjs/platform-socket.io 是 NestJS 的 WebSocket 适配器。\n\n-数据库： MySQL：设计和维护了一个强大的关系型数据库，使用 MySQL 优化了数据的存储和检索。\n\n-TypeORM：使用 TypeORM 简化了数据库交互。TypeORM 是一个基于 TypeScript 的 ORM，支持 MySQL 和其他数据库。\n\n-认证： Passport，JWT：使用 Passport 和 JWT 保障了认证和授权系统的安全性，使用 Passport 实现了多种认证策略，使用 JWT 实现了基于令牌的授权。\n\n-任务队列： BullMQ：使用 BullMQ配合Redis 有效地处理了后台任务，BullMQ 是一个任务队列库，可以实现异步处理，而不影响主应用流程。\n\n-测试： Jest：使用 Jest 编写了全面的单元测试和覆盖率，Jest 是一个测试框架，可以保证代码质量，促进持续集成。\n\n-日志工具： Log4js，Winston：使用 Log4js 和 Winston 实现了日志机制，这两个是流行的日志库，提供了灵活和可定制的日志选项。",
+    "title-hi-ni-frontend":"校园社交平台 Next.js前端",
+    "description-hi-ni-frontend":"本项目使用 TypeScript 作为主要编程语言，结合各种框架和库，打造了一个美观和交互性强的用户界面。项目涵盖了以下几个方面：\n\n- Next.js：使用 Next.js 作为构建前端应用的主要框架，利用了它的特性，如服务端渲染（SSR）、文件系统路由、API 路由等。\n\n- UI 库：使用 Ant Design Mobile、MUI、Taro UI 等 UI 库，提升了用户界面的设计和功能，提供了一致和响应式的布局和组件。\n\n- Redux Toolkit：使用 Redux Toolkit 管理应用的状态，简化了 Redux 的逻辑，减少了样板代码。\n\n- SWR：使用 SWR 进行数据的获取、缓存和重新验证，提高了应用的数据一致性和性能。\n\n- i18next：使用 i18next 实现了应用的国际化和本地化，确保了应用可以支持多种语言，并根据用户的语言偏好进行适配。\n\n- Jest：使用 Jest 作为测试框架，编写了单元测试和覆盖率，保证了应用的代码质量和可靠性。\n\n- ESLint，Prettier：使用 ESLint 和 Prettier 强制执行代码风格和格式化规则，提高了应用的代码可读性和可维护性。",
+    "test-account":"测试账号:",
+    "backend-link": "后台演示地址",
+    "frontend-link": "前台演示地址",
+    "completed-in-Sustaining":"维护中",
+    "completed-in-Progress":"开发中"
+}

@@ -7,11 +7,13 @@ import Image from 'next/image';
 
 import { isNil } from 'lodash';
 import WorksDialog, { WorkInfo } from '@frontend/components/common/WorksDialog';
+import { useTranslation } from '@frontend/app/i18n/client';
 
 interface Props {
     lng?: string;
 }
 const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
+    const { t } = useTranslation(lng, 'my-works-page');
     const [currentGroup, setCurrentGroup] = useState('All');
 
     const shuffleRef = useRef<Shuffle | null>(null);
@@ -81,10 +83,64 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                                 height={75}
                                 className="hidden dark:block"
                             />
-                            <h1>My Work</h1>
+                            <h1>{t('my-work')}</h1>
                         </header>
                     </div>
                     <div className="text-center mt-[81px] mb-[55px]">
+                        <button
+                            className={`mx-2 px-4 py-2 border-none mb-4 ${
+                                currentGroup === 'Project-Overview'
+                                    ? 'rounded-lg bg-secondary_gray_light dark:bg-secondary-dark text-[#fff]'
+                                    : 'rounded-none bg-transparent text-secondary_gray'
+                            }`}
+                            onClick={() => handleFilter('Project-Overview')}
+                        >
+                            <h4
+                                className={
+                                    currentGroup === 'Project-Overview'
+                                        ? 'text-paragraph_light dark:text-[#fff]'
+                                        : 'text-gray_light dark:text-secondary_gray'
+                                }
+                            >
+                                {t('project-overview')}
+                            </h4>
+                        </button>
+                        <button
+                            className={`mx-2 px-4 py-2 border-none mb-4 ${
+                                currentGroup === 'Back-End'
+                                    ? 'rounded-lg bg-secondary_gray_light dark:bg-secondary-dark text-[#fff]'
+                                    : 'rounded-none bg-transparent text-secondary_gray'
+                            }`}
+                            onClick={() => handleFilter('Back-End')}
+                        >
+                            <h4
+                                className={
+                                    currentGroup === 'Back-End'
+                                        ? 'text-paragraph_light dark:text-[#fff]'
+                                        : 'text-gray_light dark:text-secondary_gray'
+                                }
+                            >
+                                {t('back-end')}
+                            </h4>
+                        </button>
+                        <button
+                            className={`mx-2 px-4 py-2 border-none mb-4 ${
+                                currentGroup === 'Front-End'
+                                    ? 'rounded-lg bg-secondary_gray_light dark:bg-secondary-dark text-[#fff]'
+                                    : 'rounded-none bg-transparent text-secondary_gray'
+                            }`}
+                            onClick={() => handleFilter('Front-End')}
+                        >
+                            <h4
+                                className={
+                                    currentGroup === 'Front-End'
+                                        ? 'text-paragraph_light dark:text-[#fff]'
+                                        : 'text-gray_light dark:text-secondary_gray'
+                                }
+                            >
+                                {t('front-end')}
+                            </h4>
+                        </button>
                         <button
                             className={`mx-2 px-4 py-2 border-none mb-4 ${
                                 currentGroup === 'All'
@@ -100,61 +156,7 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                                         : 'text-gray_light dark:text-secondary_gray'
                                 }
                             >
-                                All
-                            </h4>
-                        </button>
-                        <button
-                            className={`mx-2 px-4 py-2 border-none mb-4 ${
-                                currentGroup === 'Web Developing'
-                                    ? 'rounded-lg bg-secondary_gray_light dark:bg-secondary-dark text-[#fff]'
-                                    : 'rounded-none bg-transparent text-secondary_gray'
-                            }`}
-                            onClick={() => handleFilter('Web Developing')}
-                        >
-                            <h4
-                                className={
-                                    currentGroup === 'Web Developing'
-                                        ? 'text-paragraph_light dark:text-[#fff]'
-                                        : 'text-gray_light dark:text-secondary_gray'
-                                }
-                            >
-                                Web Developing
-                            </h4>
-                        </button>
-                        <button
-                            className={`mx-2 px-4 py-2 border-none mb-4 ${
-                                currentGroup === 'Video'
-                                    ? 'rounded-lg bg-secondary_gray_light dark:bg-secondary-dark text-[#fff]'
-                                    : 'rounded-none bg-transparent text-secondary_gray'
-                            }`}
-                            onClick={() => handleFilter('Video')}
-                        >
-                            <h4
-                                className={
-                                    currentGroup === 'Video'
-                                        ? 'text-paragraph_light dark:text-[#fff]'
-                                        : 'text-gray_light dark:text-secondary_gray'
-                                }
-                            >
-                                Video
-                            </h4>
-                        </button>
-                        <button
-                            className={`mx-2 px-4 py-2 border-none mb-4 ${
-                                currentGroup === 'SEO'
-                                    ? 'rounded-lg bg-secondary_gray_light dark:bg-secondary-dark text-[#fff]'
-                                    : 'rounded-none bg-transparent text-secondary_gray'
-                            }`}
-                            onClick={() => handleFilter('SEO')}
-                        >
-                            <h4
-                                className={
-                                    currentGroup === 'SEO'
-                                        ? 'text-paragraph_light dark:text-[#fff]'
-                                        : 'text-gray_light dark:text-secondary_gray'
-                                }
-                            >
-                                SEO
+                                {t('all-works')}
                             </h4>
                         </button>
                     </div>
@@ -166,9 +168,17 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                         >
                             <div
                                 className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
-                                data-groups='["Web Developing", "SEO"]'
+                                data-groups='["Project-Overview"]'
                                 onClick={() => {
-                                    handleWorkItemOnClick();
+                                    handleWorkItemOnClick({
+                                        imgUrl: '/images/works/2.png',
+                                        title: t('title-hi-ni'),
+                                        description: t('description-hi-ni'),
+                                        completed: t('completed-in-Sustaining'),
+                                        skill: 'NestJS,Next.js, Vben, TypeScript, CI/CD',
+                                        backend_link: 'https://hi-ni-admin.densewillow.com/',
+                                        frontend_link: 'https://hi-ni.densewillow.com/',
+                                    });
                                 }}
                             >
                                 <div className="work-item-wrap">
@@ -183,20 +193,15 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                             </div>
                             <div
                                 className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
-                                data-groups='["Web Developing", "SEO"]'
+                                data-groups='["Back-End"]'
                                 onClick={() => {
                                     handleWorkItemOnClick({
                                         imgUrl: '/images/works/2.png',
-                                        title: 'Antelope Canyon',
-                                        description: `It is a long established fact that a reader will be distracted by the
-                            readable content of a page when looking at its layout. The point of using
-                            Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
-                            opposed to using 'Content here, content here', making it look like readable
-                            English`,
-                                        client: 'Cheetah Academy',
-                                        Completed: 'December 29 2022',
-                                        skill: 'HTML, CSS, Javascript TS',
-                                        project_link: '#2',
+                                        title: t('title-hi-ni-backend'),
+                                        description: t('description-hi-ni-backend'),
+                                        completed: t('completed-in-Sustaining'),
+                                        skill: 'NestJS, TypeORM, Fastify, WebSocket, MySQL, Passport, JWT, BullMQ, Jest, Log4js',
+                                        backend_link: 'https://hi-ni-admin.densewillow.com/',
                                     });
                                 }}
                             >
@@ -212,9 +217,16 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                             </div>
                             <div
                                 className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
-                                data-groups='["SEO", "Video"]'
+                                data-groups='["Front-End"]'
                                 onClick={() => {
-                                    handleWorkItemOnClick();
+                                    handleWorkItemOnClick({
+                                        imgUrl: '/images/works/3.png',
+                                        title: t('title-hi-ni-frontend'),
+                                        description: t('description-hi-ni-frontend'),
+                                        completed: t('completed-in-Sustaining'),
+                                        skill: 'Next.js, Redux Toolkit, Ant Design Mobile, MUI, SWR, i18next, ESLint, Prettier, Jest',
+                                        frontend_link: 'https://hi-ni.densewillow.com/',
+                                    });
                                 }}
                             >
                                 <div className="work-item-wrap">
@@ -229,7 +241,7 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                             </div>
                             <div
                                 className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
-                                data-groups='["SEO"]'
+                                data-groups='["Back-End", "Front-End"]'
                                 onClick={() => {
                                     handleWorkItemOnClick();
                                 }}
@@ -333,6 +345,7 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                     </div>
                 </section>
                 <WorksDialog
+                    t={t}
                     workDialogIsOpen={workDialogIsOpen}
                     workInfo={workDialogInfo || undefined}
                     onOpenStatusChange={(isOpen: boolean) => {

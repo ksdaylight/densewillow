@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "license": "MIT",
     "scripts": {
+        "db:migrate": "run prisma-schema-blog:migrate",
         "db:push": "nx run prisma-schema-blog:prisma db push",
         "db:generate-types": "nx run prisma-schema-blog:generate-types",
         "build:frontend": "nx run frontend:build",

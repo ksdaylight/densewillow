@@ -5,23 +5,28 @@ import { LiaTimesSolid, LiaFlaskSolid } from 'react-icons/lia';
 import { AiOutlineUser } from 'react-icons/ai';
 import { PiCalendarCheckLight } from 'react-icons/pi';
 import { BiLink } from 'react-icons/bi';
+import { TFunction } from 'i18next';
 
 export type WorkInfo = {
     imgUrl: string;
     title: string;
     description: string;
-    client: string;
-    Completed: string;
+    completed: string;
     skill: string;
-    project_link: string;
+    client?: string;
+    test_account?: string;
+    frontend_link?: string;
+    backend_link?: string;
 };
 interface Props {
     workDialogIsOpen: boolean;
+    t: TFunction<string | string[], undefined>;
     workInfo?: WorkInfo;
     onOpenStatusChange: (isOpen: boolean) => void;
 }
 
 const WorksDialog: FC<Props> = ({
+    t,
     workDialogIsOpen,
     workInfo,
     onOpenStatusChange,
@@ -67,7 +72,7 @@ const WorksDialog: FC<Props> = ({
                                     <h2 className="mt-8 mb-4">{`${
                                         workInfo?.title || 'Antelope Canyon'
                                     }`}</h2>
-                                    <p className="text-gray_light dark:text-gray">
+                                    <p className="text-gray_light dark:text-gray whitespace-pre-line">
                                         {`${
                                             workInfo?.description ||
                                             "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using'Content here, content here', making it look like readable EnglishIt is a long established fact that a reader will be"
@@ -75,36 +80,69 @@ const WorksDialog: FC<Props> = ({
                                     </p>
                                 </div>
                                 <div className="lg:w-5/12  lg:pl-8 pr-0 pt-8 lg:pt-20">
-                                    <div className="mb-3 flex items-center">
-                                        <AiOutlineUser className="text-lg mr-0.5" />
-                                        <span className="mr-1">Client:</span>
-                                        <span className=" text-gray_light dark:text-gray">
-                                            {`${workInfo?.client || 'Cheetah Academy'}`}
-                                        </span>
-                                    </div>
+                                    {workInfo?.client && (
+                                        <div className="mb-3 flex items-center">
+                                            <AiOutlineUser className="text-lg mr-0.5" />
+                                            <span className="mr-1">Client:</span>
+                                            <span className=" text-gray_light dark:text-gray">
+                                                {`${workInfo?.client || 'Cheetah Academy'}`}
+                                            </span>
+                                        </div>
+                                    )}
                                     <div className="mb-3 flex items-center">
                                         <PiCalendarCheckLight className="text-lg mr-0.5" />
                                         <span className="mr-1">Completed:</span>
                                         <span className="text-gray_light dark:text-gray">
-                                            {`${workInfo?.Completed || 'Cheetah Academy'}`}
+                                            {`${workInfo?.completed || 'Cheetah Academy'}`}
                                         </span>
                                     </div>
-                                    <div className="flex items-center">
-                                        <LiaFlaskSolid className="text-lg mr-0.5" />
+                                    <div className="flex items-start">
+                                        <div className="mr-0.5">
+                                            <LiaFlaskSolid className="text-lg" />
+                                        </div>
                                         <span className="mr-1">Skills:</span>
-                                        <span className="text-gray_light dark:text-gray">
-                                            {`${workInfo?.skill || 'HTML, CSS, Javascript'}`}
+                                        <span className="flex-grow text-gray_light dark:text-gray whitespace-pre-wrap">
+                                            {`${
+                                                workInfo?.skill ||
+                                                'NestJS,Next.js,Vben,TypeScript, CI/CD,NestJS,Next.js, Vben, TypeScript, CI/CD'
+                                            }`}
                                         </span>
                                     </div>
-                                    <div className="mt-4 flex items-center">
-                                        <BiLink className="text-lg mr-0.5 fill-white no-underline" />
-                                        <a
-                                            href={`${workInfo?.project_link || '#'}`}
-                                            className="text-white no-underline hover:underline"
-                                        >
-                                            Project link
-                                        </a>
-                                    </div>
+                                    {workInfo?.backend_link && (
+                                        <div className="mt-8 flex flex-col">
+                                            <div className="flex items-center">
+                                                <BiLink className="text-lg mr-0.5 fill-primary no-underline" />
+                                                <a
+                                                    href={`${workInfo?.backend_link || '#'}`}
+                                                    className="text-primary  no-underline hover:underline"
+                                                >
+                                                    {t('backend-link')}
+                                                </a>
+                                            </div>
+                                            <div className="flex items-center">
+                                                <span className="mr-1 text-sm">
+                                                    {t('test-account')}
+                                                </span>
+                                                <span className="text-gray_light dark:text-gray text-sm">
+                                                    {`${
+                                                        workInfo?.test_account ||
+                                                        'u: admin p: a123456'
+                                                    }`}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {workInfo?.frontend_link && (
+                                        <div className="mt-4 flex items-center">
+                                            <BiLink className="text-lg mr-0.5 fill-primary no-underline" />
+                                            <a
+                                                href={`${workInfo?.frontend_link || '#'}`}
+                                                className="text-primary  no-underline hover:underline"
+                                            >
+                                                {t('frontend-link')}
+                                            </a>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

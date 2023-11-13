@@ -13,7 +13,7 @@ import { BiLogoStackOverflow } from 'react-icons/bi';
 import { BsBriefcase, BsTelephone, BsEnvelope } from 'react-icons/bs';
 import { AiFillGithub } from 'react-icons/ai';
 import { isNil, random } from 'lodash';
-import WorksDialog, { WorkInfo } from '@frontend/components/common/WorksDialog';
+import { WorkInfo } from '@frontend/components/common/WorksDialog';
 import ContactForm from '@frontend/components/common/contactForm';
 
 const navItems = [
@@ -34,7 +34,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const [workDialogIsOpen, setWorkDialogIsOpen] = useState(false);
-    const [workDialogInfo, setWorkDialogInfo] = useState<WorkInfo | null>(null);
+    // const [workDialogInfo, setWorkDialogInfo] = useState<WorkInfo | null>(null);
 
     const handleSectionChange = (sectionId: string) => {
         setCurrentSection(sectionId);
@@ -44,7 +44,7 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
     };
 
     const handleWorkItemOnClick = (info?: WorkInfo) => {
-        setWorkDialogInfo(info || null);
+        // setWorkDialogInfo(info || null);
         setWorkDialogIsOpen(true);
     };
 
@@ -841,9 +841,9 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                             opposed to using 'Content here, content here', making it look like readable
                             English`,
                                         client: 'Cheetah Academy',
-                                        Completed: 'December 29 2022',
+                                        completed: 'December 29 2022',
                                         skill: 'HTML, CSS, Javascript TS',
-                                        project_link: '#2',
+                                        // project_link: '#2',
                                     });
                                 }}
                             >
@@ -979,13 +979,13 @@ const PortfolioClient: FC<Props> = (): JSX.Element => {
                         </div>
                     </div>
                 </section>
-                <WorksDialog
+                {/* <WorksDialog
                     workDialogIsOpen={workDialogIsOpen}
                     workInfo={workDialogInfo || undefined}
                     onOpenStatusChange={(isOpen: boolean) => {
                         setWorkDialogIsOpen(isOpen);
                     }}
-                />
+                /> */}
                 <section
                     id="testimonial"
                     className={`${
