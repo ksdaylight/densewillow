@@ -171,7 +171,7 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                                 data-groups='["Project-Overview"]'
                                 onClick={() => {
                                     handleWorkItemOnClick({
-                                        imgUrl: '/images/works/2.png',
+                                        imgUrl: '/images/works/hini-overview.png',
                                         title: t('title-hi-ni'),
                                         description: t('description-hi-ni'),
                                         completed: t('completed-in-Sustaining'),
@@ -183,7 +183,7 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                             >
                                 <div className="work-item-wrap">
                                     <Image
-                                        src="/images/works/1.png"
+                                        src="/images/works/hini-overview.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
@@ -196,7 +196,7 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                                 data-groups='["Back-End"]'
                                 onClick={() => {
                                     handleWorkItemOnClick({
-                                        imgUrl: '/images/works/2.png',
+                                        imgUrl: '/images/works/hi-ni-admin.png',
                                         title: t('title-hi-ni-backend'),
                                         description: t('description-hi-ni-backend'),
                                         completed: t('completed-in-Sustaining'),
@@ -207,7 +207,7 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                             >
                                 <div className="work-item-wrap">
                                     <Image
-                                        src="/images/works/2.png"
+                                        src="/images/works/hi-ni-admin.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
@@ -220,18 +220,18 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                                 data-groups='["Front-End"]'
                                 onClick={() => {
                                     handleWorkItemOnClick({
-                                        imgUrl: '/images/works/3.png',
+                                        imgUrl: '/images/works/hini-frontend.png',
                                         title: t('title-hi-ni-frontend'),
                                         description: t('description-hi-ni-frontend'),
                                         completed: t('completed-in-Sustaining'),
-                                        skill: 'Next.js, Redux Toolkit, Ant Design Mobile, MUI, SWR, i18next, ESLint, Prettier, Jest',
+                                        skill: 'Next.js,TailwindCSS, Redux Toolkit, Ant Design Mobile, MUI, SWR, i18next, ESLint, Prettier, Jest',
                                         frontend_link: 'https://hi-ni.densewillow.com/',
                                     });
                                 }}
                             >
                                 <div className="work-item-wrap">
                                     <Image
-                                        src="/images/works/3.png"
+                                        src="/images/works/hini-frontend.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
@@ -241,14 +241,23 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                             </div>
                             <div
                                 className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
-                                data-groups='["Back-End", "Front-End"]'
+                                data-groups='["Project-Overview"]'
                                 onClick={() => {
-                                    handleWorkItemOnClick();
+                                    handleWorkItemOnClick({
+                                        imgUrl: '/images/works/discount-overview.png',
+                                        title: t('title-discount'),
+                                        description: t('description-discount'),
+                                        completed: t('completed-in-Sustaining'),
+                                        skill: 'NestJS,Next.js, Ant Design Pro, TypeScript, CI/CD',
+                                        frontend_link: 'https://discount.densewillow.com/',
+                                        backend_link: 'https://admin-discount.densewillow.com/',
+                                        test_account: 'u: admin p: @Aa123456',
+                                    });
                                 }}
                             >
                                 <div className="work-item-wrap">
                                     <Image
-                                        src="/images/works/4.png"
+                                        src="/images/works/discount-overview.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
@@ -258,14 +267,22 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                             </div>
                             <div
                                 className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
-                                data-groups='["Web Developing"]'
+                                data-groups='["Back-End"]'
                                 onClick={() => {
-                                    handleWorkItemOnClick();
+                                    handleWorkItemOnClick({
+                                        imgUrl: '/images/works/discount-backend.png',
+                                        title: t('title-discount-backend'),
+                                        description: t('description-discount-backend'),
+                                        completed: t('completed-in-Sustaining'),
+                                        skill: 'NestJS, TypeORM, Fastify, MySQL, Passport, JWT, BullMQ, Jest',
+                                        backend_link: 'https://admin-discount.densewillow.com/',
+                                        test_account: 'u: admin p: @Aa123456',
+                                    });
                                 }}
                             >
                                 <div className="work-item-wrap">
                                     <Image
-                                        src="/images/works/5.png"
+                                        src="/images/works/discount-backend.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
@@ -275,14 +292,21 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                             </div>
                             <div
                                 className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
-                                data-groups='["Video", "SEO"]'
+                                data-groups='["Front-End"]'
                                 onClick={() => {
-                                    handleWorkItemOnClick();
+                                    handleWorkItemOnClick({
+                                        imgUrl: '/images/works/discount-frontend.png',
+                                        title: t('title-discount-frontend'),
+                                        description: t('description-discount-frontend'),
+                                        completed: t('completed-in-Sustaining'),
+                                        skill: 'Next.js,TailwindCSS, MUI, DaisyUI, Ant Design, MobX, SWR, ESLint, Prettier, Jest',
+                                        frontend_link: 'https://discount.densewillow.com/',
+                                    });
                                 }}
                             >
                                 <div className="work-item-wrap">
                                     <Image
-                                        src="/images/works/6.png"
+                                        src="/images/works/discount-frontend.png"
                                         alt="work"
                                         width={1053}
                                         height={817}

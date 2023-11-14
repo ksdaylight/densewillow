@@ -91,7 +91,7 @@ const WorksDialog: FC<Props> = ({
                                     )}
                                     <div className="mb-3 flex items-center">
                                         <PiCalendarCheckLight className="text-lg mr-0.5" />
-                                        <span className="mr-1">Completed:</span>
+                                        <span className="mr-1">{t('completed-status')}</span>
                                         <span className="text-gray_light dark:text-gray">
                                             {`${workInfo?.completed || 'Cheetah Academy'}`}
                                         </span>
@@ -100,7 +100,7 @@ const WorksDialog: FC<Props> = ({
                                         <div className="mr-0.5">
                                             <LiaFlaskSolid className="text-lg" />
                                         </div>
-                                        <span className="mr-1">Skills:</span>
+                                        <span className="mr-1">{t('all-skills')}</span>
                                         <span className="flex-grow text-gray_light dark:text-gray whitespace-pre-wrap">
                                             {`${
                                                 workInfo?.skill ||
