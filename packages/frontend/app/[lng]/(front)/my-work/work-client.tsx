@@ -316,14 +316,22 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                             </div>
                             <div
                                 className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
-                                data-groups='["Video", "SEO"]'
+                                data-groups='["Project-Overview"]'
                                 onClick={() => {
-                                    handleWorkItemOnClick();
+                                    handleWorkItemOnClick({
+                                        imgUrl: '/images/works/storage-overview.png',
+                                        title: t('title-storage'),
+                                        description: t('description-storage'),
+                                        completed: t('completed-in-Sustaining'),
+                                        skill: 'NestJS,Next.js, Ant Design Pro, TypeScript, CI/CD',
+                                        backend_link: 'https://storage.densewillow.com/',
+                                        test_account: 'u: admin p: @Aa123456',
+                                    });
                                 }}
                             >
                                 <div className="work-item-wrap">
                                     <Image
-                                        src="/images/works/7.png"
+                                        src="/images/works/storage-overview.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
@@ -333,14 +341,22 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                             </div>
                             <div
                                 className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
-                                data-groups='["Web Developing"]'
+                                data-groups='["Back-End"]'
                                 onClick={() => {
-                                    handleWorkItemOnClick();
+                                    handleWorkItemOnClick({
+                                        imgUrl: '/images/works/storage-overview.png',
+                                        title: t('title-storage-backend'),
+                                        description: t('description-storage-backend'),
+                                        completed: t('completed-in-Sustaining'),
+                                        skill: 'NestJS, TypeORM, Fastify, MySQL, Passport, JWT, BullMQ, Jest',
+                                        backend_link: 'https://storage.densewillow.com/',
+                                        test_account: 'u: admin p: @Aa123456',
+                                    });
                                 }}
                             >
                                 <div className="work-item-wrap">
                                     <Image
-                                        src="/images/works/8.png"
+                                        src="/images/works/storage-overview.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
@@ -350,14 +366,72 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                             </div>
                             <div
                                 className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
-                                data-groups='["Web Developing"]'
+                                data-groups='["Project-Overview"]'
                                 onClick={() => {
-                                    handleWorkItemOnClick();
+                                    handleWorkItemOnClick({
+                                        imgUrl: '/images/works/yiming-overview.png',
+                                        title: t('title-yiming'),
+                                        description: t('description-yiming'),
+                                        completed: t('completed-in-Progress'),
+                                        skill: 'NestJS,Next.js, Ant Design Pro, TypeScript, CI/CD',
+                                        backend_link: 'https://yiming.densewillow.com/admin/',
+                                        frontend_link: 'https://yiming.densewillow.com/',
+                                        test_account: 'u: admin p: @Aa123456',
+                                    });
                                 }}
                             >
                                 <div className="work-item-wrap">
                                     <Image
-                                        src="/images/works/9.png"
+                                        src="/images/works/yiming-overview.png"
+                                        alt="work"
+                                        width={1053}
+                                        height={817}
+                                        className="w-full opacity-50 cursor-pointer rounded-lg"
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
+                                data-groups='["Back-End"]'
+                                onClick={() => {
+                                    handleWorkItemOnClick({
+                                        imgUrl: '/images/works/yiming-backend.png',
+                                        title: t('title-yiming-backend'),
+                                        description: t('description-yiming-backend'),
+                                        completed: t('completed-in-Progress'),
+                                        skill: 'NestJS, TypeORM, Fastify, MySQL, Passport, JWT, BullMQ, Jest',
+                                        backend_link: 'https://yiming.densewillow.com/admin/',
+                                        test_account: 'u: admin p: @Aa123456',
+                                    });
+                                }}
+                            >
+                                <div className="work-item-wrap">
+                                    <Image
+                                        src="/images/works/yiming-backend.png"
+                                        alt="work"
+                                        width={1053}
+                                        height={817}
+                                        className="w-full opacity-50 cursor-pointer rounded-lg"
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                className="w-full md:w-1/2 lg:w-1/3 px-3 py-3 js-item"
+                                data-groups='["Front-End"]'
+                                onClick={() => {
+                                    handleWorkItemOnClick({
+                                        imgUrl: '/images/works/yiming-frontend.png',
+                                        title: t('title-yiming-frontend'),
+                                        description: t('description-yiming-frontend'),
+                                        completed: t('completed-in-Progress'),
+                                        skill: 'Next.js,TailwindCSS, MUI, DaisyUI, Ant Design, MobX, SWR, i18next, ESLint, Prettier, Jest',
+                                        frontend_link: 'https://yiming.densewillow.com/',
+                                    });
+                                }}
+                            >
+                                <div className="work-item-wrap">
+                                    <Image
+                                        src="/images/works/yiming-frontend.png"
                                         alt="work"
                                         width={1053}
                                         height={817}
