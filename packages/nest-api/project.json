@@ -20,7 +20,10 @@
             },
             "configurations": {
                 "development": {},
-                "production": {}
+                "production": {
+                  "optimization": true,
+                  "inspect": false
+                }
             }
         },
         "serve": {
@@ -34,7 +37,9 @@
                     "buildTarget": "nest-api:build:development"
                 },
                 "production": {
-                    "buildTarget": "nest-api:build:production"
+                    "buildTarget": "nest-api:build:production",
+                    "inspect": false,
+                    "watch": false
                 }
             }
         },

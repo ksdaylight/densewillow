@@ -15,7 +15,10 @@
                 "development": {
                     "outputPath": "packages/frontend"
                 },
-                "production": {}
+                "production": {
+                    "optimization": true,
+                    "inspect": false
+                }
             }
         },
         "serve": {
@@ -32,7 +35,9 @@
                 },
                 "production": {
                     "buildTarget": "frontend:build:production",
-                    "dev": false
+                    "dev": false,
+                    "inspect": false,
+                    "watch": false
                 }
             }
         },
