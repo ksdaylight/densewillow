@@ -84,7 +84,7 @@ export const PortfolioSidebar: React.FC<Props> = ({ activeItem, className, lng =
         } else {
             setVisible(true);
         }
-    }, []);
+    }, [className]);
 
     return (
         <div
