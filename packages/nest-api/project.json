@@ -22,7 +22,8 @@
                 "development": {},
                 "production": {
                   "optimization": true,
-                  "inspect": false
+                  "inspect": false,
+                  "memoryLimit":1500
                 }
             }
         },
@@ -38,8 +39,13 @@
                 },
                 "production": {
                     "buildTarget": "nest-api:build:production",
+                    "runtimeArgs": ["--max-old-space-size=1024"],
                     "inspect": false,
-                    "watch": false
+                    "watch": false,
+                    "buildTargetOptions": {
+                        "maxWorkers":1,
+                        "memoryLimit":1024
+                    }
                 }
             }
         },
