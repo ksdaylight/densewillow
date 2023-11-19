@@ -25,7 +25,7 @@ const c = nestControllerContract(apiBlog.content);
 
 @Controller()
 @TsRest({ jsonQuery: true })
-export class ContentController {
+export class PostController {
     constructor(
         private readonly postService: PostService,
         private readonly mediaService: MediaService,

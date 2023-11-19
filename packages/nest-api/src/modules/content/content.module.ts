@@ -18,7 +18,7 @@ import { ContentRbac } from './rbac';
     return {
         imports: [MediaModule, UserModule, HttpModule],
         providers,
-        controllers: Object.values(controllers),
+        postService: Object.values(controllers),
         exports: [...Object.values(services)],
     };
 })

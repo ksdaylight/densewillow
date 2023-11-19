@@ -42,7 +42,7 @@ const jwtModuleRegister = (configure: Configure) => async (): Promise<JwtModuleO
         forwardRef(() => RbacModule),
     ],
     providers: [...Object.values(services), ...Object.values(strategies), ...Object.values(guards)],
-    controllers: Object.values(controllers),
+    postService: Object.values(controllers),
     exports: [...Object.values(services)],
 }))
 export class UserModule {}

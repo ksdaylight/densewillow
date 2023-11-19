@@ -414,6 +414,9 @@ importers:
       jest-environment-node:
         specifier: ^29.4.1
         version: 29.4.1
+      jest-mock:
+        specifier: ^29.4.1
+        version: 29.6.3
       next-share:
         specifier: 0.25.0
         version: 0.25.0(react@18.2.0)
