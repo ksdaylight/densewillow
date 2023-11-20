@@ -9,6 +9,11 @@ import { FastifyInstance } from 'fastify';
 import type { FastifyCookieOptions } from '@fastify/cookie';
 import cookie from '@fastify/cookie';
 
+import { generateOpenApi } from '@ts-rest/open-api';
+import { SwaggerModule } from '@nestjs/swagger';
+
+import { apiBlog } from '@api-contracts';
+
 import { Configure } from './configure';
 
 import { ConfigStorageOption, CreateOptions, CreatorData } from './types';
@@ -55,6 +60,23 @@ export class App {
                 configure: this._configure,
                 BootModule,
             });
+            // add swagger
+            const document = generateOpenApi(
+                apiBlog,
+                {
+                    info: {
+                        title: 'example swagger',
+                        version: '1.0.0',
+                    },
+                },
+                {
+                    setOperationId: true,
+                    jsonQuery: true,
+                },
+            );
+
+            SwaggerModule.setup('api-docs', this._app, document);
+
             // 允许使用关闭监听的钩子
             this._app.enableShutdownHooks();
             if (this._app.getHttpAdapter() instanceof FastifyAdapter) {
@@ -83,7 +105,7 @@ export class App {
                     done();
                 }) // for fastify + nestJs passport
                 .register(cookie, {
-                    secret: 'my-cookie-secret', // for cookies signature
+                    secret: 'my-cookie-secret', // for cookies signature /todo
                     parseOptions: {}, // options for parsing cookies
                 } as FastifyCookieOptions);
         } catch (error) {
