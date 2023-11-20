@@ -56,11 +56,25 @@
                 "lintFilePatterns": ["packages/nest-api/**/*.ts"]
             }
         },
-        "test": {
+        "test-tdd": {
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
                 "jestConfig": "packages/nest-api/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        },
+        "test-e2e": {
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "packages/nest-api/test/jest-e2e.json",
                 "passWithNoTests": true
             },
             "configurations": {

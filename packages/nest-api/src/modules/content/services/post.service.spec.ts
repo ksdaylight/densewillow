@@ -70,7 +70,7 @@ describe('PostService', () => {
     });
 
     it('should return a post', async () => {
-        expect(await postService.post({ slug: 'test' })).toEqual({
+        expect(await postService.getPostUnique({ slug: 'test' })).toEqual({
             id: 'nest',
             where: { slug: 'test' },
             include: undefined,

@@ -16,7 +16,10 @@ export class PostService {
         protected readonly userService: UserService,
     ) {}
 
-    async post(postWhereUniqueInput: Prisma.PostWhereUniqueInput, include?: Prisma.PostInclude) {
+    async getPostUnique(
+        postWhereUniqueInput: Prisma.PostWhereUniqueInput,
+        include?: Prisma.PostInclude,
+    ) {
         return this.prisma.post.findUnique({
             where: postWhereUniqueInput,
             include,

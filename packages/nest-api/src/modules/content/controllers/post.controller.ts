@@ -62,7 +62,7 @@ export class PostController {
     @TsRestHandler(c.getPostById)
     async getPostById() {
         return tsRestHandler(c.getPostById, async ({ params: { id } }) => {
-            const post = await this.postService.post(
+            const post = await this.postService.getPostUnique(
                 { id: String(id) },
                 {
                     thumbnail: true,
@@ -84,7 +84,7 @@ export class PostController {
     @TsRestHandler(c.getPostBySlug)
     async getPostBySlug() {
         return tsRestHandler(c.getPostBySlug, async ({ params }) => {
-            const post = await this.postService.post(
+            const post = await this.postService.getPostUnique(
                 { slug: String(params.slug) },
                 { thumbnail: true, translations: true },
             );

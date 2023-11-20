@@ -18,6 +18,7 @@
         "baseUrl": ".",
         "paths": {
             "@api-contracts": ["packages/api-contracts/src/index.ts"],
+            "@api-nest/*": ["packages/nest-api/*"],
             "@frontend/*": ["packages/frontend/*"]
         }
     },
