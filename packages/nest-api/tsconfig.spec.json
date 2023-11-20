@@ -39,7 +39,6 @@
         "jest.config.ts",
         "src/**/*.test.ts",
         "src/**/*.spec.ts",
-        "test/**/*.ts",
         "src/**/*.d.ts",
         "typings/**/*.d.ts"
     ]
