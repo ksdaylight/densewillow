@@ -51,8 +51,9 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
-                "jestConfig": "packages/frontend/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "packages/frontend/jest.config.js",
+                "passWithNoTests": true,
+                "watchAll": true
             },
             "configurations": {
                 "ci": {

@@ -14,7 +14,7 @@ import SearchBar from '../SearchBar';
 
 interface Props {}
 
-const AdminSecondaryNav: FC<Props> = (props): JSX.Element => {
+const AdminSecondaryNav: FC<Props> = (): JSX.Element => {
     const router = useRouter();
     const { toggleTheme } = useDarkMode();
     const navigateToCreateNewPost = () => router.push('/admin/posts/create');

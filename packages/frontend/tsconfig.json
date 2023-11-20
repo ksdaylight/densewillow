@@ -18,10 +18,16 @@
     ],
     "types": [
       "jest",
-      "node"
+      "node",
+      "@testing-library/jest-dom",
     ]
   },
   "include": [
+    "./jest-setup.ts",
+    "./jest-setup.js",
+    "jest.config.js",
+    "./jest.config.ts",
+    "./jest.config.js",
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
@@ -33,7 +39,6 @@
   ],
   "exclude": [
     "node_modules",
-    "jest.config.ts",
     "src/**/*.spec.ts",
     "src/**/*.test.ts"
   ]
