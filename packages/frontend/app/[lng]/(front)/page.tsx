@@ -12,7 +12,7 @@ import WeChatWrap from '@frontend/components/common/WeChatIcon';
 interface Props {
     params: {
         lng: string;
-    };
+    };a
 }
 
 const PortfolioHome: NextPage<Props> = async ({ params }) => {

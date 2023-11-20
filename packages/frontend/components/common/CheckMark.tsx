@@ -9,7 +9,10 @@ const CheckMark: FC<Props> = ({ visible }): JSX.Element | null => {
     if (!visible) return null;
 
     return (
-        <div className="bg-action p-2 text-white rounded-full bg-opacity-70 backdrop-blur-sm">
+        <div
+            data-testid="test"
+            className="bg-action p-2 text-white rounded-full bg-opacity-70 backdrop-blur-sm"
+        >
             <BsCheckLg />
         </div>
     );

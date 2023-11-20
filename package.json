@@ -15,8 +15,9 @@
         "start:nest-api:dev": "cross-env NODE_ENV=development nx run nest-api:serve  --skip-nx-cache",
         "start:nest-api:prod": "nx run nest-api:serve:production  --skip-nx-cache",
         "test:nest-api:tdd": "nx run nest-api:test-tdd",
+        "test:nest-api:e2e": "nx run nest-api-e2e:e2e",
         "test:frontend:tdd": "nx run frontend:test",
-        "test:nest-api:e2e": "nx run nest-api-e2e:e2e"
+        "test:frontend:e2e": "nx run frontend-e2e:e2e:production"
     },
     "private": true,
     "devDependencies": {
