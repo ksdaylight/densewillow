@@ -52,7 +52,7 @@ export const generateMetadata = async ({ params: { lng } }: { params: { lng: str
             type: 'website',
         },
         alternates: {
-            canonical: `${process.env.NEXT_PUBLIC_SITE_URL}`,
+            canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/en`,
             languages: {
                 'en-US': `${process.env.NEXT_PUBLIC_SITE_URL}/en`,
                 'zh-CN': `${process.env.NEXT_PUBLIC_SITE_URL}/cn`,

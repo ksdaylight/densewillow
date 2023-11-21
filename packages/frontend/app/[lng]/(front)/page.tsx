@@ -12,7 +12,7 @@ import WeChatWrap from '@frontend/components/common/WeChatIcon';
 interface Props {
     params: {
         lng: string;
-    };a
+    };
 }
 
 const PortfolioHome: NextPage<Props> = async ({ params }) => {
@@ -22,8 +22,27 @@ const PortfolioHome: NextPage<Props> = async ({ params }) => {
             <PortfolioSidebar activeItem="/" lng={params.lng} />
             <main className="pl-0 pt-[50px] md:pl-[102px] md:pt-0 ">
                 <section
-                    className={`block bg-none md:bg-[url('/images/bg-shape-light.png')] md:dark:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[40vw_-24px]`}
+                    className="block"
+                    // className={`block bg-none md:bg-[url('/images/bg-shape-light.png')] md:dark:bg-[url('/images/bg-shape.png')] bg-no-repeat bg-[40vw_-24px]`}
                 >
+                    <div className="absolute w-full h-screen overflow-hidden z-0">
+                        <Image
+                            src="/images/bg-shape-light.png"
+                            alt="person circle"
+                            width={1176}
+                            height={730}
+                            className="invisible md:visible md:dark:invisible absolute left-[40%] top-[-24px] max-w-none"
+                        />
+                        <Image
+                            priority
+                            src="/images/bg-shape.png"
+                            alt="person circle"
+                            width={1176}
+                            height={730}
+                            className="invisible md:invisible md:dark:visible absolute left-[40%] top-[-24px] max-w-none"
+                        />
+                    </div>
+
                     <div
                         id="meteor-shower"
                         className="absolute w-full h-screen overflow-hidden right-0 top-0 z-10"
@@ -48,6 +67,7 @@ const PortfolioHome: NextPage<Props> = async ({ params }) => {
                             <div className="w-full lg:w-1/2 px-[32px]">
                                 <div id="info" className="pt-[80px] md:pt-[281px]">
                                     <Image
+                                        priority
                                         src="/images/person-circle.png"
                                         alt="person circle"
                                         width={45}
