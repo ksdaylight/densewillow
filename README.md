@@ -6,39 +6,8 @@
 
 <h1 align="center">DenseWillow</h1>
 
-<p align="center">
+<p align="center"><a href=""><img alt="NestJs" src="https://img.shields.io/badge/-NestJs-333333?style=flat&logo=nestjs&logoColor=ea2845" /></a> <a href=""><img alt="Next.js" src="https://img.shields.io/badge/Next.js-000?logo=nextdotjs&logoColor=fff&style=flat" /></a> <a href=""><img alt="NX" src="https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white" /></a> <a href=""><img alt="TS-REST" src="https://img.shields.io/badge/RPC-LIKE?style=flat&label=TS-REST&labelColor=%23a855f7&color=black" /></a> <a href=""><img alt="TypeScript" src="https://img.shields.io/badge/Nx-143055?logo=nx&logoColor=fff&style=flat" /></a> <a href=""><img alt="Tailwind" src="https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=fff&style=flat-square" /></a> <a href=""><img alt="Prisma" src="https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=fff&style=flat-square" /></a> <a href=""><img alt="Jest" src="https://img.shields.io/badge/Jest-C21325?logo=jest&logoColor=fff&style=flat-square" /></a> <a href=""><img alt="Fastify" src="https://img.shields.io/static/v1?style=flat&message=Fastify&color=000000&logo=Fastify&logoColor=FFFFFF&label=" /></a> <a href=""><img alt="i18n" src="https://img.shields.io/badge/i18next-26A69A?logo=i18next&logoColor=fff&style=flat-square" /></a> <a href=""><img alt="zod" src="https://img.shields.io/badge/Zod-3E67B1?logo=zod&logoColor=fff&style=flat-square" /></a> <a href=""><img alt="Passport" src="https://img.shields.io/badge/Passport-34E27A?logo=passport&logoColor=000&style=flat-square" /></a> <a href=""><img alt="Postgresql" src="https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=fff&style=flat-square" /></a> <a href="https://nestjs.com/"><img alt="License" src="https://img.shields.io/github/license/kuizuo/kz-admin?style=flat&colorA=002438&colorB=28CF8D"/></a> </p>
 
-<a href=""><img alt="NestJs" src="https://img.shields.io/badge/-NestJs-333333?style=flat&logo=nestjs&logoColor=ea2845" /></a>
-
-<a href=""><img alt="Next.js" src="https://img.shields.io/badge/Next.js-000?logo=nextdotjs&logoColor=fff&style=flat" /></a>
-
-<a href=""><img alt="NX" src="https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white" /></a>
-
-<a href=""><img alt="TS-REST" src="https://img.shields.io/badge/RPC-LIKE?style=flat&label=TS-REST&labelColor=%23a855f7&color=black" /></a>
-
-<a href=""><img alt="TypeScript" src="https://img.shields.io/badge/Nx-143055?logo=nx&logoColor=fff&style=flat" /></a>
-
-<a href=""><img alt="Tailwind" src="https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=fff&style=flat-square" /></a>
-
-<a href=""><img alt="Prisma" src="https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=fff&style=flat-square" /></a>
-
-<a href=""><img alt="Jest" src="https://img.shields.io/badge/Jest-C21325?logo=jest&logoColor=fff&style=flat-square" /></a>
-
-<a href=""><img alt="Fastify" src="https://img.shields.io/static/v1?style=flat&message=Fastify&color=000000&logo=Fastify&logoColor=FFFFFF&label=" /></a>
-
-<a href=""><img alt="i18n" src="https://img.shields.io/badge/i18next-26A69A?logo=i18next&logoColor=fff&style=flat-square" /></a>
-
-<a href=""><img alt="zod" src="https://img.shields.io/badge/Zod-3E67B1?logo=zod&logoColor=fff&style=flat-square" /></a>
-
-
-
-<a href=""><img alt="Passport" src="https://img.shields.io/badge/Passport-34E27A?logo=passport&logoColor=000&style=flat-square" /></a>
-
-<a href=""><img alt="Postgresql" src="https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=fff&style=flat-square" /></a>
-
-<a href="https://nestjs.com/"><img alt="License" src="https://img.shields.io/github/license/kuizuo/kz-admin?style=flat&colorA=002438&colorB=28CF8D"/></a>
-
-</p>
 <p>Densewillow 是一个全栈应用的 monorepo，采用了现代化的技术栈来提供高效、可维护的开发体验。  主要框架包括 NestJs 和 Next.js，同时使用 NX 作为项目的构建工具和工作区管理工具。此外，采用了 TS-REST 等第三方库，实现了完全类型化的类 RPC 开发体系结构。</p>
 <p>🔗<a href="https://densewillow.com">densewillow.com</a></p>
 ## 📚 文件结构
@@ -150,10 +119,9 @@ Densewillow是一个Monorepo程序，具备全面的前后端功能集成，以�
 
 ####  ☑️TODO List
 
- - [ ] 集成waline
+- [ ]  集成waline
 
- - [ ]  admin添加新功能
-
+- [ ]  admin添加新功能
 
 ## ⚓开发
 
