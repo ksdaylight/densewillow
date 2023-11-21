@@ -22,8 +22,7 @@
                 "development": {},
                 "production": {
                   "optimization": true,
-                  "inspect": false,
-                  "memoryLimit":1500
+                  "inspect": false
                 }
             }
         },
@@ -43,8 +42,6 @@
                     "inspect": false,
                     "watch": false,
                     "buildTargetOptions": {
-                        "maxWorkers":1,
-                        "memoryLimit":1024
                     }
                 }
             }
