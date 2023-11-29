@@ -8,7 +8,7 @@ import Tippy from '@tippyjs/react/headless';
 interface Props {
     children: React.ReactElement;
 }
-const WeChatWrap: FC<Props> = ({ children }): JSX.Element => {
+export const WeChatWrap: FC<Props> = ({ children }): JSX.Element => {
     return (
         <Tippy
             key="show-weChat"
@@ -32,5 +32,3 @@ const WeChatWrap: FC<Props> = ({ children }): JSX.Element => {
         </Tippy>
     );
 };
-
-export default WeChatWrap;

@@ -323,7 +323,7 @@ const MyWorkClient: FC<Props> = ({ lng }): JSX.Element => {
                                         title: t('title-storage'),
                                         description: t('description-storage'),
                                         completed: t('completed-in-Sustaining'),
-                                        skill: 'NestJS,Next.js, Ant Design Pro, TypeScript, CI/CD',
+                                        skill: 'NestJS,Vue3, TypeScript, CI/CD',
                                         backend_link: 'https://storage.densewillow.com/',
                                         test_account: 'u: admin p: @Aa123456',
                                     });

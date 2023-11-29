@@ -10,7 +10,7 @@ interface Props {
     lng: string;
     className?: string;
 }
-const TypedH2: FC<Props> = ({
+export const TypedH2: FC<Props> = ({
     initialText,
     className,
     typedStrings,
@@ -37,5 +37,3 @@ const TypedH2: FC<Props> = ({
         </h2>
     );
 };
-
-export default TypedH2;

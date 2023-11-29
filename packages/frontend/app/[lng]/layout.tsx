@@ -78,10 +78,14 @@ const RootLayout = async ({ children, params: { lng } }: RootLayoutProps) => {
             className={`${playfairDisplay.variable} ${ubuntu.variable} dark`}
         >
             <Script
-                strategy="afterInteractive"
+                strategy="lazyOnload"
+                // strategy="afterInteractive"
                 src="https://www.googletagmanager.com/gtag/js?id=G-FK5NCXNE8L"
             />
-            <Script id="google-analytics">{`window.dataLayer = window.dataLayer || [];
+            <Script
+                strategy="lazyOnload"
+                id="google-analytics"
+            >{`window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-FK5NCXNE8L');`}</Script>

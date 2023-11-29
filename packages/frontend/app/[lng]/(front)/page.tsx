@@ -3,17 +3,34 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { AiFillWechat, AiFillGithub } from 'react-icons/ai';
+import dynamic from 'next/dynamic';
 import { random } from 'lodash';
-import TypedH2 from '@frontend/components/common/TypedH2';
-import { PortfolioSidebar } from '@frontend/components/common/PortfolioSidebar';
+// import TypedH2 from '@frontend/components/common/TypedH2';
 import { useTranslation } from '@frontend/app/i18n';
-import WeChatWrap from '@frontend/components/common/WeChatIcon';
 
 interface Props {
     params: {
         lng: string;
     };
 }
+// 使用 dynamic 函数进行动态导入 https://github.com/vercel/next.js/discussions/47316#discussioncomment-6365548
+
+const PortfolioSidebar = dynamic(async () => {
+    const { PortfolioSidebar: Component } = await import(
+        '@frontend/components/common/PortfolioSidebar'
+    );
+    return { default: Component };
+});
+
+const TypedH2 = dynamic(async () => {
+    const { TypedH2: Component } = await import('@frontend/components/common/TypedH2');
+    return { default: Component };
+});
+
+const WeChatWrap = dynamic(async () => {
+    const { WeChatWrap: Component } = await import('@frontend/components/common/WeChatIcon');
+    return { default: Component };
+});
 
 const PortfolioHome: NextPage<Props> = async ({ params }) => {
     const { t } = await useTranslation(params.lng, 'home-page');
@@ -92,12 +109,6 @@ const PortfolioHome: NextPage<Props> = async ({ params }) => {
                                             lng={params.lng}
                                             className="text-gray_light dark:text-gray mr-[2px]"
                                         />
-                                        {/* <h2
-                                    ref={typedEl}
-                                    className="text-gray_light dark:text-gray mr-[2px]"
-                                >
-                                    Front-End web developer
-                                </h2> */}
                                     </div>
                                     <p className="max-w-[430px] mb-[74px]">{t('introduction')}</p>
                                     <a
@@ -122,6 +133,7 @@ const PortfolioHome: NextPage<Props> = async ({ params }) => {
 
                                             <li className="mr-[8px]">
                                                 <Link
+                                                    prefetch={false}
                                                     href="https://github.com/ksdaylight"
                                                     className="flex items-center no-underline transition-all duration-[0.3s] px-[11px] py-[9px] hover:bg-secondary_gray_light dark:hover:bg-secondary-dark hover:rounded-[6px] group/link"
                                                 >
@@ -134,6 +146,7 @@ const PortfolioHome: NextPage<Props> = async ({ params }) => {
                                             <li className="mr-[8px]">
                                                 <WeChatWrap>
                                                     <Link
+                                                        prefetch={false}
                                                         href="#"
                                                         className="flex items-center no-underline transition-all duration-[0.3s] px-[11px] py-[9px] hover:bg-secondary_gray_light dark:hover:bg-secondary-dark hover:rounded-[6px] group/link"
                                                     >

@@ -7,7 +7,7 @@ import { LiaMapMarkerSolid } from 'react-icons/lia';
 import { BsEnvelope } from 'react-icons/bs';
 import ContactForm from '@frontend/components/common/contactForm';
 import { useTranslation } from '@frontend/app/i18n';
-import WeChatWrap from '@frontend/components/common/WeChatIcon';
+import { WeChatWrap } from '@frontend/components/common/WeChatIcon';
 
 interface Props {
     params: {
