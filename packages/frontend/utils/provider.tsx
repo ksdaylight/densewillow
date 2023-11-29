@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+// import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
 import NProgress from 'nprogress';
 
 const Providers = ({ children }: React.PropsWithChildren) => {
@@ -24,12 +24,12 @@ const Providers = ({ children }: React.PropsWithChildren) => {
     return (
         <QueryClientProvider client={client}>
             {children}
-            <ProgressBar
+            {/* <ProgressBar
                 height="4px"
                 color="#4079dc"
                 options={{ showSpinner: false }}
                 shallowRouting
-            />
+            /> */}
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     );
