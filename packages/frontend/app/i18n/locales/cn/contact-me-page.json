@@ -5,7 +5,7 @@
     "contact-me": "联系我",
     "name":"姓名",
     "email":"Email",
-    "subject":"主题",
+    "subject":"标题",
     "message":"消息",
     "send-success":"提交成功！点击确定以刷新页面。",
     "send-failed":"提交失败，请重试！",

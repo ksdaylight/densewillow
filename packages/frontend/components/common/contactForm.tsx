@@ -57,7 +57,7 @@ const ContactForm: FC<Props> = ({ lng }): JSX.Element => {
             }
         },
         onError: (error, variables, context) => {
-            console.log(error); // ti shi
+            console.log(error);
             // eslint-disable-next-line no-alert
             alert(t('send-failed'));
         },

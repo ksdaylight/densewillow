@@ -5,6 +5,7 @@ import { TsRest, TsRestHandler, nestControllerContract, tsRestHandler } from '@t
 import { apiBlog } from '@api-contracts';
 
 import { ContactMessageService } from '../services';
+import { Guest } from '../../user/decorators';
 
 const c = nestControllerContract(apiBlog.portfolio);
 
@@ -15,8 +16,9 @@ const c = nestControllerContract(apiBlog.portfolio);
 export class ContactMessageController {
     constructor(private readonly contactMessageService: ContactMessageService) {}
 
+    @Guest()
     @TsRestHandler(c.addContactMessage)
-    async createChiefComment() {
+    async addContactMessage() {
         return tsRestHandler(c.addContactMessage, async ({ body }) => {
             try {
                 const newMessage = await this.contactMessageService.createContactMessage(body);
