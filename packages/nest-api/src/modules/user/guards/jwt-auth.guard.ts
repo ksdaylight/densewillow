@@ -82,7 +82,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
                 return allowGuest || result;
             }
             // 如果不存在访问令牌，那么返回是否允许游客访问的结果
-            return allowGuest;
+            return allowGuest; // TODO 一开始失败就不要处理了，导致后面这么多 allowGuest 判断
         }
     }
 
