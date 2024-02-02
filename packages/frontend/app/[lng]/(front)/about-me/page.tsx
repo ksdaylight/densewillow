@@ -109,7 +109,6 @@ const PortfolioAboutMe: NextPage<Props> = async ({ params }) => {
                                     <a
                                         href="/contact-me"
                                         className="btn-custom-base bg-[#E9EFFF] dark:bg-[#262f48] text-primary mr-[24px] mb-[16px] md:mb-0 w-full md:w-auto text-center"
-                                        download=""
                                     >
                                         {t('contact-me')}
                                     </a>

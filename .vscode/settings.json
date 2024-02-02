@@ -9,5 +9,9 @@
     "typescript.tsdk": "node_modules/typescript/lib",
     // "eslint.packageManager": "pnpm",
     "stylelint.packageManager": "pnpm",
-    "npm.packageManager": "pnpm"
+    "npm.packageManager": "pnpm",
+    "i18n-ally.localesPaths": [
+        "packages/frontend/app/i18n",
+        "packages/frontend/app/i18n/locales"
+    ]
 }
