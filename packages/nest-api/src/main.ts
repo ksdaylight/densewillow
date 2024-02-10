@@ -35,8 +35,9 @@ const createCorsOptions = (configure: Configure) => {
         } else if (origin) {
             console.log('blocked cors for:', origin);
             callback(new Error(`Not allowed by CORS-> ${origin}`), false);
+        } else {
+            callback(null, false);
         }
-        callback(null, false);
     };
 };
 const creator = createApp({
