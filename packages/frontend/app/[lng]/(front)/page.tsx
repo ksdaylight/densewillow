@@ -3,10 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { AiFillWechat, AiFillGithub } from 'react-icons/ai';
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 import { random } from 'lodash';
 // import TypedH2 from '@frontend/components/common/TypedH2';
+
+import { TypedH2 } from '@frontend/components/common/TypedH2';
+import { PortfolioSidebar } from '@frontend/components/common/PortfolioSidebar';
 import { useTranslation } from '@frontend/app/i18n';
+import { WeChatWrap } from '@frontend/components/common/WeChatIcon';
 
 interface Props {
     params: {
@@ -15,22 +19,22 @@ interface Props {
 }
 // 使用 dynamic 函数进行动态导入 https://github.com/vercel/next.js/discussions/47316#discussioncomment-6365548
 
-const PortfolioSidebar = dynamic(async () => {
-    const { PortfolioSidebar: Component } = await import(
-        '@frontend/components/common/PortfolioSidebar'
-    );
-    return { default: Component };
-});
+// const PortfolioSidebar = dynamic(async () => {
+//     const { PortfolioSidebar: Component } = await import(
+//         '@frontend/components/common/PortfolioSidebar'
+//     );
+//     return { default: Component };
+// });
 
-const TypedH2 = dynamic(async () => {
-    const { TypedH2: Component } = await import('@frontend/components/common/TypedH2');
-    return { default: Component };
-});
+// const TypedH2 = dynamic(async () => {
+//     const { TypedH2: Component } = await import('@frontend/components/common/TypedH2');
+//     return { default: Component };
+// });
 
-const WeChatWrap = dynamic(async () => {
-    const { WeChatWrap: Component } = await import('@frontend/components/common/WeChatIcon');
-    return { default: Component };
-});
+// const WeChatWrap = dynamic(async () => {
+//     const { WeChatWrap: Component } = await import('@frontend/components/common/WeChatIcon');
+//     return { default: Component };
+// });
 
 const PortfolioHome: NextPage<Props> = async ({ params }) => {
     const { t } = await useTranslation(params.lng, 'home-page');
