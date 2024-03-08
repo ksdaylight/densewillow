@@ -48,8 +48,9 @@ const PortfolioHome: NextPage<Props> = async ({ params }) => {
                 >
                     <div className="absolute w-full h-screen overflow-hidden z-0">
                         <Image
+                            priority
                             src="/images/bg-shape-light.png"
-                            alt="person circle"
+                            alt="person circle light"
                             width={1176}
                             height={730}
                             className="invisible md:visible md:dark:invisible absolute left-[40%] top-[-24px] max-w-none"
