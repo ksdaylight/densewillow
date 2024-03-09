@@ -1,44 +1,50 @@
 {
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx-cloud",
-      "options": {
-        "cacheableOperations": [],
-        "accessToken": "MDlkYWE3YWYtZDM2YS00MTM0LWJlYjYtNjY4NjIwNDU5ZjRlfHJlYWQtd3JpdGU="
-      }
-    }
-  },
-  "extends": "nx/presets/npm.json",
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "targetDefaults": {
-    "build": {
-      "dependsOn": [
-        "^build"
-      ]
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "nx-cloud",
+            "options": {
+                "cacheableOperations": [],
+                "accessToken": "MDlkYWE3YWYtZDM2YS00MTM0LWJlYjYtNjY4NjIwNDU5ZjRlfHJlYWQtd3JpdGU="
+            }
+        }
     },
-    "test": {
-      "inputs": [
-        "default",
-        "^default",
-        "{workspaceRoot}/jest.preset.js"
-      ]
-    }
-  },
-  "generators": {
-    "@nx/react": {
-      "application": {
-        "babel": true
-      },
-      "library": {}
+    "extends": "nx/presets/npm.json",
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "targetDefaults": {
+        "build": {
+            "dependsOn": ["^build"]
+        },
+        "test": {
+            "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+        }
     },
-    "@nx/next": {
-      "application": {
-        "style": "css",
-        "linter": "eslint"
-      }
+    "generators": {
+        "@nx/react": {
+            "application": {
+                "style": "css",
+                "linter": "eslint",
+                "bundler": "vite",
+                "babel": true
+            },
+            "library": {
+                "style": "css",
+                "linter": "eslint"
+            },
+            "component": {
+                "style": "css"
+            }
+        },
+        "@nx/next": {
+            "application": {
+                "style": "css",
+                "linter": "eslint"
+            }
+        }
+    },
+    "affected": {
+        "defaultBase": "main"
+    },
+    "workspaceLayout": {
+        "projectNameAndRootFormat": "as-provided"
     }
-  },
-  "affected": {
-    "defaultBase": "main"
-  }
 }

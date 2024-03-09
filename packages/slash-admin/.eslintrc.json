@@ -1,0 +1,29 @@
+{
+    "extends": ["plugin:@nx/react", "../../.eslintrc.json"],
+    "ignorePatterns": ["!**/*"],
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+            "parserOptions": {
+				"project": ["packages/slash-admin/tsconfig.*?.json"]
+			},
+            "rules": {
+                "react/function-component-definition": [
+                    0,
+                    {
+                        "namedComponents": "arrow-function",
+                        "unnamedComponents": "arrow-function"
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["*.ts", "*.tsx"],
+            "rules": {}
+        },
+        {
+            "files": ["*.js", "*.jsx"],
+            "rules": {}
+        }
+    ]
+}
