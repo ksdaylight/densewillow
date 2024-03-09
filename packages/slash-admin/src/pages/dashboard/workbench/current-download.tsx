@@ -1,8 +1,8 @@
 import { Typography } from 'antd';
 
-import Card from '@turnit/admin/src/components/card';
-import Chart from '@turnit/admin/src/components/chart/chart';
-import useChart from '@turnit/admin/src/components/chart/useChart';
+import Card from '@slash-admin/src/components/card';
+import Chart from '@slash-admin/src/components/chart/chart';
+import useChart from '@slash-admin/src/components/chart/useChart';
 
 export default function CurrentDownload() {
     return (

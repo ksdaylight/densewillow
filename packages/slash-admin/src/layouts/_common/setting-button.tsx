@@ -12,15 +12,15 @@ import { CSSProperties, useState } from 'react';
 import { MdCircle } from 'react-icons/md';
 import screenfull from 'screenfull';
 
-import CyanBlur from '@turnit/admin/src/assets/images/background/cyan-blur.png';
-import RedBlur from '@turnit/admin/src/assets/images/background/red-blur.png';
-import { varHover } from '@turnit/admin/src/components/animate/variants/action';
-import { IconButton, SvgIcon } from '@turnit/admin/src/components/icon';
-import { useSettingActions, useSettings } from '@turnit/admin/src/store/settingStore';
-import { colorPrimarys } from '@turnit/admin/src/theme/antd/theme';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import CyanBlur from '@slash-admin/src/assets/images/background/cyan-blur.png';
+import RedBlur from '@slash-admin/src/assets/images/background/red-blur.png';
+import { varHover } from '@slash-admin/src/components/animate/variants/action';
+import { IconButton, SvgIcon } from '@slash-admin/src/components/icon';
+import { useSettingActions, useSettings } from '@slash-admin/src/store/settingStore';
+import { colorPrimarys } from '@slash-admin/src/theme/antd/theme';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
-import { ThemeColorPresets, ThemeLayout, ThemeMode } from '@turnit/admin/types/enum';
+import { ThemeColorPresets, ThemeLayout, ThemeMode } from '@slash-admin/types/enum';
 
 /**
  * App Setting

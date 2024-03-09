@@ -1,9 +1,9 @@
 /* eslint-disable import/order */
-import '@turnit/admin/src/utils/highlight';
+import '@slash-admin/src/utils/highlight';
 import ReactQuill, { ReactQuillProps } from 'react-quill';
 import Toolbar, { formats } from './toolbar';
-import { useSettings } from '@turnit/admin/src/store/settingStore';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useSettings } from '@slash-admin/src/store/settingStore';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 import { StyledEditor } from './styles';
 
 interface Props extends ReactQuillProps {

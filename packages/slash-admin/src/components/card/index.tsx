@@ -1,7 +1,7 @@
 import { CSSProperties, ReactNode } from 'react';
 
-import { useSettings } from '@turnit/admin/src/store/settingStore';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useSettings } from '@slash-admin/src/store/settingStore';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import { ThemeMode } from '../../../types/enum';
 

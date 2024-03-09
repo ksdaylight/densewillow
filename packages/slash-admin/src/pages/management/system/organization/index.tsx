@@ -17,9 +17,9 @@ import Table, { ColumnsType } from 'antd/es/table';
 import { TableRowSelection } from 'antd/es/table/interface';
 import { useEffect, useState } from 'react';
 
-import orgService from '@turnit/admin/src/api/services/orgService';
-import { IconButton, Iconify } from '@turnit/admin/src/components/icon';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
+import orgService from '@slash-admin/src/api/services/orgService';
+import { IconButton, Iconify } from '@slash-admin/src/components/icon';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
 
 import { Organization } from '../../../../../types/entity';
 

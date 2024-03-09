@@ -9,9 +9,9 @@ import timeGridPlugin from '@fullcalendar/timegrid'; // 提供 timeGridWeek, tim
 import dayjs from 'dayjs';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import Card from '@turnit/admin/src/components/card';
-import { useSettings } from '@turnit/admin/src/store/settingStore';
-import { useResponsive } from '@turnit/admin/src/theme/hooks';
+import Card from '@slash-admin/src/components/card';
+import { useSettings } from '@slash-admin/src/store/settingStore';
+import { useResponsive } from '@slash-admin/src/theme/hooks';
 
 import CalendarEvent from './calendar-event';
 import CalendarEventForm, { CalendarEventFormFieldType } from './calendar-event-form';

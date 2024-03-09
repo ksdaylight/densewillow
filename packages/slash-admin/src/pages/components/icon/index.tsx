@@ -1,7 +1,7 @@
 import { Card, Space, Typography } from 'antd';
 
-import { Iconify, SvgIcon } from '@turnit/admin/src/components/icon';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { Iconify, SvgIcon } from '@slash-admin/src/components/icon';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export default function IconPage() {
     const { colorPrimary, colorInfo, colorSuccess, colorWarning, colorError } = useThemeToken();

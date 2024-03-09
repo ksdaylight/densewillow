@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { Card, Col, Row, Typography } from 'antd';
 
-import Scrollbar from '@turnit/admin/src/components/scrollbar';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import Scrollbar from '@slash-admin/src/components/scrollbar';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 const TEXT = faker.lorem.paragraphs({ min: 20, max: 30 });
 export default function ScrollbarView() {

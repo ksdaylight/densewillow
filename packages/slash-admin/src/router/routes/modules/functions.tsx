@@ -1,12 +1,12 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { Iconify } from '@turnit/admin/src/components/icon';
-import { CircleLoading } from '@turnit/admin/src/components/loading';
+import { Iconify } from '@slash-admin/src/components/icon';
+import { CircleLoading } from '@slash-admin/src/components/loading';
 
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { AppRouteObject } from '@slash-admin/types/router';
 
-const ClipboardPage = lazy(() => import('@turnit/admin/src/pages/functions/clipboard'));
+const ClipboardPage = lazy(() => import('@slash-admin/src/pages/functions/clipboard'));
 
 const functions: AppRouteObject = {
     order: 4,

@@ -1,4 +1,4 @@
-import { StorageEnum } from '@turnit/admin/types/enum';
+import { StorageEnum } from '@slash-admin/types/enum';
 
 export const getItem = <T>(key: StorageEnum): T | null => {
     let value = null;

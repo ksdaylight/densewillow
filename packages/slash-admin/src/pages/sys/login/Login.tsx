@@ -3,11 +3,11 @@ import Color from 'color';
 import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
 
-import DashboardImg from '@turnit/admin/src/assets/images/background/dashboard.png';
-import Overlay2 from '@turnit/admin/src/assets/images/background/overlay_2.jpg';
-import LocalePicker from '@turnit/admin/src/components/locale-picker';
-import { useUserToken } from '@turnit/admin/src/store/userStore';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import DashboardImg from '@slash-admin/src/assets/images/background/dashboard.png';
+import Overlay2 from '@slash-admin/src/assets/images/background/overlay_2.jpg';
+import LocalePicker from '@slash-admin/src/components/locale-picker';
+import { useUserToken } from '@slash-admin/src/store/userStore';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import LoginForm from './LoginForm';
 import MobileForm from './MobileForm';

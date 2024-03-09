@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useMatches, useOutlet } from 'react-router-dom';
 
-import { RouteMeta } from '@turnit/admin/types/router';
+import { RouteMeta } from '@slash-admin/types/router';
 
 import { useFlattenedRoutes } from './use-flattened-routes';
 import { useRouter } from './use-router';

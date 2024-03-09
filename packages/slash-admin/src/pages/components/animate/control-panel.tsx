@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { Card } from 'antd';
 
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 type Props = {
     variantKey: {

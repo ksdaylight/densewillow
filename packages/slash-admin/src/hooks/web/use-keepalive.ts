@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 import { useCallback, useEffect, useState } from 'react';
 
-import { useMatchRouteMeta, useRouter } from '@turnit/admin/src/router/hooks';
+import { useMatchRouteMeta, useRouter } from '@slash-admin/src/router/hooks';
 
-import { RouteMeta } from '@turnit/admin/types/router';
+import { RouteMeta } from '@slash-admin/types/router';
 
 export type KeepAliveTab = RouteMeta & {
     children: any;

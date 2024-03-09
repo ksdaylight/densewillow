@@ -2,8 +2,8 @@ import { faker } from '@faker-js/faker';
 import { Card, Row, Col, Input, Tooltip, Typography } from 'antd';
 import { ChangeEvent, useState } from 'react';
 
-import { IconButton, Iconify } from '@turnit/admin/src/components/icon';
-import { useCopyToClipboard } from '@turnit/admin/src/hooks/event/use-copy-to-clipboard';
+import { IconButton, Iconify } from '@slash-admin/src/components/icon';
+import { useCopyToClipboard } from '@slash-admin/src/hooks/event/use-copy-to-clipboard';
 
 export default function ClipboardPage() {
     const { copyFn } = useCopyToClipboard();

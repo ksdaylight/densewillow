@@ -1,9 +1,9 @@
 import { Select, Typography } from 'antd';
 import { useState } from 'react';
 
-import Card from '@turnit/admin/src/components/card';
-import Chart from '@turnit/admin/src/components/chart/chart';
-import useChart from '@turnit/admin/src/components/chart/useChart';
+import Card from '@slash-admin/src/components/card';
+import Chart from '@slash-admin/src/components/chart/chart';
+import useChart from '@slash-admin/src/components/chart/useChart';
 
 export default function AreaDownload() {
     const [year, setYear] = useState('2023');

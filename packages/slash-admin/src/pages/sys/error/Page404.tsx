@@ -3,10 +3,10 @@ import { m } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { NavLink } from 'react-router-dom';
 
-import Character6 from '@turnit/admin/src/assets/images/characters/character_6.png';
-import MotionContainer from '@turnit/admin/src/components/animate/motion-container';
-import { varBounce } from '@turnit/admin/src/components/animate/variants/bounce';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import Character6 from '@slash-admin/src/assets/images/characters/character_6.png';
+import MotionContainer from '@slash-admin/src/components/animate/motion-container';
+import { varBounce } from '@slash-admin/src/components/animate/variants/bounce';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env;
 

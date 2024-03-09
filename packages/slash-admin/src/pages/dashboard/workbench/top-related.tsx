@@ -1,11 +1,11 @@
 import { Typography } from 'antd';
 
-import Card from '@turnit/admin/src/components/card';
-import { Iconify } from '@turnit/admin/src/components/icon';
-import Scrollbar from '@turnit/admin/src/components/scrollbar';
-import ProRate from '@turnit/admin/src/theme/antd/components/rage';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import Card from '@slash-admin/src/components/card';
+import { Iconify } from '@slash-admin/src/components/icon';
+import Scrollbar from '@slash-admin/src/components/scrollbar';
+import ProRate from '@slash-admin/src/theme/antd/components/rage';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 const dataSource = [
     {

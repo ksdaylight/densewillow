@@ -7,13 +7,13 @@ import { useTranslation } from 'react-i18next';
 import { useToggle, useFullscreen } from 'react-use';
 import styled from 'styled-components';
 
-import { Iconify } from '@turnit/admin/src/components/icon';
-import useKeepAlive, { KeepAliveTab } from '@turnit/admin/src/hooks/web/use-keepalive';
-import { useRouter } from '@turnit/admin/src/router/hooks';
-import { useSettings } from '@turnit/admin/src/store/settingStore';
-import { useResponsive, useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { Iconify } from '@slash-admin/src/components/icon';
+import useKeepAlive, { KeepAliveTab } from '@slash-admin/src/hooks/web/use-keepalive';
+import { useRouter } from '@slash-admin/src/router/hooks';
+import { useSettings } from '@slash-admin/src/store/settingStore';
+import { useResponsive, useThemeToken } from '@slash-admin/src/theme/hooks';
 
-import { MultiTabOperation, ThemeLayout } from '@turnit/admin/types/enum';
+import { MultiTabOperation, ThemeLayout } from '@slash-admin/types/enum';
 
 import {
     NAV_WIDTH,

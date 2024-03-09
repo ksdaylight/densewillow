@@ -4,11 +4,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
-import { IconButton } from '@turnit/admin/src/components/icon';
-import { useLoginStateContext } from '@turnit/admin/src/pages/sys/login/providers/LoginStateProvider';
-import { useRouter } from '@turnit/admin/src/router/hooks';
-import { useUserInfo, useUserActions } from '@turnit/admin/src/store/userStore';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { IconButton } from '@slash-admin/src/components/icon';
+import { useLoginStateContext } from '@slash-admin/src/pages/sys/login/providers/LoginStateProvider';
+import { useRouter } from '@slash-admin/src/router/hooks';
+import { useUserInfo, useUserActions } from '@slash-admin/src/store/userStore';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env;
 

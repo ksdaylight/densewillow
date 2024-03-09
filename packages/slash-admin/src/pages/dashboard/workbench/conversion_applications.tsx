@@ -1,7 +1,7 @@
 import { Progress } from 'antd';
 
-import { Iconify } from '@turnit/admin/src/components/icon';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { Iconify } from '@slash-admin/src/components/icon';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export function Conversion() {
     const { colorPrimaryActive, colorPrimaryBorder } = useThemeToken();

@@ -1,20 +1,20 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { SvgIcon } from '@turnit/admin/src/components/icon';
-import { CircleLoading } from '@turnit/admin/src/components/loading';
+import { SvgIcon } from '@slash-admin/src/components/icon';
+import { CircleLoading } from '@slash-admin/src/components/loading';
 
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { AppRouteObject } from '@slash-admin/types/router';
 
-const ProfilePage = lazy(() => import('@turnit/admin/src/pages/management/user/profile'));
-const AccountPage = lazy(() => import('@turnit/admin/src/pages/management/user/account'));
+const ProfilePage = lazy(() => import('@slash-admin/src/pages/management/user/profile'));
+const AccountPage = lazy(() => import('@slash-admin/src/pages/management/user/account'));
 
 const OrganizationPage = lazy(
-    () => import('@turnit/admin/src/pages/management/system/organization'),
+    () => import('@slash-admin/src/pages/management/system/organization'),
 );
-const PermissioPage = lazy(() => import('@turnit/admin/src/pages/management/system/permission'));
+const PermissioPage = lazy(() => import('@slash-admin/src/pages/management/system/permission'));
 
-const Blog = lazy(() => import('@turnit/admin/src/pages/management/blog'));
+const Blog = lazy(() => import('@slash-admin/src/pages/management/blog'));
 
 const management: AppRouteObject = {
     order: 2,

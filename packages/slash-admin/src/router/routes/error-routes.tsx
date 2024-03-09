@@ -1,16 +1,16 @@
 import { Suspense, lazy } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { CircleLoading } from '@turnit/admin/src/components/loading';
-import SimpleLayout from '@turnit/admin/src/layouts/simple';
+import { CircleLoading } from '@slash-admin/src/components/loading';
+import SimpleLayout from '@slash-admin/src/layouts/simple';
 
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { AppRouteObject } from '@slash-admin/types/router';
 
 import AuthGuard from '../components/auth-guard';
 
-const Page403 = lazy(() => import('@turnit/admin/src/pages/sys/error/Page403'));
-const Page404 = lazy(() => import('@turnit/admin/src/pages/sys/error/Page404'));
-const Page500 = lazy(() => import('@turnit/admin/src/pages/sys/error/Page500'));
+const Page403 = lazy(() => import('@slash-admin/src/pages/sys/error/Page403'));
+const Page404 = lazy(() => import('@slash-admin/src/pages/sys/error/Page404'));
+const Page500 = lazy(() => import('@slash-admin/src/pages/sys/error/Page500'));
 
 /**
  * error routes

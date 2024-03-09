@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMatches, Link } from 'react-router-dom';
 
-import { useFlattenedRoutes, usePermissionRoutes } from '@turnit/admin/src/router/hooks';
-import { menuFilter } from '@turnit/admin/src/router/utils';
+import { useFlattenedRoutes, usePermissionRoutes } from '@slash-admin/src/router/hooks';
+import { menuFilter } from '@slash-admin/src/router/utils';
 
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { AppRouteObject } from '@slash-admin/types/router';
 
 /**
  * 动态面包屑解决方案：https://github.com/MinjieChang/myblog/issues/29

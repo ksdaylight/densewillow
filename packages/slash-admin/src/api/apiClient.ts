@@ -4,10 +4,10 @@ import { message as Message } from 'antd';
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 import { isEmpty } from 'ramda';
 
-import { t } from '@turnit/admin/src/locales/i18n';
+import { t } from '@slash-admin/src/locales/i18n';
 
-import { Result } from '@turnit/admin/types/api';
-import { ResultEnum } from '@turnit/admin/types/enum';
+import { Result } from '@slash-admin/types/api';
+import { ResultEnum } from '@slash-admin/types/enum';
 
 // 创建 axios 实例
 const axiosInstance = axios.create({

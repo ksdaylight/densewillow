@@ -1,13 +1,13 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { SvgIcon } from '@turnit/admin/src/components/icon';
-import { CircleLoading } from '@turnit/admin/src/components/loading';
+import { SvgIcon } from '@slash-admin/src/components/icon';
+import { CircleLoading } from '@slash-admin/src/components/loading';
 
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { AppRouteObject } from '@slash-admin/types/router';
 
-const HomePage = lazy(() => import(`@turnit/admin/src/pages/dashboard/workbench`));
-const Analysis = lazy(() => import('@turnit/admin/src/pages/dashboard/analysis'));
+const HomePage = lazy(() => import(`@slash-admin/src/pages/dashboard/workbench`));
+const Analysis = lazy(() => import('@slash-admin/src/pages/dashboard/analysis'));
 
 const dashboard: AppRouteObject = {
     order: 1,

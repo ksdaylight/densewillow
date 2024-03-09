@@ -9,7 +9,7 @@ import { HelmetProvider } from 'react-helmet-async';
 // eslint-disable-next-line import/no-unresolved
 import 'virtual:svg-icons-register';
 
-import App from '@turnit/admin/src/App';
+import App from '@slash-admin/src/App';
 
 // import { worker } from './_mock';
 // i18n

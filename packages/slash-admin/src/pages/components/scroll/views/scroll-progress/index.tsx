@@ -4,8 +4,8 @@ import { Card, Typography } from 'antd';
 import { useScroll } from 'framer-motion';
 import { useRef } from 'react';
 
-import ScrollProgress from '@turnit/admin/src/components/scroll-progress';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import ScrollProgress from '@slash-admin/src/components/scroll-progress';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 const TEXT = faker.lorem.paragraphs({ min: 20, max: 30 });
 export default function ScrollProgressView() {

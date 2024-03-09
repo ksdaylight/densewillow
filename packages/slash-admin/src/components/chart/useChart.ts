@@ -1,7 +1,7 @@
 import { ApexOptions } from 'apexcharts';
 import { mergeDeepRight } from 'ramda';
 
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export default function useChart(options: ApexOptions) {
     const theme = useThemeToken();

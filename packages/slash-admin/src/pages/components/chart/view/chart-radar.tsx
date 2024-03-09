@@ -1,6 +1,6 @@
-import Chart from '@turnit/admin/src/components/chart/chart';
-import useChart from '@turnit/admin/src/components/chart/useChart';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import Chart from '@slash-admin/src/components/chart/chart';
+import useChart from '@slash-admin/src/components/chart/useChart';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 const series = [
     {

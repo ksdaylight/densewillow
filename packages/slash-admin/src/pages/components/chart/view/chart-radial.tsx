@@ -1,6 +1,6 @@
-import Chart from '@turnit/admin/src/components/chart/chart';
-import useChart from '@turnit/admin/src/components/chart/useChart';
-import { fNumber } from '@turnit/admin/src/utils/format-number';
+import Chart from '@slash-admin/src/components/chart/chart';
+import useChart from '@slash-admin/src/components/chart/useChart';
+import { fNumber } from '@slash-admin/src/utils/format-number';
 
 const series = [44, 55];
 export default function ChartRadial() {

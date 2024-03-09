@@ -2,12 +2,12 @@ import { useScroll } from 'framer-motion';
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { CircleLoading } from '@turnit/admin/src/components/loading';
-import ProgressBar from '@turnit/admin/src/components/progress-bar';
-import { useSettings } from '@turnit/admin/src/store/settingStore';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { CircleLoading } from '@slash-admin/src/components/loading';
+import ProgressBar from '@slash-admin/src/components/progress-bar';
+import { useSettings } from '@slash-admin/src/store/settingStore';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
-import { ThemeLayout, ThemeMode } from '@turnit/admin/types/enum';
+import { ThemeLayout, ThemeMode } from '@slash-admin/types/enum';
 
 import Header from './header';
 import Main from './main';

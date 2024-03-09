@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
 import { App, Button, Col, Form, Input, Row, Space, Switch } from 'antd';
 
-import Card from '@turnit/admin/src/components/card';
-import { UploadAvatar } from '@turnit/admin/src/components/upload';
-import { useUserInfo } from '@turnit/admin/src/store/userStore';
+import Card from '@slash-admin/src/components/card';
+import { UploadAvatar } from '@slash-admin/src/components/upload';
+import { useUserInfo } from '@slash-admin/src/store/userStore';
 
 type FieldType = {
     name?: string;

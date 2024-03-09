@@ -1,8 +1,8 @@
 import { Card, Typography } from 'antd';
 import { useState } from 'react';
 
-import Editor from '@turnit/admin/src/components/editor';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import Editor from '@slash-admin/src/components/editor';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export default function EditorPage() {
     const [quillSimple, setQuillSimple] = useState('');

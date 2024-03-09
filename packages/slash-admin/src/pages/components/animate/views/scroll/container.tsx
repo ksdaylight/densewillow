@@ -1,9 +1,9 @@
 import { Card, Typography } from 'antd';
 import { useMemo } from 'react';
 
-import MotionViewport from '@turnit/admin/src/components/animate/motion-viewport';
-import { getVariant } from '@turnit/admin/src/components/animate/variants';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import MotionViewport from '@slash-admin/src/components/animate/motion-viewport';
+import { getVariant } from '@slash-admin/src/components/animate/variants';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 type Props = {
     variant: string;

@@ -1,7 +1,7 @@
-import Card from '@turnit/admin/src/components/card';
-import Chart from '@turnit/admin/src/components/chart/chart';
-import useChart from '@turnit/admin/src/components/chart/useChart';
-import { SvgIcon } from '@turnit/admin/src/components/icon';
+import Card from '@slash-admin/src/components/card';
+import Chart from '@slash-admin/src/components/chart/chart';
+import useChart from '@slash-admin/src/components/chart/useChart';
+import { SvgIcon } from '@slash-admin/src/components/icon';
 
 type Props = {
     title: string;

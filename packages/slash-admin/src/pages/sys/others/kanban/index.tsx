@@ -5,8 +5,8 @@ import { DragDropContext, DropResult, Droppable, OnDragEndResponder } from 'reac
 import { useEvent } from 'react-use';
 import SimpleBar from 'simplebar-react';
 
-import { Iconify } from '@turnit/admin/src/components/icon';
-import KanbanColumn from '@turnit/admin/src/pages/sys/others/kanban/kanban-column';
+import { Iconify } from '@slash-admin/src/components/icon';
+import KanbanColumn from '@slash-admin/src/pages/sys/others/kanban/kanban-column';
 import {
     Column,
     Columns,
@@ -14,7 +14,7 @@ import {
     DragType,
     Task,
     Tasks,
-} from '@turnit/admin/src/pages/sys/others/kanban/types';
+} from '@slash-admin/src/pages/sys/others/kanban/types';
 
 import { initialData } from './task-utils';
 

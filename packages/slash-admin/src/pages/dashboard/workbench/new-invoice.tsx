@@ -1,10 +1,10 @@
 import { Space, Typography } from 'antd';
 import Table, { ColumnsType } from 'antd/es/table';
 
-import Card from '@turnit/admin/src/components/card';
-import { IconButton, Iconify } from '@turnit/admin/src/components/icon';
-import Scrollbar from '@turnit/admin/src/components/scrollbar';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
+import Card from '@slash-admin/src/components/card';
+import { IconButton, Iconify } from '@slash-admin/src/components/icon';
+import Scrollbar from '@slash-admin/src/components/scrollbar';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
 
 interface DataType {
     key: string;

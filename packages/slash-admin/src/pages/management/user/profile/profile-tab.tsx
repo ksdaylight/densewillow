@@ -3,13 +3,13 @@ import { faker } from '@faker-js/faker';
 import { Row, Col, Typography, Timeline, Table, Space, Avatar, Progress } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 
-import { fakeAvatars } from '@turnit/admin/src/_mock/utils';
-import Card from '@turnit/admin/src/components/card';
-import { IconButton, Iconify, SvgIcon } from '@turnit/admin/src/components/icon';
-import Scrollbar from '@turnit/admin/src/components/scrollbar';
-import { useUserInfo } from '@turnit/admin/src/store/userStore';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { fakeAvatars } from '@slash-admin/src/_mock/utils';
+import Card from '@slash-admin/src/components/card';
+import { IconButton, Iconify, SvgIcon } from '@slash-admin/src/components/icon';
+import Scrollbar from '@slash-admin/src/components/scrollbar';
+import { useUserInfo } from '@slash-admin/src/store/userStore';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 interface DataType {
     key: string;

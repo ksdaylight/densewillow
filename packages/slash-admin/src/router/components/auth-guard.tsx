@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 
-import { useUserToken } from '@turnit/admin/src/store/userStore';
+import { useUserToken } from '@slash-admin/src/store/userStore';
 
 import { useRouter } from '../hooks';
 

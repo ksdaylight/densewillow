@@ -2,7 +2,7 @@ import { Progress } from 'antd';
 import Color from 'color';
 import { useEffect, useState } from 'react';
 
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export const LineLoading = () => {
     const { colorTextBase, colorBgContainerDisabled } = useThemeToken();

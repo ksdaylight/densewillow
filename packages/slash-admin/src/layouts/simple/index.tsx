@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import HeaderSimple from '../_common/header-simple';
 

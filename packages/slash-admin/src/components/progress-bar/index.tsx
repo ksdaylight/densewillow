@@ -2,8 +2,8 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { useEffect, useState } from 'react';
 
-import { usePathname } from '@turnit/admin/src/router/hooks';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { usePathname } from '@slash-admin/src/router/hooks';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export default function ProgressBar() {
     const pathname = usePathname();

@@ -2,7 +2,7 @@ import en_US from 'antd/locale/en_US';
 import zh_CN from 'antd/locale/zh_CN';
 import { useTranslation } from 'react-i18next';
 
-import { LocalEnum } from '@turnit/admin/types/enum';
+import { LocalEnum } from '@slash-admin/types/enum';
 import type { Locale as AntdLocal } from 'antd/es/locale';
 
 type Locale = keyof typeof LocalEnum;

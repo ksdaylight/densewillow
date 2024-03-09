@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
-import { getItem, removeItem, setItem } from '@turnit/admin/src/utils/storage';
+import { getItem, removeItem, setItem } from '@slash-admin/src/utils/storage';
 
-import { StorageEnum, ThemeColorPresets, ThemeLayout, ThemeMode } from '@turnit/admin/types/enum';
+import { StorageEnum, ThemeColorPresets, ThemeLayout, ThemeMode } from '@slash-admin/types/enum';
 
 type SettingsType = {
     themeColorPresets: ThemeColorPresets;

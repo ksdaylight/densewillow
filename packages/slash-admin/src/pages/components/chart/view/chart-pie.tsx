@@ -1,5 +1,5 @@
-import Chart from '@turnit/admin/src/components/chart/chart';
-import useChart from '@turnit/admin/src/components/chart/useChart';
+import Chart from '@slash-admin/src/components/chart/chart';
+import useChart from '@slash-admin/src/components/chart/useChart';
 
 const series = [44, 55, 13, 43];
 export default function ChartPie() {

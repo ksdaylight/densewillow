@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { List, Checkbox } from 'antd';
 
-import { IconButton, Iconify } from '@turnit/admin/src/components/icon';
+import { IconButton, Iconify } from '@slash-admin/src/components/icon';
 
 export default function AnalysisTasks() {
     const data = [

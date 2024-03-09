@@ -1,14 +1,14 @@
 import { Suspense, lazy } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { Iconify } from '@turnit/admin/src/components/icon';
-import { CircleLoading } from '@turnit/admin/src/components/loading';
+import { Iconify } from '@slash-admin/src/components/icon';
+import { CircleLoading } from '@slash-admin/src/components/loading';
 
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { AppRouteObject } from '@slash-admin/types/router';
 
-const Page403 = lazy(() => import('@turnit/admin/src/pages/sys/error/Page403'));
-const Page404 = lazy(() => import('@turnit/admin/src/pages/sys/error/Page404'));
-const Page500 = lazy(() => import('@turnit/admin/src/pages/sys/error/Page500'));
+const Page403 = lazy(() => import('@slash-admin/src/pages/sys/error/Page403'));
+const Page404 = lazy(() => import('@slash-admin/src/pages/sys/error/Page404'));
+const Page500 = lazy(() => import('@slash-admin/src/pages/sys/error/Page500'));
 
 const errors: AppRouteObject[] = [
     {

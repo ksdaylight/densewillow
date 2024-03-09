@@ -1,16 +1,16 @@
 import { Suspense, lazy } from 'react';
 
-import Card from '@turnit/admin/src/components/card';
-import { Iconify, SvgIcon } from '@turnit/admin/src/components/icon';
-import { CircleLoading } from '@turnit/admin/src/components/loading';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
+import Card from '@slash-admin/src/components/card';
+import { Iconify, SvgIcon } from '@slash-admin/src/components/icon';
+import { CircleLoading } from '@slash-admin/src/components/loading';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
 
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { AppRouteObject } from '@slash-admin/types/router';
 
-const ExternalLink = lazy(() => import('@turnit/admin/src/pages/sys/others/iframe/external-link'));
-const Iframe = lazy(() => import('@turnit/admin/src/pages/sys/others/iframe'));
-const Calendar = lazy(() => import('@turnit/admin/src/pages/sys/others/calendar'));
-const Kanban = lazy(() => import('@turnit/admin/src/pages/sys/others/kanban'));
+const ExternalLink = lazy(() => import('@slash-admin/src/pages/sys/others/iframe/external-link'));
+const Iframe = lazy(() => import('@slash-admin/src/pages/sys/others/iframe'));
+const Calendar = lazy(() => import('@slash-admin/src/pages/sys/others/calendar'));
+const Kanban = lazy(() => import('@slash-admin/src/pages/sys/others/kanban'));
 
 function Wrapper({ children }: any) {
     return <Suspense fallback={<CircleLoading />}>{children}</Suspense>;

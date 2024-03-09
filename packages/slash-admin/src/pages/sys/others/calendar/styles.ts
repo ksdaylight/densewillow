@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { ThemeMode } from '@turnit/admin/types/enum';
+import { ThemeMode } from '@slash-admin/types/enum';
 
 export const StyledCalendar = styled.div<{ $themeMode: ThemeMode }>`
     width: 100%;

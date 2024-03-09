@@ -1,16 +1,16 @@
 import { Card, Col, Row, Typography } from 'antd';
 import Color from 'color';
 
-import glass_bag from '@turnit/admin/src/assets/images/glass/ic_glass_bag.png';
-import glass_buy from '@turnit/admin/src/assets/images/glass/ic_glass_buy.png';
-import glass_message from '@turnit/admin/src/assets/images/glass/ic_glass_message.png';
-import glass_users from '@turnit/admin/src/assets/images/glass/ic_glass_users.png';
-import { Iconify } from '@turnit/admin/src/components/icon';
-import ChartBar from '@turnit/admin/src/pages/components/chart/view/chart-bar';
-import ChartMixed from '@turnit/admin/src/pages/components/chart/view/chart-mixed';
-import ChartPie from '@turnit/admin/src/pages/components/chart/view/chart-pie';
-import ChartRadar from '@turnit/admin/src/pages/components/chart/view/chart-radar';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import glass_bag from '@slash-admin/src/assets/images/glass/ic_glass_bag.png';
+import glass_buy from '@slash-admin/src/assets/images/glass/ic_glass_buy.png';
+import glass_message from '@slash-admin/src/assets/images/glass/ic_glass_message.png';
+import glass_users from '@slash-admin/src/assets/images/glass/ic_glass_users.png';
+import { Iconify } from '@slash-admin/src/components/icon';
+import ChartBar from '@slash-admin/src/pages/components/chart/view/chart-bar';
+import ChartMixed from '@slash-admin/src/pages/components/chart/view/chart-mixed';
+import ChartPie from '@slash-admin/src/pages/components/chart/view/chart-pie';
+import ChartRadar from '@slash-admin/src/pages/components/chart/view/chart-radar';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import AnalysisCard from './analysis-card';
 import AnalysisNews from './analysis-news';

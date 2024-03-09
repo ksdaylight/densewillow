@@ -4,9 +4,9 @@ import { isNil } from 'ramda';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { IconButton, Iconify, SvgIcon } from '@turnit/admin/src/components/icon';
-import { useUserPermission } from '@turnit/admin/src/store/userStore';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
+import { IconButton, Iconify, SvgIcon } from '@slash-admin/src/components/icon';
+import { useUserPermission } from '@slash-admin/src/store/userStore';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
 
 import { Permission } from '../../../../../types/entity';
 import { BasicStatus, PermissionType } from '../../../../../types/enum';
@@ -61,7 +61,7 @@ export default function PermissionPage() {
             width: 60,
             render: (icon) => {
                 if (isNil(icon)) return '';
-                if (icon.startsWith('ic')) {
+                if ((icon as any).startsWith('ic')) {
                     return <SvgIcon icon={icon} size={18} className="ant-menu-item-icon" />;
                 }
                 return <Iconify icon={icon} size={18} className="ant-menu-item-icon" />;

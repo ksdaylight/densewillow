@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
-import { UserInfo, UserToken } from '@turnit/admin/types/entity';
+import { UserInfo, UserToken } from '@slash-admin/types/entity';
 
 import apiClient from '../apiClient';
 

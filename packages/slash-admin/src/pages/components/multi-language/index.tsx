@@ -1,8 +1,8 @@
 import { Card, Pagination, Radio, Space, Typography } from 'antd';
 
-import { SvgIcon } from '@turnit/admin/src/components/icon';
-import useLocale from '@turnit/admin/src/locales/useLocale';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { SvgIcon } from '@slash-admin/src/components/icon';
+import useLocale from '@slash-admin/src/locales/useLocale';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import { LocalEnum } from '../../../../types/enum';
 

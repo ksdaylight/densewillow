@@ -1,8 +1,8 @@
 import { App as AntdApp } from 'antd';
 
-import Router from '@turnit/admin/src/router/index';
+import Router from '@slash-admin/src/router/index';
 
-import AntdConfig from '@turnit/admin/src/theme/antd';
+import AntdConfig from '@slash-admin/src/theme/antd';
 
 import { MotionLazy } from './components/animate/motion-lazy';
 

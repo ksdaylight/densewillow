@@ -59,6 +59,40 @@ export const userContract = c.router(
             },
             body: z.any(),
         },
+        // 以下是测试用的
+        testSingIn: {
+            method: 'POST',
+            path: '/auth/signin',
+            responses: {
+                200: z.object({
+                    status: z.number().optional(),
+                    message: z.string().optional(),
+                    data: z.object({
+                        user: z
+                            .object({
+                                id: z.string(),
+                                username: z.string(),
+                                email: z.string().email(),
+                                avatar: z.string().optional(),
+                                createdAt: z.date().optional(),
+                                updatedAt: z.date().optional(),
+                                password: z.string().optional(),
+                                role: z.any().optional(), // Simplified, adjust based on actual role structure
+                                permissions: z.any().optional(), // Simplified, adjust based on actual permissions structure
+                            })
+                            .optional(),
+                        accessToken: z.string().uuid().optional(),
+                        refreshToken: z.string().uuid().optional(),
+                    }),
+                }),
+                404: z.object({ message: z.string() }),
+            },
+            body: z.object({
+                username: z.string(),
+                password: z.string(),
+            }),
+            summary: 'Get all user',
+        },
     },
     {
         pathPrefix: '/auth',

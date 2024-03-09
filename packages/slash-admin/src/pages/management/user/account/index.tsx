@@ -1,6 +1,6 @@
 import { Tabs, TabsProps } from 'antd';
 
-import { Iconify } from '@turnit/admin/src/components/icon';
+import { Iconify } from '@slash-admin/src/components/icon';
 
 import GeneralTab from './general-tab';
 import NotificationsTab from './notifications-tab';

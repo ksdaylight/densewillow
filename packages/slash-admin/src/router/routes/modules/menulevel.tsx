@@ -2,10 +2,10 @@ import { Typography } from 'antd';
 import { Suspense } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { SvgIcon } from '@turnit/admin/src/components/icon';
-import { CircleLoading } from '@turnit/admin/src/components/loading';
+import { SvgIcon } from '@slash-admin/src/components/icon';
+import { CircleLoading } from '@slash-admin/src/components/loading';
 
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { AppRouteObject } from '@slash-admin/types/router';
 
 function MenuLevel({ title }: { title: string }) {
     return <Typography.Title>Menu Level: {title}</Typography.Title>;

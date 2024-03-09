@@ -2,9 +2,9 @@ import { faker } from '@faker-js/faker';
 import { Typography } from 'antd';
 import Color from 'color';
 
-import Card from '@turnit/admin/src/components/card';
-import { Iconify } from '@turnit/admin/src/components/icon';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import Card from '@slash-admin/src/components/card';
+import { Iconify } from '@slash-admin/src/components/icon';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export default function TopAuthor() {
     const themeToken = useThemeToken();

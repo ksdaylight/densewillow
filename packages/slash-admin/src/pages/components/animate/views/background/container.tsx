@@ -1,10 +1,10 @@
 import { m } from 'framer-motion';
 import { useEffect, useMemo } from 'react';
 
-import Cover3 from '@turnit/admin/src/assets/images/cover/cover_3.jpg';
-import MotionContainer from '@turnit/admin/src/components/animate/motion-container';
-import { getVariant } from '@turnit/admin/src/components/animate/variants';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import Cover3 from '@slash-admin/src/assets/images/cover/cover_3.jpg';
+import MotionContainer from '@slash-admin/src/components/animate/motion-container';
+import { getVariant } from '@slash-admin/src/components/animate/variants';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 type Props = {
     variant: string;

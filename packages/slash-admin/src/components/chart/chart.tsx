@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import ApexChart from 'react-apexcharts';
 
-import { useSettings } from '@turnit/admin/src/store/settingStore';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useSettings } from '@slash-admin/src/store/settingStore';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import type { Props as ApexChartProps } from 'react-apexcharts';
 

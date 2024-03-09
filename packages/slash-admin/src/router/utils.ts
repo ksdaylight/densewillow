@@ -1,6 +1,6 @@
 import { ascend } from 'ramda';
 
-import { AppRouteObject, RouteMeta } from '@turnit/admin/types/router';
+import { AppRouteObject, RouteMeta } from '@slash-admin/types/router';
 
 /**
  * return menu routes

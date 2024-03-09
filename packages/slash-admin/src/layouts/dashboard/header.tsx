@@ -2,13 +2,13 @@ import { Drawer } from 'antd';
 import Color from 'color';
 import { CSSProperties, useState } from 'react';
 
-import { IconButton, Iconify, SvgIcon } from '@turnit/admin/src/components/icon';
-import LocalePicker from '@turnit/admin/src/components/locale-picker';
-import Logo from '@turnit/admin/src/components/logo';
-import { useSettings } from '@turnit/admin/src/store/settingStore';
-import { useResponsive, useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { IconButton, Iconify, SvgIcon } from '@slash-admin/src/components/icon';
+import LocalePicker from '@slash-admin/src/components/locale-picker';
+import Logo from '@slash-admin/src/components/logo';
+import { useSettings } from '@slash-admin/src/store/settingStore';
+import { useResponsive, useThemeToken } from '@slash-admin/src/theme/hooks';
 
-import { ThemeLayout } from '@turnit/admin/types/enum';
+import { ThemeLayout } from '@slash-admin/types/enum';
 
 import AccountDropdown from '../_common/account-dropdown';
 import BreadCrumb from '../_common/bread-crumb';

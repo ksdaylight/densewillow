@@ -2,10 +2,10 @@ import { Content } from 'antd/es/layout/layout';
 import { CSSProperties, forwardRef } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { useSettings } from '@turnit/admin/src/store/settingStore';
-import { useResponsive } from '@turnit/admin/src/theme/hooks';
+import { useSettings } from '@slash-admin/src/store/settingStore';
+import { useResponsive } from '@slash-admin/src/theme/hooks';
 
-import { ThemeLayout } from '@turnit/admin/types/enum';
+import { ThemeLayout } from '@slash-admin/types/enum';
 
 import { NAV_WIDTH, NAV_COLLAPSED_WIDTH, HEADER_HEIGHT, MULTI_TABS_HEIGHT } from './config';
 import MultiTabs from './multi-tabs';

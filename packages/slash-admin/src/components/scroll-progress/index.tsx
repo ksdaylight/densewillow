@@ -1,7 +1,7 @@
 import { HTMLMotionProps, MotionValue, m, useSpring } from 'framer-motion';
 import { CSSProperties } from 'react';
 
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 interface Props extends HTMLMotionProps<'div'> {
     color?: string;

@@ -1,4 +1,4 @@
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export default function UploadIllustration() {
     const {

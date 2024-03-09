@@ -1,6 +1,6 @@
 import { Card, Col, Row, Typography } from 'antd';
 
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import ChartArea from './view/chart-area';
 import ChartBar from './view/chart-bar';

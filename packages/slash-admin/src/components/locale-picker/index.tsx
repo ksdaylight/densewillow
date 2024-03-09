@@ -1,6 +1,6 @@
 import { Dropdown } from 'antd';
 
-import useLocale, { LANGUAGE_MAP } from '@turnit/admin/src/locales/useLocale';
+import useLocale, { LANGUAGE_MAP } from '@slash-admin/src/locales/useLocale';
 
 import type { MenuProps } from 'antd';
 

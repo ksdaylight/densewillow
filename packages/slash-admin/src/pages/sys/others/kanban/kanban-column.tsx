@@ -5,17 +5,17 @@ import { CSSProperties, useRef, useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useEvent } from 'react-use';
 
-import { Iconify } from '@turnit/admin/src/components/icon';
-import KanbanTask from '@turnit/admin/src/pages/sys/others/kanban/kanban-task';
+import { Iconify } from '@slash-admin/src/components/icon';
+import KanbanTask from '@slash-admin/src/pages/sys/others/kanban/kanban-task';
 import {
     Column,
     DragType,
     Task,
     TaskPriority,
-} from '@turnit/admin/src/pages/sys/others/kanban/types';
-import { useSettings } from '@turnit/admin/src/store/settingStore';
+} from '@slash-admin/src/pages/sys/others/kanban/types';
+import { useSettings } from '@slash-admin/src/store/settingStore';
 
-import { ThemeMode } from '@turnit/admin/types/enum';
+import { ThemeMode } from '@slash-admin/types/enum';
 
 type Props = {
     index: number;

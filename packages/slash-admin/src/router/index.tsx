@@ -1,17 +1,17 @@
 import { lazy } from 'react';
 import { Navigate, RouteObject, RouterProvider, createHashRouter } from 'react-router-dom';
 
-import DashboardLayout from '@turnit/admin/src/layouts/dashboard';
-import AuthGuard from '@turnit/admin/src/router/components/auth-guard';
-import { usePermissionRoutes } from '@turnit/admin/src/router/hooks';
-import { ErrorRoutes } from '@turnit/admin/src/router/routes/error-routes';
+import DashboardLayout from '@slash-admin/src/layouts/dashboard';
+import AuthGuard from '@slash-admin/src/router/components/auth-guard';
+import { usePermissionRoutes } from '@slash-admin/src/router/hooks';
+import { ErrorRoutes } from '@slash-admin/src/router/routes/error-routes';
 
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { AppRouteObject } from '@slash-admin/types/router';
 
 const { VITE_APP_HOMEPAGE: HOMEPAGE } = import.meta.env;
 const LoginRoute: AppRouteObject = {
     path: '/login',
-    Component: lazy(() => import('@turnit/admin/src/pages/sys/login/Login')),
+    Component: lazy(() => import('@slash-admin/src/pages/sys/login/Login')),
 };
 const PAGE_NOT_FOUND_ROUTE: AppRouteObject = {
     path: '*',

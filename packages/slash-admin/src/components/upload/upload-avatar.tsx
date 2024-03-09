@@ -2,7 +2,7 @@ import { Typography, Upload } from 'antd';
 import { UploadChangeParam, UploadFile, UploadProps } from 'antd/es/upload';
 import { useState } from 'react';
 
-import { fBytes } from '@turnit/admin/src/utils/format-number';
+import { fBytes } from '@slash-admin/src/utils/format-number';
 
 import { Iconify } from '../icon';
 

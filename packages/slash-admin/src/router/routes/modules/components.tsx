@@ -1,19 +1,19 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { Iconify } from '@turnit/admin/src/components/icon';
-import { CircleLoading } from '@turnit/admin/src/components/loading';
+import { Iconify } from '@slash-admin/src/components/icon';
+import { CircleLoading } from '@slash-admin/src/components/loading';
 
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { AppRouteObject } from '@slash-admin/types/router';
 
-const AnimatePage = lazy(() => import('@turnit/admin/src/pages/components/animate'));
-const ScrollPage = lazy(() => import('@turnit/admin/src/pages/components/scroll'));
-const MarkdownPage = lazy(() => import('@turnit/admin/src/pages/components/markdown'));
-const EditorPage = lazy(() => import('@turnit/admin/src/pages/components/editor'));
-const MultiLanguagePage = lazy(() => import('@turnit/admin/src/pages/components/multi-language'));
-const IconPage = lazy(() => import('@turnit/admin/src/pages/components/icon'));
-const UploadPage = lazy(() => import('@turnit/admin/src/pages/components/upload'));
-const ChartPage = lazy(() => import('@turnit/admin/src/pages/components/chart'));
+const AnimatePage = lazy(() => import('@slash-admin/src/pages/components/animate'));
+const ScrollPage = lazy(() => import('@slash-admin/src/pages/components/scroll'));
+const MarkdownPage = lazy(() => import('@slash-admin/src/pages/components/markdown'));
+const EditorPage = lazy(() => import('@slash-admin/src/pages/components/editor'));
+const MultiLanguagePage = lazy(() => import('@slash-admin/src/pages/components/multi-language'));
+const IconPage = lazy(() => import('@slash-admin/src/pages/components/icon'));
+const UploadPage = lazy(() => import('@slash-admin/src/pages/components/upload'));
+const ChartPage = lazy(() => import('@slash-admin/src/pages/components/chart'));
 
 const components: AppRouteObject = {
     order: 3,

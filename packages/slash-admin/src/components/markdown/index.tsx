@@ -5,9 +5,9 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm'; // add support for strikethrough, tables, tasklists and URLs directly
 
-import { useSettings } from '@turnit/admin/src/store/settingStore';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
-import '@turnit/admin/src/utils/highlight';
+import { useSettings } from '@slash-admin/src/store/settingStore';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
+import '@slash-admin/src/utils/highlight';
 
 import StyledMarkdown from './styles';
 

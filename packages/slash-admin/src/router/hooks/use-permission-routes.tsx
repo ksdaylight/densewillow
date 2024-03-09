@@ -2,15 +2,15 @@ import { isEmpty } from 'ramda';
 import { Suspense, lazy, useMemo } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { Iconify } from '@turnit/admin/src/components/icon';
-import { CircleLoading } from '@turnit/admin/src/components/loading';
-import { useUserPermission } from '@turnit/admin/src/store/userStore';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
-import { flattenTrees } from '@turnit/admin/src/utils/tree';
+import { Iconify } from '@slash-admin/src/components/icon';
+import { CircleLoading } from '@slash-admin/src/components/loading';
+import { useUserPermission } from '@slash-admin/src/store/userStore';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
+import { flattenTrees } from '@slash-admin/src/utils/tree';
 
-import { Permission } from '@turnit/admin/types/entity';
-import { BasicStatus, PermissionType } from '@turnit/admin/types/enum';
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { Permission } from '@slash-admin/types/entity';
+import { BasicStatus, PermissionType } from '@slash-admin/types/enum';
+import { AppRouteObject } from '@slash-admin/types/router';
 
 // 使用 import.meta.glob 获取所有路由组件
 const pages = import.meta.glob('/src/pages/**/*.tsx');

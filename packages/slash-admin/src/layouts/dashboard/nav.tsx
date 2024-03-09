@@ -6,14 +6,14 @@ import Color from 'color';
 import { CSSProperties, useEffect, useState } from 'react';
 import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 
-import Logo from '@turnit/admin/src/components/logo';
-import Scrollbar from '@turnit/admin/src/components/scrollbar';
-import { useRouteToMenuFn, usePermissionRoutes } from '@turnit/admin/src/router/hooks';
-import { menuFilter } from '@turnit/admin/src/router/utils';
-import { useSettingActions, useSettings } from '@turnit/admin/src/store/settingStore';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import Logo from '@slash-admin/src/components/logo';
+import Scrollbar from '@slash-admin/src/components/scrollbar';
+import { useRouteToMenuFn, usePermissionRoutes } from '@slash-admin/src/router/hooks';
+import { menuFilter } from '@slash-admin/src/router/utils';
+import { useSettingActions, useSettings } from '@slash-admin/src/store/settingStore';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
-import { ThemeLayout } from '@turnit/admin/types/enum';
+import { ThemeLayout } from '@slash-admin/types/enum';
 
 import { NAV_COLLAPSED_WIDTH, NAV_WIDTH } from './config';
 

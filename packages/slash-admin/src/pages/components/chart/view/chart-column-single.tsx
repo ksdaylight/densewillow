@@ -1,5 +1,5 @@
-import Chart from '@turnit/admin/src/components/chart/chart';
-import useChart from '@turnit/admin/src/components/chart/useChart';
+import Chart from '@slash-admin/src/components/chart/chart';
+import useChart from '@slash-admin/src/components/chart/useChart';
 
 const series = [{ name: 'Net Profit', data: [44, 55, 57, 56, 61, 58, 63, 60, 66] }];
 export default function ChartColumnSingle() {

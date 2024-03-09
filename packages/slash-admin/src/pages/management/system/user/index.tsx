@@ -1,10 +1,10 @@
 import { Button, Card, Popconfirm } from 'antd';
 import Table, { ColumnsType } from 'antd/es/table';
 
-import { USER_LIST } from '@turnit/admin/src/_mock/assets';
-import { IconButton, Iconify } from '@turnit/admin/src/components/icon';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { USER_LIST } from '@slash-admin/src/_mock/assets';
+import { IconButton, Iconify } from '@slash-admin/src/components/icon';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import { Role, UserInfo } from '../../../../../types/entity';
 import { BasicStatus } from '../../../../../types/enum';

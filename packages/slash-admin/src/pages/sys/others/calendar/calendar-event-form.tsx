@@ -5,7 +5,7 @@ import { ModalFooterRender } from 'antd/es/modal/interface';
 import { Dayjs } from 'dayjs';
 import { useEffect } from 'react';
 
-import { IconButton, Iconify } from '@turnit/admin/src/components/icon';
+import { IconButton, Iconify } from '@slash-admin/src/components/icon';
 
 export type CalendarEventFormFieldType = Pick<EventInput, 'title' | 'allDay' | 'color'> & {
     id: string;

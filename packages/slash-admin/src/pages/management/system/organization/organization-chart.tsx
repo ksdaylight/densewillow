@@ -2,8 +2,8 @@ import Color from 'color';
 import { Tree, TreeNode } from 'react-organizational-chart';
 import styled from 'styled-components';
 
-import { useSettings } from '@turnit/admin/src/store/settingStore';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useSettings } from '@slash-admin/src/store/settingStore';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import { Organization } from '../../../../../types/entity';
 import { ThemeMode } from '../../../../../types/enum';

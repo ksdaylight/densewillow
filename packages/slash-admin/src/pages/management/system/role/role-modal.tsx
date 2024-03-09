@@ -1,8 +1,8 @@
 import { Form, Modal, Input, InputNumber, Radio, Tree } from 'antd';
 import { useEffect } from 'react';
 
-import { PERMISSION_LIST } from '@turnit/admin/src/_mock/assets';
-import { flattenTrees } from '@turnit/admin/src/utils/tree';
+import { PERMISSION_LIST } from '@slash-admin/src/_mock/assets';
+import { flattenTrees } from '@slash-admin/src/utils/tree';
 
 import { Permission, Role } from '../../../../../types/entity';
 import { BasicStatus } from '../../../../../types/enum';

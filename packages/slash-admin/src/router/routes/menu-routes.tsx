@@ -1,8 +1,8 @@
 import { Navigate } from 'react-router-dom';
 
-import DashboardLayout from '@turnit/admin/src/layouts/dashboard';
+import DashboardLayout from '@slash-admin/src/layouts/dashboard';
 
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { AppRouteObject } from '@slash-admin/types/router';
 
 import AuthGuard from '../components/auth-guard';
 import { getMenuModules } from '../utils';

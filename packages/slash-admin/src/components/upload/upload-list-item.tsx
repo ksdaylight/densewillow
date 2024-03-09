@@ -3,9 +3,9 @@ import { ItemRender } from 'antd/es/upload/interface';
 import { m } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
-import { varFade } from '@turnit/admin/src/components/animate/variants';
-import { Iconify, SvgIcon } from '@turnit/admin/src/components/icon';
-import { fBytes } from '@turnit/admin/src/utils/format-number';
+import { varFade } from '@slash-admin/src/components/animate/variants';
+import { Iconify, SvgIcon } from '@slash-admin/src/components/icon';
+import { fBytes } from '@slash-admin/src/utils/format-number';
 
 import { getBlobUrl, getFileFormat, getFileThumb } from './utils';
 

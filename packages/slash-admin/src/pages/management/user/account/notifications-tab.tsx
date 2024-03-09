@@ -1,7 +1,7 @@
 import { App, Button, Col, Row, Switch, Typography } from 'antd';
 
-import Card from '@turnit/admin/src/components/card';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import Card from '@slash-admin/src/components/card';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export default function NotificationsTab() {
     const { notification } = App.useApp();

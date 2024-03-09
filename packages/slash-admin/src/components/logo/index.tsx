@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 function Logo({ className = '' }: { className?: string }) {
     const { colorPrimary } = useThemeToken();

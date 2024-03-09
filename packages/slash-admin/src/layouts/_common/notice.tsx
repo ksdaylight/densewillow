@@ -3,11 +3,11 @@ import { Badge, Button, Drawer, Space, Tabs, TabsProps } from 'antd';
 import Color from 'color';
 import { CSSProperties, ReactNode, useState } from 'react';
 
-import CyanBlur from '@turnit/admin/src/assets/images/background/cyan-blur.png';
-import RedBlur from '@turnit/admin/src/assets/images/background/red-blur.png';
-import { IconButton, Iconify, SvgIcon } from '@turnit/admin/src/components/icon';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import CyanBlur from '@slash-admin/src/assets/images/background/cyan-blur.png';
+import RedBlur from '@slash-admin/src/assets/images/background/red-blur.png';
+import { IconButton, Iconify, SvgIcon } from '@slash-admin/src/components/icon';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export default function NoticeButton() {
     const [drawerOpen, setDrawerOpen] = useState(false);

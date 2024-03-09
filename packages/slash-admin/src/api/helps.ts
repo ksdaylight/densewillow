@@ -1,6 +1,6 @@
 // import { isNil } from 'lodash';
 import { initQueryClient } from '@ts-rest/react-query';
-import { appsApi } from '@turnit/api-contracts';
+import { apiBlog } from '@api-contracts';
 import axios, { Method, AxiosError, AxiosResponse, isAxiosError } from 'axios';
 // import { tsRestFetchApi } from '@ts-rest/core';
 
@@ -10,7 +10,7 @@ export const trimText = (text: string, trimBy: number) => {
 };
 
 export const baseUrl = `http://192.168.31.101`;
-export const apiClient = initQueryClient(appsApi, {
+export const apiClient = initQueryClient(apiBlog, {
     baseUrl: '',
     baseHeaders: {
         Authorization: 'key',

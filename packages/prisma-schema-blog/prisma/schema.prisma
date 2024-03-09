@@ -10,12 +10,15 @@ datasource db {
 
 generator zod {
   provider       = "zod-prisma-types"
+  output                           = "../../api-contracts/src/zod" //cause: @nx/enforce-module-boundaries
+  prismaClientPath                 = "@prisma/client/blog"
+  addInputTypeValidation           = true 
+  validateWhereUniqueInput         = true // default is false 
   createOptionalDefaultValuesTypes = true // default is false
   createRelationValuesTypes        = true // default is false
   createPartialTypes               = true // default is false
   addIncludeType                   = true // default is true
   addSelectType                    = true // default is true
-  output                           = "../../api-contracts/src/zod" //cause: @nx/enforce-module-boundaries
 }
 model User {
   id            String             @id @default(uuid())

@@ -4,14 +4,14 @@ import { CSSProperties, memo, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
-import CyanBlur from '@turnit/admin/src/assets/images/background/cyan-blur.png';
-import RedBlur from '@turnit/admin/src/assets/images/background/red-blur.png';
-import { IconButton, Iconify, SvgIcon } from '@turnit/admin/src/components/icon';
-import { Task, TaskPriority } from '@turnit/admin/src/pages/sys/others/kanban/types';
-import { useSettings } from '@turnit/admin/src/store/settingStore';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import CyanBlur from '@slash-admin/src/assets/images/background/cyan-blur.png';
+import RedBlur from '@slash-admin/src/assets/images/background/red-blur.png';
+import { IconButton, Iconify, SvgIcon } from '@slash-admin/src/components/icon';
+import { Task, TaskPriority } from '@slash-admin/src/pages/sys/others/kanban/types';
+import { useSettings } from '@slash-admin/src/store/settingStore';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
-import { ThemeMode } from '@turnit/admin/types/enum';
+import { ThemeMode } from '@slash-admin/types/enum';
 
 import TaskDetail from './task-detail';
 

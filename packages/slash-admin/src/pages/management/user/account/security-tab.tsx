@@ -1,6 +1,6 @@
 import { App, Button, Form, Input } from 'antd';
 
-import Card from '@turnit/admin/src/components/card';
+import Card from '@slash-admin/src/components/card';
 
 type FieldType = {
     oldPassword?: string;

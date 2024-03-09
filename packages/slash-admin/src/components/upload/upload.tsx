@@ -1,7 +1,7 @@
 import { Typography, Upload as AntdUpload } from 'antd';
 import { ItemRender } from 'antd/es/upload/interface';
 
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import type { UploadProps } from 'antd';
 

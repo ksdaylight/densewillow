@@ -1,8 +1,8 @@
 import { Card, Col, Row, Space, Switch, Tabs, TabsProps, Typography } from 'antd';
 import { useState } from 'react';
 
-import { Iconify } from '@turnit/admin/src/components/icon';
-import { Upload, UploadAvatar, UploadBox } from '@turnit/admin/src/components/upload';
+import { Iconify } from '@slash-admin/src/components/icon';
+import { Upload, UploadAvatar, UploadBox } from '@slash-admin/src/components/upload';
 
 export default function UploadPage() {
     const [thumbnail, setThumbnail] = useState<boolean>(false);

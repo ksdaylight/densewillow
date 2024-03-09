@@ -1,6 +1,6 @@
 import { Tabs, TabsProps, Typography } from 'antd';
 
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import BackgroundView from './views/background';
 import Inview from './views/inview';

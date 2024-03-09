@@ -19,7 +19,9 @@
         "paths": {
             "@api-contracts": ["packages/api-contracts/src/index.ts"],
             "@api-nest/*": ["packages/nest-api/*"],
-            "@frontend/*": ["packages/frontend/*"]
+            "@frontend/*": ["packages/frontend/*"],
+            "@slash-admin/src/*": ["packages/slash-admin/src/*"],
+            "@slash-admin/types/*": ["packages/slash-admin/types/*"],
         }
     },
     "exclude": ["node_modules", "tmp"]

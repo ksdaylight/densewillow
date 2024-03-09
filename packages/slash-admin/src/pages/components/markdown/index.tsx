@@ -1,8 +1,8 @@
 import { Card, Typography } from 'antd';
 import { useState } from 'react';
 
-import Markdown from '@turnit/admin/src/components/markdown';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import Markdown from '@slash-admin/src/components/markdown';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 const TEXT = `
 # h1

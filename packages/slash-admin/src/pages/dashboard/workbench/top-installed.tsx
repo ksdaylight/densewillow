@@ -1,8 +1,8 @@
 import { Typography } from 'antd';
 import { ReactNode } from 'react';
 
-import Card from '@turnit/admin/src/components/card';
-import { Iconify } from '@turnit/admin/src/components/icon';
+import Card from '@slash-admin/src/components/card';
+import { Iconify } from '@slash-admin/src/components/icon';
 
 const dataSource = [
     {

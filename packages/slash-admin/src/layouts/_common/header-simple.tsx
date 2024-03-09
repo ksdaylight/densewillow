@@ -1,4 +1,4 @@
-import Logo from '@turnit/admin/src/components/logo';
+import Logo from '@slash-admin/src/components/logo';
 
 import SettingButton from './setting-button';
 

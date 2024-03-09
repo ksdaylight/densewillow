@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiFillGithub, AiFillGoogleCircle, AiFillWechat } from 'react-icons/ai';
 
-import { DEFAULT_USER, TEST_USER } from '@turnit/admin/src/_mock/assets';
-import { SignInReq } from '@turnit/admin/src/api/services/userService';
-import { useSignIn } from '@turnit/admin/src/store/userStore';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { DEFAULT_USER, TEST_USER } from '@slash-admin/src/_mock/assets';
+import { SignInReq } from '@slash-admin/src/api/services/userService';
+import { useSignIn } from '@slash-admin/src/store/userStore';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import { LoginStateEnum, useLoginStateContext } from './providers/LoginStateProvider';
 

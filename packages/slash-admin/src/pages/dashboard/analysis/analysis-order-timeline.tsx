@@ -1,6 +1,6 @@
 import { Timeline, Typography } from 'antd';
 
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export default function AnalysisOrderTimeline() {
     const theme = useThemeToken();

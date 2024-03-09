@@ -2,9 +2,9 @@ import { Avatar, DatePicker, Input, Radio, Space, Image, Typography } from 'antd
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 
-import { SvgIcon } from '@turnit/admin/src/components/icon';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { SvgIcon } from '@slash-admin/src/components/icon';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import { Task } from './types';
 

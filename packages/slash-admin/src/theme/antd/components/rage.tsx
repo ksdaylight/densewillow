@@ -1,7 +1,7 @@
 import { Rate, RateProps } from 'antd';
 import styled from 'styled-components';
 
-import { Iconify } from '@turnit/admin/src/components/icon';
+import { Iconify } from '@slash-admin/src/components/icon';
 
 export default function ProRate(props: RateProps) {
     return (

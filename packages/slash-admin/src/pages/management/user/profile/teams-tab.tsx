@@ -1,10 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { Row, Col, Avatar } from 'antd';
 
-import { fakeAvatars } from '@turnit/admin/src/_mock/utils';
-import Card from '@turnit/admin/src/components/card';
-import { IconButton, Iconify } from '@turnit/admin/src/components/icon';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
+import { fakeAvatars } from '@slash-admin/src/_mock/utils';
+import Card from '@slash-admin/src/components/card';
+import { IconButton, Iconify } from '@slash-admin/src/components/icon';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
 
 export default function TeamsTab() {
     const items = [

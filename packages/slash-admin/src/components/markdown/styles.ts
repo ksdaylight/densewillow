@@ -5,7 +5,7 @@ import { GlobalToken } from 'antd';
  */
 import styled from 'styled-components';
 
-import { ThemeMode } from '@turnit/admin/types/enum';
+import { ThemeMode } from '@slash-admin/types/enum';
 
 type KeyofToken = keyof GlobalToken;
 const getHeadingStyle = (level: 1 | 2 | 3 | 4 | 5, token: GlobalToken) => {

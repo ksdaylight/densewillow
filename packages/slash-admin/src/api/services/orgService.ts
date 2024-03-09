@@ -1,4 +1,4 @@
-import { Organization } from '@turnit/admin/types/entity';
+import { Organization } from '@slash-admin/types/entity';
 
 import apiClient from '../apiClient';
 

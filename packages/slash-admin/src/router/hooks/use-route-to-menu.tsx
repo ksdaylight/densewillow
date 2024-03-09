@@ -2,11 +2,11 @@ import { ItemType } from 'antd/es/menu/hooks/useItems';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Iconify, SvgIcon } from '@turnit/admin/src/components/icon';
-import { useSettings } from '@turnit/admin/src/store/settingStore';
+import { Iconify, SvgIcon } from '@slash-admin/src/components/icon';
+import { useSettings } from '@slash-admin/src/store/settingStore';
 
-import { ThemeLayout } from '@turnit/admin/types/enum';
-import { AppRouteObject } from '@turnit/admin/types/router';
+import { ThemeLayout } from '@slash-admin/types/enum';
+import { AppRouteObject } from '@slash-admin/types/router';
 
 /**
  *   routes -> menus

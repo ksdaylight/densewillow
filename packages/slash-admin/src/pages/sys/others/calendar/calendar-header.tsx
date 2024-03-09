@@ -2,8 +2,8 @@ import { Button, Dropdown, MenuProps } from 'antd';
 import dayjs from 'dayjs';
 import { ReactNode, useMemo } from 'react';
 
-import { IconButton, Iconify } from '@turnit/admin/src/components/icon';
-import { useResponsive } from '@turnit/admin/src/theme/hooks';
+import { IconButton, Iconify } from '@slash-admin/src/components/icon';
+import { useResponsive } from '@slash-admin/src/theme/hooks';
 
 export type HandleMoveArg = 'next' | 'prev' | 'today';
 export type ViewType = 'dayGridMonth' | 'timeGridWeek' | 'timeGridDay' | 'listWeek';

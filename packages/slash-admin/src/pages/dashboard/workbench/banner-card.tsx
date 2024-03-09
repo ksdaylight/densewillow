@@ -1,9 +1,9 @@
 import { Col, Row } from 'antd';
 import Color from 'color';
 
-import Character3 from '@turnit/admin/src/assets/images/characters/character_3.png';
-import { useUserInfo } from '@turnit/admin/src/store/userStore';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import Character3 from '@slash-admin/src/assets/images/characters/character_3.png';
+import { useUserInfo } from '@slash-admin/src/store/userStore';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export default function BannerCard() {
     const { username } = useUserInfo();

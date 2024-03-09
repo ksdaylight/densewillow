@@ -1,6 +1,6 @@
 import { ThemeConfig } from 'antd';
 
-import { ThemeColorPresets } from '@turnit/admin/types/enum';
+import { ThemeColorPresets } from '@slash-admin/types/enum';
 /**
  * Antd theme editor: https://ant.design/theme-editor-cn
  */

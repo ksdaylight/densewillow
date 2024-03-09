@@ -1,10 +1,10 @@
 import { CSSProperties, useState } from 'react';
 
-import CoverImage from '@turnit/admin/src/assets/images/cover/cover_4.jpg';
-import Card from '@turnit/admin/src/components/card';
-import { Iconify } from '@turnit/admin/src/components/icon';
-import { useUserInfo } from '@turnit/admin/src/store/userStore';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import CoverImage from '@slash-admin/src/assets/images/cover/cover_4.jpg';
+import Card from '@slash-admin/src/components/card';
+import { Iconify } from '@slash-admin/src/components/icon';
+import { useUserInfo } from '@slash-admin/src/store/userStore';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import ConnectionsTab from './connections-tab';
 import ProfileTab from './profile-tab';

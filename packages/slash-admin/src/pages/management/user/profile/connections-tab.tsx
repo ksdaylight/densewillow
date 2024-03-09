@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
 import { Button, Col, Row } from 'antd';
 
-import Card from '@turnit/admin/src/components/card';
-import { Iconify } from '@turnit/admin/src/components/icon';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
+import Card from '@slash-admin/src/components/card';
+import { Iconify } from '@slash-admin/src/components/icon';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
 
 export default function ConnectionsTab() {
     const items = [

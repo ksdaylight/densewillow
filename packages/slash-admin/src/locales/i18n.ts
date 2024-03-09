@@ -2,9 +2,9 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-import { getStringItem } from '@turnit/admin/src/utils/storage';
+import { getStringItem } from '@slash-admin/src/utils/storage';
 
-import { LocalEnum, StorageEnum } from '@turnit/admin/types/enum';
+import { LocalEnum, StorageEnum } from '@slash-admin/types/enum';
 
 import en_US from './lang/en_US';
 import zh_CN from './lang/zh_CN';

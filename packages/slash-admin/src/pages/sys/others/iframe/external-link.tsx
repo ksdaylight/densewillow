@@ -1,6 +1,6 @@
 import { useLayoutEffect } from 'react';
 
-import { useRouter } from '@turnit/admin/src/router/hooks';
+import { useRouter } from '@slash-admin/src/router/hooks';
 
 type Props = {
     src: string;

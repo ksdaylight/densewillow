@@ -1,7 +1,7 @@
 import { Form, Modal, Input, InputNumber, Radio, TreeSelect } from 'antd';
 import { useEffect } from 'react';
 
-import { useUserPermission } from '@turnit/admin/src/store/userStore';
+import { useUserPermission } from '@slash-admin/src/store/userStore';
 
 import { Permission } from '../../../../../types/entity';
 import { BasicStatus, PermissionType } from '../../../../../types/enum';

@@ -3,9 +3,9 @@ import { ItemType } from 'antd/es/menu/hooks/useItems';
 import { useState, useEffect, CSSProperties } from 'react';
 import { useNavigate, useMatches, useLocation } from 'react-router-dom';
 
-import { useRouteToMenuFn, usePermissionRoutes } from '@turnit/admin/src/router/hooks';
-import { menuFilter } from '@turnit/admin/src/router/utils';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { useRouteToMenuFn, usePermissionRoutes } from '@slash-admin/src/router/hooks';
+import { menuFilter } from '@slash-admin/src/router/utils';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 import { NAV_HORIZONTAL_HEIGHT } from './config';
 

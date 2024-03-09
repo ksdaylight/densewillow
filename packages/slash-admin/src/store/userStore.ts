@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { create } from 'zustand';
 
-import { SignInReq } from '@turnit/admin/src/api/services/userService';
-import { getItem, removeItem, setItem } from '@turnit/admin/src/utils/storage';
+import { SignInReq } from '@slash-admin/src/api/services/userService';
+import { getItem, removeItem, setItem } from '@slash-admin/src/utils/storage';
 
-import { UserInfo, UserToken } from '@turnit/admin/types/entity';
-import { StorageEnum } from '@turnit/admin/types/enum';
+import { UserInfo, UserToken } from '@slash-admin/types/entity';
+import { StorageEnum } from '@slash-admin/types/enum';
 
 import { apiClient } from '../api/helps';
 
@@ -58,7 +58,7 @@ export const useSignIn = () => {
 
     // const signInMutation = useMutation(userService.signin);
     const { mutateAsync } = apiClient.user.testSingIn.useMutation({
-        onSuccess(res, _variables: any, _context: any) {
+        onSuccess(res: any, _variables: any, _context: any) {
             // res = data2 as any as SignInRes;
             console.log(JSON.stringify(res));
             // const { user, accessToken, refreshToken } = res.body.data;

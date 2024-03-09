@@ -2,10 +2,10 @@ import { StyleProvider } from '@ant-design/cssinjs';
 import { ConfigProvider, theme } from 'antd';
 import 'antd/dist/reset.css';
 
-import useLocale from '@turnit/admin/src/locales/useLocale';
-import { useSettings } from '@turnit/admin/src/store/settingStore';
+import useLocale from '@slash-admin/src/locales/useLocale';
+import { useSettings } from '@slash-admin/src/store/settingStore';
 
-import { ThemeMode } from '@turnit/admin/types/enum';
+import { ThemeMode } from '@slash-admin/types/enum';
 
 import {
     customThemeTokenConfig,

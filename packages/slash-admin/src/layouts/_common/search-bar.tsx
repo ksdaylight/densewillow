@@ -7,11 +7,11 @@ import { useTranslation } from 'react-i18next';
 import { useBoolean, useEvent, useKeyPressEvent } from 'react-use';
 import styled from 'styled-components';
 
-import { IconButton, SvgIcon } from '@turnit/admin/src/components/icon';
-import Scrollbar from '@turnit/admin/src/components/scrollbar';
-import { useFlattenedRoutes, useRouter } from '@turnit/admin/src/router/hooks';
-import ProTag from '@turnit/admin/src/theme/antd/components/tag';
-import { useThemeToken } from '@turnit/admin/src/theme/hooks';
+import { IconButton, SvgIcon } from '@slash-admin/src/components/icon';
+import Scrollbar from '@slash-admin/src/components/scrollbar';
+import { useFlattenedRoutes, useRouter } from '@slash-admin/src/router/hooks';
+import ProTag from '@slash-admin/src/theme/antd/components/tag';
+import { useThemeToken } from '@slash-admin/src/theme/hooks';
 
 export default function SearchBar() {
     const { t } = useTranslation();
