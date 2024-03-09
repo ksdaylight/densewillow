@@ -134,7 +134,8 @@ export class App {
             const host = await configure.get<string>('app.host');
             const port = await configure.get<number>('app.port')!;
             const https = await configure.get<boolean>('app.https');
-            const globalPrefix = await configure.get<string>('app.globalPrefix');
+            // const globalPrefix = await configure.get<string>('app.globalPrefix');
+            const globalPrefix = 'api';
 
             appUrl = `${https ? 'https' : 'http'}://${host!}:${port}${
                 isNil(globalPrefix) ? '' : `/${globalPrefix}`

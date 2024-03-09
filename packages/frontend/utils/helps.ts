@@ -37,7 +37,8 @@ export const getRelativeDate = (date: string, lng?: string) => {
         .toRelative();
 };
 export const baseUrl = `${process.env.SERVER_PUBLIC_URL}`;
-export const publicApiUrl = `${process.env.SERVER_PUBLIC_URL}/${process.env.APP_PREFIX}`;
+// export const publicApiUrl = `${process.env.SERVER_PUBLIC_URL}/${process.env.APP_PREFIX}`;
+export const publicApiUrl = `${process.env.SERVER_PUBLIC_URL}/api`;
 export const privateApiUrl = `http://${process.env.APP_HOST}:${process.env.APP_PORT}`;
 export const apiClient = initQueryClient(apiBlog, {
     baseUrl: '',

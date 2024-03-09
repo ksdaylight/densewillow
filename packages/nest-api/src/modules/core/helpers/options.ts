@@ -13,7 +13,7 @@ export const createAppConfig: (
     register,
     defaultRegister: (configure) => ({
         host: configure.env('APP_HOST', '127.0.0.1'),
-        globalPrefix: configure.env('APP_PREFIX', 'api'),
+        // globalPrefix: configure.env('APP_PREFIX', 'api'),
         port: configure.env('APP_PORT', (v) => toNumber(v), 3000),
         https: configure.env('APP_SSL', (v) => toBoolean(v), false),
         timezone: configure.env('APP_TIMEZONE', 'Asia/Shanghai'),

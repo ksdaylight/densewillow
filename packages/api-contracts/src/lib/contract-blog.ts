@@ -25,6 +25,6 @@ export const apiBlog = c.router(
         baseHeaders: z.object({
             Authorization: z.string().optional(),
         }),
-        pathPrefix: `/${process.env['APP_PREFIX']}`,
+        pathPrefix: `/api`,
     },
 );

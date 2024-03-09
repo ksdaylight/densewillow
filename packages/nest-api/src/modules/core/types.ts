@@ -17,7 +17,7 @@ export interface AppConfig {
 
     port: number;
 
-    globalPrefix?: string;
+    // globalPrefix?: string;
 
     https: boolean;
 
