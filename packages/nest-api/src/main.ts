@@ -29,7 +29,11 @@ const createCorsOptions = (configure: Configure) => {
             ? new RegExp(`${parsedDomain}.*`)
             : new RegExp(`${parsedDomain.sld}.*`); // 取舍的正则写法，可改
     return (origin: string, callback: (err: Error | null, allow?: boolean) => void) => {
-        const isAllowed = originRegExp.test(origin);
+        // 添加 localhost 和 127.0.0.1 到允许列表
+        const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1)(:[0-9]+)?$/.test(origin);
+
+        const isAllowed = originRegExp.test(origin) || isLocalhost;
+
         if (isAllowed) {
             callback(null, true);
         } else if (origin) {

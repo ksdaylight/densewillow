@@ -10,10 +10,18 @@
         "build:frontend:prod": "nx run frontend:build:production",
         "build:nest-api": "nx run nest-api:build",
         "build:nest-api:prod": "nx run nest-api:build:production",
+
+        "build:admin": "nx run slash-admin:build",
+        "build:admin:prod": "nx run slash-admin:build:production",
+
         "start:frontend:prod": "nx run frontend:serve:production --skip-nx-cache --port=4200",
         "start:frontend:dev": "nx run frontend:serve:development --skip-nx-cache --port=4200",
         "start:nest-api:dev": "cross-env NODE_ENV=development nx run nest-api:serve  --skip-nx-cache",
         "start:nest-api:prod": "nx run nest-api:serve:production  --skip-nx-cache",
+        
+        "start:admin": "nx run slash-admin:serve --skip-nx-cache",
+        "start:admin:prod": "nx run slash-admin:preview:production --skip-nx-cache",
+
         "test:nest-api:tdd": "nx run nest-api:test-tdd",
         "test:nest-api:e2e": "nx run nest-api-e2e:e2e",
         "test:frontend:tdd": "nx run frontend:test",

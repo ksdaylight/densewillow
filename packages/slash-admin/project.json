@@ -1,5 +1,5 @@
 {
-    "name": "inventory",
+    "name": "slash-admin",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/slash-admin/src",
     "projectType": "application",
@@ -24,15 +24,15 @@
             "executor": "@nx/vite:dev-server",
             "defaultConfiguration": "development",
             "options": {
-                "buildTarget": "inventory:build"
+                "buildTarget": "slash-admin:build"
             },
             "configurations": {
                 "development": {
-                    "buildTarget": "inventory:build:development",
+                    "buildTarget": "slash-admin:build:development",
                     "hmr": true
                 },
                 "production": {
-                    "buildTarget": "inventory:build:production",
+                    "buildTarget": "slash-admin:build:production",
                     "hmr": false
                 }
             }
@@ -41,14 +41,14 @@
             "executor": "@nx/vite:preview-server",
             "defaultConfiguration": "development",
             "options": {
-                "buildTarget": "inventory:build"
+                "buildTarget": "slash-admin:build"
             },
             "configurations": {
                 "development": {
-                    "buildTarget": "inventory:build:development"
+                    "buildTarget": "slash-admin:build:development"
                 },
                 "production": {
-                    "buildTarget": "inventory:build:production"
+                    "buildTarget": "slash-admin:build:production"
                 }
             }
         },
@@ -70,7 +70,7 @@
         "serve-static": {
             "executor": "@nx/web:file-server",
             "options": {
-                "buildTarget": "inventory:build"
+                "buildTarget": "slash-admin:build"
             }
         }
     },

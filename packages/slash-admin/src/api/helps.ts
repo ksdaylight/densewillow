@@ -9,7 +9,7 @@ export const trimText = (text: string, trimBy: number) => {
     return `${text.substring(0, trimBy).trim()}...`;
 };
 
-export const baseUrl = `http://192.168.31.101`;
+export const baseUrl = `http://192.168.80.6`; // TODO 硬编码 SERVER_PUBLIC_URL
 export const apiClient = initQueryClient(apiBlog, {
     baseUrl: '',
     baseHeaders: {

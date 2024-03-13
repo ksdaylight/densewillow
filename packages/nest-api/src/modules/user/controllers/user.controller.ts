@@ -7,7 +7,7 @@ import { User } from '@prisma/client/blog';
 import { faker } from '@faker-js/faker';
 
 import { UserService } from '../services';
-import { ReqUser } from '../decorators';
+import { Guest, ReqUser } from '../decorators';
 import { PermissionChecker } from '../../rbac/types';
 import { PermissionAction } from '../../rbac/constants';
 import { Permission } from '../../rbac/decorators';
@@ -51,6 +51,7 @@ export class UserController {
         });
     }
 
+    @Guest()
     @TsRestHandler(c.testSingIn)
     async testSingIn() {
         return tsRestHandler(c.testSingIn, async ({ body: { username } }) => {

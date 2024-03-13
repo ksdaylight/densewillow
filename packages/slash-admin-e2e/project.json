@@ -1,5 +1,5 @@
 {
-    "name": "inventory-e2e",
+    "name": "slash-admin-e2e",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/slash-admin-e2e/src",
     "projectType": "application",
@@ -8,15 +8,15 @@
             "executor": "@nx/cypress:cypress",
             "options": {
                 "cypressConfig": "packages/slash-admin-e2e/cypress.config.ts",
-                "devServerTarget": "inventory:serve:development",
+                "devServerTarget": "slash-admin:serve:development",
                 "testingType": "e2e"
             },
             "configurations": {
                 "production": {
-                    "devServerTarget": "inventory:serve:production"
+                    "devServerTarget": "slash-admin:serve:production"
                 },
                 "ci": {
-                    "devServerTarget": "inventory:serve-static"
+                    "devServerTarget": "slash-admin:serve-static"
                 }
             }
         },
@@ -29,5 +29,5 @@
         }
     },
     "tags": [],
-    "implicitDependencies": ["inventory"]
+    "implicitDependencies": ["slash-admin"]
 }

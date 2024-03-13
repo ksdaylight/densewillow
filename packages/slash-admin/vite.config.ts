@@ -1,5 +1,6 @@
 /// <reference types="vitest" />
 import path from 'path';
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -7,10 +8,9 @@ import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-
 export default defineConfig({
     root: __dirname,
-    cacheDir: '../../node_modules/.vite/inventory',
+    cacheDir: '../../node_modules/.vite/slash-admin',
 
     esbuild: {
         // drop: ['console', 'debugger'],

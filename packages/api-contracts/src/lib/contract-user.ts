@@ -62,7 +62,7 @@ export const userContract = c.router(
         // 以下是测试用的
         testSingIn: {
             method: 'POST',
-            path: '/auth/signin',
+            path: '/signin',
             responses: {
                 200: z.object({
                     status: z.number().optional(),
