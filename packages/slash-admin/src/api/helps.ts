@@ -9,7 +9,7 @@ export const trimText = (text: string, trimBy: number) => {
     return `${text.substring(0, trimBy).trim()}...`;
 };
 
-export const baseUrl = `http://192.168.80.6`; // TODO 硬编码 SERVER_PUBLIC_URL
+export const baseUrl = (import.meta.env.VITE_SERVER_PUBLIC_URL as string) || `http://192.168.80.7`;
 export const apiClient = initQueryClient(apiBlog, {
     baseUrl: '',
     baseHeaders: {
