@@ -20,14 +20,3 @@ const config = {
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
 module.exports = createJestConfig(config);
-
-// export default {
-//     displayName: 'frontend',
-//     preset: '../../jest.preset.js',
-//     transform: {
-//         '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',
-//         '^.+\\.[tj]sx?$': ['babel-jest', { presets: ['@nx/next/babel'] }],
-//     },
-//     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-//     coverageDirectory: '../../coverage/packages/frontend',
-// };

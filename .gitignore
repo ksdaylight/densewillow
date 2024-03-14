@@ -8,8 +8,6 @@ tmp
 /logs
 uploads
 #Env
-.env
-.env.*
 # dependencies
 node_modules
 
@@ -23,7 +21,6 @@ node_modules
 *.sublime-workspace
 
 # IDE - VSCode
-.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -55,3 +52,7 @@ lerna-debug.log*
 .next
 
 .nx/cache
+temp_auto_push.bat
+temp_interactive_push.bat
+branch_structure.json
+config.bat
