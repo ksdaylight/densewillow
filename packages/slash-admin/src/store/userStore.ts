@@ -57,28 +57,7 @@ export const useSignIn = () => {
     const { setUserToken, setUserInfo } = useUserActions();
 
     // const signInMutation = useMutation(userService.signin);
-    const { mutateAsync } = apiClient.user.testSingIn.useMutation({
-        onSuccess(res: any, _variables: any, _context: any) {
-            // res = data2 as any as SignInRes;
-            console.log(JSON.stringify(res));
-            // const { user, accessToken, refreshToken } = res.body.data;
-            // setUserToken({ accessToken, refreshToken });
-            // if (user) setUserInfo(user);
-            // navigatge(HOMEPAGE, { replace: true });
-
-            // notification.success({
-            //     message: t('sys.login.loginSuccessTitle'),
-            //     description: `${t('sys.login.loginSuccessDesc')}: `, // ${data.username}`,
-            //     duration: 3,
-            // });
-        },
-        onError(err: any, _variables: any, _context: any) {
-            console.log(err);
-        },
-        onSettled(data2: any) {
-            console.log(data2);
-        },
-    });
+    const { mutateAsync } = apiClient.user.testSingIn.useMutation();
 
     const signIn = async (data: SignInReq) => {
         try {
